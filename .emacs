@@ -23,13 +23,13 @@
 (setq org-hide-emphasis-markers t)
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
-;;(setq helm-ag-base-command "rg --vimgrep --no-heading")
 (setq helm-grep-ag-command "rg --smart-case --no-heading --line-number %s %s %s")
 (setq evil-want-C-u-scroll t)
 (setq tab-width 2)
 (setq diredp-hide-details-initially-flag nil)
 (setq ring-bell-function 'ignore)
 (setq neo-smart-open t)
+(setq projectile-enable-caching t)
 
 (set-default-font "Inconsolata")
 (set-default 'truncate-lines -1)
@@ -42,6 +42,7 @@
 (require 'neotree)
 (require 'evil-magit)
 (require 'dired+)
+(require 'multi-term)
 
 (show-paren-mode 1)
 (menu-bar-mode -1)
@@ -51,7 +52,6 @@
 (nyan-mode 1)
 (evil-mode 1)
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -70,7 +70,7 @@
  '(main-line-color2 "#333343")
  '(package-selected-packages
    (quote
-    (projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
+    (multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343"))
 
@@ -107,7 +107,7 @@
 
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd ":") 'helm-M-x)
-  (define-key evil-normal-state-map (kbd "\C-p") 'helm-find-files))
+  (define-key evil-normal-state-map (kbd "\C-p") 'projectile-find-file)) ;; 'helm-find-files))
 
 (global-set-key (kbd "M-x")  'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -191,3 +191,28 @@
 (shell-command-to-string "xset r rate 180 30")
 
 
+(defun my-run-term ()
+    (interactive)
+    (require 'multi-term)
+    (command-execute 'multi-term)
+    (setq-default truncate-lines nil)
+    (if (not (boundp 'term-number))
+        (defvar term-number 1 "term index in the current emacs session") )
+    (rename-buffer (concat "Term " (int-to-string term-number)))
+    (setq term-number (+ 1 term-number)))
+(global-set-key (kbd "C-x t") 'my-run-term) ;; mappe sur C-T
+
+
+
+;;(eval-when-compile (require 'cl-lib))
+;;
+;;(defun split-window-func-with-other-buffer (split-function)
+;;  (lexical-let ((s-f split-function))
+;;    (lambda ()
+;;      (interactive)
+;;      (funcall s-f)
+;;      (set-window-buffer (next-window) (other-buffer)
+;;	(other-window 1)))))
+;;
+;;(global-set-key (kbd "C--") (split-window-func-with-other-buffer 'split-window-vertically))
+;;(global-set-key (kbd "C-\\") (split-window-func-with-other-buffer 'split-window-horizontally))
