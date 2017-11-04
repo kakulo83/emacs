@@ -1,4 +1,4 @@
-;; Added by Package.el.  This must come before configurations of
+
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -29,7 +29,10 @@
 (setq diredp-hide-details-initially-flag nil)
 (setq ring-bell-function 'ignore)
 (setq neo-smart-open t)
+(setq neo-show-hidden-files t)
 (setq projectile-enable-caching t)
+(setq word-wrap nil)
+(setq linum-format "%d ")
 
 (set-default-font "Inconsolata")
 (set-default 'truncate-lines -1)
@@ -51,6 +54,9 @@
 (yas-global-mode 1)
 (nyan-mode 1)
 (evil-mode 1)
+(projectile-mode 1)
+
+
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 
 (custom-set-variables
@@ -102,13 +108,15 @@
  '(org-block-begin-line ((t (:inherit org-meta-line :background "gray10" :foreground "gray16"))))
  '(org-level-1 ((t (:inherit outline-1 :foreground "white" :weight bold :height 1.75))))
  '(org-level-2 ((t (:inherit outline-2 :foreground "dark magenta" :weight bold :height 1.3))))
- '(org-level-3 ((t (:inherit outline-3 :foreground "#4682b4" :weight bold :height 1.2)))))
+ '(org-level-3 ((t (:inherit outline-3 :foreground "#4682b4" :weight bold :height 1.2))))
+ '(vertical-border ((((type tty)) (:inherit mode-line-inactive :background "Black" :foreground "Black")))))
 
 
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd ":") 'helm-M-x)
   (define-key evil-normal-state-map (kbd "\C-p") 'projectile-find-file)) ;; 'helm-find-files))
 
+(global-set-key (kbd "\C-p") 'projectile-find-file)
 (global-set-key (kbd "M-x")  'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-h")  'windmove-left)
@@ -120,9 +128,13 @@
 (global-set-key (kbd "M-l") 'helm-buffers-list)
 (global-set-key (kbd "C-o") 'previous-buffer)
 
+(global-unset-key (kbd "s-k"))
+
 (define-key evil-normal-state-map (kbd "RET") 'neotree-enter)
 (define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
+;;(define-key evil-insert-state-map (kbd "kj") 'evil-force-normal-state)
 
+(add-hook 'find-file-hook 'linum-mode)
 
 (add-hook 'org-mode-hook
 	  (lambda ()
@@ -155,26 +167,11 @@
 
 (add-hook 'cider-repl-mode-hook
 	  (lambda ()
+	    (define-key cider-repl-mode-map (kbd "s-k") 'cider-repl-clear-buffer)
+	    (define-key cider-repl-mode-map (kbd "s-r") 'cider-refresh)
 	    (define-key cider-repl-mode-map (kbd "C-j") 'windmove-down)))
 
 
-
-;;(with-eval-after-load "helm"
-;;    (defun helm-buffer-switch-to-new-window (_candidate)
-;;    "Display buffers in new windows."
-;;    ;; Select the bottom right window
-;;    (require 'winner)
-;;    (select-window (car (last (winner-sorted-window-list))))
-;;    ;; Display buffers in new windows
-;;    (dolist (buf (helm-marked-candidates))
-;;	(select-window (split-window-right))
-;;	(switch-to-buffer buf))
-;;    ;; Adjust size of windows
-;;    (balance-windows))
-;;
-;;    (add-to-list 'helm-type-buffer-actions
-;;		'("Display buffer(s) in new window(s) `M-o'" .
-;;		helm-buffer-switch-new-window) 'append))
 
 (evil-define-key 'normal dired-mode-map (kbd ":") 'helm-M-x)
 
@@ -200,9 +197,29 @@
         (defvar term-number 1 "term index in the current emacs session") )
     (rename-buffer (concat "Term " (int-to-string term-number)))
     (setq term-number (+ 1 term-number)))
+
 (global-set-key (kbd "C-x t") 'my-run-term) ;; mappe sur C-T
 
-
+(defun neotree-project-dir-toggle ()
+  "Open NeoTree using the project root, using find-file-in-project, or the current buffer directory."
+  (interactive)
+  (let ((project-dir
+         (ignore-errors
+           ;;; Pick one: projectile or find-file-in-project
+           ; (projectile-project-root)
+           (ffip-project-root)
+           ))
+        (file-name (buffer-file-name))
+        (neo-smart-open t))
+    (if (and (fboundp 'neo-global--window-exists-p)
+             (neo-global--window-exists-p))
+        (neotree-hide)
+      (progn
+        (neotree-show)
+        (if project-dir
+            (neotree-dir project-dir))
+        (if file-name
+            (neotree-find file-name))))))
 
 ;;(eval-when-compile (require 'cl-lib))
 ;;
