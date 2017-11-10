@@ -65,18 +65,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+	 ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(custom-enabled-themes (quote (deeper-blue)))
  '(custom-safe-themes
-   (quote
-    ("0dd717ae0704f14f39cf6da5b3a8ff11a768f21586936d46e3d3ffcac28d1400" "f0021feeaa66dfe9d4f58c17a612c9b5e200c17e3b8297bdde899b6296cb53fd" "ed91d4e59412defda16b551eb705213773531f30eb95b69319ecd142fab118ca" default)))
+	 (quote
+		("0dd717ae0704f14f39cf6da5b3a8ff11a768f21586936d46e3d3ffcac28d1400" "f0021feeaa66dfe9d4f58c17a612c9b5e200c17e3b8297bdde899b6296cb53fd" "ed91d4e59412defda16b551eb705213773531f30eb95b69319ecd142fab118ca" default)))
  '(fringe-mode 10 nil (fringe))
  '(linum-format " %6d ")
  '(main-line-color1 "#222232")
  '(main-line-color2 "#333343")
  '(package-selected-packages
-   (quote
-    (multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
+	 (quote
+		(rnc-mode multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343"))
 
@@ -113,6 +113,7 @@
 
 
 (with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "\C-b") 'helm-bookmarks)
   (define-key evil-motion-state-map (kbd ":") 'helm-M-x)
   (define-key evil-normal-state-map (kbd "\C-p") 'projectile-find-file)) ;; 'helm-find-files))
 
@@ -181,6 +182,12 @@
   (interactive "ssubject: ")
   (find-file (format "~/Dropbox/Notes/%s/%s.org" subject subject)))
 
+(defun books (subject)
+  "Function to quickly open book in ~/Dropbox/books folder"
+  (interactive "ssubject: ")
+  (find-file (format "~/Dropbox/Books/%s.pdf" subject subject)))
+
+
 (defadvice split-window (after move-point-to-new-window activate)
   "Moves the point to the newly created window after splitting"
   (other-window 1))
@@ -233,3 +240,11 @@
 ;;
 ;;(global-set-key (kbd "C--") (split-window-func-with-other-buffer 'split-window-vertically))
 ;;(global-set-key (kbd "C-\\") (split-window-func-with-other-buffer 'split-window-horizontally))
+
+
+
+
+
+
+
+
