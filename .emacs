@@ -213,7 +213,7 @@ static char *gnus-pointer[] = {
 
 (evil-define-minor-mode-key 'normal 'neotree-mode (kbd "RET") 'neotree-enter)
 
-
+(define-key evil-normal-state-map (kbd "-") 'open-pwd-dired)
 (define-key evil-normal-state-map (kbd "RET") 'neotree-enter)
 (define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
 (define-key evil-normal-state-map (kbd "C-f") 'helm-projectile-grep)
@@ -284,10 +284,13 @@ static char *gnus-pointer[] = {
 
 (evil-define-key 'normal dired-mode-map (kbd ":") 'helm-M-x)
 
-
 (defadvice split-window (after move-point-to-new-window activate)
   "Moves the point to the newly created window after splitting"
   (other-window 1))
+
+(defun open-pwd-dired ()
+  (interactive)
+    (dired default-directory))
 
 
 (defun notes (subject)
