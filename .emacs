@@ -13,6 +13,8 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 (setq same-window-regexps '("."))
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
@@ -33,6 +35,9 @@
 (setq projectile-enable-caching t)
 (setq word-wrap nil)
 (setq linum-format "%d ")
+(setq org-latex-create-formula-image-program 'dvipng)
+(setq cider-auto-select-error-buffer nil)
+
 
 (set-default-font "Inconsolata")
 (set-default 'truncate-lines -1)
@@ -76,7 +81,7 @@
  '(main-line-color2 "#333343")
  '(package-selected-packages
    (quote
-    (multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
+    (exec-path-from-shell auctex multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343"))
 
@@ -172,8 +177,15 @@
 	    (define-key cider-repl-mode-map (kbd "C-j") 'windmove-down)))
 
 
+(add-hook 'cider--debug-mode-hook 'my-cider-debug-toggle-insert-state)
 
 (evil-define-key 'normal dired-mode-map (kbd ":") 'helm-M-x)
+
+(defun my-cider-debug-toggle-insert-state ()
+  (if cider--debug-mode    ;; Checks if you're entering the debugger   
+      (evil-insert-state)  ;; If so, turn on evil-insert-state
+    (evil-normal-state)))  ;; Otherwise, turn on normal-state
+
 
 
 (defun notes (subject)
