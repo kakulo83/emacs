@@ -248,7 +248,9 @@ static char *gnus-pointer[] = {
 (general-define-key :keymaps 'neotree-mode-map
   :states '(normal emacs)
   "s" 'neotree-enter-vertical-split)
-
+(general-define-key :keymaps 'neotree-mode-map
+  :states '(normal emacs)
+  "m" 'neotree-rename-node)	    
 
 
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
