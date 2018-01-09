@@ -1,3 +1,12 @@
+<<<<<<< HEAD
 *
 !.gitignore
 !.emacs
+=======
+# Ignore everything
+*
+# Except the following
+!.gitignore
+!.emacs
+
+>>>>>>> 0d61c668431cd673b11804d75b26ffc85b637b7d
