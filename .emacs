@@ -23,6 +23,7 @@
 (setq org-hide-emphasis-markers t)
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
+(setq org-image-actual-width nil)
 (setq helm-grep-ag-command "rg --smart-case --no-heading --line-number %s %s %s")
 (setq evil-want-C-u-scroll t)
 (setq tab-width 2)
@@ -56,6 +57,8 @@
 (evil-mode 1)
 (projectile-mode 1)
 
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 
@@ -65,20 +68,21 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-	 ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(custom-enabled-themes (quote (deeper-blue)))
  '(custom-safe-themes
-	 (quote
-		("0dd717ae0704f14f39cf6da5b3a8ff11a768f21586936d46e3d3ffcac28d1400" "f0021feeaa66dfe9d4f58c17a612c9b5e200c17e3b8297bdde899b6296cb53fd" "ed91d4e59412defda16b551eb705213773531f30eb95b69319ecd142fab118ca" default)))
+   (quote
+    ("0dd717ae0704f14f39cf6da5b3a8ff11a768f21586936d46e3d3ffcac28d1400" "f0021feeaa66dfe9d4f58c17a612c9b5e200c17e3b8297bdde899b6296cb53fd" "ed91d4e59412defda16b551eb705213773531f30eb95b69319ecd142fab118ca" default)))
  '(fringe-mode 10 nil (fringe))
  '(linum-format " %6d ")
  '(main-line-color1 "#222232")
  '(main-line-color2 "#333343")
  '(package-selected-packages
-	 (quote
-		(rnc-mode multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
+   (quote
+    (exec-path-from-shell rnc-mode multi-term projectile helm-ag cider rjsx-mode dired+ evil-magit neotree evil nyan-mode magit avy helm org yasnippet)))
  '(powerline-color1 "#222232")
- '(powerline-color2 "#333343"))
+ '(powerline-color2 "#333343")
+ '(tramp-syntax (quote default) nil (tramp)))
 
 
 (custom-set-faces
@@ -109,6 +113,7 @@
  '(org-level-1 ((t (:inherit outline-1 :foreground "white" :weight bold :height 1.75))))
  '(org-level-2 ((t (:inherit outline-2 :foreground "dark magenta" :weight bold :height 1.3))))
  '(org-level-3 ((t (:inherit outline-3 :foreground "#4682b4" :weight bold :height 1.2))))
+ '(org-tag ((t (:foreground "gray22" :slant italic :weight thin :height 0.8))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :background "Black" :foreground "Black")))))
 
 
@@ -130,6 +135,8 @@
 (global-set-key (kbd "C-o") 'previous-buffer)
 
 (global-unset-key (kbd "s-k"))
+
+(global-set-key (kbd "s-1") 'open-or-save-window-config-1)
 
 (define-key evil-normal-state-map (kbd "RET") 'neotree-enter)
 (define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
@@ -165,7 +172,6 @@
 (define-key dired-mode-map (kbd "C-h") 'windmove-left)
 (define-key dired-mode-map (kbd "M-l") 'helm-buffers-list)
 
-
 (add-hook 'cider-repl-mode-hook
 	  (lambda ()
 	    (define-key cider-repl-mode-map (kbd "s-k") 'cider-repl-clear-buffer)
@@ -180,7 +186,9 @@
 (defun notes (subject)
   "Function to quickly open/create new org/notes file"
   (interactive "ssubject: ")
-  (find-file (format "~/Dropbox/Notes/%s/%s.org" subject subject)))
+  (if (string= subject "list")
+		(dired-other-window "~/Dropbox/Notes")
+		(find-file (format "~/Dropbox/Notes/%s/%s.org" subject subject))))
 
 (defun books (subject)
   "Function to quickly open book in ~/Dropbox/books folder"
@@ -228,6 +236,13 @@
         (if file-name
             (neotree-find file-name))))))
 
+
+;;(defun open-or-save-window-config-1 ()
+;;	"Open the window config 1 if it exists, otherwise save current config as 1"
+;;	(interactive)
+;;	(window-configuration-to-register "1"))
+
+
 ;;(eval-when-compile (require 'cl-lib))
 ;;
 ;;(defun split-window-func-with-other-buffer (split-function)
@@ -242,8 +257,53 @@
 ;;(global-set-key (kbd "C-\\") (split-window-func-with-other-buffer 'split-window-horizontally))
 
 
+;; https://www.emacswiki.org/emacs/WindowsAndRegisters
+;; VARIABLES ;;
+(defvar workspaces-list nil)
+(defvar workspaces-are-initialized nil)
+
+;; GLOBAL BINDINGS ;;
+(global-set-key (kbd "s-t") 'workspace-goto)
+
+;; FUNCTIONS ;;
+(defun workspace-create-new (deskid)
+    "Create a blank workspace at id deskid, between 1 and 9"
+    (interactive "cWhat ID do you want to give to blank workspace ?")
+    (workspace-goto ?0)
+    (window-configuration-to-register deskid)
+    (add-to-list 'workspaces-list deskid)
+    (workspace-goto deskid))
 
 
+(defun workspace-goto (deskid)
+  "Go to another workspace, deskid is workspace number between 1 and 9; Workspace 0 is a template workspace, do not use it unless you know what you do; You can kill a workspace with 'k' and fallback on 1."
+    (interactive "cTo which workspace do you want to go ? ")
+    (let (add)
+    (setq add (if (eq deskid ?0) "\n!-!-! This is template workspace. New workspaces are based on it. " nil))
+    (cond
+	((and (>= deskid ?0) (<= deskid ?9))
+	(if (or (member deskid workspaces-list) (eq deskid ?0))
+	(progn
+	(window-configuration-to-register current-workspace)
+	(setq current-workspace deskid)
+	(jump-to-register deskid))
+    (if (y-or-n-p "This workspace does not exist, should it be created ? ")
+	(progn
+	    (window-configuration-to-register current-workspace)
+	    (workspace-create-new deskid))
+	nil)))
+	((and (eq deskid ?k) (not (or (eq current-workspace ?0) (eq current-workspace ?1))))
+	(let ((deskid-to-del current-workspace))
+    (workspace-goto ?1)
+    (setq workspaces-list (remove deskid-to-del workspaces-list))))
+	(t (setq add "\n!-!-! Please specify a valid workspace number in (1-9), 0 do edit template, 'k' to kill current workspace in (2-9)")))
+    (message (concat "Now on workspace " (char-to-string current-workspace) "\nWorkspaces list is : " (mapconcat 'char-to-string (sort (copy-sequence workspaces-list) '<) ", ") add))))
+
+(unless workspaces-are-initialized
+		(window-configuration-to-register ?0)
+		(setq current-workspace ?0)
+		(workspace-create-new ?1)
+		(setq workspaces-are-initialized t))
 
 
 
