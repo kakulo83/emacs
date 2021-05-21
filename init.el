@@ -14,7 +14,7 @@
  '(gnutls-algorithm-priority "normal:-vers-tls1.3")
  '(org-hidden-keywords '(title))
  '(package-selected-packages
-	 '(deft evil-collection org-download org-roam-server magit ivy-rich marginalia pdf-tools orderless treemacs-icons-dired lsp-ui evil-leader popwin treemacs-evil treemacs counsel tron-legacy-theme alect-themes org-bullets go-mode projectile lsp-mode org-roam org evil)))
+	 '(consult notdeft evil-collection org-download org-roam-server magit ivy-rich marginalia pdf-tools orderless treemacs-icons-dired lsp-ui evil-leader popwin treemacs-evil treemacs counsel tron-legacy-theme alect-themes go-mode projectile lsp-mode org-roam org evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
