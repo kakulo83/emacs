@@ -1,6 +1,7 @@
 ;;; package --- Summary
 ;;; Commentary:
-;;; 
+;;;
+;;; https://github.com/cmacrae/.emacs.d#perspective    (also very good)
 ;;; https://emacs.nasy.moe/#orge7b5d89    (this one is good)
 ;;; https://ladicle.com/post/config/#lsp
 ;;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
@@ -34,7 +35,10 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-(package-refresh-contents)
+;;(package-refresh-contents)
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -48,7 +52,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(company-box yasnippet org embark counsel simple-modeline vimish-fold imenu-list lsp-ui typescript-mode lsp-mode go-mode bug-hunter use-package all-the-icons-dired evil)))
+	 '(company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -72,11 +76,13 @@
  make-backup-files nil
  auto-save-default nil
  create-lockfiles nil)
+(fset 'yes-or-no-p 'y-or-n-p)  ;; use 'y' and 'n' for 'yes' and 'no'
 
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
-(use-package counsel
-	:ensure t)
+(use-package bug-hunter)
+
+(use-package counsel)
 
 (use-package evil
   :init
@@ -84,11 +90,10 @@
 	:config
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-motion-state-map (kbd "C-z") nil)
-	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
+	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+	(define-key evil-normal-state-map (kbd "C-b") 'persp-ivy-switch-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
-	(define-key evil-normal-state-map (kbd "C-b") 'ivy-switch-buffer)
-	;; (define-key evil-normal-state-map (kbd "C-t") 'centaur-tabs-counsel-switch-group)
 	(define-key evil-normal-state-map (kbd "C-f") 'counsel-rg)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
@@ -96,12 +101,15 @@
 
 (use-package evil-collection
 	:after evil
-	:ensure t
 	:config
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
 (use-package all-the-icons)
+
+(use-package all-the-icons-dired
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
 
 (use-package ivy
   :init
@@ -135,10 +143,32 @@
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
 (use-package projectile
-  :ensure t
   :init
 	(setq projectile-completion-system 'ivy)
+	(setq projectile-switch-project-action 'neotree-projectile-action)
   (projectile-mode +1))
+
+(use-package perspective
+	:init (persp-mode)
+	:config
+	(defun cm/persp-neo ()
+    "Make NeoTree follow the perspective"
+    (interactive)
+    (let ((cw (selected-window))
+          (path (buffer-file-name))) ;; save current window and buffer
+          (progn
+            (when (and (fboundp 'projectile-project-p)
+                       (projectile-project-p)
+                       (fboundp 'projectile-project-root))
+              (neotree-dir (projectile-project-root)))
+            (neotree-find path))
+          (select-window cw)))
+
+  :hook
+  (persp-switch . cm/persp-neo))
+
+(use-package persp-projectile
+	:after (perspective))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -146,11 +176,9 @@
 	(setq lsp-ui-doc-position 'at-point)
 	(setq lsp-enable-snippet nil))
 
-(use-package magit
-	:ensure t)
+(use-package magit)
 
 (use-package neotree
-	:ensure t
 	:config
 	(setq-default neo-show-hidden-files t)
 	(setq neo-theme 'icons)
@@ -167,15 +195,13 @@
 				(define-key evil-normal-state-local-map (kbd "c") 'neotree-copy-node))))
 
 (use-package doom-modeline
-  :ensure t
 	:init
 	(setq doom-modeline-workspace-name nil)
 	(setq doom-modeline-buffer-encoding nil)
 	(setq doom-modeline-vcs-max-length 24)
-	:hook (after-init . doom-modeline-init))
+	:hook (after-init . doom-modeline-mode))
 
 (use-package evil-leader
-	:ensure t
 	:after evil
 	:config
 	(global-evil-leader-mode)
@@ -197,11 +223,9 @@
 	(evil-mode t))
 
 (use-package docker
-	:ensure t
 	:bind ("C-c d" . docker))
 
 (use-package go-mode
-	:ensure t
 	:hook ((go-mode . lsp-deferred))
 	:config
 	(setq gofmt-command "goimports")
@@ -216,37 +240,13 @@
 
 
 (use-package flycheck
-	:ensure t
 	:init (global-flycheck-mode))
-	
-;;(use-package centaur-tabs
-;;	:ensure t
-;;	:config
-;;	(setq centaur-tabs-style "chamfer")
-;;	(setq centaur-tabs-set-icons t)
-;;	(setq centaur-tabs-set-bar 'under)
-;;	(setq x-underline-at-descent-line t)
-;;	(setq centaur-tabs-cycle-scope 'tabs)
-;;	(setq centaur-tabs-set-close-button nil)
-;;	(centaur-tabs-headline-match)
-;;	(centaur-tabs-mode t)
-;;	:hook (emacs-startup . centaur-tabs-mode)
-;;  :bind
-;;	("C-t" . 'centaur-tabs-counsel-switch-group)
-;;	(:map evil-normal-state-map
-;;				("g t" . centaur-tabs-forward)
-;;				("g T" . centaur-tabs-backward)))
 
 (use-package doom-themes
- 	:ensure t
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
  	(load-theme 'doom-nord t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights
-
-(use-package simple-modeline
-	:ensure t
-  :hook (after-init . simple-modeline-mode))
 
 (use-package hideshow
 	:defer t
@@ -254,7 +254,6 @@
   :hook (prog-mode  . hs-minor-mode))
 
 (use-package yasnippet
-	:ensure t
   :diminish yas-minor-mode
   :preface (defvar tmp/company-point nil)
   :config
@@ -270,7 +269,6 @@
                     (yas-expand)))))
 
 (use-package company
-	:ensure t
 	:config (progn
             ;; don't add any dely before trying to complete thing being typed
             ;; the call/response to gopls is asynchronous so this should have little
@@ -282,12 +280,9 @@
             (setq company-tooltip-align-annotations t)))
 
 (use-package company-box
-	:ensure t
   :hook (company-mode . company-box-mode))
 
-
 (use-package org
-	:ensure t
 	:config
 	:hook (prog-mode . yas-minor-mode))
 
@@ -335,8 +330,6 @@
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-;; (define-key evil-normal-state-map (kbd "C-c k") 'centaur-tabs--kill-this-buffer-dont-ask)
-
 ;; MODES =================================================================================================================================================================================================================================================
 
 (show-paren-mode 1)
@@ -361,8 +354,6 @@
 
 (global-linum-mode t) ;; Show number lines
 
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ;; add icons to dired using all-the-icons-dired-mode
-
 (setq scroll-step            1
       scroll-conservatively  10000) ;; Smoother scrolling with smaller steps
 
@@ -380,8 +371,14 @@
 
 (setq lsp-enable-links nil)
 
-;;(setq lsp-gopls-codelens nil)
+;; (add-hook 'kill-emacs-hook #'persp-state-save) ;; save perspetive sessions on exit
 
+(cond
+  ((string-equal system-type "darwin")
+      (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))))
+(setq frame-title-format '(""))
+
+(set-cursor-color "#00FFFF")
 ;; =======================================================================================================================================================================================================================================================
 
 
