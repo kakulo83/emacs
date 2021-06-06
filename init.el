@@ -15,7 +15,7 @@
 ;;; 
 ;;; TODO
 ;;;  - add keybinding to move to next/previous diagnostic error
-;;;  - look into this:  https://github.com/ericdanan/counsel-projectile    (use ivy for projectile commands... this should allow the use of ctrl-o within an ivy-list and show additional actions
+;;;  - figure out better project/project-buffer managment.   When switching to a new buffer, all current buffers should be replaced with those of the new project.  Buffer configuration should be retained
 ;;;
 ;;; NOTE
 ;;;
@@ -44,6 +44,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(gnutls-algorithm-priority "normal:-vers-tls1.3")
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
@@ -84,10 +85,10 @@
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-motion-state-map (kbd "C-z") nil)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
-	(define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+	(define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
 	(define-key evil-normal-state-map (kbd "C-b") 'ivy-switch-buffer)
-	(define-key evil-normal-state-map (kbd "C-t") 'centaur-tabs-counsel-switch-group)
+	;; (define-key evil-normal-state-map (kbd "C-t") 'centaur-tabs-counsel-switch-group)
 	(define-key evil-normal-state-map (kbd "C-f") 'counsel-rg)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
@@ -111,8 +112,12 @@
          (/ (frame-height) 2))))
   (ivy-mode 1)
 	:config
+	(ivy-add-actions 'projectile-find-file '(("i" evil-window-split "split below")))
+	(ivy-add-actions 'projectile-find-file '(("s" evil-window-vsplit "split right")))
+	(ivy-add-actions 'ivy-switch-buffer '(("s" ivy-switch-buffer-other-window "split right")))
 	(define-key ivy-mode-map (kbd "C-n") 'ivy-next-line)
 	(define-key ivy-mode-map (kbd "C-p") 'ivy-previous-line))
+
 
 (use-package popwin
   :init
@@ -132,11 +137,13 @@
 (use-package projectile
   :ensure t
   :init
+	(setq projectile-completion-system 'ivy)
   (projectile-mode +1))
 
 (use-package lsp-ui
   :after (lsp-mode)
   :config
+	(setq lsp-ui-doc-position 'at-point)
 	(setq lsp-enable-snippet nil))
 
 (use-package magit
@@ -150,7 +157,22 @@
 	(setq neo-smart-open t)
 	(setq neo-autorefresh t)
 	(setq projectile-switch-project-action 'neotree-projectile-action)
-  :bind ("C-c n" . neotree-toggle))
+  :bind ("C-c n" . neotree-toggle)
+	:init
+	(add-hook 'neotree-mode-hook
+      (lambda ()
+        (define-key evil-normal-state-local-map (kbd "a") 'neotree-create-node)
+				(define-key evil-normal-state-local-map (kbd "d") 'neotree-delete-node)
+				(define-key evil-normal-state-local-map (kbd "r") 'neotree-rename-node)
+				(define-key evil-normal-state-local-map (kbd "c") 'neotree-copy-node))))
+
+(use-package doom-modeline
+  :ensure t
+	:init
+	(setq doom-modeline-workspace-name nil)
+	(setq doom-modeline-buffer-encoding nil)
+	(setq doom-modeline-vcs-max-length 24)
+	:hook (after-init . doom-modeline-init))
 
 (use-package evil-leader
 	:ensure t
@@ -180,7 +202,11 @@
 
 (use-package go-mode
 	:ensure t
-	:hook ((go-mode . lsp-deferred)))
+	:hook ((go-mode . lsp-deferred))
+	:config
+	(setq gofmt-command "goimports")
+	(setq go-indent-level 2)
+	:hook (before-save-hook . gofmt-before-save))
 
 (use-package typescript-mode
 	:mode ("\\.ts\\'" "\\.tsx\\'")
@@ -193,30 +219,30 @@
 	:ensure t
 	:init (global-flycheck-mode))
 	
-(use-package centaur-tabs
-	:ensure t
-	:config
-	(setq centaur-tabs-style "chamfer")
-	(setq centaur-tabs-set-icons t)
-	(setq centaur-tabs-set-bar 'under)
-	(setq x-underline-at-descent-line t)
-	(setq centaur-tabs-cycle-scope 'tabs)
-	(setq centaur-tabs-set-close-button nil)
-	(centaur-tabs-headline-match)
-	(centaur-tabs-mode t)
-	:hook (emacs-startup . centaur-tabs-mode)
-  :bind
-	("C-t" . 'centaur-tabs-counsel-switch-group)
-	(:map evil-normal-state-map
-				("g t" . centaur-tabs-forward)
-				("g T" . centaur-tabs-backward)))
+;;(use-package centaur-tabs
+;;	:ensure t
+;;	:config
+;;	(setq centaur-tabs-style "chamfer")
+;;	(setq centaur-tabs-set-icons t)
+;;	(setq centaur-tabs-set-bar 'under)
+;;	(setq x-underline-at-descent-line t)
+;;	(setq centaur-tabs-cycle-scope 'tabs)
+;;	(setq centaur-tabs-set-close-button nil)
+;;	(centaur-tabs-headline-match)
+;;	(centaur-tabs-mode t)
+;;	:hook (emacs-startup . centaur-tabs-mode)
+;;  :bind
+;;	("C-t" . 'centaur-tabs-counsel-switch-group)
+;;	(:map evil-normal-state-map
+;;				("g t" . centaur-tabs-forward)
+;;				("g T" . centaur-tabs-backward)))
 
 (use-package doom-themes
  	:ensure t
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-one t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights
+ 	(load-theme 'doom-nord t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights
 
 (use-package simple-modeline
 	:ensure t
@@ -227,21 +253,21 @@
   :diminish hs-minor-mode
   :hook (prog-mode  . hs-minor-mode))
 
-;;(use-package yasnippet
-;;	:ensure t
-;;  :diminish yas-minor-mode
-;;  :preface (defvar tmp/company-point nil)
-;;  :config
-;;  (yas-global-mode +1)
-;;  (advice-add 'company-complete-common
-;;              :before
-;;              #'(lambda ()
-;;                  (setq tmp/company-point (point))))
-;;  (advice-add 'company-complete-common
-;;              :after
-;;              #'(lambda ()
-;;                  (when (equal tmp/company-point (point))
-;;                    (yas-expand)))))
+(use-package yasnippet
+	:ensure t
+  :diminish yas-minor-mode
+  :preface (defvar tmp/company-point nil)
+  :config
+  (yas-global-mode +1)
+  (advice-add 'company-complete-common
+              :before
+              #'(lambda ()
+                  (setq tmp/company-point (point))))
+  (advice-add 'company-complete-common
+              :after
+              #'(lambda ()
+                  (when (equal tmp/company-point (point))
+                    (yas-expand)))))
 
 (use-package company
 	:ensure t
@@ -309,7 +335,7 @@
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-(define-key evil-normal-state-map (kbd "C-c k") 'centaur-tabs--kill-this-buffer-dont-ask)
+;; (define-key evil-normal-state-map (kbd "C-c k") 'centaur-tabs--kill-this-buffer-dont-ask)
 
 ;; MODES =================================================================================================================================================================================================================================================
 
