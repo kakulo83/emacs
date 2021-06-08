@@ -17,6 +17,8 @@
 ;;; TODO
 ;;;  - add keybinding to move to next/previous diagnostic error
 ;;;  - figure out better project/project-buffer managment.   When switching to a new buffer, all current buffers should be replaced with those of the new project.  Buffer configuration should be retained
+;;;  - https://org-roam.discourse.group/t/what-does-it-feel-like-to-work-with-10-000-notes-in-org-roam-benchmarking-org-roams-search-methods/227
+;;;  - read thoroughly: https://emacsair.me/2017/09/01/magit-walk-through/
 ;;;
 ;;; NOTE
 ;;;
@@ -78,6 +80,7 @@
  create-lockfiles nil)
 (fset 'yes-or-no-p 'y-or-n-p)  ;; use 'y' and 'n' for 'yes' and 'no'
 
+
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
@@ -88,8 +91,9 @@
   :init
 	(setq evil-want-keybinding nil)
 	:config
-	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-motion-state-map (kbd "C-z") nil)
+	(define-key evil-motion-state-map (kbd "RET") nil)
+	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'persp-ivy-switch-buffer)
@@ -284,7 +288,27 @@
 
 (use-package org
 	:config
+	(setq org-return-follows-link t)
 	:hook (prog-mode . yas-minor-mode))
+
+(use-package org-roam
+	:hook
+	(after-init . org-roam-mode)
+	:custom
+	(org-roam-directory (file-truename "/Users/robertcarter/notes/org-roam-notes/"))
+	:init
+	(defun bms/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
+	:bind (:map org-roam-mode-map
+							 (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
