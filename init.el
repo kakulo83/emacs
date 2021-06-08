@@ -130,7 +130,6 @@
 	(define-key ivy-mode-map (kbd "C-n") 'ivy-next-line)
 	(define-key ivy-mode-map (kbd "C-p") 'ivy-previous-line))
 
-
 (use-package popwin
   :init
   (popwin-mode 1))
@@ -149,7 +148,6 @@
 (use-package projectile
   :init
 	(setq projectile-completion-system 'ivy)
-	(setq projectile-switch-project-action 'neotree-projectile-action)
   (projectile-mode +1))
 
 (use-package perspective
@@ -188,7 +186,7 @@
 	(setq neo-theme 'icons)
 	(setq neo-smart-open t)
 	(setq neo-autorefresh t)
-	(setq projectile-switch-project-action 'neotree-projectile-action)
+	;; (setq projectile-switch-project-action 'neotree-projectile-action)
   :bind ("C-c n" . neotree-toggle)
 	:init
 	(add-hook 'neotree-mode-hook
