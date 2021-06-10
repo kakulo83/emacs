@@ -54,7 +54,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
+	 '(vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -70,9 +70,13 @@
  '(org-level-7 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo"))))
  '(org-level-8 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo")))))
 
-(setq gc-cons-threshold 100000000) ;; increase garbage-collection threshold to 100mb from 8kb
+(defvar evil-want-C-u-scroll)
+(defvar ac-cons-threshold)
+(defvar all-the-icons-dired-monochrome)
+
 (setq evil-want-C-u-scroll t)
 (setq initial-scratch-message "")
+(setq gc-cons-threshold 100000000) ;; increase garbage-collection threshold to 100mb from 8kb
 (setq all-the-icons-dired-monochrome nil)
 (setq
  make-backup-files nil
@@ -97,13 +101,14 @@
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'persp-ivy-switch-buffer)
-	(define-key evil-normal-state-map (kbd "C-n") 'neotree-toggle)
+	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 	(define-key evil-normal-state-map (kbd "C-f") 'counsel-rg)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
   (evil-mode))
 
 (use-package evil-collection
+	:defines evil-collection-company-use-tng
 	:after evil
 	:config
 	(setq evil-collection-company-use-tng nil)
@@ -116,6 +121,7 @@
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package ivy
+	:functions ivy-add-actions
   :init
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height-alist
@@ -151,26 +157,31 @@
   (projectile-mode +1))
 
 (use-package perspective
-	:init (persp-mode)
-	:config
-	(defun cm/persp-neo ()
-    "Make NeoTree follow the perspective"
-    (interactive)
-    (let ((cw (selected-window))
-          (path (buffer-file-name))) ;; save current window and buffer
-          (progn
-            (when (and (fboundp 'projectile-project-p)
-                       (projectile-project-p)
-                       (fboundp 'projectile-project-root))
-              (neotree-dir (projectile-project-root)))
-            (neotree-find path))
-          (select-window cw)))
-
-  :hook
-  (persp-switch . cm/persp-neo))
+	:init
+	:config (persp-mode))
 
 (use-package persp-projectile
 	:after (perspective))
+
+(use-package treemacs
+	:defer t
+	:config
+	(progn
+		(setq treemacs-show-hidden-files t
+					treemacs-display-in-side-window t
+					treemacs-position 'left
+					treemacs-width 35)))
+
+(use-package treemacs-all-the-icons
+	:after (treemacs)
+	:config
+	(treemacs-load-theme 'all-the-icons))
+	
+(use-package treemacs-perspective
+	:after (treemacs perspective)
+	:config
+	(treemacs-set-scope-type 'Perspectives))
+
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -179,22 +190,6 @@
 	(setq lsp-enable-snippet nil))
 
 (use-package magit)
-
-(use-package neotree
-	:config
-	(setq-default neo-show-hidden-files t)
-	(setq neo-theme 'icons)
-	(setq neo-smart-open t)
-	(setq neo-autorefresh t)
-	;; (setq projectile-switch-project-action 'neotree-projectile-action)
-  :bind ("C-c n" . neotree-toggle)
-	:init
-	(add-hook 'neotree-mode-hook
-      (lambda ()
-        (define-key evil-normal-state-local-map (kbd "a") 'neotree-create-node)
-				(define-key evil-normal-state-local-map (kbd "d") 'neotree-delete-node)
-				(define-key evil-normal-state-local-map (kbd "r") 'neotree-rename-node)
-				(define-key evil-normal-state-local-map (kbd "c") 'neotree-copy-node))))
 
 (use-package doom-modeline
 	:init
@@ -205,14 +200,15 @@
 
 (use-package evil-leader
 	:after evil
+	:functions evil-leader/set-leader
 	:config
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
-	(evil-leader/set-leader",")
+	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "cp" 'copy-filepath-to-clipboard
 	 "q" 'delete-window
-	 "n" 'neotree-find
+	 ;; "n" 'neotree-find
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
@@ -220,7 +216,7 @@
 	 "gl" 'magit-log-all
 	 "gb" 'magit-blame
 	 "gs" 'magit-status
-	 "gp" 'magit-pull
+	 "gc" 'magit-branch
 	 "gh" 'magit-log-buffer-file)
 	(evil-mode t))
 
@@ -228,6 +224,7 @@
 	:bind ("C-c d" . docker))
 
 (use-package go-mode
+	:defines go-indent-level
 	:hook ((go-mode . lsp-deferred))
 	:config
 	(setq gofmt-command "goimports")
@@ -240,11 +237,11 @@
 	:config
 	(setq typescript-indent-level 2))
 
-
 (use-package flycheck
 	:init (global-flycheck-mode))
 
 (use-package doom-themes
+	:defines doom-themes-enable-bolt
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
@@ -256,6 +253,7 @@
   :hook (prog-mode  . hs-minor-mode))
 
 (use-package yasnippet
+	:functions yas-expand
   :diminish yas-minor-mode
   :preface (defvar tmp/company-point nil)
   :config
@@ -286,7 +284,11 @@
 
 (use-package org
 	:config
+	(add-to-list 'org-emphasis-alist
+             '("*" (:foreground "red")
+               ))
 	(setq org-return-follows-link t)
+	(setq org-hide-emphasis-markers t)
 	:hook (prog-mode . yas-minor-mode))
 
 (use-package org-roam
@@ -308,12 +310,15 @@
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
 
+(use-package vterm)
+
+
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
   (interactive)
-  (call-interactively 'term)
+  (call-interactively 'vterm) ;; 'ansi-term)
   ;;(call-interactively 'shell)
   (rename-buffer (read-string "Enter buffer name: ")))
 
