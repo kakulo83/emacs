@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;;
 ;;; https://github.com/cmacrae/.emacs.d#perspective    (also very good)
+
 ;;; https://emacs.nasy.moe/#orge7b5d89    (this one is good)
 ;;; https://ladicle.com/post/config/#lsp
 ;;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
@@ -13,7 +14,7 @@
 ;;; https://www.reddit.com/r/emacs/comments/gr72by/how_do_you_guys_refine_search_results_doom_emacs/ (small discussion on how to use ripgrep for searching)
 ;;; https://www.youtube.com/watch?v=AaUlOH4GTCs (simple tutorial on how to add custom ivy action options... when you press alt-o to show additional options for an ivy list)
 ;;; https://www.reddit.com/r/emacs/comments/kqutap/selectrum_prescient_consult_embark_getting_started/gi6yibq/     INVESTIGATE THESE
-;;; 
+;;;
 ;;; TODO
 ;;;  - add keybinding to move to next/previous diagnostic error
 ;;;  - figure out better project/project-buffer managment.   When switching to a new buffer, all current buffers should be replaced with those of the new project.  Buffer configuration should be retained
@@ -54,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
+	 '(dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -176,7 +177,7 @@
 	:after (treemacs)
 	:config
 	(treemacs-load-theme 'all-the-icons))
-	
+
 (use-package treemacs-perspective
 	:after (treemacs perspective)
 	:config
@@ -245,7 +246,7 @@
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-nord t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights
+ 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer
 
 (use-package hideshow
 	:defer t
@@ -312,6 +313,11 @@
 
 (use-package vterm)
 
+(use-package dashboard
+	:config
+	(setq dashboard-items '((projects . 5)
+													(agenda . 5)))
+	(dashboard-setup-startup-hook))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
@@ -345,7 +351,8 @@
 
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 
-(global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
+(global-set-key (kbd "C-'") #'lsp-ui-imenu)
+;;(global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
