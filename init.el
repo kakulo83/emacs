@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel imenu-list lsp-ui go-mode bug-hunter use-package)))
+	 '(rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -98,12 +98,12 @@
 	:config
 	(define-key evil-motion-state-map (kbd "C-z") nil)
 	(define-key evil-motion-state-map (kbd "RET") nil)
+	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'persp-ivy-switch-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
-	(define-key evil-normal-state-map (kbd "C-f") 'counsel-rg)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
   (evil-mode))
@@ -124,6 +124,7 @@
 (use-package ivy
 	:functions ivy-add-actions
   :init
+	(setq ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height-alist
       '((t
@@ -183,7 +184,6 @@
 	:config
 	(treemacs-set-scope-type 'Perspectives))
 
-
 (use-package lsp-ui
   :after (lsp-mode)
   :config
@@ -209,7 +209,6 @@
 	(evil-leader/set-key
 	 "cp" 'copy-filepath-to-clipboard
 	 "q" 'delete-window
-	 ;; "n" 'neotree-find
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
@@ -246,7 +245,7 @@
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer
+ 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer
 
 (use-package hideshow
 	:defer t
@@ -289,6 +288,7 @@
              '("*" (:foreground "red")
                ))
 	(setq org-return-follows-link t)
+	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
 	:hook (prog-mode . yas-minor-mode))
 
@@ -298,18 +298,16 @@
 	:custom
 	(org-roam-directory (file-truename "/Users/robertcarter/notes/org-roam-notes/"))
 	:init
-	(defun bms/org-roam-rg-search ()
-  "Search org-roam directory using consult-ripgrep. With live-preview."
-  (interactive)
-  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
-    (consult-ripgrep org-roam-directory)))
-	:bind (:map org-roam-mode-map
-							 (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))
-              (("C-c n I" . org-roam-insert-immediate))))
+	:bind (
+				 :map org-mode-map
+							(("C-f" . counsel-rg))
+							(("C-'" . org-roam))
+              (("C-c i" . org-roam-insert))
+              (("C-c I" . org-roam-insert-immediate))))
+
+(use-package orderless
+  :ensure t
+  :custom (completion-styles '(orderless)))
 
 (use-package vterm)
 
@@ -319,13 +317,14 @@
 													(agenda . 5)))
 	(dashboard-setup-startup-hook))
 
+(use-package rainbow-delimiters)
+
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
   (interactive)
-  (call-interactively 'vterm) ;; 'ansi-term)
-  ;;(call-interactively 'shell)
+  (call-interactively 'vterm)
   (rename-buffer (read-string "Enter buffer name: ")))
 
 (global-set-key (kbd "C-z") #'unique-shell)
@@ -351,8 +350,8 @@
 
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 
-(global-set-key (kbd "C-'") #'lsp-ui-imenu)
-;;(global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
+(with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
+(with-eval-after-load 'prog-mode (bind-key "C-f" #'counsel-rg))
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
@@ -405,7 +404,7 @@
 
 (setq lsp-enable-links nil)
 
-;; (add-hook 'kill-emacs-hook #'persp-state-save) ;; save perspetive sessions on exit
+(setq show-paren-style 'parenthesis)
 
 (cond
   ((string-equal system-type "darwin")
@@ -414,7 +413,5 @@
 
 (set-cursor-color "#00FFFF")
 ;; =======================================================================================================================================================================================================================================================
-
-
 
 ;;; init ends here
