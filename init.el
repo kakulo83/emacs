@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org counsel lsp-ui go-mode bug-hunter use-package)))
+	 '(consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -85,12 +85,9 @@
  create-lockfiles nil)
 (fset 'yes-or-no-p 'y-or-n-p)  ;; use 'y' and 'n' for 'yes' and 'no'
 
-
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
-
-(use-package counsel)
 
 (use-package evil
   :init
@@ -102,7 +99,7 @@
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
-	(define-key evil-normal-state-map (kbd "C-b") 'persp-ivy-switch-buffer)
+	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
@@ -121,22 +118,13 @@
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
-(use-package ivy
-	:functions ivy-add-actions
-  :init
-	(setq ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-height-alist
-      '((t
-         lambda (_caller)
-         (/ (frame-height) 2))))
-  (ivy-mode 1)
+(use-package selectrum
 	:config
-	(ivy-add-actions 'projectile-find-file '(("i" evil-window-split "split below")))
-	(ivy-add-actions 'projectile-find-file '(("s" evil-window-vsplit "split right")))
-	(ivy-add-actions 'ivy-switch-buffer '(("s" ivy-switch-buffer-other-window "split right")))
-	(define-key ivy-mode-map (kbd "C-n") 'ivy-next-line)
-	(define-key ivy-mode-map (kbd "C-p") 'ivy-previous-line))
+	(setq selectrum-max-window-height (/ (frame-height) 2))
+	(setq selectrum-fix-vertical-window-height t)
+	(selectrum-mode +1))
+
+(use-package consult)
 
 (use-package popwin
   :init
@@ -151,11 +139,8 @@
 	:bind (:map lsp-mode-map
 							("TAB" . completion-at-point)))
 
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-
 (use-package projectile
   :init
-	(setq projectile-completion-system 'ivy)
   (projectile-mode +1))
 
 (use-package perspective
@@ -300,7 +285,7 @@
 	:init
 	:bind (
 				 :map org-mode-map
-							(("C-f" . counsel-rg))
+							(("C-f" . consult-ripgrep))
 							(("C-'" . org-roam))
               (("C-c i" . org-roam-insert))
               (("C-c I" . org-roam-insert-immediate))))
@@ -351,7 +336,13 @@
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
-(with-eval-after-load 'prog-mode (bind-key "C-f" #'counsel-rg))
+(with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
+
+;; C-i and C-o shouldn't jump between files in different workspaces
+;; Taken from https://github.com/hlissner/doom-emacs/issues/2826
+(with-eval-after-load 'persp-mode
+  (defadvice persp-delete-other-windows (before better-jumper activate)
+    (select-window (split-window))))
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
