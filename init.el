@@ -38,7 +38,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-;;(package-refresh-contents)
+(package-refresh-contents)
 
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
+	 '(org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -303,6 +303,30 @@
 	(dashboard-setup-startup-hook))
 
 (use-package rainbow-delimiters)
+
+(use-package marginalia
+	:init
+	(marginalia-mode))
+
+(use-package embark
+	:after selectrum
+	:bind
+	(("M-o" . embark-act))
+	:init
+	(setq prefix-help-command #'embark-prefix-help-command)
+	(add-to-list 'display-buffer-alist
+							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+								 nil
+								 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
