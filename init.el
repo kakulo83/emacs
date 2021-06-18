@@ -14,10 +14,10 @@
 ;;; https://www.reddit.com/r/emacs/comments/gr72by/how_do_you_guys_refine_search_results_doom_emacs/ (small discussion on how to use ripgrep for searching)
 ;;; https://www.youtube.com/watch?v=AaUlOH4GTCs (simple tutorial on how to add custom ivy action options... when you press alt-o to show additional options for an ivy list)
 ;;; https://www.reddit.com/r/emacs/comments/kqutap/selectrum_prescient_consult_embark_getting_started/gi6yibq/     INVESTIGATE THESE
+;;; https://raw.githubusercontent.com/txgvnn/dots/master/.emacs  (example config)
 ;;;
 ;;; TODO
 ;;;  - add keybinding to move to next/previous diagnostic error
-;;;  - figure out better project/project-buffer managment.   When switching to a new buffer, all current buffers should be replaced with those of the new project.  Buffer configuration should be retained
 ;;;  - https://org-roam.discourse.group/t/what-does-it-feel-like-to-work-with-10-000-notes-in-org-roam-benchmarking-org-roams-search-methods/227
 ;;;  - read thoroughly: https://emacsair.me/2017/09/01/magit-walk-through/
 ;;;
@@ -281,14 +281,29 @@
 	:hook
 	(after-init . org-roam-mode)
 	:custom
-	(org-roam-directory (file-truename "/Users/robertcarter/notes/org-roam-notes/"))
+	(org-roam-directory (file-truename "~/notes/org-roam-notes/"))
 	:init
+	(setq org-roam-db-update-method 'immediate)
+	(setq org-roam-dailies-directory "~/notes/org-roam-daily")
+	(setq org-roam-capture-templates
+				'(("d" "default" plain #'org-roam-capture--get-point
+					 :file-name "%<%Y-%m-%d>-${slug}"
+					 :head "#+title: ${title}\n#+ROAM_TAGS: %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n%?"
+					 :unnarrowed t
+					 :jump-to-captured t)
+					("l" "clipboard" plain #'org-roam-capture--get-point "%i%a"
+					 :file-name "%<%Y%m%d%H%M%S>-${slug}"
+					 :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+ROAM_TAGS: %? \n"
+					 :unnarrowed t
+					 :prepend t
+					 :jump-to-captured t)))
 	:bind (
 				 :map org-mode-map
-							(("C-f" . consult-ripgrep))
-							(("C-'" . org-roam))
-              (("C-c i" . org-roam-insert))
-              (("C-c I" . org-roam-insert-immediate))))
+							("C-x C-f" . org-roam-find-file)
+							("C-f" . consult-ripgrep)
+							("C-'" . org-roam)
+              ("C-c i" . org-roam-insert)
+              ("C-c I" . org-roam-insert-immediate)))
 
 (use-package orderless
   :ensure t
@@ -313,11 +328,7 @@
 	:bind
 	(("M-o" . embark-act))
 	:init
-	(setq prefix-help-command #'embark-prefix-help-command)
-	(add-to-list 'display-buffer-alist
-							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-								 nil
-								 (window-parameters (mode-line-format . none)))))
+	(setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
   :ensure t
@@ -327,6 +338,28 @@
   ;; auto-updating embark collect buffer
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package erc
+	:config
+	(defun rgr/erc-switch-to-channel(&optional channel)
+		(when (string= (or channel "#emacs") (buffer-name (current-buffer)))
+    (switch-to-buffer (current-buffer))))
+	(defun rgr/erc-start()
+		(interactive)
+		(unless(get-buffer "irc.libera.chat:6697")
+    (progn
+      (erc-tls :server "irc.libera.chat" :port "6697")
+      (add-hook 'erc-join-hook 'rgr/erc-switch-to-channel))))
+  (setq erc-fill-function 'erc-fill-static)
+  (setq erc-fill-static-center 22)
+  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-threshold-time 43200)
+  (setq erc-prompt-for-nickserv-password nil)
+  (setq erc-server-reconnect-attempts 5)
+  (setq erc-server-reconnect-timeout 3)
+  (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "324" "329" "332" "333" "353" "477"))
+	:bind ("C-c i" . #'rgr/erc-start))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
