@@ -85,6 +85,8 @@
  create-lockfiles nil)
 (fset 'yes-or-no-p 'y-or-n-p)  ;; use 'y' and 'n' for 'yes' and 'no'
 
+(setq completion-ignore-case t)
+
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
@@ -98,7 +100,7 @@
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
-	(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
