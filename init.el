@@ -18,8 +18,8 @@
 ;;;
 ;;; TODO
 ;;;  - add keybinding to move to next/previous diagnostic error
-;;;  - https://org-roam.discourse.group/t/what-does-it-feel-like-to-work-with-10-000-notes-in-org-roam-benchmarking-org-roams-search-methods/227
 ;;;  - read thoroughly: https://emacsair.me/2017/09/01/magit-walk-through/
+;;;  - fix ctrl-o ctrl-i not respecting the current project perspective;  Shouldn't be allowed to jump to previous buffer if its in a different project
 ;;;
 ;;; NOTE
 ;;;
@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
+	 '(org-roam-server simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -74,6 +74,7 @@
 (defvar evil-want-C-u-scroll)
 (defvar ac-cons-threshold)
 (defvar all-the-icons-dired-monochrome)
+(defvar show-paren-style)
 
 (setq evil-want-C-u-scroll t)
 (setq initial-scratch-message "")
@@ -296,6 +297,7 @@
 	:hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
+	:defines org-roam-ref-capture-templates
 	:hook
 	(after-init . org-roam-mode)
 	:custom
@@ -303,6 +305,12 @@
 	:init
 	(setq org-roam-db-update-method 'immediate)
 	(setq org-roam-dailies-directory "~/notes/org-roam-daily")
+	(setq org-roam-ref-capture-templates
+				'(("r" "ref" plain #'org-roam-capture--get-point
+					 ":%?"
+					 :file-name "websites/${slug}"
+					 :head "#+title: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}"
+					 :unnarrowed t)))
 	(setq org-roam-capture-templates
 				'(("d" "default" plain #'org-roam-capture--get-point
 					 :file-name "%<%Y-%m-%d>-${slug}"
@@ -315,6 +323,13 @@
 					 :unnarrowed t
 					 :prepend t
 					 :jump-to-captured t))))
+
+(use-package simple-httpd
+	:init
+	(setq httpd-root "/var/www")
+	(httpd-start))
+
+(use-package org-roam-server)
 
 (use-package orderless
   :ensure t
@@ -351,6 +366,7 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package erc
+	:defines erc-fill-function erc-fill-static-center erc-prompt-for-nickserv-password erc-track-exclude-types
 	:config
 	(defun rgr/erc-switch-to-channel(&optional channel)
 		(when (string= (or channel "#emacs") (buffer-name (current-buffer)))
