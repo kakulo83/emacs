@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
+	 '(helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -232,7 +232,7 @@
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer
+ 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric
 
 (use-package hideshow
 	:defer t
@@ -277,7 +277,23 @@
 	(setq org-return-follows-link t)
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
-	:hook (prog-mode . yas-minor-mode))
+	:bind (
+				 :map org-mode-map
+							("C-p" . org-roam-find-file)
+							("C-f" . consult-ripgrep)
+							("C-c n" . org-roam-capture)
+							("C-c d" . org-roam-db-build-cache)
+							("C-'" . org-roam)
+              ("C-c i" . org-roam-insert)
+              ("C-c I" . org-roam-insert-immediate)
+							("C-j" . windmove-down)
+							("C-k" . windmove-up))
+	:hook(prog-mode . yas-minor-mode))
+
+(use-package org-bullets
+	:init
+	(setq org-bullets-bullet-list '("\u200b"))
+	:hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
 	:hook
@@ -298,14 +314,7 @@
 					 :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+ROAM_TAGS: %? \n"
 					 :unnarrowed t
 					 :prepend t
-					 :jump-to-captured t)))
-	:bind (
-				 :map org-mode-map
-							("C-x C-f" . org-roam-find-file)
-							("C-f" . consult-ripgrep)
-							("C-'" . org-roam)
-              ("C-c i" . org-roam-insert)
-              ("C-c I" . org-roam-insert-immediate)))
+					 :jump-to-captured t))))
 
 (use-package orderless
   :ensure t
@@ -362,6 +371,8 @@
   (setq erc-server-reconnect-timeout 3)
   (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "324" "329" "332" "333" "353" "477"))
 	:bind ("C-c i" . #'rgr/erc-start))
+
+(use-package helpful)
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
