@@ -55,7 +55,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(org-roam-server simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
+	 '(rg org-roam-server simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,8 +75,10 @@
 (defvar ac-cons-threshold)
 (defvar all-the-icons-dired-monochrome)
 (defvar show-paren-style)
+(defvar evil-want-fine-undo)
 
 (setq evil-want-C-u-scroll t)
+(setq evil-want-fine-undo 'yes)
 (setq initial-scratch-message "")
 (setq gc-cons-threshold 100000000) ;; increase garbage-collection threshold to 100mb from 8kb
 (setq all-the-icons-dired-monochrome nil)
@@ -162,15 +164,15 @@
 					treemacs-position 'left
 					treemacs-width 35)))
 
-(use-package treemacs-all-the-icons
-	:after (treemacs)
-	:config
-	(treemacs-load-theme 'all-the-icons))
-
 (use-package treemacs-perspective
 	:after (treemacs perspective)
 	:config
 	(treemacs-set-scope-type 'Perspectives))
+
+(use-package treemacs-all-the-icons
+	:after (treemacs)
+	:config
+	(treemacs-load-theme 'all-the-icons))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -224,6 +226,8 @@
 	:hook (typescript-mode . lsp-deferred)
 	:config
 	(setq typescript-indent-level 2))
+
+(use-package clojure-mode)
 
 (use-package flycheck
 	:init (global-flycheck-mode))
@@ -326,8 +330,8 @@
 
 (use-package simple-httpd
 	:init
-	(setq httpd-root "/var/www")
-	(httpd-start))
+	(setq httpd-root "/var/www"))
+	;;(httpd-start))
 
 (use-package org-roam-server)
 
@@ -349,10 +353,21 @@
 	:init
 	(marginalia-mode))
 
+;; consult for enhanced minibuffer commands
+(use-package consult)
+
+(defun find-with-ripgrep ()
+	"Find stuff with ripgrep."
+	(interactive)
+	(message "executing find-with-ripgrep"))
+
+;; embark for per-item actions
 (use-package embark
 	:after selectrum
-	:bind
-	(("M-o" . embark-act))
+	:bind (:map minibuffer-local-map
+							("M-o" . embark-act)
+							:map embark-file-map
+							("g" . find-with-ripgrep))
 	:init
 	(setq prefix-help-command #'embark-prefix-help-command))
 
@@ -365,30 +380,26 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package erc
-	:defines erc-fill-function erc-fill-static-center erc-prompt-for-nickserv-password erc-track-exclude-types
-	:config
-	(defun rgr/erc-switch-to-channel(&optional channel)
-		(when (string= (or channel "#emacs") (buffer-name (current-buffer)))
-    (switch-to-buffer (current-buffer))))
-	(defun rgr/erc-start()
-		(interactive)
-		(unless(get-buffer "irc.libera.chat:6697")
-    (progn
-      (erc-tls :server "irc.libera.chat" :port "6697")
-      (add-hook 'erc-join-hook 'rgr/erc-switch-to-channel))))
-  (setq erc-fill-function 'erc-fill-static)
-  (setq erc-fill-static-center 22)
-  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-lurker-threshold-time 43200)
-  (setq erc-prompt-for-nickserv-password nil)
-  (setq erc-server-reconnect-attempts 5)
-  (setq erc-server-reconnect-timeout 3)
-  (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "324" "329" "332" "333" "353" "477"))
-	:bind ("C-c i" . #'rgr/erc-start))
-
 (use-package helpful)
+
+(use-package rg
+	:config
+	(setq rg-group-result t)
+	(setq rg-hide-command t)
+	(setq rg-show-columns nil)
+
+	(rg-define-search robert/grep-vc-or-dir
+		:query ask
+		:format regexp
+		:files "everything"
+		:dir (let ((vc (vc-root-dir)))
+					 (if vc
+							 vc
+						 default-directory))
+		:confirm prefix
+		:flags ("--hidden -g !.git"))
+	:bind (("C-f" . robert/grep-vc-or-dir))
+	)
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
@@ -422,7 +433,6 @@
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
-(with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
 
 ;; C-i and C-o shouldn't jump between files in different workspaces
 ;; Taken from https://github.com/hlissner/doom-emacs/issues/2826
@@ -464,7 +474,7 @@
 
 (global-linum-mode t) ;; Show number lines
 
-(setq scroll-step            1
+(setq scroll-step 1
       scroll-conservatively  10000) ;; Smoother scrolling with smaller steps
 
 (defadvice split-window (after move-point-to-new-window activate)
