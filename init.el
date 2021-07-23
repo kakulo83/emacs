@@ -20,10 +20,9 @@
 ;;;  - add keybinding to move to next/previous diagnostic error
 ;;;  - read thoroughly: https://emacsair.me/2017/09/01/magit-walk-through/
 ;;;  - fix ctrl-o ctrl-i not respecting the current project perspective;  Shouldn't be allowed to jump to previous buffer if its in a different project
-;;;
-;;; NOTE
-;;;
-;;;   In order to present additional actions when acting on a selection, for instance "find-file" (ctrl-x ctrl-f) you have to invoke the function 'counsel-find-file'.
+;;;  - consider using 'embark-act-noquit' to initiate a ripgrep search and then select an interactive function that does another ripgrep search set to find tags
+;;;  - figure out how to add actions:  https://github.com/oantolin/embark/issues/3
+;;;  - describe-variable embark-keymap-alist
 ;;;   Then you trigger the UI for the additional actions with ctrl-o
 ;;;
 ;;; With counsel-rg you can pass any flags to ripgrep after --
@@ -51,16 +50,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(embark-prompter 'embark-completing-read-prompter)
  '(gnutls-algorithm-priority "normal:-vers-tls1.3")
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(rg org-roam-server simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm treemacs-all-the-icons treemacs persp-projectile perspective company-box org lsp-ui go-mode bug-hunter use-package)))
+	 '(consult-selectrum tron-legacy-theme cider project rg org-roam-server simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard vterm company-box org lsp-ui go-mode bug-hunter use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#1D252C" :foreground "#A0B3C5" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Inconsolata light"))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 6.0 :underline nil))))
  '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 2.75))))
  '(org-level-2 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 1.5))))
@@ -77,15 +78,21 @@
 (defvar show-paren-style)
 (defvar evil-want-fine-undo)
 
+(setq lexical-binding t)
 (setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
 (setq initial-scratch-message "")
-(setq gc-cons-threshold 100000000) ;; increase garbage-collection threshold to 100mb from 8kb
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+      ) ;; increase garbage-collection threshold to 100mb from 8kb
 (setq all-the-icons-dired-monochrome nil)
 (setq
  make-backup-files nil
  auto-save-default nil
  create-lockfiles nil)
+
 (fset 'yes-or-no-p 'y-or-n-p)  ;; use 'y' and 'n' for 'yes' and 'no'
 
 (setq completion-ignore-case t)
@@ -93,6 +100,10 @@
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
+
+(use-package projectile
+	:init
+	(projectile-mode +1))
 
 (use-package evil
   :init
@@ -102,7 +113,7 @@
 	(define-key evil-motion-state-map (kbd "RET") nil)
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
-	(define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
+	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
@@ -124,12 +135,11 @@
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package selectrum
+	:functions selectrum-mode
 	:config
 	(setq selectrum-max-window-height (/ (frame-height) 2))
 	(setq selectrum-fix-vertical-window-height t)
 	(selectrum-mode +1))
-
-(use-package consult)
 
 (use-package popwin
   :init
@@ -137,37 +147,46 @@
 
 (use-package lsp-mode
 	:commands (lsp lsp-deferred)
-  :init
+	:config
+  (setq lsp-lens-enable t)
+  (setq lsp-signature-auto-activate nil)
   (setq lsp-keymap-prefix "C-c l")
 	(setq lsp-headerline-breadcrumb-enable nil)
-  :hook (ruby-mode . lsp-deferred)
+  :init
+  :hook ((ruby-mode . lsp-deferred)
+				 (javascript-mode . lsp-deferred)
+				 (clojure-mode . lsp-deferred)
+				 (c-mode . lsp-deferred)
+									 )
 	:bind (:map lsp-mode-map
 							("TAB" . completion-at-point)))
 
-(use-package projectile
-  :init
-  (projectile-mode +1))
-
-(use-package perspective
-	:init
-	:config (persp-mode))
-
-(use-package persp-projectile
-	:after (perspective))
+(use-package centaur-tabs
+	:functions centaur-tabs-headline-match
+	:config
+	(setq centaur-tabs-style "chamfer")
+	(setq centaur-tabs-set-icons t)
+	(setq centaur-tabs-set-bar 'under)
+	(setq x-underline-at-descent-line t)
+	(setq centaur-tabs-cycle-scope 'tabs)
+	(setq centaur-tabs-set-close-button nil)
+	(centaur-tabs-headline-match)
+	(centaur-tabs-mode t)
+	:hook (emacs-startup . centaur-tabs-mode)
+	:bind
+	(:map evil-normal-state-map
+				("g t" . centaur-tabs-forward)
+				("g T" . centaur-tabs-backward)))
 
 (use-package treemacs
 	:defer t
 	:config
 	(progn
 		(setq treemacs-show-hidden-files t
+          treemacs-space-between-root-nodes nil
 					treemacs-display-in-side-window t
 					treemacs-position 'left
 					treemacs-width 35)))
-
-(use-package treemacs-perspective
-	:after (treemacs perspective)
-	:config
-	(treemacs-set-scope-type 'Perspectives))
 
 (use-package treemacs-all-the-icons
 	:after (treemacs)
@@ -198,7 +217,7 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "cp" 'copy-filepath-to-clipboard
-	 "q" 'delete-window
+	 "q" 'centaur-tabs--kill-this-buffer-dont-ask
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
@@ -229,15 +248,21 @@
 
 (use-package clojure-mode)
 
+(use-package cider)
+
 (use-package flycheck
 	:init (global-flycheck-mode))
+
+;;(use-package tron-legacy-theme
+;;  :config
+;;  (load-theme 'tron-legacy t))
 
 (use-package doom-themes
 	:defines doom-themes-enable-bolt
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric
+ 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -261,7 +286,9 @@
                     (yas-expand)))))
 
 (use-package company
-	:config (progn
+	:config
+	(setq company-minimum-prefix-length 1)
+	(progn
             ;; don't add any dely before trying to complete thing being typed
             ;; the call/response to gopls is asynchronous so this should have little
             ;; to no affect on edit latency
@@ -353,21 +380,18 @@
 	:init
 	(marginalia-mode))
 
-;; consult for enhanced minibuffer commands
-(use-package consult)
+(use-package consult) ;; consult for enhanced minibuffer commands
 
 (defun find-with-ripgrep ()
 	"Find stuff with ripgrep."
 	(interactive)
 	(message "executing find-with-ripgrep"))
 
-;; embark for per-item actions
 (use-package embark
-	:after selectrum
 	:bind (:map minibuffer-local-map
-							("M-o" . embark-act)
-							:map embark-file-map
-							("g" . find-with-ripgrep))
+		    ("M-o" . embark-act)
+		    :map embark-file-map
+		    ("g" . consult-ripgrep))
 	:init
 	(setq prefix-help-command #'embark-prefix-help-command))
 
@@ -431,14 +455,8 @@
       (message filename))))
 
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
-
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
-
-;; C-i and C-o shouldn't jump between files in different workspaces
-;; Taken from https://github.com/hlissner/doom-emacs/issues/2826
-(with-eval-after-load 'persp-mode
-  (defadvice persp-delete-other-windows (before better-jumper activate)
-    (select-window (split-window))))
+(with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
@@ -455,6 +473,7 @@
 (show-paren-mode 1)
 
 ;; =======================================================================================================================================================================================================================================================
+(evil-ex-define-cmd "q" 'kill-this-buffer)
 
 (tool-bar-mode -1) ;; Disable Toolbar
 
@@ -485,7 +504,9 @@
 
 (setq org-hidden-keywords '(title))
 
-(set-frame-font "Monaco-12" nil t)
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8-unix)
+;;(set-frame-font "" nil t)
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 
@@ -500,5 +521,4 @@
 
 (set-cursor-color "#00FFFF")
 ;; =======================================================================================================================================================================================================================================================
-
-;;; init ends here
+;;; init.el ends here
