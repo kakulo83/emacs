@@ -36,6 +36,13 @@
 ;;; <ctrl-f> "def -- g*.el            -> look in all *.el files
 ;;; <ctrl-f> "def -- g*.el!ivy.el     -> look in all *.el files except ivy.el
 ;;;
+;;;
+;;; DEPENDENCIES
+;;;
+;;; ripgrep
+;;; pngpaste
+;;; pgformatter
+;;;
 ;;; Code:
 
 (require 'package)
@@ -75,7 +82,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -344,10 +351,11 @@
 	(add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
                ))
-	(setq org-link-frame-setup '((file . find-file)))
+	(setq org-link-frame-setup '((file . find-file-other-window)))
 	(setq org-return-follows-link t)
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
+	(setq org-startup-with-inline-images t)
 	(setq org-src-preserve-indentation nil org-edit-src-content-indentation 0)
 	:bind (
 				 :map org-mode-map
@@ -361,14 +369,10 @@
 	:hook(prog-mode . yas-minor-mode))
 
 (use-package org-bullets
+	:after org
 	:init
 	(setq org-bullets-bullet-list '("\u200b"))
 	:hook (org-mode . org-bullets-mode))
-
-(use-package org-download
-	:after org
-	:hook
-	(add-hook 'dired-mode-hook 'org-download-enable))
 
 (use-package org-roam
 	:defines org-roam-v2-act org-roam-db-update-method
@@ -389,7 +393,21 @@
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
 					))
+	;;:bind (:map org-roam-mode-map
+	;;					(("RET" . (lambda) () (interactive) (org-roam-node-visit-other-window))))
 	(org-roam-setup))
+
+(use-package org-download
+	:after org
+	:custom
+	(org-download-method 'directory)
+  (org-download-image-dir "images")
+	(org-download-heading-lvl nil)
+  (org-download-timestamp "%Y%m%d-%H%M%S_")
+	(org-image-actual-width 300)
+	(org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+	:config
+	(require 'org-download))
 
 (use-package simple-httpd)
 
@@ -545,22 +563,6 @@
 (add-hook 'eshell-mode-hook
 					'(lambda ()
 						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
-
-(defun my-org-download-method (link)
-     ;; make drag-and-drop save images in the /images directory of the current org file.
-     ;; ex:  `my-subject/my-subject.org` then save `test.png` to `my-subject/images/test.png`
-  (let ((filename
-     (file-name-nondirectory
-     (car (url-path-and-query
-       (url-generic-parse-url link)))))
-                 (dirname (concat Files "images/" (file-name-sans-extension (buffer-name) "-img")))
-     ;; if directory not exist, create it
-     (make-directory dirname :parents)
-     ;; return the path to save the download files
-     (expand-file-name filename dirname))))
-     ;; point `org-download-method` to our helper function
-(setq-local org-download-method 'my-org-download-method)
-
 
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
