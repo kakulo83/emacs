@@ -1,0 +1,13 @@
+alias ps proced
+alias clear clear 1
+alias open find-file $1
+alias ls ls -la $1
+
+alias dev cd ~/Development
+alias desk cd ~/Desktop
+alias down cd ~/Downloads
+
+alias init find-file ~/.emacs.d/init.el
+alias alias find-file ~/.emacs.d/eshell/alias
+
+alias psql sql-postgres

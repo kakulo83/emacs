@@ -38,7 +38,7 @@
 ;;;
 ;;;
 ;;; DEPENDENCIES
-;;;
+;;; MacTex 
 ;;; ripgrep
 ;;; pngpaste
 ;;; pgformatter
@@ -82,7 +82,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -356,6 +356,9 @@
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
 	(setq org-startup-with-inline-images t)
+	(setq org-startup-with-latex-preview t)
+	(setq org-latex-create-formula-image-program 'dvisvgm)
+	(setq org-latex-create-formula-image-program 'dvisvgm)
 	(setq org-src-preserve-indentation nil org-edit-src-content-indentation 0)
 	:bind (
 				 :map org-mode-map
@@ -366,7 +369,7 @@
 							("C-c n" . org-roam-capture)
 							("C-'" . org-roam-buffer-toggle)
               ("C-c i" . org-roam-node-insert))
-	:hook(prog-mode . yas-minor-mode))
+	:hook((prog-mode . yas-minor-mode)))
 
 (use-package org-bullets
 	:after org
@@ -387,7 +390,7 @@
 				'(
 					("d" "default" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n")
+															 "#+title: ${title}\n#+startup: inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n")
 						:unnarrowed t)
 					("c" "code snippet" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -496,6 +499,11 @@
 (use-package undo-tree
 	:init
 	(global-undo-tree-mode))
+
+(use-package tex
+	:defer t
+	:ensure auctex
+	)
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
