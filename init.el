@@ -618,7 +618,7 @@
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 
 (global-linum-mode t) ;; Show number lines
-(add-hook 'term-mode-hook (lambda() (linum-mode 0)))
+(add-hook 'vterm-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (org-hide-properties)))
 (add-hook 'sql-mode-hook 'sqlformat-on-save-mode)

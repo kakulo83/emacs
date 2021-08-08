@@ -12,3 +12,4 @@ projects
 eshell/history
 eshell/lastdir
 transient
+flycheck_init.el
