@@ -25,10 +25,10 @@
 ;;;  - describe-variable embark-keymap-alist
 ;;;    Then you trigger the UI for the additional actions with ctrl-o
 ;;;  - consider using shell-pop (https://github.com/kyagi/shell-pop-el)
-;;;  - https://github.com/akhayyat/emacs-undo-tree
 ;;;  - keybindings for visiting nodes in treemacs in splits
 ;;;  - Figure out better workspace management (i.e  am I using tabbar wrong? )
-;;;
+;;;  - Figure out how to conveniently access eshell command history, maybe pop it into buffer
+;;;       - figure out how to put eshell-list-history into a selectrum minibuffer
 ;;;
 ;;; With counsel-rg you can pass any flags to ripgrep after --
 ;;;
@@ -68,7 +68,9 @@
 (exec-path-from-shell-initialize)
 
 (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+	(exec-path-from-shell-copy-envs
+   '("PATH")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -82,7 +84,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -168,6 +170,7 @@
 					proced
 					help
 					man
+					completion
 					helpful))
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
@@ -184,10 +187,6 @@
 	(setq selectrum-max-window-height (/ (frame-height) 2))
 	(setq selectrum-fix-vertical-window-height t)
 	(selectrum-mode +1))
-
-;;(use-package popwin
-;;  :init
-;;  (popwin-mode 1))
 
 (use-package lsp-mode
 	:commands (lsp lsp-deferred)
@@ -267,7 +266,7 @@
 	 "f" 'lsp-find-definition
 	 "d" 'flycheck-list-errors
 	 "gl" 'magit-log-all
-	 "gb" 'magit-blame
+	 "gb" 'magit-show-commit
 	 "gs" 'magit-status
 	 "gc" 'magit-branch
 	 "gh" 'magit-log-buffer-file)
@@ -421,7 +420,6 @@
 (add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
 (load-library "org-roam-ui")
 
-
 (use-package orderless
   :ensure t
   :custom (completion-styles '(orderless)))
@@ -494,7 +492,8 @@
 	:commands (sqlformat sqlformat-buffer sqlformat-region)
 	:hook (sql-mode . sqlformat-on-save-mode)
 	:init
-	(setq sqlformat-command 'pgformatter sqlformat-args '("-s2" "-g")))
+	(setq sqlformat-command 'pgformatter
+				sqlformat-args '("-s2" "-g")))
 
 (use-package undo-tree
 	:init
@@ -505,12 +504,16 @@
 	:ensure auctex
 	)
 
+(use-package vterm)
+
+(use-package projectile-rails)
+
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
   (interactive)
-  (call-interactively 'eshell)
+  (call-interactively 'vterm)
   (rename-buffer (read-string "Enter buffer name: ")))
 
 (global-set-key (kbd "C-z") #'unique-shell)
@@ -569,6 +572,10 @@
 
 ;; Insert at prompt only on eshell
 (add-hook 'eshell-mode-hook
+					'(lambda ()
+						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
+
+(add-hook 'vterm-mode-hook
 					'(lambda ()
 						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
 
