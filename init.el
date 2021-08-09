@@ -25,7 +25,6 @@
 ;;;  - describe-variable embark-keymap-alist
 ;;;    Then you trigger the UI for the additional actions with ctrl-o
 ;;;  - consider using shell-pop (https://github.com/kyagi/shell-pop-el)
-;;;  - keybindings for visiting nodes in treemacs in splits
 ;;;  - Figure out better workspace management (i.e  am I using tabbar wrong? )
 ;;;  - Figure out how to conveniently access eshell command history, maybe pop it into buffer
 ;;;       - figure out how to put eshell-list-history into a selectrum minibuffer
@@ -156,7 +155,9 @@
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
-	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
+	(evil-define-key 'normal -mode-map (kbd "C-n") 'treemacs)
+	(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-horizontal-split)
+	(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-vertical-split)
   (evil-mode))
 
 (use-package evil-collection
@@ -618,6 +619,7 @@
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 
 (global-linum-mode t) ;; Show number lines
+(add-hook 'treemacs-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'vterm-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (org-hide-properties)))
