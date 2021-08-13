@@ -37,7 +37,7 @@
 ;;;
 ;;;
 ;;; DEPENDENCIES
-;;; MacTex 
+;;; MacTex
 ;;; ripgrep
 ;;; pngpaste
 ;;; pgformatter
@@ -63,13 +63,9 @@
 (defvar exec-path-from-shell-variables)
 
 (setq use-package-always-ensure t)
-(setq exec-path-from-shell-variables '("PATH"))
-(exec-path-from-shell-initialize)
 
 (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize)
-	(exec-path-from-shell-copy-envs
-   '("PATH")))
+  (exec-path-from-shell-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -83,7 +79,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -136,7 +132,7 @@
 	(projectile-mode +1))
 
 (use-package evil
-	:functions org-roam-capture org-roam-capture 
+	:functions org-roam-capture org-roam-capture
   :init
 	(setq evil-want-keybinding nil)
 	:config
@@ -145,7 +141,7 @@
 	(define-key evil-motion-state-map (kbd "RET") nil)
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
-	(define-key evil-normal-state-map (kbd "C-t") 'tab-switch)
+	(define-key evil-normal-state-map (kbd "C-t") 'tab-switcher)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
@@ -155,9 +151,10 @@
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
-	(evil-define-key 'normal -mode-map (kbd "C-n") 'treemacs)
+	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
 	(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-horizontal-split)
 	(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-vertical-split)
+	(evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
   (evil-mode))
 
 (use-package evil-collection
@@ -197,30 +194,14 @@
   (setq lsp-keymap-prefix "C-c l")
 	(setq lsp-headerline-breadcrumb-enable nil)
   :init
-  :hook ((ruby-mode . lsp-deferred)
-				 (javascript-mode . lsp-deferred)
+  :hook (
+				 (ruby-mode . lsp-deferred)
+				 (js-mode . lsp-deferred)
 				 (clojure-mode . lsp-deferred)
 				 (c-mode . lsp-deferred)
 									 )
 	:bind (:map lsp-mode-map
 							("TAB" . completion-at-point)))
-
-(use-package centaur-tabs
-	:functions centaur-tabs-headline-match
-	:config
-	(setq centaur-tabs-style "chamfer")
-	(setq centaur-tabs-set-icons t)
-	(setq centaur-tabs-set-bar 'under)
-	(setq x-underline-at-descent-line t)
-	(setq centaur-tabs-cycle-scope 'tabs)
-	(setq centaur-tabs-set-close-button nil)
-	(centaur-tabs-headline-match)
-	(centaur-tabs-mode t)
-	:hook (emacs-startup . centaur-tabs-mode)
-	:bind
-	(:map evil-normal-state-map
-				("g t" . centaur-tabs-forward)
-				("g T" . centaur-tabs-backward)))
 
 (use-package treemacs
 	:defer t
@@ -261,13 +242,14 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "cp" 'copy-filepath-to-clipboard
-	 "q" 'centaur-tabs--kill-this-buffer-dont-ask
+	 ;; "q" 'centaur-tabs--kill-this-buffer-dont-ask
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
 	 "d" 'flycheck-list-errors
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
+	 "gB" 'magit-blame
 	 "gs" 'magit-status
 	 "gc" 'magit-branch
 	 "gh" 'magit-log-buffer-file)
@@ -507,14 +489,20 @@
 
 (use-package vterm)
 
+(use-package multi-vterm)
+
 (use-package projectile-rails)
+
+(use-package rvm
+	:config
+	(rvm-use-default))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
   (interactive)
-  (call-interactively 'vterm)
+  (call-interactively 'multi-vterm)
   (rename-buffer (read-string "Enter buffer name: ")))
 
 (global-set-key (kbd "C-z") #'unique-shell)
