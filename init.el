@@ -79,7 +79,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -87,6 +87,13 @@
 				(server :default "localhost")
 				(port :default 5432)))))
  '(warning-suppress-types '((org-roam) (org-roam))))
+
+(customize-set-variable 'display-buffer-base-action
+  '((display-buffer-reuse-window display-buffer-same-window)
+    (reusable-frames . t)))
+
+(customize-set-variable 'even-window-sizes nil)     ; avoid resizing
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -128,6 +135,8 @@
 (use-package bug-hunter)
 
 (use-package projectile
+	:config
+	(setq projectile-switch-project-action 'projectile-dired)
 	:init
 	(projectile-mode +1))
 
@@ -242,7 +251,7 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "cp" 'copy-filepath-to-clipboard
-	 ;; "q" 'centaur-tabs--kill-this-buffer-dont-ask
+	 "q" 'delete-window
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
@@ -279,17 +288,17 @@
 (use-package flycheck
 	:init (global-flycheck-mode))
 
-(use-package tron-legacy-theme
-  :config
-	(setq tron-legacy-theme-softer-bg t)
-  (load-theme 'tron-legacy t))
+;;(use-package tron-legacy-theme
+;;  :config
+;;	(setq tron-legacy-theme-softer-bg t)
+;;  (load-theme 'tron-legacy t))
 
-;;(use-package doom-themes
-;;	:defines doom-themes-enable-bolt
-;; 	:config
-;; 	(setq doom-themes-enable-bolt t
-;; 				doom-themes-enable-italic t)
-;; 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t)
+ 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -372,7 +381,7 @@
 				'(
 					("d" "default" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-															 "#+title: ${title}\n#+startup: inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n")
+															 "#+title: ${title}\n#+startup: inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}")
 						:unnarrowed t)
 					("c" "code snippet" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -496,6 +505,8 @@
 (use-package rvm
 	:config
 	(rvm-use-default))
+
+(use-package es-mode)
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
@@ -664,6 +675,12 @@
 				 (propertize "\n")
          (propertize "❱ " 'face `(:foreground "white"))
 				 )))
+
+;; allows vim '*' to grab words with underscores:  i.e   match_this_whole_thing
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
 
 ;; =======================================================================================================================================================================================================================================================
 ;;; init.el ends here
