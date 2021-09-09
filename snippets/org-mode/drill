@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: drill block
+# key: drill 
+# --
+** question                                                              :drill:
+	 :PROPERTIES:
+	 :ROAM_EXCLUDE: t
+	 :END:
+   $2
+*** answer 
+	  $4	

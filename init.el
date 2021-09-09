@@ -28,6 +28,7 @@
 ;;;  - Figure out better workspace management (i.e  am I using tabbar wrong? )
 ;;;  - Figure out how to conveniently access eshell command history, maybe pop it into buffer
 ;;;       - figure out how to put eshell-list-history into a selectrum minibuffer
+;;;  - Configure Org-drill  https://orgmode.org/worg/org-contrib/org-drill.html
 ;;;
 ;;; With counsel-rg you can pass any flags to ripgrep after --
 ;;;
@@ -63,6 +64,7 @@
 (defvar exec-path-from-shell-variables)
 
 (setq use-package-always-ensure t)
+(setq warning-minimum-level :error)
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -79,7 +81,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -158,6 +160,8 @@
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
+	(define-key evil-normal-state-map (kbd "C-o") 'previous-buffer)
+	(define-key evil-normal-state-map (kbd "C-i") 'next-buffer)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
@@ -211,6 +215,12 @@
 									 )
 	:bind (:map lsp-mode-map
 							("TAB" . completion-at-point)))
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 (use-package treemacs
 	:defer t
@@ -282,6 +292,11 @@
 	(setq typescript-indent-level 2))
 
 (use-package clojure-mode)
+
+(use-package elpy
+	:defer t
+	:init
+	(advice-add 'python-mode :before 'elpy-enable))
 
 (use-package cider)
 
@@ -376,12 +391,15 @@
 	(setq org-roam-v2-act t)
 	(setq org-roam-db-update-method 'immediate)
 	(setq org-roam-dailies-directory "~/Notes/org-roam-daily")
+	(setq org-roam-db-node-include-function
+				(lambda()
+					(not (member 'drill' (org-get-tags)))))
 	(setq org-roam-capture-templates
 				;; M-x describe-variable on:  org-roam-capture-templates
 				'(
 					("d" "default" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-															 "#+title: ${title}\n#+startup: inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}")
+															 "#+title: ${title}\n#+startup: showall inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}\n")
 						:unnarrowed t)
 					("c" "code snippet" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -485,7 +503,7 @@
 	:hook (sql-mode . sqlformat-on-save-mode)
 	:init
 	(setq sqlformat-command 'pgformatter
-				sqlformat-args '("-s2" "-g")))
+				sqlformat-args '("-s2" "-g" "-M")))
 
 (use-package undo-tree
 	:init
@@ -508,7 +526,23 @@
 
 (use-package es-mode)
 
+(use-package org-drill
+	:init
+	(setq org-drill-add-random-noise-to-intervals-p t)
+	(setq org-drill-hint-separator "||")
+	(setq org-drill-left-close-delimiter "<[")
+	(setq org-drill-right-close-delimiter "]>")
+	(setq org-drill-learn-fraction 0.25))
+
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
+
+(defun new-named-tab ()
+	"Create a new named tab."
+	(interactive)
+	(call-interactively 'tab-new)
+	(tab-rename (read-string "Enter tab name: ")))
+
+(global-set-key (kbd "s-t") 'new-named-tab)
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
@@ -592,7 +626,10 @@
 (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-visualize)
+
+(define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
 ;; MODES =================================================================================================================================================================================================================================================
 
@@ -646,7 +683,7 @@
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
-(set-frame-font "Inconsolata Light" nil t)
+(set-frame-font "monego-11" nil t)
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 

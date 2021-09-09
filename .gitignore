@@ -13,3 +13,5 @@ eshell/history
 eshell/lastdir
 transient
 flycheck_init.el
+eln-cache
+persist
