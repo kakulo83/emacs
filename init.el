@@ -1,5 +1,5 @@
 ;; package --- Summary
-;;; Commentary:
+;; Commentary:
 ;;;
 ;;; https://github.com/cmacrae/.emacs.d#perspective    (also very good)
 
@@ -81,7 +81,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -152,7 +152,7 @@
 	(define-key evil-motion-state-map (kbd "RET") nil)
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
-	(define-key evil-normal-state-map (kbd "C-t") 'tab-switcher)
+	(define-key evil-normal-state-map (kbd "C-t") 'tab-switch)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
@@ -168,6 +168,10 @@
 	(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-horizontal-split)
 	(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-vertical-split)
 	(evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
+	(evil-define-key 'normal pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
+	(evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
+	(evil-define-key 'normal pdf-view-mode-map (kbd "d") 'pdf-view-next-page)
+	(evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
   (evil-mode))
 
 (use-package evil-collection
@@ -181,6 +185,7 @@
 					proced
 					help
 					man
+					woman
 					completion
 					helpful))
 	(setq evil-collection-company-use-tng nil)
@@ -303,10 +308,11 @@
 (use-package flycheck
 	:init (global-flycheck-mode))
 
-;;(use-package tron-legacy-theme
-;;  :config
-;;	(setq tron-legacy-theme-softer-bg t)
-;;  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;	(setq tron-legacy-theme-softer-bg t)
+;  (load-theme 'tron-legacy t))
+
 
 (use-package doom-themes
 	:defines doom-themes-enable-bolt
@@ -335,6 +341,7 @@
               #'(lambda ()
                   (when (equal tmp/company-point (point))
                     (yas-expand)))))
+(use-package yasnippet-snippets)
 
 (use-package company
 	:config
@@ -365,6 +372,7 @@
 	(setq org-startup-with-latex-preview t)
 	(setq org-latex-create-formula-image-program 'dvisvgm)
 	(setq org-latex-create-formula-image-program 'dvisvgm)
+	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 	(setq org-src-preserve-indentation nil org-edit-src-content-indentation 0)
 	:bind (
 				 :map org-mode-map
@@ -416,7 +424,7 @@
   (org-download-image-dir "images")
 	(org-download-heading-lvl nil)
   (org-download-timestamp "%Y%m%d-%H%M%S_")
-	(org-image-actual-width 300)
+	(org-image-actual-width 600)
 	(org-download-screenshot-method "/usr/local/bin/pngpaste %s")
 	:config
 	(require 'org-download))
@@ -503,7 +511,7 @@
 	:hook (sql-mode . sqlformat-on-save-mode)
 	:init
 	(setq sqlformat-command 'pgformatter
-				sqlformat-args '("-s2" "-g" "-M")))
+				sqlformat-args '("-s2" "-g" "-M" "-w100")))
 
 (use-package undo-tree
 	:init
@@ -533,6 +541,18 @@
 	(setq org-drill-left-close-delimiter "<[")
 	(setq org-drill-right-close-delimiter "]>")
 	(setq org-drill-learn-fraction 0.25))
+
+(use-package pdf-tools
+	:config
+	(pdf-tools-install)
+	(evil-set-initial-state 'pdf-view-mode 'normal))
+
+(use-package pdf-view-restore
+  :after pdf-tools
+  :config
+	(setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
@@ -613,6 +633,11 @@
 					'(lambda ()
 						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
 
+(add-hook 'pdf-view-mode-hook
+					(lambda ()
+						(set (make-local-variable 'evil-normal-state-cursor) (list nil))
+						(pdf-view-midnight-minor-mode)))
+
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
 (with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
@@ -654,7 +679,7 @@
 
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 
-(global-linum-mode t) ;; Show number lines
+;;(global-linum-mode t) ;; Show number lines
 (add-hook 'treemacs-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'vterm-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (linum-mode 0)))
@@ -680,6 +705,8 @@
 (setq-default tab-width 2) ;; Set tab space to 2
 
 (setq org-hidden-keywords '(title))
+
+(set-face-bold-p 'bold nil)
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
