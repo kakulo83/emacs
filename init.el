@@ -455,7 +455,10 @@
 	:init
 	(marginalia-mode))
 
-(use-package consult) ;; consult for enhanced minibuffer commands
+(use-package consult
+  :after selectrum
+	:config
+	(setq consult-project-root-function (lambda () (project-root (project-current))))) ;; consult for enhanced minibuffer commands
 
 (defun find-with-ripgrep ()
 	"Find stuff with ripgrep."
