@@ -81,7 +81,8 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(
+		 pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -308,10 +309,10 @@
 (use-package flycheck
 	:init (global-flycheck-mode))
 
-;(use-package tron-legacy-theme
-;  :config
-;	(setq tron-legacy-theme-softer-bg t)
-;  (load-theme 'tron-legacy t))
+;;(use-package tron-legacy-theme
+;;  :config
+;;	(setq tron-legacy-theme-softer-bg t)
+;;  (load-theme 'tron-legacy t))
 
 
 (use-package doom-themes
@@ -536,6 +537,7 @@
 
 (use-package org-drill
 	:init
+	(setq org-drill-scope 'directory)
 	(setq org-drill-add-random-noise-to-intervals-p t)
 	(setq org-drill-hint-separator "||")
 	(setq org-drill-left-close-delimiter "<[")
@@ -544,8 +546,7 @@
 
 (use-package pdf-tools
 	:config
-	(pdf-tools-install)
-	(evil-set-initial-state 'pdf-view-mode 'normal))
+	(pdf-tools-install))
 
 (use-package pdf-view-restore
   :after pdf-tools
@@ -636,7 +637,12 @@
 (add-hook 'pdf-view-mode-hook
 					(lambda ()
 						(set (make-local-variable 'evil-normal-state-cursor) (list nil))
+						(evil-set-initial-state 'pdf-view-mode 'normal)
 						(pdf-view-midnight-minor-mode)))
+
+(add-hook 'outline-mode-hook
+					(lambda ()
+						(evil-set-initial-state 'outline-mode 'normal)))
 
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
@@ -655,6 +661,11 @@
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-visualize)
 
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
+
+;;(define-key outline-mode-map (kbd "j") 'next-line)
+;;(define-key outline-mode-map (kbd "k") 'previous-line)
+;;(define-key outline-mode-map (kbd "C-l") 'evil-window-right)
+;;(define-key outline-mode-map (kbd "C-n") 'pdf-outline-quit)
 
 ;; MODES =================================================================================================================================================================================================================================================
 
@@ -710,7 +721,7 @@
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
-(set-frame-font "monego-11" nil t)
+(set-frame-font "Monego-10" nil t)
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 
