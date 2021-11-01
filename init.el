@@ -1,42 +1,6 @@
 ;; package --- Summary
 ;; Commentary:
 ;;;
-;;; https://github.com/cmacrae/.emacs.d#perspective    (also very good)
-
-;;; https://emacs.nasy.moe/#orge7b5d89    (this one is good)
-;;; https://ladicle.com/post/config/#lsp
-;;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
-;;; https://menno.io/posts/use-package/
-;;; https://github.com/bmag/imenu-list
-;;; https://blog.sumtypeofway.com/posts/emacs-config.html  (lists some interesting packages for investigation)
-;;; https://github.com/dajva/rg.el (ripgrep integration)
-;;; https://luca.cambiaghi.me/vanilla-emacs/readme.html#h:6E4E5BD6-1930-4DCE-8E26-5ADAC2B9A152   (has some packages listed worth investigating)
-;;; https://www.reddit.com/r/emacs/comments/gr72by/how_do_you_guys_refine_search_results_doom_emacs/ (small discussion on how to use ripgrep for searching)
-;;; https://www.youtube.com/watch?v=AaUlOH4GTCs (simple tutorial on how to add custom ivy action options... when you press alt-o to show additional options for an ivy list)
-;;; https://www.reddit.com/r/emacs/comments/kqutap/selectrum_prescient_consult_embark_getting_started/gi6yibq/     INVESTIGATE THESE
-;;; https://raw.githubusercontent.com/txgvnn/dots/master/.emacs  (example config)
-;;; https://github.com/KaratasFurkan/.emacs.d
-;;;
-;;; TODO
-;;;  - add keybinding to move to next/previous diagnostic error
-;;;  - read thoroughly: https://emacsair.me/2017/09/01/magit-walk-through/
-;;;  - consider using 'embark-act-noquit' to initiate a ripgrep search and then select an interactive function that does another ripgrep search set to find tags
-;;;  - figure out how to add actions:  https://github.com/oantolin/embark/issues/3
-;;;  - describe-variable embark-keymap-alist
-;;;    Then you trigger the UI for the additional actions with ctrl-o
-;;;  - consider using shell-pop (https://github.com/kyagi/shell-pop-el)
-;;;  - Figure out better workspace management (i.e  am I using tabbar wrong? )
-;;;  - Figure out how to conveniently access eshell command history, maybe pop it into buffer
-;;;       - figure out how to put eshell-list-history into a selectrum minibuffer
-;;;  - Configure Org-drill  https://orgmode.org/worg/org-contrib/org-drill.html
-;;;
-;;; With counsel-rg you can pass any flags to ripgrep after --
-;;;
-;;; <ctrl-f> "def"                    -> look in all files
-;;; <ctrl-f> "def -- g*.el            -> look in all *.el files
-;;; <ctrl-f> "def -- g*.el!ivy.el     -> look in all *.el files except ivy.el
-;;;
-;;;
 ;;; DEPENDENCIES
 ;;; MacTex
 ;;; ripgrep
@@ -65,6 +29,7 @@
 
 (setq use-package-always-ensure t)
 (setq warning-minimum-level :error)
+(setq use-dialog-box nil)
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -81,8 +46,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(
-		 pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -173,6 +137,10 @@
 	(evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
 	(evil-define-key 'normal pdf-view-mode-map (kbd "d") 'pdf-view-next-page)
 	(evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
+	(evil-define-key 'normal treemacs-mode-map (kbd "a") 'treemacs-create-file)
+	(evil-define-key 'normal treemacs-mode-map (kbd "m") 'treemacs-move-file)
+	(evil-define-key 'normal treemacs-mode-map (kbd "d") 'treemacs-delete)
+	(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-refresh)
   (evil-mode))
 
 (use-package evil-collection
@@ -309,18 +277,18 @@
 (use-package flycheck
 	:init (global-flycheck-mode))
 
-;;(use-package tron-legacy-theme
-;;  :config
-;;	(setq tron-legacy-theme-softer-bg t)
-;;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+	(setq tron-legacy-theme-softer-bg t)
+  (load-theme 'tron-legacy t))
 
 
-(use-package doom-themes
-	:defines doom-themes-enable-bolt
- 	:config
- 	(setq doom-themes-enable-bolt t
- 				doom-themes-enable-italic t)
- 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+;;(use-package doom-themes
+;;	:defines doom-themes-enable-bolt
+;; 	:config
+;; 	(setq doom-themes-enable-bolt t
+;; 				doom-themes-enable-italic t)
+;; 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -425,7 +393,7 @@
   (org-download-image-dir "images")
 	(org-download-heading-lvl nil)
   (org-download-timestamp "%Y%m%d-%H%M%S_")
-	(org-image-actual-width 600)
+	(org-image-actual-width 300)
 	(org-download-screenshot-method "/usr/local/bin/pngpaste %s")
 	:config
 	(require 'org-download))
@@ -583,6 +551,28 @@
          (split-string-and-unquote path ":")
          exec-path)))
 
+(defun robert/eshell-history (&optional initial-input)
+	"Find command from eshell history. Initial-input can be given as the initial minibuffer input."
+	(interactive)
+	(insert
+	  (completing-read "Find cmd: "
+									 (robert/eshell-history-list))))
+
+(defun robert/eshell-history-list ()
+  "Return the eshell history as a list."
+  (and (or (not (ring-p eshell-history-ring))
+	   (ring-empty-p eshell-history-ring))
+       (error "No history"))
+  (let* ((index (1- (ring-length eshell-history-ring)))
+	 (ref (- (ring-length eshell-history-ring) index))
+	 (items (list)))
+    (while (>= index 0)
+      (setq items (cons (format "%s" (eshell-get-history index)) items)
+	    index (1- index)
+	    ref (1+ ref)))
+    items))
+
+
 (defadvice split-window (after move-point-to-new-window activate)
   "Moves the point to the newly created window after splitting."
   (other-window 1))
@@ -626,7 +616,12 @@
 
 (add-hook 'eshell-mode-hook
           (lambda ()
+						(define-key eshell-mode-map (kbd "C-h") #'robert/eshell-history)
             (define-key eshell-mode-map (kbd "C-n") #'treemacs)))
+
+;; Try to use vterm-mode-map and keybind "C-h" to history completion function
+;; have to investigate whehther vterm exposes its history
+
 
 ;; Insert at prompt only on eshell
 (add-hook 'eshell-mode-hook
@@ -739,6 +734,7 @@
 
 (set-cursor-color "#00FFFF")
 
+(setq eshell-prompt-regexp "^[^λ]+ λ ")
 (setq eshell-prompt-function
 			(lambda ()
 				(concat
@@ -759,6 +755,13 @@
     (defalias #'forward-evil-word #'forward-evil-symbol)
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
+
+;; https://www.gnu.org/software/emacs/manual/html_node/eshell/Input_002fOutput.html#Input_002fOutput 
+(add-to-list 'eshell-visual-commands "git")
+(add-to-list 'eshell-visual-commands "rails")
+
+;; remove duplicate commands from history
+(setq comint-input-ignoredups t)
 
 ;; =======================================================================================================================================================================================================================================================
 ;;; init.el ends here

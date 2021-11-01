@@ -15,3 +15,5 @@ transient
 flycheck_init.el
 eln-cache
 persist
+.pdf-view-restore
+ni.cache
