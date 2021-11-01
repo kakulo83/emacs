@@ -117,7 +117,7 @@
 	(define-key evil-motion-state-map (kbd "RET") nil)
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
-	(define-key evil-normal-state-map (kbd "C-t") 'tab-switch)
+	(define-key evil-normal-state-map (kbd "C-t") 'tab-bar-switch-to-tab)
 	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
