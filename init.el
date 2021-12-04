@@ -46,7 +46,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(safe-local-variable-values
 	 '((sql-postgres-login-params
 			'((user :default "robertcarter")
@@ -226,6 +226,10 @@
 	(setq doom-modeline-vcs-max-length 24)
 	:hook (after-init . doom-modeline-mode))
 
+(use-package solaire-mode
+	:config
+	(solaire-global-mode +1))
+
 (use-package evil-leader
 	:after evil
 	:functions evil-leader/set-leader
@@ -277,18 +281,17 @@
 (use-package flycheck
 	:init (global-flycheck-mode))
 
-(use-package tron-legacy-theme
-  :config
-	(setq tron-legacy-theme-softer-bg t)
-  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;	(setq tron-legacy-theme-softer-bg t)
+;  (load-theme 'tron-legacy t))
 
-
-;;(use-package doom-themes
-;;	:defines doom-themes-enable-bolt
-;; 	:config
-;; 	(setq doom-themes-enable-bolt t
-;; 				doom-themes-enable-italic t)
-;; 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t)
+ 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -402,7 +405,7 @@
 
 (use-package websocket)
 
-;; TODO replace this with melpa package when it is available
+; TODO replace this with melpa package when it is available
 (require 'websocket)
 (add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
 (load-library "org-roam-ui")
@@ -527,6 +530,7 @@
 
 (use-package kubel)
 
+(use-package sly)
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 
