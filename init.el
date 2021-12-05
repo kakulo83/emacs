@@ -238,6 +238,7 @@
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
+	 "a" 'ace-window
 	 "cp" 'copy-filepath-to-clipboard
 	 "q" 'delete-window
 	 "o" 'delete-other-windows
@@ -437,12 +438,29 @@
 	(message "executing find-with-ripgrep"))
 
 (use-package embark
-	:bind (:map minibuffer-local-map
-		    ("M-o" . embark-act)
-		    :map embark-file-map
-		    ("g" . consult-ripgrep))
+	:bind 
+	(("M-o" . embark-act))
 	:init
-	(setq prefix-help-command #'embark-prefix-help-command))
+	(setq prefix-help-command #'embark-prefix-help-command)
+	:config
+	(eval-when-compile
+  (defmacro my/embark-split-action (fn split-type)
+    `(defun ,(intern (concat "my/embark-"
+                             (symbol-name fn)
+                             "-"
+                             (car (last  (split-string
+                                          (symbol-name split-type) "-"))))) ()
+       (interactive)
+       (funcall #',split-type)
+       (call-interactively #',fn))))
+
+	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file evil-window-split))
+	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer evil-window-split))
+	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump evil-window-split))
+
+	(define-key embark-file-map     (kbd "C-v") (my/embark-split-action find-file evil-window-vsplit))
+	(define-key embark-buffer-map   (kbd "C-v") (my/embark-split-action switch-to-buffer evil-window-vsplit))
+	(define-key embark-bookmark-map (kbd "C-v") (my/embark-split-action bookmark-jump evil-window-vsplit)))
 
 (use-package embark-consult
   :ensure t
@@ -452,6 +470,8 @@
   ;; auto-updating embark collect buffer
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package ace-window)
 
 (use-package helpful)
 
