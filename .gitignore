@@ -18,3 +18,5 @@ persist
 .pdf-view-restore
 ni.cache
 url
+request
+tramp
