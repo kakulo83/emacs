@@ -217,6 +217,13 @@
 	(setq lsp-ui-doc-position 'at-point)
 	(setq lsp-enable-snippet nil))
 
+(use-package git-timemachine
+	:config
+	(with-eval-after-load 'git-timemachine
+  (evil-make-overriding-map git-timemachine-mode-map 'normal)
+  ;; force update evil keymaps after git-timemachine-mode loaded
+  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
+
 (use-package magit)
 
 (use-package doom-modeline
@@ -250,7 +257,8 @@
 	 "gB" 'magit-blame
 	 "gs" 'magit-status
 	 "gc" 'magit-branch
-	 "gh" 'magit-log-buffer-file)
+	 "gh" 'magit-log-buffer-file
+	 "gH" 'git-timemachine)
 	(evil-mode t))
 
 (use-package docker
