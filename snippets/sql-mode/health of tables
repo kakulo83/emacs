@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: health of tables
+# key: f-health
+# --
+
+select relname, autovacuum_count, autoanalyze_count, n_live_tup, n_dead_tup, 
+round(n_dead_tup / n_live_tup::numeric, 3) AS DeadTuplesRatio 
+from pg_stat_user_tables 
+where n_live_tup > 0 
+order by n_live_tup desc;

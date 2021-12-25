@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Current queries sorted by running time 
+# key: f-diag
+# --
+SELECT
+      application_name, pid,
+      age(clock_timestamp(), query_start) as time_running,
+      usename,
+      substr(query, 0, 75)
+FROM pg_stat_activity WHERE state != 'idle'
+ORDER BY time_running DESC;

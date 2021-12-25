@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: cancel query
+# key: f-cancel
+# --
+/*
+pg_cancel_backend and pg_terminate_backend send signals (SIGINT or SIGTERM respectively) to backend processes
+identified by process ID. The process ID of an active backend can be found from the pid column of the
+pg_stat_activity view, or by listing the postgres processes on the server (using ps on Unix or the Task Manager on Windows). The role of an active backend can be found from the usename column of the pg_stat_activity view.
+
+SELECT pg_cancel_backend(12345);
+
+Sometimes cancel doesn't owrk, use `pg_terminate_backend` in that case
+
+SELECT pg_terminate_backend(12345);
+*/
+
+
+SELECT pg_cancel_backend(12345);

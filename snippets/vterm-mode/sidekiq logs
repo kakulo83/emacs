@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sidekiq logs
+# key: skl
+# --
+kubectl logs -n <namespace> <sidekiq-pod> -f

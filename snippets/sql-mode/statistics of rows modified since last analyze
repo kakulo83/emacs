@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: statistics of rows modified since last analyze, all tables
+# key: f-mod
+# --
+/* For all tables, number of rows modified since last analyze, and how many times seq scan ran */
+SELECT relname,
+Age(last_vacuum, Clock_timestamp()) as last_vacuumed_hours_ago,
+Age(last_autovacuum, Clock_timestamp()) as last_autovacuumed_hours_ago,
+Age(last_analyze, Clock_timestamp()) as last_analyzed_hours_ago,
+Age(last_autoanalyze, Clock_timestamp()) as last_autoanalyzed_hours_ago,
+n_mod_since_analyze,
+seq_scan
+FROM   pg_stat_all_tables
+WHERE  schemaname = 'public'
+ORDER  BY n_mod_since_analyze DESC, seq_scan DESC;

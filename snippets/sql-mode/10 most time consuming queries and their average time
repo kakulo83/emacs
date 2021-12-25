@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: 10 most time consuming queries and their average time 
+# key: f-10
+# --
+SELECT substr(query, 0, 75), total_time / calls AS avg_time
+FROM pg_stat_statements
+ORDER BY total_time DESC
+LIMIT 10;

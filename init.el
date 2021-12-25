@@ -1,11 +1,12 @@
 ;; package --- Summary
-;; Commentary:
+;;; Commentary:
 ;;;
 ;;; DEPENDENCIES
 ;;; MacTex
 ;;; ripgrep
 ;;; pngpaste
 ;;; pgformatter
+;;; sqls
 ;;;
 ;;; Code:
 
@@ -31,6 +32,12 @@
 (setq warning-minimum-level :error)
 (setq use-dialog-box nil)
 
+(setq sql-postgres-login-params
+      '((user :default "robertcarter")
+        (database :default "db/onboardiq_dev"
+        (server :default "localhost")
+        (port :default 5432)))
+			
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
@@ -41,18 +48,16 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
 	 '("f91395598d4cb3e2ae6a2db8527ceb83fed79dbaf007f435de3e91e5bda485fb" default))
+ '(display-buffer-base-action
+	 '((display-buffer-reuse-window display-buffer-same-window)
+		 (reusable-frames . t)))
  '(embark-prompter 'embark-completing-read-prompter)
+ '(even-window-sizes nil)
  '(gnutls-algorithm-priority "normal:-vers-tls1.3")
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
- '(safe-local-variable-values
-	 '((sql-postgres-login-params
-			'((user :default "robertcarter")
-				(database :default "app_development")
-				(server :default "localhost")
-				(port :default 5432)))))
+	 '(org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -97,6 +102,10 @@
 
 (setq completion-ignore-case t)
 
+(let ((fountain-scripts "~/.emacs.d/private/fountain/fountain.el"))
+	(when (file-exists-p fountain-scripts)
+		(load-file fountain-scripts)))
+
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
@@ -125,8 +134,10 @@
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
-	(define-key evil-normal-state-map (kbd "C-o") 'previous-buffer)
-	(define-key evil-normal-state-map (kbd "C-i") 'next-buffer)
+	(define-key evil-normal-state-map (kbd "/") 'isearch-forward)
+	(define-key evil-normal-state-map (kbd "?") 'isearch-backward)
+	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
+	(define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
@@ -182,6 +193,7 @@
 	(setq lsp-headerline-breadcrumb-enable nil)
   :init
   :hook (
+				 (sql-mode . lsp-deferred)
 				 (ruby-mode . lsp-deferred)
 				 (js-mode . lsp-deferred)
 				 (clojure-mode . lsp-deferred)
@@ -224,7 +236,9 @@
   ;; force update evil keymaps after git-timemachine-mode loaded
   (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
-(use-package magit)
+(use-package magit
+	:config
+	(setq magit-save-repository-buffers nil))
 
 (use-package doom-modeline
 	:init
@@ -252,6 +266,7 @@
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
 	 "d" 'flycheck-list-errors
+	 "s" 'yas-insert-snippet
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
 	 "gB" 'magit-blame
@@ -394,8 +409,6 @@
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
 					))
-	;;:bind (:map org-roam-mode-map
-	;;					(("RET" . (lambda) () (interactive) (org-roam-node-visit-other-window))))
 	(org-roam-setup))
 
 (use-package org-download
@@ -414,10 +427,7 @@
 
 (use-package websocket)
 
-; TODO replace this with melpa package when it is available
-(require 'websocket)
-(add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
-(load-library "org-roam-ui")
+(use-package org-roam-ui)
 
 (use-package orderless
   :ensure t
@@ -446,10 +456,9 @@
 	(message "executing find-with-ripgrep"))
 
 (use-package embark
-	:bind 
+	:bind
 	(("M-o" . embark-act))
 	:init
-	(setq prefix-help-command #'embark-prefix-help-command)
 	:config
 	(eval-when-compile
   (defmacro my/embark-split-action (fn split-type)
@@ -547,7 +556,8 @@
 	(setq org-drill-learn-fraction 0.25))
 
 (use-package pdf-tools
-	:config
+	:init
+	(setq pdf-view-display-size 1.0)
 	(pdf-tools-install))
 
 (use-package pdf-view-restore
@@ -556,12 +566,18 @@
 	(setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
   (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
 
-(use-package kubel)
+;;(use-package kubel)
 
 (use-package sly)
 
-;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
+(use-package balanced-windows
+  :config
+  (balanced-windows-mode))
 
+(use-package inf-ruby
+	:hook (inf-ruby-switch-setup))
+
+;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 (defun new-named-tab ()
 	"Create a new named tab."
 	(interactive)
@@ -722,11 +738,11 @@
 
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 
-;;(global-linum-mode t) ;; Show number lines
+(global-linum-mode t) ;; Show number lines
 (add-hook 'treemacs-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'vterm-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (linum-mode 0)))
-(add-hook 'org-mode-hook (lambda() (org-hide-properties)))
+;;(add-hook 'org-mode-hook (lambda() (org-hide-properties)))
 (add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
 (add-hook 'eshell-mode-hook (lambda()
 															(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
@@ -753,7 +769,7 @@
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
-(set-frame-font "Monego-10" nil t)
+;;(set-frame-font "Monego-10" nil t)
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 
@@ -791,8 +807,8 @@
     (setq-default evil-symbol-word-search t))
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/eshell/Input_002fOutput.html#Input_002fOutput 
-(add-to-list 'eshell-visual-commands "git")
-(add-to-list 'eshell-visual-commands "rails")
+;;(add-to-list 'eshell-visual-commands "git")
+;;(add-to-list 'eshell-visual-commands "rails")
 
 ;; remove duplicate commands from history
 (setq comint-input-ignoredups t)

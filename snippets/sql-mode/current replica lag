@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: current replica lag
+# key: f-replag
+# --
+/* Determine current replica lag in seconds. Run on replica db */
+
+select now()-pg_last_xact_replay_timestamp() as replication_lag;
