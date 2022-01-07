@@ -34,7 +34,7 @@
 
 (setq sql-postgres-login-params
       '((user :default "robertcarter")
-        (database :default "db/onboardiq_dev"
+        (database :default "db/onboardiq_dev")
         (server :default "localhost")
         (port :default 5432)))
 			
@@ -57,7 +57,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -369,7 +369,8 @@
 	(setq org-latex-create-formula-image-program 'dvisvgm)
 	(setq org-latex-create-formula-image-program 'dvisvgm)
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-	(setq org-src-preserve-indentation nil org-edit-src-content-indentation 0)
+	(setq org-src-preserve-indentation t)
+	(setq org-src-tab-acts-natively t)
 	:bind (
 				 :map org-mode-map
 							("C-j" . windmove-down)
@@ -692,6 +693,22 @@
 					(lambda ()
 						(evil-set-initial-state 'outline-mode 'normal)))
 
+(defun evil-org-insert-state-in-edit-buffer (fun &rest args)
+  "Bind `evil-default-state' to `insert' before calling FUN with ARGS."
+  (let ((evil-default-state 'insert)
+        ;; Force insert state
+        evil-emacs-state-modes
+        evil-normal-state-modes
+        evil-motion-state-modes
+        evil-visual-state-modes
+        evil-operator-state-modes
+        evil-replace-state-modes)
+    (apply fun args)
+    (evil-refresh-cursor)))
+
+(advice-add 'org-babel-do-key-sequence-in-edit-buffer
+            :around #'evil-org-insert-state-in-edit-buffer)
+
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
 (with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
 (with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
@@ -769,7 +786,8 @@
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
-;;(set-frame-font "Monego-10" nil t)
+(set-frame-font "Hack Nerd Font Mono" nil t)
+(set-face-attribute 'default nil :height 100)
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 
