@@ -34,7 +34,7 @@
 
 (setq sql-postgres-login-params
       '((user :default "robertcarter")
-        (database :default "db/onboardiq_dev"
+        (database :default "db/onboardiq_dev")
         (server :default "localhost")
         (port :default 5432)))
 			

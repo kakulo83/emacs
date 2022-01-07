@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: connections 
+# key: connections
+# --
+select datname,state, application_name, client_addr, usename, count(*)
+from pg_stat_activity 
+WHERE NOT pid=pg_backend_pid() 
+  AND query not like '%autovacuum%'
+  AND query not like 'VACUUM VERBOSE ANALYZE%'
+group by datname,state,application_name,client_addr,usename,xact_start 
+union
+select 'Total Connections ===============' as name,null,null,null,null, count(*) 
+from pg_stat_activity
+order by datname desc;
