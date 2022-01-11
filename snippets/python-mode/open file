@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: open file
+# key: open
+# --
+file = open("${1:path}", "r")
+for line in file:
+		print(line)

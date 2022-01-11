@@ -32,11 +32,11 @@
 (setq warning-minimum-level :error)
 (setq use-dialog-box nil)
 
-(setq sql-postgres-login-params
-      '((user :default "robertcarter")
-        (database :default "db/onboardiq_dev")
-        (server :default "localhost")
-        (port :default 5432)))
+;(setq sql-postgres-login-params
+;      '((user :default "robertcarter")
+;        (database :default "db/onboardiq_dev")
+;        (server :default "localhost")
+;        (port :default 5432)))
 			
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -57,7 +57,9 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes
+
+																						es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -110,6 +112,8 @@
 
 (use-package bug-hunter)
 
+(use-package autothemer)
+
 (use-package projectile
 	:config
 	(setq projectile-switch-project-action 'projectile-dired)
@@ -134,8 +138,7 @@
 	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
 	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
-	(define-key evil-normal-state-map (kbd "/") 'isearch-forward)
-	(define-key evil-normal-state-map (kbd "?") 'isearch-backward)
+	(define-key evil-normal-state-map (kbd "/") 'consult-line)
 	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 	(define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
