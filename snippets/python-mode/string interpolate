@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: string interpolate 
+# key: printf
+# --
+print(f'${0:string}{${1:varaible}}')

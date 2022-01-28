@@ -268,8 +268,9 @@
 	 "o" 'delete-other-windows
 	 "r" 'lsp-find-references
 	 "f" 'lsp-find-definition
-	 "d" 'flycheck-list-errors
+	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
+	 "m" 'consult-man
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
 	 "gB" 'magit-blame
@@ -306,7 +307,16 @@
 (use-package cider)
 
 (use-package flycheck
-	:init (global-flycheck-mode))
+	:init (global-flycheck-mode)
+	:config
+		(add-to-list 'display-buffer-alist
+								`(,(rx bos "*Flycheck errors*" eos)
+								(display-buffer-reuse-window
+								display-buffer-in-side-window)
+								(side            . bottom)
+								(reusable-frames . visible)
+								(window-height   . 0.33)))
+	)
 
 ;(use-package tron-legacy-theme
 ;  :config
@@ -726,7 +736,8 @@
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-(define-key evil-normal-state-map (kbd "u") 'undo-tree-visualize)
+(define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
+(define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
