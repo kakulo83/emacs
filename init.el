@@ -271,6 +271,7 @@
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
 	 "m" 'consult-man
+	 "c" 'string-rectangle
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
 	 "gB" 'magit-blame
