@@ -41,6 +41,9 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(exec-path-from-shell-copy-env "PERF_PSQL_STRING")
+(exec-path-from-shell-copy-env "UAT_PSQL_STRING")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

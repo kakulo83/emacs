@@ -56,21 +56,47 @@
 	; brew services start elasticsearch@6
 	)
 
+
 (defun elasticsearch-repl ()
 	"Elasticsearch scratch-pad split with repl."
 	(interactive)
 	;; TODO create a enw tab entitled "elasticsearch repl"
-  (find-file "~/Developer/monolith/scratch.es"))
+  (find-file "~/Developer/monolith/scratch.es")
+	(split-window-right)
+	(es-mode))
 
 (defun postgres-repl ()
 	"Postgres scratch pad split with repl."
 	(interactive)
 	;; TODO create a new tab entitled "postgres repl"
-	(find-file "~/Developer/monolith//scratch.sql")
+	(find-file "~/Developer/monolith/scratch.sql")
 	(split-window-right)
 	(sql-postgres))
 
 
+(setq sql-postgres-login-params nil) 
+
+(setq sql-connection-alist
+			'((fountain-performance (sql-product 'postgres)
+															(sql-database (getenv "PERF_PSQL_STRING")))
+				(uat-staging (sql-product 'postgres)
+										 (sql-database (getenv "UAT_PSQL_STRING")))
+				(local-development (sql-product 'postgres)
+													 (sql-database 'postgres)
+													 (sql-database (concat "postgres://"
+																								 "robertcarter"
+																								 "@localhost"
+																								 ":5432"
+																								 "/db/onboardiq_dev")))))
+
+(defun fountain-db ()
+	"Convenience function to connect to postgres."
+	(interactive)
+	(find-file "~/Developer/monolith/scratch.sql")
+	(split-window-right)
+	(call-interactively #'sql-connect))
+
+;(defalias 'fountain-db 'sql-connect)
 
 (defun run-in-vterm-kill (process event)
   "A process sentinel. Kills PROCESS's buffer if it is live."
@@ -82,7 +108,7 @@
   "Execute string COMMAND in a new vterm.
 
 Interactively, prompt for COMMAND with the current buffer's file
-name supplied. When called from Dired, supply the name of the
+name supplied.  When called from Dired, supply the name of the
 file at point.
 
 Like `async-shell-command`, but run in a vterm for full terminal features.
@@ -106,3 +132,52 @@ shell exits, the buffer is killed."
     (set-process-sentinel vterm--process #'run-in-vterm-kill)
     (vterm-send-string command)
     (vterm-send-return)))
+
+(defun connect_monolith_multitenant ()
+	"Convenient function to connect to multitenant rails console."
+	(interactive)
+	(with-current-buffer "*eshell*"
+		(eshell-return-to-prompt)
+		(insert "cd ~/Developer/terraform/aws/eks-clusters/production/us-east-1")
+		(eshell-send-input)))
+
+
+(defun enter-multitenant-pod ()
+	(message "Opening multitenant")
+	;(let ((path-to-terraform "/Users/robertcarter/Developer/terraform/aws/eks-clusters/production/us-east-1"))
+	;	(multi-vterm)
+	;	(rename-buffer "multitenant shell")
+
+	;	(process-send-string nil path-to-terraform)
+	;	(process-send-string nil "bundle exec rails server\n")
+
+	;	(multi-vterm)
+	;	(rename-buffer "monolith webpack")
+	;	(process-send-string nil path-to-monolith)
+	;	(process-send-string nil "yarn run webpack:development\n")
+	)
+
+(defun fountain-console ()
+		 (interactive)
+		 (let* ((choices '(("multi-tenant" . enter-multitenant-pod)))
+						(choice (completing-read "Select instance: " choices)))
+			 (call-interactively (cdr (assoc choice choices)))))
+
+
+;(defun kubernetes-pods (candidate)
+;	(cdr (assoc candidate '(("multi-tenant" . "Multitenant")
+;													("staging uat" . "Staging")
+;													("allegis" . "Allegis")
+;													("amazon-na" . "Amazon North America")
+;													("amazon-dsp" . "Amazon DSP (North America")
+;													("chipotle" . "Mexican food for white people")
+;													("instacart" . "Instacart")
+;													("amazon-eu-dsp" . "Amazon DSP (Europe)")
+;													("ceracare" . "Ceracare")
+;													("takeawway" . "Takeaway")))))
+;
+;(defun fountain-console ()
+;	(interactive)
+;  (let ((completion-extra-properties '(:annotation-function kubernetes-pods)))
+;		(completing-read "Choose: " '(("multi-tenant" . " Multi tenant environment")))))
+	
