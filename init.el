@@ -3,11 +3,13 @@
 ;;;
 ;;; DEPENDENCIES
 ;;; MacTex
+;;; nerd-fonts
 ;;; ripgrep
 ;;; pngpaste
 ;;; pgformatter
 ;;; sqls
-;;;
+;;; exa
+;;; 
 ;;; Code:
 
 (require 'package)
@@ -60,9 +62,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes
-
-																						es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(modus-operandi-theme tron-legacy-theme all-the-icons-nerd-fonts sublime-themes balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -76,7 +76,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :extend nil :stipple nil :foreground "#A0B3C5" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Inconsolata Light"))))
+ '(default ((t (:background nil))))
+ '(blamer-face ((t :foreground "#7a88cf" :background nil :height 140 :italic t)))
  '(italic ((t (:foreground "white" :slant italic))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 6.0 :underline nil))))
  '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 2.75))))
@@ -144,6 +145,7 @@
 	(define-key evil-normal-state-map (kbd "/") 'consult-line)
 	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 	(define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
+	(evil-define-key 'normal dired-mode-map (kbd "C-t") 'tab-bar-switch-to-tab)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
@@ -156,7 +158,7 @@
 	(evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
 	(evil-define-key 'normal treemacs-mode-map (kbd "a") 'treemacs-create-file)
 	(evil-define-key 'normal treemacs-mode-map (kbd "m") 'treemacs-move-file)
-	(evil-define-key 'normal treemacs-mode-map (kbd "d") 'treemacs-delete)
+	(evil-define-key 'normal treemacs-mode-map (kbd "d") 'treemacs-delete-file)
 	(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-refresh)
   (evil-mode))
 
@@ -212,6 +214,7 @@
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
+													(highlight-indentation-mode -1)
                           (lsp))))  ; or lsp-deferred
 
 (use-package treemacs
@@ -229,11 +232,11 @@
 	:config
 	(treemacs-load-theme 'all-the-icons))
 
-(use-package lsp-ui
-  :after (lsp-mode)
-  :config
-	(setq lsp-ui-doc-position 'at-point)
-	(setq lsp-enable-snippet nil))
+;(use-package lsp-ui
+;  :after (lsp-mode)
+;  :config
+;	(setq lsp-ui-doc-position 'at-point)
+;	(setq lsp-enable-snippet nil))
 
 (use-package git-timemachine
 	:config
@@ -327,12 +330,23 @@
 ;	(setq tron-legacy-theme-softer-bg t)
 ;  (load-theme 'tron-legacy t))
 
-(use-package doom-themes
-	:defines doom-themes-enable-bolt
- 	:config
- 	(setq doom-themes-enable-bolt t
- 				doom-themes-enable-italic t)
- 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+;(use-package sublime-themes
+;	; NOTE:  For granger theme I changed the "fringe" background color to "background"
+;	;        to get rid of that annoying gray frame separator line
+;	; https://github.com/owainlewis/emacs-color-themes
+;	:config
+;	(load-theme 'graham t)) ;; graham  fogus  granger 
+
+(use-package modus-operandi-theme
+	:config
+	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+
+;(use-package doom-themes
+;	:defines doom-themes-enable-bolt
+; 	:config
+; 	(setq doom-themes-enable-bolt t
+; 				doom-themes-enable-italic t)
+; 	(load-theme 'doom-sourcerer t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -767,6 +781,8 @@
 
 (setq ring-bell-function 'ignore) ;; silence alert chimes
 
+(global-auto-revert-mode 1) ;; Automatically revert buffers for changed files
+
 (global-font-lock-mode 1) ;; Enable syntax highlighting
 
 (set-default 'truncate-lines t) ;; Don't wrap lines
@@ -804,7 +820,7 @@
 
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
-(set-frame-font "Hack Nerd Font Mono" nil t)
+(set-frame-font "Hack Nerd Font Mono" nil t)  ;  "Hack Nerd Font Mono"
 (set-face-attribute 'default nil :height 100)
 
 (setq-default explicit-shell-file-name "/bin/zsh")

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: rspec describe
+# key: spec
+# --
+require '${1:path_to_class}'
+
+RSpec.describe ${2:Subject} do
+  context '${3:context}' do
+    it '${4:does_something_useful}' do
+		  expect().to eq()
+		end
+  end
+end
