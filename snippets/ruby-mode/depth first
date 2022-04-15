@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: depth first search
+# key: dfs
+# --
+
+def depth_first_search(root)
+  stack = []
+	output = []
+	current = root
+
+  while stack.any? || current
+    if current
+		  stack.push(current)
+			current = current.left
+		else
+      current = stack.pop
+
+      # process current node
+		  output.push(current)	
+
+      current = current.right
+    end
+  end
+
+	output
+end

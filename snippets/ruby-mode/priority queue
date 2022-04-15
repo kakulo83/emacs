@@ -1,0 +1,120 @@
+# -*- mode: snippet -*-
+# name: priority queue
+# key: pqueue
+# --
+
+class Heap
+  attr_reader :elements
+
+  def initialize
+    @elements = [nil]
+  end
+
+  def <<(element)
+    @elements.push(element)
+    heapify_up(@elements.count - 1)
+  end
+
+  def pop
+    # move 1st element to the end of the queue
+    # remove it and then ensure heap property throughout queue again
+    swap(1, @elements.size - 1)
+
+    last = @elements.pop
+
+    heapify_down(1)
+    last
+  end
+
+  def heapify_up
+    raise NoMethodError
+  end
+
+  def heapify_down
+    raise NoMethodError
+  end
+
+  def swap(initial, target)
+    @elements[initial], @elements[target] = @elements[target], @elements[initial]
+  end
+end
+
+class MaxHeap < Heap
+  def heapify_up(index)
+    parent_index = (index / 2)
+
+    return if index <= 1
+
+    return if @elements[parent_index] >= @elements[index]
+
+    swap(index, parent_index)
+
+    heapify_up(parent_index)
+  end
+
+  def heapify_down(index)
+    # we use a Binary Heap, which is a BinaryTree with two additional
+    # constraints:
+    # 1.  all levels are filled, except possibly last, nodes filled from left to right
+    # 2.  heap property, a parent node P is greater (for MaxHeap) than all its children or less (for MinHeap)
+
+    child_index = index * 2
+
+    # stop the recursive descent if we reach the end of the queue
+    return if child_index > @elements.count - 1
+
+    # if the current index is less than the index of the last element, then we at least have a right sibling
+    has_more_children = child_index < @elements.count - 1
+    left_child = @elements[child_index]
+    right_child = @elements[child_index + 1]
+
+    # get the largest child if possible
+    child_index += 1 if has_more_children && right_child > left_child
+
+    # early return if the current element is greater than the largest child, heap property is satisfied
+    return if @elements[index] >= @elements[child_index]
+
+    # swap current and largest child if heap property not satisfied
+    swap(index, child_index)
+
+    # continue recursive descent
+    heapify_down(child_index)
+  end
+end
+
+class Element
+  attr_accessor :val, :priority
+
+  include Comparable
+
+  def initialize(val, priority)
+    @val = val
+    @priority = priority
+  end
+
+  def <=>(other)
+    priority <=> other.priority
+  end
+end
+
+class PriorityQueue
+  def initialize
+    @max_heap = MaxHeap.new
+  end
+
+  def <<(element)
+    insert(element)
+  end
+
+  def insert(element)
+    @max_heap << element
+  end
+
+  def pull
+    @max_heap.pop
+  end
+
+  def elements
+    @max_heap.elements
+  end
+end

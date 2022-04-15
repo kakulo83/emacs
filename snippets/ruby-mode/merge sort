@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# name: merge sort
+# key: msort
+# --
+
+def merge_sort(a)
+  if a.count == 1
+    return a
+  else
+    half = (a.count / 2.0).ceil
+    split = a.each_slice(half).to_a
+
+    x = split.first
+    y = split.last
+
+    return merge_arrays(merge_sort(x), merge_sort(y))
+  end
+end
+
+def merge_arrays(x, y)
+  p1 = p2 = 0
+
+  output = []
+
+  while p1 < x.count && p2 < y.count
+    if x[p1] < y[p2]
+      output.push(x[p1])
+      p1 += 1
+    else
+      output.push(y[p2])
+      p2 += 1
+    end
+  end
+
+  if p1 == x.count
+    output.concat(y[p2..])
+  elsif p2 == y.count
+    output.concat(x[p1..])
+  end
+  output
+end

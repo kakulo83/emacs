@@ -62,7 +62,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(modus-operandi-theme tron-legacy-theme all-the-icons-nerd-fonts sublime-themes balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(afternoon-theme enh-ruby-mode restclient modus-operandi-theme tron-legacy-theme all-the-icons-nerd-fonts sublime-themes balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -112,6 +112,8 @@
 	(when (file-exists-p fountain-scripts)
 		(load-file fountain-scripts)))
 
+(setq evil-shift-width 2)
+
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
@@ -145,7 +147,7 @@
 	(define-key evil-normal-state-map (kbd "/") 'consult-line)
 	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 	(define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
-	(evil-define-key 'normal dired-mode-map (kbd "C-t") 'tab-bar-switch-to-tab)
+	;(evil-define-key 'normal dired-mode-map (kbd "C-t") 'tab-bar-switch-to-tab)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
@@ -277,7 +279,7 @@
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
 	 "m" 'consult-man
-	 "c" 'string-rectangle
+	 "/" 'string-rectangle
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
 	 "gB" 'magit-blame
@@ -337,16 +339,20 @@
 ;	:config
 ;	(load-theme 'graham t)) ;; graham  fogus  granger 
 
-(use-package modus-operandi-theme
+;(use-package modus-operandi-theme
+;	:config
+;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+
+(use-package afternoon-theme
 	:config
-	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+	(load-theme 'afternoon t))
 
 ;(use-package doom-themes
 ;	:defines doom-themes-enable-bolt
 ; 	:config
 ; 	(setq doom-themes-enable-bolt t
 ; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-sourcerer t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+; 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -608,6 +614,16 @@
 
 (use-package inf-ruby
 	:hook (inf-ruby-switch-setup))
+
+(use-package restclient)
+
+;; for better syntax highlighting of ruby code
+(use-package enh-ruby-mode
+	:config
+	(add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
+  (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+  (add-to-list 'auto-mode-alist '("\\.rb\\'" . enh-ruby-mode))
+  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode)))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 (defun new-named-tab ()

@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: breadth first search
+# key: bfs
+# --
+
+def breadth_first_search(root)
+  queue = []
+	queue.push(root)
+	output = []
+
+  while queue.any?
+    current = queue.shift
+		queue.push(current.left, current.right)
+
+    # process current node
+    output.push(current)
+  end
+
+  output
+end

@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: open file 
+# key: file
+# --
+# OPEN TO READ
+file = File.open("users.txt")
+
+# read whole file at once
+file_data = file.read
+
+# close
+file.close
+
+# read large file one line at a time
+File.foreach("users.txt") { |line| puts line }
+
+
+
+# WRITE TO FILE
+File.open("log.txt", "w") { |f| f.write "#{Time.now} - User logged in\n" }
