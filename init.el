@@ -45,6 +45,9 @@
 
 (exec-path-from-shell-copy-env "PERF_PSQL_STRING")
 (exec-path-from-shell-copy-env "UAT_PSQL_STRING")
+(exec-path-from-shell-copy-env "PROD_MULTI_TENANT_PRIMARY_PSQL_STRING")
+(exec-path-from-shell-copy-env "PROD_MULTI_TENANT_SLAVE_PSQL_STRING")
+(exec-path-from-shell-copy-env "URL_SHORTENER_PSQL_STRING")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
