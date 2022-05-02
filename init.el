@@ -62,7 +62,7 @@
  '(help-at-pt-display-when-idle '(flymake-diagnostic) nil (help-at-pt))
  '(help-at-pt-timer-delay 0.1)
  '(package-selected-packages
-	 '(afternoon-theme enh-ruby-mode restclient modus-operandi-theme tron-legacy-theme all-the-icons-nerd-fonts sublime-themes balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es es-mode es multi-vterm rvm vterm projectile-rails auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
+	 '(company-lsp tree-sitter-langs tree-sitter evil-vimish-fold vimish-fold afternoon-theme enh-ruby-mode restclient modus-operandi-theme tron-legacy-theme all-the-icons-nerd-fonts sublime-themes balanced-windows org-roam-ui sly kubel native-complete pdf-view-restore pdf-tools yasnippet-snippets elpy lsp-pyright org-drill doom-themes es es-mode es multi-vterm rvm vterm auctex org-download undo-tree websocket sqlformat olivetti consult-selectrum cider project rg simple-httpd helpful org-bullets org-roam company yasnippet embark-consult embark marginalia consult rainbow-delimiters orderless dashboard company-box org lsp-ui go-mode bug-hunter use-package))
  '(warning-suppress-types '((org-roam) (org-roam))))
 
 (customize-set-variable 'display-buffer-base-action
@@ -114,6 +114,7 @@
 
 (setq evil-shift-width 2)
 
+
 ;; PACKAGES ==============================================================================================================================================================================================================================================
 
 (use-package bug-hunter)
@@ -137,12 +138,12 @@
 	(define-key evil-motion-state-map (kbd "C-f") nil)
 	(define-key evil-normal-state-map (kbd "-") 'dired)
 	(define-key evil-normal-state-map (kbd "C-t") 'tab-bar-switch-to-tab)
-	(define-key evil-normal-state-map (kbd "C-s") 'projectile-switch-project)
+	(define-key evil-normal-state-map (kbd "C-s") 'switch-project-with-new-tab) ; 'projectile-switch-project)
 	(define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 	(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
 	(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
-	(define-key evil-normal-state-map (kbd "z-c") 'hs-hide-block)
-	(define-key evil-normal-state-map (kbd "z-o") 'hs-show-block)
+	(define-key evil-normal-state-map (kbd "z-c") 'vimish-fold) ; 'hs-hide-block)
+	(define-key evil-normal-state-map (kbd "z-o") 'vimish-fold-delete) ;'hs-show-block)
 	(define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 	(define-key evil-normal-state-map (kbd "/") 'consult-line)
 	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
@@ -151,8 +152,8 @@
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
-	(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-horizontal-split)
-	(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-vertical-split)
+	(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-ace-horizontal-split)
+	(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-ace-vertical-split)
 	(evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
 	(evil-define-key 'normal pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
 	(evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
@@ -180,6 +181,15 @@
 					helpful))
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
+
+(use-package vimish-fold
+  :ensure
+  :after evil)
+
+(use-package evil-vimish-fold
+  :ensure
+  :after vimish-fold
+  :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 (use-package all-the-icons)
 
@@ -234,12 +244,6 @@
 	:config
 	(treemacs-load-theme 'all-the-icons))
 
-;(use-package lsp-ui
-;  :after (lsp-mode)
-;  :config
-;	(setq lsp-ui-doc-position 'at-point)
-;	(setq lsp-enable-snippet nil))
-
 (use-package git-timemachine
 	:config
 	(with-eval-after-load 'git-timemachine
@@ -288,9 +292,6 @@
 	 "gh" 'magit-log-buffer-file
 	 "gH" 'git-timemachine)
 	(evil-mode t))
-
-(use-package docker
-	:bind ("C-c d" . docker))
 
 (use-package go-mode
 	:defines go-indent-level
@@ -343,16 +344,16 @@
 ;	:config
 ;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
 
-(use-package afternoon-theme
-	:config
-	(load-theme 'afternoon t))
+;(use-package afternoon-theme
+;	:config
+;	(load-theme 'afternoon t))
 
-;(use-package doom-themes
-;	:defines doom-themes-enable-bolt
-; 	:config
-; 	(setq doom-themes-enable-bolt t
-; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t)
+ 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -387,7 +388,8 @@
             ;; start completing after a single character instead of 3
             (setq company-minimum-prefix-length 1)
             ;; align fields in completions
-            (setq company-tooltip-align-annotations t)))
+            (setq company-tooltip-align-annotations t))
+	:hook (prog-mode . company-mode))
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
@@ -572,11 +574,11 @@
 	:ensure auctex
 	)
 
-(use-package vterm)
+(use-package vterm
+	:config
+	(setq vterm-max-scrollback 20000))
 
 (use-package multi-vterm)
-
-(use-package projectile-rails)
 
 (use-package rvm
 	:config
@@ -604,8 +606,6 @@
 	(setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
   (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
 
-;;(use-package kubel)
-
 (use-package sly)
 
 (use-package balanced-windows
@@ -617,13 +617,20 @@
 
 (use-package restclient)
 
-;; for better syntax highlighting of ruby code
 (use-package enh-ruby-mode
 	:config
 	(add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
   (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
   (add-to-list 'auto-mode-alist '("\\.rb\\'" . enh-ruby-mode))
   (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode)))
+
+(use-package tree-sitter-langs)
+
+(use-package tree-sitter
+  :config
+	(require 'tree-sitter-langs)
+	(global-tree-sitter-mode)
+	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 ;; HELP FUCNTIONS ========================================================================================================================================================================================================================================
 (defun new-named-tab ()
@@ -634,10 +641,17 @@
 
 (global-set-key (kbd "s-t") 'new-named-tab)
 
+(defun switch-project-with-new-tab ()
+	(interactive)
+  (tab-new)
+  (call-interactively 'projectile-switch-project)
+  (tab-rename (read-string "Enter tab name: ")))
+
 (defun unique-shell ()
 	"Create a new named shell buffer."
   (interactive)
-  (call-interactively 'multi-vterm)
+	;(call-interactively 'split-window-vertically)
+	(call-interactively 'multi-vterm)
   (rename-buffer (read-string "Enter buffer name: ")))
 
 (global-set-key (kbd "C-z") #'unique-shell)
@@ -669,7 +683,6 @@
 	    index (1- index)
 	    ref (1+ ref)))
     items))
-
 
 (defadvice split-window (after move-point-to-new-window activate)
   "Moves the point to the newly created window after splitting."
@@ -756,8 +769,8 @@
 (advice-add 'org-babel-do-key-sequence-in-edit-buffer
             :around #'evil-org-insert-state-in-edit-buffer)
 
+
 ;; KEYBINDINGS ===========================================================================================================================================================================================================================================
-(with-eval-after-load 'prog-mode (bind-key "C-'" #'lsp-ui-imenu))
 (with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
@@ -788,6 +801,8 @@
 (evil-ex-define-cmd "q" 'kill-this-buffer)
 
 (tool-bar-mode -1) ;; Disable Toolbar
+
+(tab-bar-mode 0)
 
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized) ;; Make fullscreen
 
