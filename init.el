@@ -12,6 +12,12 @@
 ;;; 
 ;;; Code:
 
+
+;;; TODO
+;;;  - get reliable ripgrep functionality
+;;;  - figure out how to use ace-windows to split
+;;;  - figure out how to combine embark and ace-windows
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -148,7 +154,6 @@
 	(define-key evil-normal-state-map (kbd "/") 'consult-line)
 	(define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 	(define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
-	;(evil-define-key 'normal dired-mode-map (kbd "C-t") 'tab-bar-switch-to-tab)
 	(evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 	(evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 	(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
@@ -448,8 +453,8 @@
 					("c" "code snippet" plain "%?"
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
-					))
-	(org-roam-setup))
+					)))
+
 
 (use-package org-download
 	:after org
@@ -528,7 +533,9 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package ace-window)
+(use-package ace-window
+	:config
+	(setq aw-display-always t))
 
 (use-package helpful)
 
