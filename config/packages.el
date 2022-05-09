@@ -342,6 +342,7 @@
 	(("M-o" . embark-act))
 	:init
 	:config
+	(setq aw-dispatch-always t)
 	(eval-when-compile
   (defmacro my/embark-split-action (fn split-type)
     `(defun ,(intern (concat "my/embark-"
