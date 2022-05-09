@@ -27,6 +27,8 @@
 
 (require 'use-package-ensure)
 
+(setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
+
 (load "~/.emacs.d/config/packages.el")
 (load "~/.emacs.d/config/appearance.el")
 (load "~/.emacs.d/config/settings.el")

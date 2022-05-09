@@ -10,7 +10,6 @@
 
 
 (setq lexical-binding t)
-(setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
 (setq initial-scratch-message "")
 (setq gc-cons-threshold (* 100 1024 1024)
@@ -28,7 +27,6 @@
 
 (setq completion-ignore-case t)
 
-(setq evil-shift-width 2)
 
 (setq inhibit-splash-screen t) ;; Disable splash screen
 
