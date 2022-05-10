@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 (use-package bug-hunter)
 
 (use-package autothemer)
@@ -40,6 +43,7 @@
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package selectrum
+	:defines selectrum-mode
 	:functions selectrum-mode
 	:config
 	(setq selectrum-max-window-height (/ (frame-height) 2))
@@ -82,6 +86,8 @@
 					treemacs-width 35)))
 
 (use-package treemacs-all-the-icons
+	:defines treemacs-load-theme
+	:functions treemacs-load-theme
 	:after (treemacs)
 	:config
 	(treemacs-load-theme 'all-the-icons))
@@ -109,6 +115,8 @@
 	(solaire-global-mode +1))
 
 (use-package evil-leader
+	:defines evil-leader/set-leader
+	:functions evil-leader/set-leader
 	:after evil
 	:functions evil-leader/set-leader
 	:config
@@ -180,7 +188,7 @@
 ;	;        to get rid of that annoying gray frame separator line
 ;	; https://github.com/owainlewis/emacs-color-themes
 ;	:config
-;	(load-theme 'graham t)) ;; graham  fogus  granger 
+;	(load-theme 'graham t)) ;; graham  fogus  granger
 
 ;(use-package modus-operandi-theme
 ;	:config
@@ -247,8 +255,7 @@
 	(setq org-hide-emphasis-markers t)
 	(setq org-startup-with-inline-images t)
 	(setq org-startup-with-latex-preview t)
-	(setq org-latex-create-formula-image-program 'dvisvgm)
-	(setq org-latex-create-formula-image-program 'dvisvgm)
+	(setq org-preview-latex-default-process 'dvisvgm)
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 	(setq org-src-preserve-indentation t)
 	(setq org-src-tab-acts-natively t)
@@ -270,7 +277,7 @@
 	:hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
-	:defines org-roam-v2-act org-roam-db-update-method
+	:defines org-roam-v2-act org-roam-db-update-method org-roam-dailies-directory
 	:custom
 	(org-roam-directory "~/Notes/org-roam-notes/")
 	:init
@@ -328,6 +335,7 @@
 	(marginalia-mode))
 
 (use-package consult
+	:defines consult-project-root-function
   :after selectrum
 	:config
 	(setq consult-project-root-function (lambda () (project-root (project-current))))) ;; consult for enhanced minibuffer commands
@@ -338,12 +346,14 @@
 	(message "executing find-with-ripgrep"))
 
 (use-package embark
+	:defines aw-dispatch-always embark-completing-read-prompter-map
+	:functions embark-completing-read-prompter-map with-minibuffer-keymap
 	:bind
 	(("M-o" . embark-act))
 	:init
 	:config
-	(setq aw-dispatch-always t)
-  (eval-when-compile
+
+	(eval-when-compile
   (defmacro my/embark-ace-action (fn)
     `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
        (interactive)
@@ -367,13 +377,13 @@
        (funcall #',split-type)
        (call-interactively #',fn))))
 
-	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file evil-window-split))
-	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer evil-window-split))
-	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump evil-window-split))
+	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
+	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
+	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump split-window-below))
 
-	(define-key embark-file-map     (kbd "C-v") (my/embark-split-action find-file evil-window-vsplit))
-	(define-key embark-buffer-map   (kbd "C-v") (my/embark-split-action switch-to-buffer evil-window-vsplit))
-	(define-key embark-bookmark-map (kbd "C-v") (my/embark-split-action bookmark-jump evil-window-vsplit)))
+	(define-key embark-file-map     (kbd "C-v") (my/embark-split-action find-file split-window-right))
+	(define-key embark-buffer-map   (kbd "C-v") (my/embark-split-action switch-to-buffer split-window-right))
+	(define-key embark-bookmark-map (kbd "C-v") (my/embark-split-action bookmark-jump split-window-right)))
 
 (use-package embark-consult
   :ensure t
@@ -386,7 +396,13 @@
 
 (use-package ace-window
 	:config
-	(setq aw-display-always t))
+	(setq aw-dispatch-always t)
+  (setq aw-dispatch-alist
+	      '((?h aw-split-window-vert "Vertcal Split")
+					(?v aw-split-window-horz "Horizontal Split")
+				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
+					(?? aw-show-dispatch-help)
+					)))
 
 (use-package helpful)
 
@@ -410,6 +426,8 @@
 	)
 
 (use-package olivetti
+	:defines olivetti-set-width
+	:functions olivetti-set-width
 	:hook (
 				 (org-mode . olivetti-mode)
 				 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
@@ -445,6 +463,7 @@
 (use-package es-mode)
 
 (use-package org-drill
+	:defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
 	:init
 	(setq org-drill-scope 'directory)
 	(setq org-drill-add-random-noise-to-intervals-p t)
@@ -489,3 +508,5 @@
 	(require 'tree-sitter-langs)
 	(global-tree-sitter-mode)
 	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+;;; packages.el ends here
