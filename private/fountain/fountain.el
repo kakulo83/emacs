@@ -15,8 +15,8 @@
 		(rename-buffer "monolith rails server")
 
 		(process-send-string nil path-to-monolith)
-		(process-send-string nil "rvm use $(cat .ruby-version)\n")
-		(process-send-string nil "rvm gemset use $(cat .ruby-gemset)\n")
+		;(process-send-string nil "rvm use $(cat .ruby-version)\n")
+	 	;(process-send-string nil "rvm gemset use $(cat .ruby-gemset)\n")
 		(process-send-string nil "bundle exec rails server\n")
 
 		(multi-vterm)
@@ -34,7 +34,7 @@
 	(multi-vterm)
 	(rename-buffer "ms-self-server client")
 	(process-send-string nil "cd ~/Developer/ms-self-serve-ui\n")
-	(process-send-string nil "yarn start\n"))
+	(process-send-string nil "npm start\n"))
 
 (defun ensure-postgres-running ()
 	"Ensure postgres is running."
@@ -77,10 +77,16 @@
 (setq sql-postgres-login-params nil) 
 
 (setq sql-connection-alist
-			'((fountain-performance (sql-product 'postgres)
+			'((monolith-performance (sql-product 'postgres)
 															(sql-database (getenv "PERF_PSQL_STRING")))
+				(monolith-production-primary (sql-product 'postgres)
+																		 (sql-database (getenv "PROD_MULTI_TENANT_PRIMARY_PSQL_STRING")))
+				(monolith-production-slave (sql-product 'postgres)
+																	 (sql-database (getenv "PROD_MULTI_TENANT_SLAVE_PSQL_STRING")))
 				(uat-staging (sql-product 'postgres)
 										 (sql-database (getenv "UAT_PSQL_STRING")))
+				(url-shortener (sql-product 'postgres)
+											 (sql-database (getenv "URL_SHORTENER_PSQL_STRING")))
 				(local-development (sql-product 'postgres)
 													 (sql-database 'postgres)
 													 (sql-database (concat "postgres://"
