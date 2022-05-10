@@ -19,8 +19,7 @@
 ;;;  - figure out how to combine embark and ace-windows
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
 (package-refresh-contents)
