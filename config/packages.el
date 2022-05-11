@@ -169,14 +169,14 @@
 (use-package flycheck
 	:init (global-flycheck-mode)
 	:config
-		(add-to-list 'display-buffer-alist
+	(setq flycheck-check-syntax-automatically '(save mode-enable))
+	(add-to-list 'display-buffer-alist
 								`(,(rx bos "*Flycheck errors*" eos)
 								(display-buffer-reuse-window
 								display-buffer-in-side-window)
 								(side            . bottom)
 								(reusable-frames . visible)
-								(window-height   . 0.33)))
-	)
+								(window-height   . 0.33))))
 
 ;(use-package tron-legacy-theme
 ;  :config
@@ -190,20 +190,20 @@
 ;	:config
 ;	(load-theme 'graham t)) ;; graham  fogus  granger
 
-;(use-package modus-operandi-theme
-;	:config
-;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+(use-package modus-operandi-theme
+	:config
+	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
 
 ;(use-package afternoon-theme
 ;	:config
 ;	(load-theme 'afternoon t))
 
-(use-package doom-themes
-	:defines doom-themes-enable-bolt
- 	:config
- 	(setq doom-themes-enable-bolt t
- 				doom-themes-enable-italic t)
- 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+;(use-package doom-themes
+;	:defines doom-themes-enable-bolt
+; 	:config
+; 	(setq doom-themes-enable-bolt t
+; 				doom-themes-enable-italic t)
+; 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -346,13 +346,16 @@
 	(message "executing find-with-ripgrep"))
 
 (use-package embark
-	:defines aw-dispatch-always embark-completing-read-prompter-map
+	:defines aw-dispatch-always embark-completing-read-prompter-map embark-completing-read-prompter
 	:functions embark-completing-read-prompter-map with-minibuffer-keymap
 	:bind
 	(("M-o" . embark-act))
 	:init
 	:config
 
+	;; Selecting commands via completions instead of key bindings
+	;; (setq embark-prompter 'embark-completing-read-prompter)
+	
 	(eval-when-compile
   (defmacro my/embark-ace-action (fn)
     `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
@@ -442,6 +445,8 @@
 				sqlformat-args '("-s2" "-g" "-M" "-w100")))
 
 (use-package undo-tree
+	:config
+	(setq undo-tree-auto-save-history 0)
 	:init
 	(global-undo-tree-mode))
 

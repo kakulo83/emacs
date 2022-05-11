@@ -35,7 +35,6 @@
 (load "~/.emacs.d/config/hooks.el")
 (load "~/.emacs.d/config/keybindings.el")
 
-			
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
@@ -56,10 +55,6 @@
 (let ((fountain-scripts "~/.emacs.d/private/fountain/fountain.el"))
 	(when (file-exists-p fountain-scripts)
 		(load-file fountain-scripts)))
-
-;; https://www.gnu.org/software/emacs/manual/html_node/eshell/Input_002fOutput.html#Input_002fOutput 
-;;(add-to-list 'eshell-visual-commands "git")
-;;(add-to-list 'eshell-visual-commands "rails")
 
 ;; =======================================================================================================================================================================================================================================================
 ;;; init.el ends here
