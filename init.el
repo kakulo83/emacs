@@ -25,9 +25,11 @@
 (package-refresh-contents)
 
 (require 'use-package-ensure)
-
+ 
+(setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 
+(load "~/.emacs.d/config/custom.el")
 (load "~/.emacs.d/config/packages.el")
 (load "~/.emacs.d/config/appearance.el")
 (load "~/.emacs.d/config/settings.el")
@@ -56,5 +58,4 @@
 	(when (file-exists-p fountain-scripts)
 		(load-file fountain-scripts)))
 
-;; =======================================================================================================================================================================================================================================================
 ;;; init.el ends here
