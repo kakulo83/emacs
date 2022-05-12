@@ -216,6 +216,7 @@
   :preface (defvar tmp/company-point nil)
   :config
   (yas-global-mode +1)
+
   (advice-add 'company-complete-common
               :before
               #'(lambda ()
@@ -225,6 +226,7 @@
               #'(lambda ()
                   (when (equal tmp/company-point (point))
                     (yas-expand)))))
+
 (use-package yasnippet-snippets)
 
 (use-package company
@@ -298,7 +300,6 @@
 						:if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
 					)))
-
 
 (use-package org-download
 	:after org
@@ -409,25 +410,6 @@
 
 (use-package helpful)
 
-(use-package rg
-	:config
-	(setq rg-group-result t)
-	(setq rg-hide-command t)
-	(setq rg-show-columns nil)
-
-	(rg-define-search robert/grep-vc-or-dir
-		:query ask
-		:format regexp
-		:files "everything"
-		:dir (let ((vc (vc-root-dir)))
-					 (if vc
-							 vc
-						 default-directory))
-		:confirm prefix
-		:flags ("--hidden -g !.git"))
-	:bind (("C-f" . robert/grep-vc-or-dir))
-	)
-
 (use-package olivetti
 	:defines olivetti-set-width
 	:functions olivetti-set-width
@@ -513,5 +495,9 @@
 	(require 'tree-sitter-langs)
 	(global-tree-sitter-mode)
 	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package yafolding
+  :config
+	(add-hook 'ruby-mode-hook 'yafolding-mode))
 
 ;;; packages.el ends here
