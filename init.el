@@ -17,6 +17,8 @@
 ;;;  - get reliable ripgrep functionality
 ;;;  - figure out how to use ace-windows to split
 ;;;  - figure out how to combine embark and ace-windows
+;;;  - figure out how to do git blame with magit when there are multiple splits
+;;;  - figure out how to use yafold and keybind to z-m, z-c etc
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
