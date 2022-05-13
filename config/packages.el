@@ -93,6 +93,7 @@
 	(treemacs-load-theme 'all-the-icons))
 
 (use-package git-timemachine
+	:after evil
 	:config
 	(with-eval-after-load 'git-timemachine
   (evil-make-overriding-map git-timemachine-mode-map 'normal)
@@ -491,6 +492,7 @@
 (use-package tree-sitter-langs)
 
 (use-package tree-sitter
+	:after tree-sitter-langs
   :config
 	(require 'tree-sitter-langs)
 	(global-tree-sitter-mode)

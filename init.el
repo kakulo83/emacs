@@ -14,9 +14,14 @@
 
 
 ;;; TODO
-;;;  - get reliable ripgrep functionality
-;;;  - figure out how to use ace-windows to split
-;;;  - figure out how to combine embark and ace-windows
+;;;  - Refine searching
+;;;  - create function to search for javascript/typescript files
+;;;  - create function to search for ruby files
+;;;  - add ability to search with ripgrep and show result in new split window
+;;;
+;;;  - investigate tree-sitter and whether i'm using it correctly
+;;;
+;;;  - <leader> q should close the target window if many windows, a tab if only one window, or a frame if only one window
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
