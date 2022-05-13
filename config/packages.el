@@ -16,8 +16,8 @@
   :init
 	(setq evil-want-keybinding nil)
 	:config
-  (setq evil-shift-width 2)
-  (evil-mode))
+	(evil-mode)
+  (setq evil-shift-width 2))
 
 (use-package evil-collection
 	:defines evil-collection-company-use-tng
@@ -102,6 +102,8 @@
 
 (use-package magit
 	:config
+	(setq magit-git-executable "/usr/bin/git")
+	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
 
 (use-package doom-modeline
@@ -499,6 +501,7 @@
 	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package yafolding
+	:after evil
   :config
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
 

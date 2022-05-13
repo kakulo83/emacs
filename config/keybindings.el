@@ -24,12 +24,19 @@
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 (define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
 (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
-(define-key evil-normal-state-map (kbd "z-c") 'vimish-fold) ; 'hs-hide-block)
-(define-key evil-normal-state-map (kbd "z-o") 'vimish-fold-delete) ;'hs-show-block)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 (define-key evil-normal-state-map (kbd "/") 'consult-line)
 (define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 (define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
+
+(define-key evil-normal-state-map "zc" nil)
+(define-key evil-normal-state-map "zo" nil)
+(define-key evil-normal-state-map "zM" nil)
+(define-key evil-normal-state-map "zR" nil)
+(define-key evil-normal-state-map "zc" 'yafolding-toggle-element)
+(define-key evil-normal-state-map "zo" 'yafolding-toggle-element)
+(define-key evil-normal-state-map "zM" 'yafolding-toggle-all)
+(define-key evil-normal-state-map "zR" 'yafolding-toggle-all)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
@@ -47,4 +54,3 @@
 (evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-refresh)
 
 (evil-ex-define-cmd "q" 'kill-this-buffer)
-
