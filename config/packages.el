@@ -101,6 +101,7 @@
 
 (use-package magit
 	:config
+	(setq magit-git-executable "/usr/bin/git")
 	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
 
