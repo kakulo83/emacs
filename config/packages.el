@@ -139,7 +139,7 @@
 	 "/" 'string-rectangle
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
-	 "gB" 'magit-blame
+	 "gB" 'magit-blame-echo
 	 "gs" 'magit-status
 	 "gc" 'magit-branch
 	 "gh" 'magit-log-buffer-file

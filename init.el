@@ -15,6 +15,7 @@
 
 ;;; TODO
 ;;;  - Refine searching
+;;;  -   add ability to split result of consult-ripgrep in a vert or horizontal split
 ;;;  - create function to search for javascript/typescript files
 ;;;  - create function to search for ruby files
 ;;;  - add ability to search with ripgrep and show result in new split window
