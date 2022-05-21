@@ -50,31 +50,6 @@
 	(setq selectrum-fix-vertical-window-height t)
 	(selectrum-mode +1))
 
-(use-package lsp-mode
-	:commands (lsp lsp-deferred)
-	:config
-  (setq lsp-lens-enable t)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-keymap-prefix "C-c l")
-	(setq lsp-headerline-breadcrumb-enable nil)
-  :init
-  :hook (
-				 (sql-mode . lsp-deferred)
-				 (ruby-mode . lsp-deferred)
-				 (js-mode . lsp-deferred)
-				 (clojure-mode . lsp-deferred)
-				 (c-mode . lsp-deferred)
-									 )
-	:bind (:map lsp-mode-map
-							("TAB" . completion-at-point)))
-
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-													(highlight-indentation-mode -1)
-                          (lsp))))  ; or lsp-deferred
-
 (use-package treemacs
 	:defer t
 	:config
@@ -131,8 +106,6 @@
 	 "cp" 'copy-filepath-to-clipboard
 	 "q" 'delete-window
 	 "o" 'delete-other-windows
-	 "r" 'lsp-find-references
-	 "f" 'lsp-find-definition
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
 	 "m" 'consult-man
@@ -148,7 +121,6 @@
 
 (use-package go-mode
 	:defines go-indent-level
-	:hook ((go-mode . lsp-deferred))
 	:config
 	(setq gofmt-command "goimports")
 	(setq go-indent-level 2)
@@ -156,7 +128,6 @@
 
 (use-package typescript-mode
 	:mode ("\\.ts\\'" "\\.tsx\\'")
-	:hook (typescript-mode . lsp-deferred)
 	:config
 	(setq typescript-indent-level 2))
 
