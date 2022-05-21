@@ -76,3 +76,5 @@
 (global-linum-mode t) ;; Show number lines
 
 (show-paren-mode 1)
+
+(global-so-long-mode 1)
