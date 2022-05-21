@@ -36,6 +36,10 @@
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
+(use-package eglot
+  :config
+	(add-hook 'ruby-mode-hook 'eglot-ensure))
+
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
@@ -110,6 +114,8 @@
 	 "s" 'yas-insert-snippet
 	 "m" 'consult-man
 	 "/" 'string-rectangle
+	 "f" 'xref-find-definitions
+	 "r" 'xref-find-references
 	 "gl" 'magit-log-all
 	 "gb" 'magit-show-commit
 	 "gB" 'magit-blame-echo
