@@ -102,3 +102,7 @@
         evil-replace-state-modes)
     (apply fun args)
     (evil-refresh-cursor)))
+
+(defun collect-search-in-split
+  (split-window-right))
+(advice-add 'embark-collect-live :before #'collect-search-in-split)

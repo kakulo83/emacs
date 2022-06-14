@@ -45,6 +45,6 @@
 	    (sql-set-product-feature 'postgres :prompt-cont-regexp
                            "^[-[:alnum:]_]*[-(][#>] ")))
 
-
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 
 

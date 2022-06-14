@@ -38,7 +38,8 @@
 
 (use-package eglot
   :config
-	(add-hook 'ruby-mode-hook 'eglot-ensure))
+	;(add-hook 'ruby-mode-hook 'eglot-ensure)
+  (add-hook 'typescript-mode-hook 'eglot-ensure))
 
 (use-package all-the-icons)
 
@@ -132,10 +133,36 @@
 	(setq go-indent-level 2)
 	:hook (before-save-hook . gofmt-before-save))
 
-(use-package typescript-mode
-	:mode ("\\.ts\\'" "\\.tsx\\'")
+;; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
+(use-package tide
+	:ensure t
 	:config
-	(setq typescript-indent-level 2))
+	(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+	(setq company-tooltip-align-annotations t)
+  ;; formats the buffer before saving
+  (add-hook 'before-save-hook 'tide-format-before-save)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+	(require 'web-mode)
+
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
+
+  ;; enable typescript - tslint checker
+  (flycheck-add-mode 'typescript-tslint 'web-mode))
+
 
 (use-package clojure-mode)
 
@@ -170,20 +197,20 @@
 ;	:config
 ;	(load-theme 'graham t)) ;; graham  fogus  granger
 
-(use-package modus-operandi-theme
-	:config
-	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+;(use-package modus-operandi-theme
+;	:config
+;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
 
 ;(use-package afternoon-theme
 ;	:config
 ;	(load-theme 'afternoon t))
 
-;(use-package doom-themes
-;	:defines doom-themes-enable-bolt
-; 	:config
-; 	(setq doom-themes-enable-bolt t
-; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t)
+ 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -336,7 +363,7 @@
 
 	;; Selecting commands via completions instead of key bindings
 	;; (setq embark-prompter 'embark-completing-read-prompter)
-	
+
 	(eval-when-compile
   (defmacro my/embark-ace-action (fn)
     `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
@@ -385,6 +412,7 @@
 	      '((?h aw-split-window-vert "Vertcal Split")
 					(?v aw-split-window-horz "Horizontal Split")
 				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
+					(?m aw-move-window "Move Buffer")
 					(?? aw-show-dispatch-help)
 					)))
 
@@ -461,7 +489,9 @@
 
 (use-package restclient)
 
-(use-package tree-sitter-langs)
+; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
+(use-package tree-sitter-langs
+	:after tree-sitter)
 
 (use-package tree-sitter
 	:after tree-sitter-langs
@@ -474,5 +504,11 @@
 	:after evil
   :config
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
+
+(use-package imenu-list
+	:config
+	(setq imenu-list-focus-after-activation t)
+	;(setq imenu-list-size .10)
+	(global-set-key (kbd "C-'") #'imenu-list-smart-toggle))
 
 ;;; packages.el ends here
