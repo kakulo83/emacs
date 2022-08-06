@@ -103,6 +103,11 @@
 	:after evil
 	:functions evil-leader/set-leader
 	:config
+	(defun my-tab-window-close()
+		(interactive)
+    (if (= (length (window-list)) 1)
+		  (tab-close)	
+			(delete-window)))
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
 	(evil-leader/set-leader ",")

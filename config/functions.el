@@ -10,7 +10,8 @@
 	(interactive)
   (tab-new)
   (call-interactively 'projectile-switch-project)
-  (tab-rename (read-string "Enter tab name: ")))
+  (tab-rename (projectile-project-name)))
+  ;(tab-rename (read-string "Enter tab name: ")))
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
