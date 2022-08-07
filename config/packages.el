@@ -6,6 +6,7 @@
 (use-package projectile
 	:config
 	(setq projectile-switch-project-action 'projectile-dired)
+	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
 	:init
 	(projectile-mode +1))
 
@@ -36,8 +37,49 @@
 
 (use-package eglot
   :config
-	;(add-hook 'ruby-mode-hook 'eglot-ensure)
+	(add-hook 'ruby-mode-hook 'eglot-ensure)
   (add-hook 'typescript-mode-hook 'eglot-ensure))
+
+(use-package corfu
+	:functions global-corfu-mode
+	:bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+	:config
+	(setq corfu-auto t
+      corfu-quit-no-match 'separator)
+	:init
+	(global-corfu-mode))
+
+(use-package orderless
+  :ensure t
+  :init
+	(setq completion-styles '(orderless basic)
+				completion-category-defaults nil
+				completion-category-overrides '((file (styles . (partial-completion))))))
+
+;(use-package company
+;	:config
+;	(setq company-minimum-prefix-length 1)
+;	(progn
+;            ;; don't add any dely before trying to complete thing being typed
+;            ;; the call/response to gopls is asynchronous so this should have little
+;            ;; to no affect on edit latency
+;            (setq company-idle-delay 0)
+;            ;; start completing after a single character instead of 3
+;            (setq company-minimum-prefix-length 1)
+;            ;; align fields in completions
+;            (setq company-tooltip-align-annotations t))
+;	:hook
+;	(prog-mode . company-mode)
+;	(shell-mode . company-mode)
+;	)
+;
+;(use-package company-box
+;  :hook (company-mode . company-box-mode))
 
 (use-package all-the-icons)
 
@@ -49,6 +91,8 @@
 	:defines selectrum-mode
 	:functions selectrum-mode
 	:config
+	(setq selectrum-refine-candidates-function #'orderless-filter)
+  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
 	(setq selectrum-max-window-height (/ (frame-height) 2))
 	(setq selectrum-fix-vertical-window-height t)
 	(selectrum-mode +1))
@@ -108,7 +152,7 @@
 	(evil-leader/set-key
 	 "a" 'ace-window
 	 "cp" 'copy-filepath-to-clipboard
-	 "q" 'delete-window
+	 "q"  'my-tab-window-close ; 'delete-window
 	 "o" 'delete-other-windows
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
@@ -132,6 +176,7 @@
 	(setq go-indent-level 2)
 	:hook (before-save-hook . gofmt-before-save))
 
+;(use-package elpy
 ;	:defer t
 ;	:init
 ;	(advice-add 'python-mode :before 'elpy-enable))
@@ -158,7 +203,7 @@
 ;	;        to get rid of that annoying gray frame separator line
 ;	; https://github.com/owainlewis/emacs-color-themes
 ;	:config
-;	(load-theme 'graham t)) ;; graham  fogus  granger
+;	(load-theme 'granger  t)) ;; graham  fogus  granger
 
 ;(use-package modus-operandi-theme
 ;	:config
@@ -173,7 +218,7 @@
  	:config
  	(setq doom-themes-enable-bolt t
  				doom-themes-enable-italic t)
- 	(load-theme 'doom-city-lights t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+ 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
 
 (use-package hideshow
 	:defer t
@@ -185,6 +230,7 @@
   :diminish yas-minor-mode
   :preface (defvar tmp/company-point nil)
   :config
+	(setq yas-indent-line 'fixed)
   (yas-global-mode +1)
 
   (advice-add 'company-complete-common
@@ -209,7 +255,7 @@
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
 	(setq org-startup-with-inline-images t)
-	(setq org-startup-with-latex-preview t)
+	;(setq org-startup-with-latex-preview t)
 	(setq org-preview-latex-default-process 'dvisvgm)
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 	(setq org-src-preserve-indentation t)
@@ -270,6 +316,9 @@
 
 (use-package websocket)
 
+(use-package org-roam-ui
+  :config
+	(setq org-roam-ui-follow t))
 
 (use-package dashboard
 	:config
@@ -324,6 +373,9 @@
        (funcall #',split-type)
        (call-interactively #',fn))))
 
+	(define-key embark-identifier-map (kbd "f") 'lsp-bridge-find-def)
+	(define-key embark-identifier-map (kbd "F") 'lsp-bridge-find-def-other-window)
+ 
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
 	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump split-window-below))
@@ -423,9 +475,17 @@
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
 
 (use-package imenu-list
+	:custom-face
+  (imenu-list-entry-face-1 ((t (:foreground "white"))))
+	:custom
+	(imenu-list-focus-after-activation t)
+	(imenu-list-auto-resize t)
 	:config
-	(setq imenu-list-focus-after-activation t)
-	;(setq imenu-list-size .10)
 	(global-set-key (kbd "C-'") #'imenu-list-smart-toggle))
+
+;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
+;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
+
+;https://github.com/mhayashi1120/Emacs-wgrep
 
 ;;; packages.el ends here
