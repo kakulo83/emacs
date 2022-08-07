@@ -7,8 +7,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(eglot-ignored-server-capabilities
+	 '(:hoverProvider :signatureHelpProvider :documentHighlightProvider :codeActionProvider :codeLensProvider))
  '(package-selected-packages
-	 '(tide imenu-list eglot yafolding yasnippet-snippets use-package undo-tree tron-legacy-theme treemacs-all-the-icons tree-sitter-langs sublime-themes sqlformat solaire-mode sly selectrum rvm rg restclient rake rainbow-delimiters projectile pdf-view-restore origami org-roam-ui org-drill org-download org-bullets orderless olivetti native-complete multi-vterm modus-operandi-theme marginalia magit lsp-ui lsp-pyright kubel inflections inf-ruby helpful go-mode git-timemachine flycheck exec-path-from-shell evil-vimish-fold evil-leader evil-collection es-mode enh-ruby-mode embark-consult elpy doom-themes doom-modeline docker dired-sidebar dashboard company-box cider centaur-tabs bug-hunter balanced-windows autothemer auctex all-the-icons-dired afternoon-theme)))
+	 '(corfu eglot material-theme imenu-list yafolding yasnippet-snippets use-package undo-tree tron-legacy-theme treemacs-all-the-icons tree-sitter-langs sublime-themes sqlformat selectrum rg restclient rake rainbow-delimiters projectile pdf-view-restore origami org-roam-ui org-drill org-download org-bullets orderless olivetti native-complete multi-vterm modus-operandi-theme marginalia magit kubel inflections inf-ruby helpful go-mode git-timemachine flycheck exec-path-from-shell evil-vimish-fold evil-leader evil-collection enh-ruby-mode embark-consult doom-themes doom-modeline docker dired-sidebar dashboard bug-hunter balanced-windows auctex all-the-icons-dired afternoon-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -16,6 +18,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
  '(blamer-face ((t :foreground "#7a88cf" :background nil :height 140 :italic t)))
+ '(imenu-list-entry-face-1 ((t (:foreground "white"))))
  '(italic ((t (:foreground "white" :slant italic))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 6.0 :underline nil))))
  '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 2.75))))
