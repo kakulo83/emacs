@@ -27,6 +27,10 @@
 
 (setq completion-ignore-case t)
 
+(setq completion-ignored-extensions
+    (append completion-ignored-extensions
+        (quote
+        ("~undo-tree~"))))
 
 (setq inhibit-splash-screen t) ;; Disable splash screen
 
@@ -78,3 +82,7 @@
 (show-paren-mode 1)
 
 (global-so-long-mode 1)
+
+(setq comint-scroll-show-maximum-output nil)
+
+(setq js-indent-level 2)
