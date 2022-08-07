@@ -9,6 +9,8 @@
 ;;; pgformatter
 ;;; sqls
 ;;; exa
+;;; man-db
+;;; pip3 install epc
 ;;; 
 ;;; Code:
 
@@ -22,7 +24,8 @@
 ;;;
 ;;;  - investigate tree-sitter and whether i'm using it correctly
 ;;;
-;;;  - <leader> q should close the target window if many windows, a tab if only one window, or a frame if only one window
+;;;  - Add new embark action for identity targets, option to search with lsp-fid-def in other window
+;;;  - Investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -42,6 +45,10 @@
 (load "~/.emacs.d/config/functions.el")
 (load "~/.emacs.d/config/hooks.el")
 (load "~/.emacs.d/config/keybindings.el")
+
+; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
