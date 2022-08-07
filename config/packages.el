@@ -61,26 +61,6 @@
 				completion-category-defaults nil
 				completion-category-overrides '((file (styles . (partial-completion))))))
 
-;(use-package company
-;	:config
-;	(setq company-minimum-prefix-length 1)
-;	(progn
-;            ;; don't add any dely before trying to complete thing being typed
-;            ;; the call/response to gopls is asynchronous so this should have little
-;            ;; to no affect on edit latency
-;            (setq company-idle-delay 0)
-;            ;; start completing after a single character instead of 3
-;            (setq company-minimum-prefix-length 1)
-;            ;; align fields in completions
-;            (setq company-tooltip-align-annotations t))
-;	:hook
-;	(prog-mode . company-mode)
-;	(shell-mode . company-mode)
-;	)
-;
-;(use-package company-box
-;  :hook (company-mode . company-box-mode))
-
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
@@ -175,11 +155,6 @@
 	(setq gofmt-command "goimports")
 	(setq go-indent-level 2)
 	:hook (before-save-hook . gofmt-before-save))
-
-;(use-package elpy
-;	:defer t
-;	:init
-;	(advice-add 'python-mode :before 'elpy-enable))
 
 (use-package flycheck
 	:init (global-flycheck-mode)
