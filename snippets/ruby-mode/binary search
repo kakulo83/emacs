@@ -8,9 +8,11 @@ def binary_search(array, target)
 	right = array.length - 1
   middle = array.length / 2
 
-  while left < right
-    if array[middle] == target
-		  return middle
+  while left <= right
+    return middle if array[middle] == target
+    return left if nums[left] == target
+    return right if nums[right] == target
+
 		elsif array[middle] < target
 		  left = middle + 1
 			middle = left + right / 2

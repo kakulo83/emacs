@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: rspec example
+# key: it
+# --
+ it '${1:does_something_useful}' do
+  expect().to eq()
+end
