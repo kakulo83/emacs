@@ -3,8 +3,6 @@
 ;;; Code:
 (use-package bug-hunter)
 
-(use-package autothemer)
-
 (use-package projectile
 	:config
 	(setq projectile-switch-project-action 'projectile-dired)
@@ -93,10 +91,6 @@
 	(setq doom-modeline-vcs-max-length 24)
 	:hook (after-init . doom-modeline-mode))
 
-(use-package solaire-mode
-	:config
-	(solaire-global-mode +1))
-
 (use-package evil-leader
 	:defines evil-leader/set-leader
 	:functions evil-leader/set-leader
@@ -138,45 +132,9 @@
 	(setq go-indent-level 2)
 	:hook (before-save-hook . gofmt-before-save))
 
-;; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
-(use-package tide
-	:ensure t
-	:config
-	(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-	(setq company-tooltip-align-annotations t)
-  ;; formats the buffer before saving
-  (add-hook 'before-save-hook 'tide-format-before-save)
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-	(require 'web-mode)
-
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (setup-tide-mode))))
-
-  ;; enable typescript - tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
-
-
-(use-package clojure-mode)
-
-(use-package elpy
-	:defer t
-	:init
-	(advice-add 'python-mode :before 'elpy-enable))
-
-(use-package cider)
+;	:defer t
+;	:init
+;	(advice-add 'python-mode :before 'elpy-enable))
 
 (use-package flycheck
 	:init (global-flycheck-mode)
@@ -240,23 +198,6 @@
                     (yas-expand)))))
 
 (use-package yasnippet-snippets)
-
-(use-package company
-	:config
-	(setq company-minimum-prefix-length 1)
-	(progn
-            ;; don't add any dely before trying to complete thing being typed
-            ;; the call/response to gopls is asynchronous so this should have little
-            ;; to no affect on edit latency
-            (setq company-idle-delay 0)
-            ;; start completing after a single character instead of 3
-            (setq company-minimum-prefix-length 1)
-            ;; align fields in completions
-            (setq company-tooltip-align-annotations t))
-	:hook (prog-mode . company-mode))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
 
 (use-package org
 	:config
@@ -329,11 +270,6 @@
 
 (use-package websocket)
 
-(use-package org-roam-ui)
-
-(use-package orderless
-  :ensure t
-  :custom (completion-styles '(orderless)))
 
 (use-package dashboard
 	:config
@@ -352,11 +288,6 @@
   :after selectrum
 	:config
 	(setq consult-project-root-function (lambda () (project-root (project-current))))) ;; consult for enhanced minibuffer commands
-
-(defun find-with-ripgrep ()
-	"Find stuff with ripgrep."
-	(interactive)
-	(message "executing find-with-ripgrep"))
 
 (use-package embark
 	:defines aw-dispatch-always embark-completing-read-prompter-map embark-completing-read-prompter
@@ -456,12 +387,6 @@
 
 (use-package multi-vterm)
 
-(use-package rvm
-	:config
-	(rvm-use-default))
-
-(use-package es-mode)
-
 (use-package org-drill
 	:defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
 	:init
@@ -471,19 +396,6 @@
 	(setq org-drill-left-close-delimiter "<[")
 	(setq org-drill-right-close-delimiter "]>")
 	(setq org-drill-learn-fraction 0.25))
-
-(use-package pdf-tools
-	:init
-	(setq pdf-view-display-size 1.0)
-	(pdf-tools-install))
-
-(use-package pdf-view-restore
-  :after pdf-tools
-  :config
-	(setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
-  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
-
-(use-package sly)
 
 (use-package balanced-windows
   :config
