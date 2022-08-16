@@ -26,6 +26,10 @@
 ;;;
 ;;;  - Add new embark action for identity targets, option to search with lsp-fid-def in other window
 ;;;  - Investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
+;;; 
+;;;  - consider:  https://github.com/justbur/emacs-which-key
+;;;  - consider:  https://github.com/alexluigit/dirvish
+;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
