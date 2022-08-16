@@ -30,15 +30,29 @@
 					help
 					man
 					woman
-					completion
+	 				completion
 					helpful))
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
-(use-package eglot
-  :config
-	(add-hook 'ruby-mode-hook 'eglot-ensure)
-  (add-hook 'typescript-mode-hook 'eglot-ensure))
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+	:config
+	(setq lsp-lens-enable t
+        lsp-enable-links nil
+				lsp-signature-auto-activate nil
+				lsp-keymap-prefix "C-c l"
+				lsp-headerline-breadcrumb-enable nil)
+	:hook (
+				 (sql-mode . lsp-deferred)
+				 (js-mode . lsp-deferred))
+	)
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))
 
 (use-package corfu
 	:functions global-corfu-mode
@@ -168,10 +182,10 @@
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
 
-;(use-package tron-legacy-theme
-;  :config
-;	(setq tron-legacy-theme-softer-bg t)
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+	(setq tron-legacy-theme-softer-bg t)
+  (load-theme 'tron-legacy t))
 
 ;(use-package sublime-themes
 ;	; NOTE:  For granger theme I changed the "fringe" background color to "background"
@@ -184,16 +198,23 @@
 ;	:config
 ;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
 
-;(use-package afternoon-theme
+;(use-package planet-theme
 ;	:config
-;	(load-theme 'afternoon t))
+;	(load-theme 'planet t))
 
-(use-package doom-themes
-	:defines doom-themes-enable-bolt
- 	:config
- 	(setq doom-themes-enable-bolt t
- 				doom-themes-enable-italic t)
- 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant
+; orbital  iceberg  lucius  deep-space  
+
+;(use-package iceberg-theme
+;	:config
+;	(iceberg-theme-create-theme-file)
+;	(load-theme 'solarized-iceberg-dark t))
+
+;(use-package doom-themes
+;	:defines doom-themes-enable-bolt
+; 	:config
+; 	(setq doom-themes-enable-bolt t
+; 				doom-themes-enable-italic t)
+; 	(load-theme 'doom-nord-aurora t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 
 (use-package hideshow
 	:defer t
@@ -449,18 +470,31 @@
   :config
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
 
+;(use-package side-hustle
+;	:config
+;	(setq side-hustle-display-alist '((side . right) (slot . 0) (window-width . 40)))
+;	:bind
+;	(("C-'" . side-hustle-toggle)))
+
 (use-package imenu-list
-	:custom-face
-  (imenu-list-entry-face-1 ((t (:foreground "white"))))
-	:custom
-	(imenu-list-focus-after-activation t)
-	(imenu-list-auto-resize t)
+  :ensure t
+  :bind ("C-'" . imenu-list-minor-mode)
+  :config
+  (setq imenu-list-focus-after-activation t))  
+(require 'wgrep)
+
+(use-package web-mode
 	:config
-	(global-set-key (kbd "C-'") #'imenu-list-smart-toggle))
+	(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+	(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)))
 
-;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
+
+																				;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
-
-;https://github.com/mhayashi1120/Emacs-wgrep
 
 ;;; packages.el ends here
