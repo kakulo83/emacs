@@ -15,6 +15,9 @@
   :init
 	(setq evil-want-keybinding nil)
 	:config
+  (setq evil-insert-state-cursor '(bar "#00FF00")
+      evil-visual-state-cursor '(box "#FF00FF")
+      evil-normal-state-cursor '(box "#E2E8EF"))
 	(evil-mode)
   (setq evil-shift-width 2))
 
@@ -23,7 +26,8 @@
 	:after evil
 	:config
 	(setq evil-collection-mode-list
-				'(dired
+				'(vterm
+					dired
 					dashboard
 					magit
 					proced
@@ -182,10 +186,10 @@
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
 
-(use-package tron-legacy-theme
-  :config
-	(setq tron-legacy-theme-softer-bg t)
-  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;	(setq tron-legacy-theme-softer-bg t)
+;  (load-theme 'tron-legacy t))
 
 ;(use-package sublime-themes
 ;	; NOTE:  For granger theme I changed the "fringe" background color to "background"
@@ -209,12 +213,12 @@
 ;	(iceberg-theme-create-theme-file)
 ;	(load-theme 'solarized-iceberg-dark t))
 
-;(use-package doom-themes
-;	:defines doom-themes-enable-bolt
-; 	:config
-; 	(setq doom-themes-enable-bolt t
-; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-nord-aurora t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t)
+ 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 
 (use-package hideshow
 	:defer t

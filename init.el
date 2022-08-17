@@ -30,6 +30,7 @@
 ;;;  - consider:  https://github.com/justbur/emacs-which-key
 ;;;  - consider:  https://github.com/alexluigit/dirvish
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
+;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -51,7 +52,7 @@
 (load "~/.emacs.d/config/keybindings.el")
 
 ; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
-(when (string= system-type "darwin")       
+(when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
 (when (memq window-system '(mac ns x))

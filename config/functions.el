@@ -114,3 +114,10 @@
 (defun collect-search-in-split
   (split-window-right))
 (advice-add 'embark-collect-live :before #'collect-search-in-split)
+
+(push (list "open-profile-vsplit"
+						(lambda ()
+							(split-window-horizontally)
+							(find-file "~/.zshrc")))
+			vterm-eval-cmds)
+
