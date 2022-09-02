@@ -22,7 +22,7 @@
 ; Tab Related (define-key evil-normal-state-map (kbd "C-t") 'tab-bar-switch-to-tab)
 (define-key evil-normal-state-map (kbd "C-s") 'switch-project-with-new-tab) ; 'projectile-switch-project)
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
-(define-key evil-normal-state-map (kbd "C-b") 'switch-to-buffer)
+(define-key evil-normal-state-map (kbd "C-b") 'persp-list-buffers)
 (define-key evil-normal-state-map (kbd "C-S-b") 'list-buffers)
 (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)

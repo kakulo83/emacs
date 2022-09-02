@@ -532,8 +532,10 @@
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
   (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
-
-
+(use-package perspective
+  :bind ("C-b" . persp-list-buffers)
+	:init
+	(persp-mode))
 
 
 ;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
