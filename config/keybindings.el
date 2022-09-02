@@ -22,7 +22,7 @@
 ; Tab Related (define-key evil-normal-state-map (kbd "C-t") 'tab-bar-switch-to-tab)
 (define-key evil-normal-state-map (kbd "C-s") 'switch-project-with-new-tab) ; 'projectile-switch-project)
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
-(define-key evil-normal-state-map (kbd "C-b") 'persp-list-buffers)
+(define-key evil-normal-state-map (kbd "C-b") 'persp-switch-to-buffers*)
 (define-key evil-normal-state-map (kbd "C-S-b") 'list-buffers)
 (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
@@ -64,5 +64,5 @@
 ;(evil-define-key 'insert shell-mode-map (kbd "C-up") 'comint-previous-input)
 ;(evil-define-key 'insert shell-mode-map (kbd "C-down") 'comint-next-input)
 
-(evil-ex-define-cmd "q" 'kill-this-buffer)
+(evil-ex-define-cmd "q" 'persp-kill-buffer*)
 (evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)

@@ -532,6 +532,15 @@
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
   (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
+
+; todo
+; when switching to a new project
+;     - create a new perspective with the project name
+; when switching forward/backwards in tab-line
+;     - change perspective
+; when in a project and perspective
+;     - opening a new buffer adds the buffer to the current perspective
+;     - killing a buffer removes it from the current perspective
 (use-package perspective
   :bind ("C-b" . persp-list-buffers)
 	:init
