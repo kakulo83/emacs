@@ -12,6 +12,7 @@ eshell/history
 eshell/lastdir
 transient
 flycheck_init.el
+flycheck_packages.el
 eln-cache
 persist
 .pdf-view-restore
@@ -20,3 +21,5 @@ url
 request
 tramp
 *.~undo-tree~
+quelpa
+themes

@@ -6,15 +6,15 @@
  '(default ((t (:background nil))))
  '(blamer-face ((t :foreground "#7a88cf" :background nil :height 140 :italic t)))
  '(italic ((t (:foreground "white" :slant italic))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 6.0 :underline nil))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 2.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "ETBembo")))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 6.0 :underline nil))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 2.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold")))))
 
 
 (tool-bar-mode -1) ;; Disable Toolbar
@@ -40,4 +40,3 @@
 (set-default 'truncate-lines t) ;; Don't wrap lines
 
 (set-cursor-color "#00FFFF")
-

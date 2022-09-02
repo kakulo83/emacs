@@ -1,6 +1,12 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
+
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t))
+
 (use-package bug-hunter)
 
 (use-package projectile
@@ -53,7 +59,6 @@
 	)
 
 (use-package lsp-pyright
-  :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))
@@ -73,8 +78,7 @@
 	(global-corfu-mode))
 
 (use-package orderless
-  :ensure t
-  :init
+	:init
 	(setq completion-styles '(orderless basic)
 				completion-category-defaults nil
 				completion-category-overrides '((file (styles . (partial-completion))))))
@@ -82,8 +86,8 @@
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
+	:hook
+	(dired-mode . all-the-icons-dired-mode))
 
 (use-package selectrum
 	:defines selectrum-mode
@@ -158,9 +162,9 @@
 	 "/" 'string-rectangle
 	 "f" 'xref-find-definitions
 	 "r" 'xref-find-references
-	 "gl" 'magit-log-all
-	 "gb" 'magit-show-commit
-	 "gB" 'magit-blame-echo
+	 "gl" 'magit-log-buffer-file
+	 "gL" 'magit-log-all
+	 "gb" 'magit-blame ; 'magit-show-commit
 	 "gs" 'magit-status
 	 "gc" 'magit-branch
 	 "gh" 'magit-log-buffer-file
@@ -198,9 +202,9 @@
 ;	:config
 ;	(load-theme 'granger  t)) ;; graham  fogus  granger
 
-;(use-package modus-operandi-theme
-;	:config
-;	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+(use-package modus-operandi-theme
+	:config
+	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
 
 ;(use-package planet-theme
 ;	:config
@@ -213,12 +217,12 @@
 ;	(iceberg-theme-create-theme-file)
 ;	(load-theme 'solarized-iceberg-dark t))
 
-(use-package doom-themes
-	:defines doom-themes-enable-bolt
- 	:config
- 	(setq doom-themes-enable-bolt t
- 				doom-themes-enable-italic t)
- 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+;(use-package doom-themes
+;	:defines doom-themes-enable-bolt
+; 	:config
+; 	(setq doom-themes-enable-bolt t
+; 				doom-themes-enable-italic t)
+; 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 
 (use-package hideshow
 	:defer t
@@ -314,10 +318,10 @@
 
 (use-package simple-httpd)
 
-(use-package websocket)
+(use-package websocket)	
 
 (use-package org-roam-ui
-  :config
+        :config
 	(setq org-roam-ui-follow t))
 
 (use-package dashboard
@@ -372,9 +376,17 @@
        (interactive)
        (funcall #',split-type)
        (call-interactively #',fn))))
+	(defun my-find-identifier-vertical-split ()
+    "Find the symbol under cursor in a vertical split."
 
-	(define-key embark-identifier-map (kbd "f") 'lsp-bridge-find-def)
-	(define-key embark-identifier-map (kbd "F") 'lsp-bridge-find-def-other-window)
+		)
+	(defun my-find-identifier-horizontal-split ()
+    "Find the symbol under cursor in a horizontal split."
+		
+		)
+
+	(define-key embark-identifier-map (kbd "C-v") 'lsp-bridge-find-def)
+	(define-key embark-identifier-map (kbd "C-s") 'lsp-bridge-find-def-other-window)
  
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
@@ -385,7 +397,7 @@
 	(define-key embark-bookmark-map (kbd "C-v") (my/embark-split-action bookmark-jump split-window-right)))
 
 (use-package embark-consult
-  :ensure t
+  
   :after (embark consult)
   :demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an
@@ -474,17 +486,12 @@
   :config
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
 
-;(use-package side-hustle
-;	:config
-;	(setq side-hustle-display-alist '((side . right) (slot . 0) (window-width . 40)))
-;	:bind
-;	(("C-'" . side-hustle-toggle)))
-
 (use-package imenu-list
-  :ensure t
   :bind ("C-'" . imenu-list-minor-mode)
   :config
   (setq imenu-list-focus-after-activation t))  
+
+; allows editing grep results and applying it to all files, good for global search/replace
 (require 'wgrep)
 
 (use-package web-mode
@@ -497,8 +504,37 @@
   :after python
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
+(use-package typescript-mode
+  :after tree-sitter
+  :config
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode typescriptreact-mode typescript-mode
+    "TypeScript TSX")
 
-																				;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+
+; allows typescript-mode to use tree-sitter for indentation and parsing
+(use-package tsi
+  :after tree-sitter
+  :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
+  ;; define autoload definitions which when actually invoked will cause package to be loaded
+  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
+  :init
+  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
+
+
+
+
+
+;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
 
 ;;; packages.el ends here

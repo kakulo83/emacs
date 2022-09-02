@@ -16,6 +16,10 @@
 
 
 ;;; TODO
+;;;  - Find all references 'xref-find-references' is USELESS, it does not capture the entire word if it is separated with chars like '-'
+;;;  - Figure a way to perform go-to-definition (gd) with the option of opening a vertical or horizontal split
+;;;  - Add either perspective or figure out how to scope each tab such that Ctrl-B/buffers-list only shows buffers for THAT tab
+;;;
 ;;;  - Refine searching
 ;;;  -   add ability to split result of consult-ripgrep in a vert or horizontal split
 ;;;  - create function to search for javascript/typescript files
@@ -27,6 +31,7 @@
 ;;;  - Add new embark action for identity targets, option to search with lsp-fid-def in other window
 ;;;  - Investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
 ;;; 
+;;;  - consider:  https://github.com/Silex/docker.el
 ;;;  - consider:  https://github.com/justbur/emacs-which-key
 ;;;  - consider:  https://github.com/alexluigit/dirvish
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
@@ -39,7 +44,14 @@
 (package-refresh-contents)
 
 (require 'use-package-ensure)
- 
+
+; quelpa allows installation of packages from source like github
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 

@@ -27,6 +27,7 @@
 (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 (define-key evil-normal-state-map (kbd "/") 'consult-line)
+(define-key evil-normal-state-map (kbd "*") 'isearch-forward-symbol-at-point)
 (define-key evil-motion-state-map (kbd "n") 'isearch-repeat-forward)
 (define-key evil-motion-state-map (kbd "N") 'isearch-repeat-backward)
 
@@ -64,3 +65,4 @@
 ;(evil-define-key 'insert shell-mode-map (kbd "C-down") 'comint-next-input)
 
 (evil-ex-define-cmd "q" 'kill-this-buffer)
+(evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
