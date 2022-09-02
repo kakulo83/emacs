@@ -55,8 +55,7 @@
 				lsp-headerline-breadcrumb-enable nil)
 	:hook (
 				 (sql-mode . lsp-deferred)
-				 (js-mode . lsp-deferred))
-	)
+				 (js-mode . lsp-deferred)))
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
@@ -145,18 +144,19 @@
 	:after evil
 	:functions evil-leader/set-leader
 	:config
-	(defun my-tab-window-close()
-		(interactive)
-    (if (= (length (window-list)) 1)
-		  (tab-close)	
-			(delete-window)))
+	;; Tab Related
+  ;	(defun my-tab-window-close()
+  ;		(interactive)
+  ;    (if (= (length (window-list)) 1)
+  ;		  (tab-close)	
+  ;			(delete-window)))
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "a" 'ace-window
 	 "cp" 'copy-filepath-to-clipboard
-	 "q"  'my-tab-window-close ; 'delete-window
+	 ;; Tab Related "q"  'my-tab-window-close ; 'delete-window
 	 "o" 'delete-other-windows
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet

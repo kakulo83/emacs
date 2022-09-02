@@ -1,17 +1,17 @@
-(defun new-named-tab ()
-	"Create a new named tab."
-	(interactive)
-	(call-interactively 'tab-new)
-	(tab-rename (read-string "Enter tab name: ")))
-
-(global-set-key (kbd "s-t") 'new-named-tab)
-
-(defun switch-project-with-new-tab ()
-	(interactive)
-  (tab-new)
-  (call-interactively 'projectile-switch-project)
-  (tab-rename (projectile-project-name)))
-  ;(tab-rename (read-string "Enter tab name: ")))
+; Tab Related
+;(defun new-named-tab ()
+;	"Create a new named tab."
+;	(interactive)
+;	(call-interactively 'tab-new)
+;	(tab-rename (read-string "Enter tab name: ")))
+;
+;(global-set-key (kbd "s-t") 'new-named-tab)
+;
+;(defun switch-project-with-new-tab ()
+;	(interactive)
+;  (tab-new)
+;  (call-interactively 'projectile-switch-project)
+;  (tab-rename (projectile-project-name)))
 
 (defun unique-shell ()
 	"Create a new named shell buffer."
