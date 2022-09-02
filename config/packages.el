@@ -63,19 +63,21 @@
                           (require 'lsp-pyright)
                           (lsp))))
 
-(use-package corfu
-	:functions global-corfu-mode
-	:bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
+(use-package company
 	:config
-	(setq corfu-auto t
-      corfu-quit-no-match 'separator)
-	:init
-	(global-corfu-mode))
+	(setq company-minimum-prefix-length 1)
+	(progn
+		;; don't add any dely before trying to complete thing being typed
+		;; the call/response to gopls is asynchronous so this should have little
+		;; to no affect on edit latency
+		(setq company-idle-delay 0)
+		;; start completing after a single character instead of 3
+		(setq company-minimum-prefix-length 1)
+		;; align fields in completions
+		(setq company-tooltip-align-annotations t))
+	:hook
+	(prog-mode . company-mode)
+	(shell-mode . company-mode))
 
 (use-package orderless
 	:init
