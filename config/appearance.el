@@ -19,7 +19,7 @@
 
 (tool-bar-mode -1) ;; Disable Toolbar
 
-(tab-bar-mode 0)
+(tab-bar-mode -1)
 
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 

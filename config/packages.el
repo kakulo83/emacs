@@ -145,18 +145,18 @@
 	:functions evil-leader/set-leader
 	:config
 	;; Tab Related
-  ;	(defun my-tab-window-close()
-  ;		(interactive)
-  ;    (if (= (length (window-list)) 1)
-  ;		  (tab-close)	
-  ;			(delete-window)))
+  (defun my-tab-window-close()
+  	(interactive)
+     (if (= (length (window-list)) 1)
+  	  (tab-close)	
+  		(delete-window)))
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 	 "a" 'ace-window
 	 "cp" 'copy-filepath-to-clipboard
-	 ;; Tab Related "q"  'my-tab-window-close ; 'delete-window
+	 "q"  'my-tab-window-close ; 'delete-window
 	 "o" 'delete-other-windows
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
@@ -532,20 +532,11 @@
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
   (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
-
-; todo
-; when switching to a new project
-;     - create a new perspective with the project name
-; when switching forward/backwards in tab-line
-;     - change perspective
-; when in a project and perspective
-;     - opening a new buffer adds the buffer to the current perspective
-;     - killing a buffer removes it from the current perspective
 (use-package perspective
-  :bind ("C-b" . persp-list-buffers)
+	:custom
+	(persp-mode-prefix-key (kbd "C-c M-p"))
 	:init
 	(persp-mode))
-
 
 ;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
