@@ -55,8 +55,7 @@
 				lsp-headerline-breadcrumb-enable nil)
 	:hook (
 				 (sql-mode . lsp-deferred)
-				 (js-mode . lsp-deferred))
-	)
+				 (js-mode . lsp-deferred)))
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
@@ -145,11 +144,12 @@
 	:after evil
 	:functions evil-leader/set-leader
 	:config
-	(defun my-tab-window-close()
-		(interactive)
-    (if (= (length (window-list)) 1)
-		  (tab-close)	
-			(delete-window)))
+	;; Tab Related
+  (defun my-tab-window-close()
+  	(interactive)
+     (if (= (length (window-list)) 1)
+  	  (tab-close)	
+  		(delete-window)))
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
 	(evil-leader/set-leader ",")
@@ -532,9 +532,11 @@
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
   (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
-
-
-
+(use-package perspective
+	:custom
+	(persp-mode-prefix-key (kbd "C-c M-p"))
+	:init
+	(persp-mode))
 
 ;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html

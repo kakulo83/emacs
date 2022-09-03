@@ -19,6 +19,7 @@
 ;;;  - Find all references 'xref-find-references' is USELESS, it does not capture the entire word if it is separated with chars like '-'
 ;;;  - Figure a way to perform go-to-definition (gd) with the option of opening a vertical or horizontal split
 ;;;  - Add either perspective or figure out how to scope each tab such that Ctrl-B/buffers-list only shows buffers for THAT tab
+;;;  - When opening a new projectile project, set emacs current working directory to root of project
 ;;;
 ;;;  - Refine searching
 ;;;  -   add ability to split result of consult-ripgrep in a vert or horizontal split
@@ -76,7 +77,7 @@
 (exec-path-from-shell-copy-env "PROD_MULTI_TENANT_SLAVE_PSQL_STRING")
 (exec-path-from-shell-copy-env "URL_SHORTENER_PSQL_STRING")
 
-
+; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
   '((display-buffer-reuse-window display-buffer-same-window)
     (reusable-frames . t)))
@@ -87,5 +88,8 @@
 (let ((fountain-scripts "~/.emacs.d/private/fountain/fountain.el"))
 	(when (file-exists-p fountain-scripts)
 		(load-file fountain-scripts)))
+
+; add non package scripts
+(load "~/.emacs.d/private/custom/persp-projectile.el")
 
 ;;; init.el ends here
