@@ -538,6 +538,10 @@
 	:init
 	(persp-mode))
 
+(use-package prettier-js
+	:config
+	(add-hook 'js-mode-hook 'prettier-js-mode))
+
 ;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
 
