@@ -449,9 +449,43 @@
 
 (use-package vterm
 	:config
+	(advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
 	(setq vterm-max-scrollback 20000))
 
-(use-package multi-vterm)
+(use-package multi-vterm
+  :config
+  	(add-hook 'vterm-mode-hook
+  			(lambda ()
+  			(setq-local evil-insert-state-cursor 'box)
+  			(evil-insert-state)))
+  	(define-key vterm-mode-map [return]                      #'vterm-send-return)
+  
+  	(setq vterm-keymap-exceptions nil)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+  	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+  	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+  	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+  	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+  	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+  	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+  	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
 
 (use-package org-drill
 	:defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
@@ -520,6 +554,8 @@
   ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
   (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
+; TODO swap out for https://dev.to/viglioni/how-i-set-up-my-emacs-for-typescript-3eeh
+; be nice to not have to use "quelpa" and another packaging mechanism
 ; allows typescript-mode to use tree-sitter for indentation and parsing
 (use-package tsi
   :after tree-sitter
@@ -537,6 +573,8 @@
 	(persp-mode-prefix-key (kbd "C-c M-p"))
 	:init
 	(persp-mode))
+
+(use-package lox-mode)
 
 ;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
 ;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
