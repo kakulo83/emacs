@@ -40,6 +40,8 @@
 (define-key evil-normal-state-map "zR" 'yafolding-toggle-all)
 (define-key evil-normal-state-map "gd" 'xref-find-definitions)
 (define-key evil-normal-state-map "gr" 'xref-find-references)
+(define-key evil-normal-state-map "gt" 'persp-next)
+(define-key evil-normal-state-map "gT" 'persp-prev)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)

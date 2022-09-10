@@ -133,9 +133,11 @@
 
 (use-package doom-modeline
 	:init
+	(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 	(setq doom-modeline-workspace-name nil)
 	(setq doom-modeline-buffer-encoding nil)
-	(setq doom-modeline-vcs-max-length 24)
+	(setq doom-modeline-height 30)
+	(setq doom-modeline-vcs-max-length 36)
 	:hook (after-init . doom-modeline-mode))
 
 (use-package evil-leader
@@ -554,20 +556,6 @@
   ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
   (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
-; TODO swap out for https://dev.to/viglioni/how-i-set-up-my-emacs-for-typescript-3eeh
-; be nice to not have to use "quelpa" and another packaging mechanism
-; allows typescript-mode to use tree-sitter for indentation and parsing
-(use-package tsi
-  :after tree-sitter
-  :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
-  ;; define autoload definitions which when actually invoked will cause package to be loaded
-  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
-  :init
-  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
-  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
-  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
-  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
-
 (use-package perspective
 	:custom
 	(persp-mode-prefix-key (kbd "C-c M-p"))
@@ -579,8 +567,5 @@
 (use-package prettier-js
 	:config
 	(add-hook 'js-mode-hook 'prettier-js-mode))
-
-;https://amitp.blogspot.com/2020/06/emacs-prettier-tab-line.html
-;https://amitp.blogspot.com/2018/10/emacs-prettier-tabbar.html
 
 ;;; packages.el ends here
