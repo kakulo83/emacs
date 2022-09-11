@@ -381,17 +381,22 @@
        (interactive)
        (funcall #',split-type)
        (call-interactively #',fn))))
-	(defun my-find-identifier-vertical-split ()
-    "Find the symbol under cursor in a vertical split."
 
-		)
-	(defun my-find-identifier-horizontal-split ()
-    "Find the symbol under cursor in a horizontal split."
-		
-		)
 
-	(define-key embark-identifier-map (kbd "C-v") 'lsp-bridge-find-def)
-	(define-key embark-identifier-map (kbd "C-s") 'lsp-bridge-find-def-other-window)
+	(add-to-list 'marginalia-prompt-categories '("consult-ripgrep" . consult-ripgrep))
+	
+	(embark-define-keymap embark-consult-ripgrep-actions
+		"Keymap for consult-ripgrep (when mentioned by name)."
+    ((kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
+    ((kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below)))
+
+	(add-to-list 'embark-keymap-alist '(consult-ripgrep . embark-consult-ripgrep-actions))
+	
+	;(define-key embark-consult-search-map (kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
+	;(define-key embark-consult-search-map (kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below))
+	
+	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action xref-find-definitions split-window-right))
+	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action xref-find-definitions split-window-below))
  
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
