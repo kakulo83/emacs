@@ -16,20 +16,12 @@
 
 
 ;;; TODO
-;;;  - Figure a way to perform go-to-definition (gd) with the option of opening a vertical or horizontal split
-;;;       - best way is to implement a new Embark action on an identity target, "find-definition-vertical-split" "find-definition-horizontal-split"
 ;;;  - When opening a new projectile project, set emacs current working directory to root of project
-;;;
-;;;  - Refine searching
-;;;  -   add ability to split result of consult-ripgrep in a vert or horizontal split
-;;;  - create function to search for javascript/typescript files
-;;;  - create function to search for ruby files
-;;;  - add ability to search with ripgrep and show result in new split window
+;;;  - Add ability to search with ripgrep and show result in new split window
+;;;  - Make Embark-Collect default to showing results in a vertical split
 ;;;
 ;;;  - investigate tree-sitter and whether i'm using it correctly
 ;;;
-;;;  - Add new embark action for identity targets, option to search with lsp-fid-def in other window
-;;; 
 ;;;  - consider:  https://github.com/radian-software/ctrlf
 ;;;  - consider:  https://github.com/Silex/docker.el
 ;;;  - consider:  https://github.com/justbur/emacs-which-key
