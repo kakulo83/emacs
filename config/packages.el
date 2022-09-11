@@ -127,6 +127,7 @@
 
 (use-package magit
 	:config
+	(advice-add 'magit-blame :after '(lambda (&rest args) (call-interactively 'other-window 0)))
 	(setq magit-git-executable "/usr/bin/git")
 	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
