@@ -127,7 +127,7 @@
 
 (use-package magit
 	:config
-	(advice-add 'magit-blame :after '(lambda (&rest args) (call-interactively 'other-window 0)))
+	(advice-add 'magit-blame :after '(lambda (&rest args) (select-window (previous-window))))
 	(setq magit-git-executable "/usr/bin/git")
 	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
@@ -354,6 +354,12 @@
 	(("M-o" . embark-act))
 	:init
 	:config
+  ;; NOTE:  embark shows UI in extended-mini-buffer
+	;;        from customizing this:  embark-verbose-indicator-display-action
+
+  ; '(embark-verbose-indicator-display-action
+  ;	 '(display-buffer-at-bottom
+  ;		 (window-height . fit-window-to-buffer)))
 
 	;; Selecting commands via completions instead of key bindings
 	;; (setq embark-prompter 'embark-completing-read-prompter)
@@ -384,7 +390,7 @@
 
 
 	(add-to-list 'marginalia-prompt-categories '("consult-ripgrep" . consult-ripgrep))
-	
+
 	(embark-define-keymap embark-consult-ripgrep-actions
 		"Keymap for consult-ripgrep (when mentioned by name)."
     ((kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
