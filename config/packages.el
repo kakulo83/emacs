@@ -167,6 +167,7 @@
 	 "/" 'string-rectangle
 	 "f" 'xref-find-definitions
 	 "r" 'xref-find-references
+   "p" 'persp-switch
 	 "gl" 'magit-log-buffer-file
 	 "gL" 'magit-log-all
 	 "gb" 'magit-blame ; 'magit-show-commit
@@ -452,7 +453,7 @@
 
 (use-package undo-tree
 	:config
-	(setq undo-tree-auto-save-history 0)
+	(setq undo-tree-auto-save-history nil)
 	:init
 	(global-undo-tree-mode))
 
@@ -579,5 +580,10 @@
 (use-package prettier-js
 	:config
 	(add-hook 'js-mode-hook 'prettier-js-mode))
+
+(use-package dired-sidebar
+	:config
+	(setq dired-sidebar-recenter-cursor-on-follow-file t)
+	(setq dired-sidebar-should-follow-file t))
 
 ;;; packages.el ends here
