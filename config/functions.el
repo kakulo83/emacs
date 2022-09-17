@@ -18,8 +18,7 @@
   (interactive)
 	;(call-interactively 'split-window-vertically)
 	(call-interactively 'multi-vterm)
-	;(call-interactively 'shell)
-  (rename-buffer (read-string "Enter buffer name: ")))
+	(rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")"))))
 
 (defun spawn-shell (name)
 	"Create a new shell buffer"
