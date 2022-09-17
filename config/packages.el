@@ -100,23 +100,6 @@
 	(setq selectrum-fix-vertical-window-height t)
 	(selectrum-mode +1))
 
-(use-package treemacs
-	:defer t
-	:config
-	(progn
-		(setq treemacs-show-hidden-files t
-          treemacs-space-between-root-nodes nil
-					treemacs-display-in-side-window t
-					treemacs-position 'left
-					treemacs-width 35)))
-
-(use-package treemacs-all-the-icons
-	:defines treemacs-load-theme
-	:functions treemacs-load-theme
-	:after (treemacs)
-	:config
-	(treemacs-load-theme 'all-the-icons))
-
 (use-package git-timemachine
 	:after evil
 	:config

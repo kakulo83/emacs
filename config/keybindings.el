@@ -45,18 +45,11 @@
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
-(evil-define-key 'normal eshell-mode-map (kbd "C-n") 'treemacs)
-(evil-define-key 'normal treemacs-mode-map (kbd "s") 'treemacs-visit-node-ace-horizontal-split)
-(evil-define-key 'normal treemacs-mode-map (kbd "i") 'treemacs-visit-node-ace-vertical-split)
 (evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
 (evil-define-key 'normal pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "d") 'pdf-view-next-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
-(evil-define-key 'normal treemacs-mode-map (kbd "a") 'treemacs-create-file)
-(evil-define-key 'normal treemacs-mode-map (kbd "m") 'treemacs-move-file)
-(evil-define-key 'normal treemacs-mode-map (kbd "d") 'treemacs-delete-file)
-(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-refresh)
 (evil-define-key 'insert shell-mode-map (kbd "C-h") 'consult-history)
 
 ; TODO bind up/down arrow key to show previous/next shell command

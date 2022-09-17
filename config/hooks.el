@@ -1,7 +1,6 @@
 (add-hook 'eshell-mode-hook
           (lambda ()
-						(define-key eshell-mode-map (kbd "C-h") #'robert/eshell-history)
-            (define-key eshell-mode-map (kbd "C-n") #'treemacs)))
+						(define-key eshell-mode-map (kbd "C-h") #'robert/eshell-history)))
 
 ;; Try to use vterm-mode-map and keybind "C-h" to history completion function
 ;; have to investigate whehther vterm exposes its history
@@ -31,12 +30,10 @@
 
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized) ;; Make fullscreen
 
-(add-hook 'treemacs-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'vterm-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'org-mode-hook (lambda() (linum-mode 0)))
 (add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
 (add-hook 'eshell-mode-hook (lambda()
-															(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 															(linum-mode 0)))
 
 (add-hook 'sql-interactive-mode-hook
