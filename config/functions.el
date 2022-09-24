@@ -120,3 +120,27 @@
 							(find-file "~/.zshrc")))
 			vterm-eval-cmds)
 
+;; next-buffer and prev-buffer will violate the scope of the current perspective
+;; and show buffers from other perspectives
+;; The following functions attempt to remediate this.
+;; Taken from (https://github.com/nex3/perspective-el/issues/63)
+(defun my/persp-get-buffers-list ()
+  "Get filtered list of buffers, sorted alphabetically."
+  (sort
+   (cl-remove-if '(lambda (b) (if (stringp b) (string-match "^\[* \]" b) t))
+                 (mapcar 'buffer-name (persp-buffers (persp-curr))))
+   'string<))
+
+(defun my/persp-next-buffer ()
+  "My own version of `next-buffer'. Don't show internal buffers."
+  (interactive)
+  (let ((buffername (buffer-name (current-buffer)))
+        (bufferlist (my/persp-get-buffers-list)))
+    (switch-to-buffer (or (cadr (member buffername bufferlist)) (car bufferlist)))))
+
+(defun my/persp-previous-buffer ()
+  "My own version of `next-buffer'. Don't show internal buffers"
+  (interactive)
+  (let ((buffername (buffer-name (current-buffer)))
+        (bufferlist (reverse (my/persp-get-buffers-list))))
+    (switch-to-buffer (or (cadr (member buffername bufferlist)) (car bufferlist)))))

@@ -62,6 +62,10 @@
                           (require 'lsp-pyright)
                           (lsp))))
 
+(use-package lsp-ui
+	:bind
+	("C-'" . lsp-ui-imenu))
+
 (use-package company
 	:config
 	(setq company-minimum-prefix-length 1)
@@ -519,11 +523,6 @@
 	:after evil
   :config
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
-
-(use-package imenu-list
-  :bind ("C-'" . imenu-list-minor-mode)
-  :config
-  (setq imenu-list-focus-after-activation t))  
 
 ; allows editing grep results and applying it to all files, good for global search/replace
 (require 'wgrep)

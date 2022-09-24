@@ -19,8 +19,8 @@
 ;;;  - When opening a new projectile project, set emacs current working directory to root of project
 ;;;  - Add ability to search with ripgrep and show result in new split window
 ;;;  - Make Embark-Collect default to showing results in a vertical split
-;;;  - Consolidate undo-tree hidden files to .emacs.d/undo
-;;;       - https://www.reddit.com/r/emacs/comments/tejte0/undotree_bug_undotree_files_scattering_everywhere/
+;;;  - Create a command "repl" that lets me interactively select
+;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;
 ;;;  - consider:  https://github.com/radian-software/ctrlf
 ;;;  - consider:  https://github.com/Silex/docker.el
