@@ -568,4 +568,6 @@
 	(setq dired-sidebar-recenter-cursor-on-follow-file t)
 	(setq dired-sidebar-should-follow-file t))
 
+(use-package focus)
+
 ;;; packages.el ends here

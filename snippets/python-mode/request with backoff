@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: request with backoff
+# key: req
+# --
+import time
+
+import requests
+from requests.exceptions import HTTPError
+
+url = "https://theurl.com"
+retries = 3
+
+for n in range(retries):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        break
+
+    except HTTPError as exc:
+        code = exc.response.status_code
+        
+        if code in [429, 500, 502, 503, 504]:
+            # retry after n seconds
+            time.sleep(n)
+            continue
+
+        raise

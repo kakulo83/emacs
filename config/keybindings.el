@@ -48,6 +48,7 @@
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 (evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
+(evil-define-key 'normal vterm-mode-map (kbd "C-d") 'evil-scroll-down)
 (evil-define-key 'normal pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "d") 'pdf-view-next-page)

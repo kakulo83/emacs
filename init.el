@@ -22,6 +22,9 @@
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;
+;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
+;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
+;;;  - consider:  https://github.com/dash-docs-el/dash-docs
 ;;;  - consider:  https://github.com/radian-software/ctrlf
 ;;;  - consider:  https://github.com/Silex/docker.el
 ;;;  - consider:  https://github.com/justbur/emacs-which-key
