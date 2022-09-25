@@ -29,7 +29,6 @@
 ;;;  - consider:  https://github.com/Silex/docker.el
 ;;;  - consider:  https://github.com/justbur/emacs-which-key
 ;;;  - consider:  https://github.com/alexluigit/dirvish
-;;;  - consider:  https://github.com/jojojames/dired-sidebar
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
 ;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 ;;;  - investigate https://issuecloser.com/blog/vterm-completion-for-files-directories-command-history-and-programs-in-emacs
@@ -42,13 +41,6 @@
 (package-refresh-contents)
 
 (require 'use-package-ensure)
-
-; quelpa allows installation of packages from source like github
-;(unless (package-installed-p 'quelpa)
-;  (with-temp-buffer
-;    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-;    (eval-buffer)
-;    (quelpa-self-upgrade)))
 
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil

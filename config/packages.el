@@ -135,10 +135,10 @@
 	:functions evil-leader/set-leader
 	:config
 	;; Tab Related
-  (defun my-tab-window-close()
+  (defun my-persp-window-close()
   	(interactive)
      (if (= (length (window-list)) 1)
-  	  (tab-close)	
+  	  (call-interactively (persp-kill (persp-current-name)))
   		(delete-window)))
 	(global-evil-leader-mode)
 	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
@@ -146,14 +146,13 @@
 	(evil-leader/set-key
 	 "a" 'ace-window
 	 "cp" 'copy-filepath-to-clipboard
-	 "q"  'my-tab-window-close ; 'delete-window
+	 "q"  'my-persp-window-close ; 'delete-window
 	 "o" 'delete-other-windows
 	 "e" 'flycheck-list-errors
 	 "s" 'yas-insert-snippet
 	 "m" 'consult-man
 	 "/" 'string-rectangle
-	 "f" 'xref-find-definitions
-	 "r" 'xref-find-references
+	 "f" 'avy-goto-char-2
    "p" 'persp-switch
 	 "gl" 'magit-log-buffer-file
 	 "gL" 'magit-log-all
@@ -197,7 +196,7 @@
 
 (use-package modus-operandi-theme
 	:config
-	(load-theme 'modus-vivendi t))  ;; modus-operandi    modus-vivendi
+	(load-theme 'modus-vivendi))  ;; modus-operandi    modus-vivendi
 
 ;(use-package planet-theme
 ;	:config
@@ -215,7 +214,7 @@
 ; 	:config
 ; 	(setq doom-themes-enable-bolt t
 ; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-outrun-electric t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+; 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 
 (use-package hideshow
 	:defer t
@@ -376,7 +375,6 @@
        (funcall #',split-type)
        (call-interactively #',fn))))
 
-
 	(add-to-list 'marginalia-prompt-categories '("consult-ripgrep" . consult-ripgrep))
 
 	(embark-define-keymap embark-consult-ripgrep-actions
@@ -388,10 +386,12 @@
 	
 	;(define-key embark-consult-search-map (kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
 	;(define-key embark-consult-search-map (kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below))
+
+	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action lsp-find-definition split-window-right))
+	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action lsp-find-definition split-window-below))
+
+	(define-key embark-region-map "f" #'fill-region)
 	
-	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action xref-find-definitions split-window-right))
-	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action xref-find-definitions split-window-below))
- 
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
 	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump split-window-below))
@@ -569,5 +569,7 @@
 	(setq dired-sidebar-should-follow-file t))
 
 (use-package focus)
+
+(use-package avy)
 
 ;;; packages.el ends here
