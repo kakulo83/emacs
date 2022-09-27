@@ -82,35 +82,24 @@
 	(prog-mode . company-mode)
 	(shell-mode . company-mode))
 
-(use-package orderless
-	:init
-	(setq completion-styles '(orderless basic)
-				completion-category-defaults nil
-				completion-category-overrides '((file (styles . (partial-completion))))))
-
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
 	:hook
 	(dired-mode . all-the-icons-dired-mode))
 
-(use-package selectrum
-	:defines selectrum-mode
-	:functions selectrum-mode
+(use-package vertico
 	:config
-	(setq selectrum-refine-candidates-function #'orderless-filter)
-  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
-	(setq selectrum-max-window-height (/ (frame-height) 2))
-	(setq selectrum-fix-vertical-window-height t)
-	(selectrum-mode +1))
+	(setq vertico-count 20)
+	(setq vertico-resize nil)
+	:init
+	(vertico-mode))
 
-(use-package git-timemachine
-	:after evil
-	:config
-	(with-eval-after-load 'git-timemachine
-  (evil-make-overriding-map git-timemachine-mode-map 'normal)
-  ;; force update evil keymaps after git-timemachine-mode loaded
-  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
+(use-package orderless
+	:init
+	(setq completion-styles '(orderless basic)
+				completion-category-defaults nil
+				completion-category-overrides '((file (styles . (partial-completion))))))
 
 (use-package magit
 	:config
@@ -333,7 +322,7 @@
 
 (use-package consult
 	:defines consult-project-root-function
-  :after selectrum
+  :after vertico
 	:config
 	(setq consult-project-root-function (lambda () (project-root (project-current))))) ;; consult for enhanced minibuffer commands
 
