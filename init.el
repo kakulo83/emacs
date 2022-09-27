@@ -21,6 +21,8 @@
 ;;;  - Make Embark-Collect default to showing results in a vertical split
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
+;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
+;;;      There is no value/reason for them to show up in the buffer-list
 ;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html

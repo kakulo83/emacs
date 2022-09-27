@@ -122,9 +122,12 @@
 (use-package doom-modeline
 	:init
 	(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+	(setq doom-modeline-major-mode-icon nil)
 	(setq doom-modeline-workspace-name nil)
 	(setq doom-modeline-buffer-encoding nil)
 	(setq doom-modeline-height 30)
+	(setq doom-modeline-lsp nil)
+	(setq doom-modeline-env-version nil)
 	(setq doom-modeline-vcs-max-length 36)
 	:hook (after-init . doom-modeline-mode))
 
@@ -366,6 +369,7 @@
 
 	(eval-when-compile
   (defmacro my/embark-split-action (fn split-type)
+		"Split buffer and perform passed function"
     `(defun ,(intern (concat "my/embark-"
                              (symbol-name fn)
                              "-"
@@ -377,15 +381,15 @@
 
 	(add-to-list 'marginalia-prompt-categories '("consult-ripgrep" . consult-ripgrep))
 
-	(embark-define-keymap embark-consult-ripgrep-actions
-		"Keymap for consult-ripgrep (when mentioned by name)."
-    ((kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
-    ((kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below)))
+	;(embark-define-keymap embark-consult-ripgrep-actions
+	;	"Keymap for consult-ripgrep (when mentioned by name)."
+  ;  ((kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
+  ;  ((kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below)))
 
-	(add-to-list 'embark-keymap-alist '(consult-ripgrep . embark-consult-ripgrep-actions))
+	;(add-to-list 'embark-keymap-alist '(consult-ripgrep . embark-consult-ripgrep-actions))
 	
-	;(define-key embark-consult-search-map (kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
-	;(define-key embark-consult-search-map (kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below))
+	;(define-key embark-consult-grep-map (kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
+	;(define-key embark-consult-grep-map (kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below))
 
 	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action lsp-find-definition split-window-right))
 	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action lsp-find-definition split-window-below))
