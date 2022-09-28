@@ -23,6 +23,11 @@
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
 ;;;      There is no value/reason for them to show up in the buffer-list
+;;;  - Add an Embark identifier action to open a filepath from vterm into a regular Buffer (open the file in other words)
+;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
+;;;      This might be a solution to use evil to edit vterm commands etc
+;;;  - Investigate:  https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-738842507
+;;;      Maybe some of these functions can be used to use evil in vterm commandline
 ;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
