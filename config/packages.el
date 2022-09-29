@@ -108,6 +108,10 @@
 	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
 
+(use-package git-timemachine
+	:config
+	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
+
 (use-package doom-modeline
 	:init
 	(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)

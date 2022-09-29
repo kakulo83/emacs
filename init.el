@@ -19,6 +19,7 @@
 ;;;  - When opening a new projectile project, set emacs current working directory to root of project
 ;;;  - Add ability to search with ripgrep and show result in new split window
 ;;;  - Make Embark-Collect default to showing results in a vertical split
+;;;  - Undo Ctrl-O Ctrl-I or fix them, its not correctly reverting to previous/next buffers
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
