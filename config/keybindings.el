@@ -30,8 +30,8 @@
 
 (define-key evil-normal-state-map (kbd "n") 'isearch-repeat-forward)
 (define-key evil-normal-state-map (kbd "N") 'isearch-repeat-backward)
-(define-key evil-normal-state-map (kbd "C-o") 'my/persp-previous-buffer)
-(define-key evil-normal-state-map (kbd "C-i") 'my/persp-next-buffer)
+(define-key evil-normal-state-map (kbd "C-o") 'switch-to-prev-buffer)
+(define-key evil-normal-state-map (kbd "C-i") 'switch-to-next-buffer)
 (define-key evil-normal-state-map "zc" nil)
 (define-key evil-normal-state-map "zo" nil)
 (define-key evil-normal-state-map "zM" nil)
