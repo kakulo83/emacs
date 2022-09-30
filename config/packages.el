@@ -11,7 +11,9 @@
 
 (use-package projectile
 	:config
-	(setq projectile-switch-project-action 'projectile-dired)
+	(setq projectile-switch-project-action (lambda()
+																					 (projectile-dired)
+																					 (cd (projectile-project-root))))
 	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
 	:init
 	(projectile-mode +1))
