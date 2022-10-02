@@ -115,16 +115,19 @@
 	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
 (use-package doom-modeline
-	:init
-	(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
-	(setq doom-modeline-major-mode-icon nil)
-	(setq doom-modeline-workspace-name nil)
-	(setq doom-modeline-buffer-encoding nil)
-	(setq doom-modeline-height 30)
-	(setq doom-modeline-lsp nil)
-	(setq doom-modeline-env-version nil)
-	(setq doom-modeline-vcs-max-length 36)
-	:hook (after-init . doom-modeline-mode))
+	:defines doom-modeline-mode-alist doom-modeline-support-imenu
+	:functions doom-modeline-def-modeline
+	:config
+	(doom-modeline-def-modeline 'minimal
+		'(persp-name buffer-info)
+		'(vcs))
+	(add-hook 'doom-modeline-mode-hook
+						(lambda nil
+							(doom-modeline-set-modeline 'minimal 'default)))
+	(doom-modeline-mode 1)
+	:custom
+	(doom-modeline-mode-alist nil)
+	(doom-modeline-height 30))
 
 (use-package evil-leader
 	:defines evil-leader/set-leader
