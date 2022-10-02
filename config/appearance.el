@@ -30,7 +30,8 @@
 (set-default-coding-systems 'utf-8-unix)
 
 ; M-x describe-font
-(set-frame-font "Hack Nerd Font:pixelsize=10:weight=medium:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
+(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
+;(set-frame-font "Hack Nerd Font:pixelsize=10:weight=medium:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
 ;(set-frame-font "Inconsolata:pixelsize=12:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
 
 (set-face-attribute 'default nil :height 100)
