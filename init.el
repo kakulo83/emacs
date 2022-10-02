@@ -29,6 +29,11 @@
 ;;;      This might be a solution to use evil to edit vterm commands etc
 ;;;  - Investigate:  https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-738842507
 ;;;      Maybe some of these functions can be used to use evil in vterm commandline
+;;;  - Add ability to select visual region in Org mode and create a new note from the region's contents
+;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
+;;;  - Create my own theme
+;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
+;;;      Match grey colors from:  https://github.com/rougier/nano-emacs
 ;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
