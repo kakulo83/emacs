@@ -10,13 +10,13 @@
 (use-package bug-hunter)
 
 (use-package projectile
-	:config
+	:functions projectile-project-root
+	:init
+	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
 	(setq projectile-switch-project-action (lambda()
 																					 (projectile-dired)
 																					 (cd (projectile-project-root))))
-	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
-	:init
-	(projectile-mode +1))
+	(projectile-mode 1))
 
 (use-package evil
 	:functions org-roam-capture org-roam-capture
@@ -105,7 +105,7 @@
 
 (use-package magit
 	:config
-	(advice-add 'magit-blame :after '(lambda (&rest args) (select-window (previous-window))))
+	(advice-add 'magit-blame :after #'(lambda (&rest args) (select-window (previous-window))))
 	(setq magit-git-executable "/usr/bin/git")
 	(setq magit-blame-echo-style 'margin)
 	(setq magit-save-repository-buffers nil))
@@ -132,8 +132,8 @@
 (use-package evil-leader
 	:defines evil-leader/set-leader
 	:functions evil-leader/set-leader
-	:after evil
-	:functions evil-leader/set-leader
+	:after evil perspective
+	:functions evil-leader/set-leader persp-current-name
 	:config
 	;; Tab Related
   (defun my-persp-window-close()
@@ -195,15 +195,15 @@
 ;	:config
 ;	(load-theme 'granger  t)) ;; graham  fogus  granger
 
-(use-package modus-operandi-theme
+(use-package modus-themes
 	:config
-	(load-theme 'modus-vivendi))  ;; modus-operandi    modus-vivendi
+	(load-theme 'modus-operandi t))  ;; modus-operandi    modus-vivendi
 
 ;(use-package planet-theme
 ;	:config
 ;	(load-theme 'planet t))
 
-; orbital  iceberg  lucius  deep-space  
+;orbital  iceberg  lucius  deep-space
 
 ;(use-package iceberg-theme
 ;	:config
@@ -311,7 +311,7 @@
 
 (use-package simple-httpd)
 
-(use-package websocket)	
+(use-package websocket)
 
 (use-package org-roam-ui
         :config
@@ -457,6 +457,7 @@
 	(setq vterm-max-scrollback 20000))
 
 (use-package multi-vterm
+	:functions vterm-send-return evil-insert-state
   :config
   	(add-hook 'vterm-mode-hook
   			(lambda ()
@@ -556,6 +557,8 @@
 (use-package perspective
 	:custom
 	(persp-mode-prefix-key (kbd "C-c M-p"))
+	:config
+	(setq persp-modestring-short t)
 	:init
 	(persp-mode))
 
