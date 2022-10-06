@@ -16,10 +16,11 @@
 
 
 ;;; TODO
+;;;  - Figure out how to use snippets in vterm
+;;;  - Figure out how to configure LSP for projects (ignore node-modules etc)
 ;;;  - When opening a new projectile project, set emacs current working directory to root of project
 ;;;  - Add ability to search with ripgrep and show result in new split window
 ;;;  - Make Embark-Collect default to showing results in a vertical split
-;;;  - Undo Ctrl-O Ctrl-I or fix them, its not correctly reverting to previous/next buffers
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
@@ -46,6 +47,8 @@
 ;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 ;;;  - investigate https://issuecloser.com/blog/vterm-completion-for-files-directories-command-history-and-programs-in-emacs
 ;;;  - investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
+;;;  - investigate this dudes config: https://github.com/jakebox/jake-emacs
+;;;      - he uses the cape package and corfu
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))

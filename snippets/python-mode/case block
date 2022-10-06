@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: case block
+# key: ca
+# --
+case ${1:key}: ${2:statement}

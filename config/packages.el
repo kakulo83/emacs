@@ -126,6 +126,7 @@
 							(doom-modeline-set-modeline 'minimal 'default)))
 	(doom-modeline-mode 1)
 	:custom
+	(doom-modeline-vcs-max-length 40)
 	(doom-modeline-mode-alist nil)
 	(doom-modeline-height 30))
 
@@ -155,6 +156,8 @@
 	 "/" 'string-rectangle
 	 "f" 'avy-goto-char-2
    "p" 'persp-switch
+	 "ya" 'yas-describe-tables
+	 "yn" 'yas-new-snippet
 	 "gl" 'magit-log-buffer-file
 	 "gL" 'magit-log-all
 	 "gb" 'magit-blame ; 'magit-show-commit

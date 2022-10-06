@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: request with backoff
 # key: req
+# group: networking
 # --
 import time
 

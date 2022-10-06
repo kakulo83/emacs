@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pytest
+# key: test
+# group: testing
+# --
+def test_${1:thing_to_test}():
+    pass
