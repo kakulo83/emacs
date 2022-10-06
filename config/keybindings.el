@@ -55,6 +55,10 @@
 (evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
 (evil-define-key 'insert shell-mode-map (kbd "C-h") 'consult-history)
 
+(evil-define-key 'motion grep-mode-map (kbd "C-p") 'project-find-file)
+(evil-define-key 'motion grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
+(evil-define-key 'motion grep-mode-map (kbd "/") 'consult-line)
+
 ; TODO bind up/down arrow key to show previous/next shell command
 ;(evil-define-key 'insert shell-mode-map (kbd "C-up") 'comint-previous-input)
 ;(evil-define-key 'insert shell-mode-map (kbd "C-down") 'comint-next-input)

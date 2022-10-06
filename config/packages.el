@@ -297,6 +297,10 @@
 															 "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
 					)))
 
+(use-package org-roam-ui
+        :config
+	(setq org-roam-ui-follow t))
+
 (use-package org-download
 	:after org
 	:custom
@@ -312,10 +316,6 @@
 (use-package simple-httpd)
 
 (use-package websocket)
-
-(use-package org-roam-ui
-        :config
-	(setq org-roam-ui-follow t))
 
 (use-package dashboard
 	:config

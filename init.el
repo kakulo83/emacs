@@ -17,7 +17,7 @@
 
 ;;; TODO
 ;;;  - When opening a new projectile project, set emacs current working directory to root of project
-;;;  - Add ability to search with ripgrep and show result in new split window
+;;;  - Add ability display Ripgrep results in new vertical/horizontal split via an Embark action
 ;;;  - Make Embark-Collect default to showing results in a vertical split
 ;;;  - Undo Ctrl-O Ctrl-I or fix them, its not correctly reverting to previous/next buffers
 ;;;  - Create a command "repl" that lets me interactively select
@@ -34,6 +34,11 @@
 ;;;  - Create my own theme
 ;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
 ;;;      Match grey colors from:  https://github.com/rougier/nano-emacs
+;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
+;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)
+;;;  - create Embark Action on an Identifier to perform a ripgrep search/export action
+;;;  - create Embark Action on perspective-list <leader>p to kill a perspective from the mini-buffer directly
+;;;  - dig for gems here:  https://www.reddit.com/r/emacs/comments/nr3cxv/what_are_your_very_useful_emacs_key_bindings_fast/
 ;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
