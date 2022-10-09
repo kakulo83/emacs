@@ -119,3 +119,13 @@
 							(split-window-horizontally)
 							(find-file "~/.zshrc")))
 			vterm-eval-cmds)
+
+(defun basic-auth-generator ()
+	"Prompt for username & password and generate base64 encoded basic auth string."
+	(interactive)
+	(let ((username (read-string "username: "))
+				(password (read-string "password: ")))
+		(insert (concat "Basic " (base64-encode-string
+											(concat username ":" password))))))
+		
+
