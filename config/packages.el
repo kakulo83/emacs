@@ -118,16 +118,25 @@
 	:defines doom-modeline-mode-alist doom-modeline-support-imenu
 	:functions doom-modeline-def-modeline
 	:config
-	(doom-modeline-def-modeline 'minimal
-		'(persp-name buffer-info)
-		'(vcs))
-	(add-hook 'doom-modeline-mode-hook
-						(lambda nil
-							(doom-modeline-set-modeline 'minimal 'default)))
-	(doom-modeline-mode 1)
-	:custom
-	(doom-modeline-mode-alist nil)
-	(doom-modeline-height 30))
+	(setq doom-modeline-time-icon t)
+	(setq doom-modeline-env-version nil)
+	(setq doom-modeline-workspace-name nil)
+	(setq doom-modeline-lsp nil)
+	(setq doom-modeline-major-mode-icon nil)
+	(setq doom-modeline-minor-modes nil)
+	(setq doom-modeline-buffer-file-name-style 'file-name)
+	(setq doom-modeline-vcs-max-length 40)
+	(setq doom-modeline-mode-alist nil)
+	(setq doom-modeline-height 30)
+	(setq doom-modeline-buffer-encoding nil)
+	(setq doom-modeline-display-misc-in-all-mode-lines nil)
+	:hook (after-init . doom-modeline-mode))
+
+(use-package blackout
+	:config
+	(blackout 'ruby-mode)
+	(blackout 'python-mode)
+	(blackout 'emacs-lisp-mode))
 
 (use-package evil-leader
 	:defines evil-leader/set-leader
@@ -155,6 +164,8 @@
 	 "/" 'string-rectangle
 	 "f" 'avy-goto-char-2
    "p" 'persp-switch
+	 "ya" 'yas-describe-tables
+	 "yn" 'yas-new-snippet
 	 "gl" 'magit-log-buffer-file
 	 "gL" 'magit-log-all
 	 "gb" 'magit-blame ; 'magit-show-commit
@@ -183,39 +194,27 @@
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
 
-;(use-package tron-legacy-theme
-;  :config
-;	(setq tron-legacy-theme-softer-bg t)
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+	(setq tron-legacy-theme-softer-bg t))
 
-;(use-package sublime-themes
-;	; NOTE:  For granger theme I changed the "fringe" background color to "background"
-;	;        to get rid of that annoying gray frame separator line
-;	; https://github.com/owainlewis/emacs-color-themes
-;	:config
-;	(load-theme 'granger  t)) ;; graham  fogus  granger
+(use-package sublime-themes)
 
-(use-package modus-themes
+(use-package modus-themes)
+
+(use-package planet-theme)
+
+(use-package iceberg-theme
 	:config
-	(load-theme 'modus-operandi t))  ;; modus-operandi    modus-vivendi
+	(iceberg-theme-create-theme-file))
 
-;(use-package planet-theme
-;	:config
-;	(load-theme 'planet t))
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t))
 
-;orbital  iceberg  lucius  deep-space
-
-;(use-package iceberg-theme
-;	:config
-;	(iceberg-theme-create-theme-file)
-;	(load-theme 'solarized-iceberg-dark t))
-
-;(use-package doom-themes
-;	:defines doom-themes-enable-bolt
-; 	:config
-; 	(setq doom-themes-enable-bolt t
-; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+(use-package nano-theme)
 
 (use-package hideshow
 	:defer t

@@ -41,3 +41,12 @@
 (set-default 'truncate-lines t) ;; Don't wrap lines
 
 (set-cursor-color "#00FFFF")
+
+
+;(load-theme 'tron-legacy t)
+;(load-theme 'granger  t)       ;; graham  fogus  granger
+;(load-theme 'modus-vivendi t)  ;; modus-operandi    modus-vivendi
+;(load-theme 'planet t)
+;(load-theme 'solarized-iceberg-dark t)
+(load-theme 'doom-outrun-electric t) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+;(load-theme 'nano-dark)         ;; nano-light
