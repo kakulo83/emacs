@@ -186,39 +186,27 @@
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
 
-;(use-package tron-legacy-theme
-;  :config
-;	(setq tron-legacy-theme-softer-bg t)
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+	(setq tron-legacy-theme-softer-bg t))
 
-;(use-package sublime-themes
-;	; NOTE:  For granger theme I changed the "fringe" background color to "background"
-;	;        to get rid of that annoying gray frame separator line
-;	; https://github.com/owainlewis/emacs-color-themes
-;	:config
-;	(load-theme 'granger  t)) ;; graham  fogus  granger
+(use-package sublime-themes)
 
-(use-package modus-themes
+(use-package modus-themes)
+
+(use-package planet-theme)
+
+(use-package iceberg-theme
 	:config
-	(load-theme 'modus-operandi t))  ;; modus-operandi    modus-vivendi
+	(iceberg-theme-create-theme-file))
 
-;(use-package planet-theme
-;	:config
-;	(load-theme 'planet t))
+(use-package doom-themes
+	:defines doom-themes-enable-bolt
+ 	:config
+ 	(setq doom-themes-enable-bolt t
+ 				doom-themes-enable-italic t))
 
-;orbital  iceberg  lucius  deep-space
-
-;(use-package iceberg-theme
-;	:config
-;	(iceberg-theme-create-theme-file)
-;	(load-theme 'solarized-iceberg-dark t))
-
-;(use-package doom-themes
-;	:defines doom-themes-enable-bolt
-; 	:config
-; 	(setq doom-themes-enable-bolt t
-; 				doom-themes-enable-italic t)
-; 	(load-theme 'doom-wilmersdorf t)) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+(use-package nano-theme)
 
 (use-package hideshow
 	:defer t
