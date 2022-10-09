@@ -32,9 +32,7 @@
 ;;;      Maybe some of these functions can be used to use evil in vterm commandline
 ;;;  - Add ability to select visual region in Org mode and create a new note from the region's contents
 ;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
-;;;  - Create my own theme
-;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
-;;;      Match grey colors from:  https://github.com/rougier/nano-emacs
+;;;  - Create my own modeline, extract from: https://github.com/jessiehildebrandt/mood-line/blob/master/mood-line.el
 ;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
