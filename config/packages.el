@@ -118,17 +118,25 @@
 	:defines doom-modeline-mode-alist doom-modeline-support-imenu
 	:functions doom-modeline-def-modeline
 	:config
-	(doom-modeline-def-modeline 'minimal
-		'(persp-name buffer-info)
-		'(vcs))
-	(add-hook 'doom-modeline-mode-hook
-						(lambda nil
-							(doom-modeline-set-modeline 'minimal 'default)))
-	(doom-modeline-mode 1)
-	:custom
-	(doom-modeline-vcs-max-length 40)
-	(doom-modeline-mode-alist nil)
-	(doom-modeline-height 30))
+	(setq doom-modeline-time-icon t)
+	(setq doom-modeline-env-version nil)
+	(setq doom-modeline-workspace-name nil)
+	(setq doom-modeline-lsp nil)
+	(setq doom-modeline-major-mode-icon nil)
+	(setq doom-modeline-minor-modes nil)
+	(setq doom-modeline-buffer-file-name-style 'file-name)
+	(setq doom-modeline-vcs-max-length 40)
+	(setq doom-modeline-mode-alist nil)
+	(setq doom-modeline-height 30)
+	(setq doom-modeline-buffer-encoding nil)
+	(setq doom-modeline-display-misc-in-all-mode-lines nil)
+	:hook (after-init . doom-modeline-mode))
+
+(use-package blackout
+	:config
+	(blackout 'ruby-mode)
+	(blackout 'python-mode)
+	(blackout 'emacs-lisp-mode))
 
 (use-package evil-leader
 	:defines evil-leader/set-leader
