@@ -425,8 +425,11 @@
 	:config
 	(setq aw-dispatch-always t)
   (setq aw-dispatch-alist
-	      '((?h aw-split-window-vert "Vertcal Split")
-					(?v aw-split-window-horz "Horizontal Split")
+				; NOTE:  triggering the ace action when the help window is open causes the action to
+				; double the buffers, seems to be a bug.  If trigger the action without consulting the help
+				; menu causes it to work perfectly
+	      '((?i aw-split-window-vert "Vertcal Split")
+					(?s aw-split-window-horz "Horizontal Split")
 				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
 					(?m aw-move-window "Move Buffer")
 					(?? aw-show-dispatch-help)
