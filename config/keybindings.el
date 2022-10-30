@@ -9,7 +9,6 @@
 (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 
@@ -58,10 +57,6 @@
 (evil-define-key 'motion grep-mode-map (kbd "C-p") 'project-find-file)
 (evil-define-key 'motion grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
 (evil-define-key 'motion grep-mode-map (kbd "/") 'consult-line)
-
-; TODO bind up/down arrow key to show previous/next shell command
-;(evil-define-key 'insert shell-mode-map (kbd "C-up") 'comint-previous-input)
-;(evil-define-key 'insert shell-mode-map (kbd "C-down") 'comint-next-input)
 
 (evil-ex-define-cmd "q" 'persp-kill-buffer*)
 (evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
