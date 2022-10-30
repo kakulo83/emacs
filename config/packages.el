@@ -350,7 +350,16 @@
 
 	;; Selecting commands via completions instead of key bindings
 	;; (setq embark-prompter 'embark-completing-read-prompter)
-
+	(setq embark-verbose-indicator-display-action
+				`((display-buffer-below-selected display-buffer-in-side-window)
+					(side . bottom)
+					(slot . 0)
+					(window-parameters
+					 (mode-line-format
+						. ,(propertize embark--verbose-indicator-buffer
+													 'face 'bold)))
+					(window-height . (lambda (win) (fit-window-to-buffer win (floor (frame-height) 3))))))
+	
 	(eval-when-compile
   (defmacro my/embark-ace-action (fn)
     `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()

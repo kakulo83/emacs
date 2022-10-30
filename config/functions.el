@@ -56,9 +56,12 @@
 	    ref (1+ ref)))
     items))
 
-(defadvice split-window (after move-point-to-new-window activate)
-  "Moves the point to the newly created window after splitting."
-  (other-window 1))
+; disable this so when embark is presented in the extended mini-buffer
+; the cursor/active buffer is still embark and not the new buffer.  Without
+; doing this the embark menu remains after the action and screws things up
+;(defadvice split-window (after move-point-to-new-window activate)
+;  "Moves the point to the newly created window after splitting."
+;  (other-window 1))
 
 (defun copy-filepath-to-clipboard ()
   "Put the current file name on the clipboard."
