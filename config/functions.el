@@ -130,5 +130,42 @@
 				(password (read-string "password: ")))
 		(insert (concat "Basic " (base64-encode-string
 											(concat username ":" password))))))
-		
+
+;; I want the ability to select an AWS EC2 instance from a list and connect to it.
+;; I want to initiate this flow from a keybinding or from entering a function.
+
+;; I want the ability to connect to a MySQL process from a list and connect to it.
+;; likewise initiate from a keybinding or entering a function
+
+;; I want the ability to list EC2 log files and possibly download them for
+;; viewing in emacs
+
+;; maybe can use 'shell-quote-argument' to escape quotes
+
+;; https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
+;; https://emacs.stackexchange.com/questions/27407/accessing-json-data-in-elisp
+;; https://stackoverflow.com/questions/35390729/how-to-return-the-value-instead-of-key-by-completing-read
+;; need to parse JSON format
+
+(defalias 'elisp-repl 'ielm)
+
+(defun breezeway/start-ec2-session (instance-id)
+	"Start EC2 Session from INSTANCE-ID.  Wrapper for aws ssm command."
+	(multi-vterm)
+	(rename-buffer (concat "EC2" instance-id))
+	(process-send-string nil (concat  "aws ssm start-session --target " instance-id)))
+
+(defun generate-name-id-tuples ()
+	"Convert json format into more convenient form for further processing."
+	(message "transforming json"))
+
+(defun breezeway/select-ec2-instance ()
+	"Prompt for ec2 instance to select."
+	(interactive)
+	(let* ((list-ec2-instances "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\"  --query \"Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key=='Name']|[0].Value}\" --output json")
+				 (instances-json (shell-command-to-string list-ec2-instances)))
+		(message instances-json)))
+
+;		(breezeway/start-ec2-session (completing-read "ec2 instances" (split-string (shell-command-to-string list-ec2-instances) "\n" t)))))
+
 
