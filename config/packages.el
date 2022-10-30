@@ -122,7 +122,7 @@
 	(setq doom-modeline-lsp nil)
 	(setq doom-modeline-major-mode-icon nil)
 	(setq doom-modeline-minor-modes nil)
-	(setq doom-modeline-buffer-file-name-style 'file-name)
+	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
 	(setq doom-modeline-vcs-max-length 40)
 	(setq doom-modeline-mode-alist nil)
 	(setq doom-modeline-height 30)
