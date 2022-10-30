@@ -105,9 +105,7 @@
 
 (use-package magit
 	:config
-	(advice-add 'magit-blame :after #'(lambda (&rest args) (select-window (previous-window))))
-	(setq magit-git-executable "/usr/bin/git")
-	(setq magit-blame-echo-style 'margin)
+	(setq magit-git-executable "/opt/homebrew/bin/git")
 	(setq magit-save-repository-buffers nil))
 
 (use-package git-timemachine
