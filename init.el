@@ -59,6 +59,7 @@
 ;;;  - consider:  https://github.com/alexluigit/dirvish
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
 ;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
+;;;  - consider:  https://www.emacswiki.org/emacs/AutoInsertMode
 ;;;  - investigate https://issuecloser.com/blog/vterm-completion-for-files-directories-command-history-and-programs-in-emacs
 ;;;  - investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
 ;;;  - investigate this dudes config: https://github.com/jakebox/jake-emacs
