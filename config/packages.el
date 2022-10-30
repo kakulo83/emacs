@@ -130,8 +130,10 @@
 	(setq doom-modeline-display-misc-in-all-mode-lines nil)
 	:hook (after-init . doom-modeline-mode))
 
+; this package hides certain modes from cluttering the modeline
 (use-package blackout
 	:config
+	(blackout 'js-mode)
 	(blackout 'ruby-mode)
 	(blackout 'python-mode)
 	(blackout 'emacs-lisp-mode))
