@@ -545,7 +545,9 @@
 (use-package inf-ruby
 	:hook (inf-ruby-switch-setup))
 
-(use-package restclient)
+(use-package restclient
+	:config
+	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
 ; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
 (use-package tree-sitter-langs
