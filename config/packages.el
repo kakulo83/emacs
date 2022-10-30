@@ -611,7 +611,9 @@
 (use-package dired-sidebar
 	:config
 	(setq dired-sidebar-recenter-cursor-on-follow-file t)
-	(setq dired-sidebar-should-follow-file t))
+	(setq dired-sidebar-should-follow-file t)
+	:bind
+	(:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
 (use-package focus)
 
