@@ -42,6 +42,14 @@
 ;;;  - dig for gems here:  https://www.reddit.com/r/emacs/comments/nr3cxv/what_are_your_very_useful_emacs_key_bindings_fast/
 ;;;  - Create my own modeline, extract from: https://github.com/jessiehildebrandt/mood-line/blob/master/mood-line.el
 ;;;
+;;;  - Investigate my magit status bug:  https://github.com/magit/magit/issues/4744
+;;;    https://github.com/magit/magit/issues/4739
+;;;  
+;;;  - Searching by Tags in Notes should be orderless:
+;;;      example:  if searching for ec2, aws, breezeway, any order should match
+;;;
+;;;  - GREAT EXAMPLE:   https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
+;;;
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
 ;;;  - consider:  https://github.com/dash-docs-el/dash-docs
