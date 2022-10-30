@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: show source
+# key: source
+# --
+import inspect
+			 
+lines = inspect.getsource(${1:method})
