@@ -101,7 +101,6 @@
 
 (use-package magit
 	:config
-	(setq magit-git-executable "/opt/homebrew/bin/git")
 	(setq magit-save-repository-buffers nil))
 
 (use-package git-timemachine
