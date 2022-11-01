@@ -211,7 +211,6 @@
 
 (use-package nano-theme)
 
-(use-package spacemacs-theme)
 
 (use-package hideshow
 	:defer t
