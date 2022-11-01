@@ -341,21 +341,19 @@
   ;; NOTE:  embark shows UI in extended-mini-buffer
 	;;        from customizing this:  embark-verbose-indicator-display-action
 
-  ; '(embark-verbose-indicator-display-action
-  ;	 '(display-buffer-at-bottom
-  ;		 (window-height . fit-window-to-buffer)))
-
-	;; Selecting commands via completions instead of key bindings
-	;; (setq embark-prompter 'embark-completing-read-prompter)
-	(setq embark-verbose-indicator-display-action
-				`((display-buffer-below-selected display-buffer-in-side-window)
-					(side . bottom)
-					(slot . 0)
-					(window-parameters
-					 (mode-line-format
-						. ,(propertize embark--verbose-indicator-buffer
-													 'face 'bold)))
-					(window-height . (lambda (win) (fit-window-to-buffer win (floor (frame-height) 3))))))
+;  (setq embark-verbose-indicator-display-action
+;   '(display-buffer-at-bottom
+;  	 (window-height . fit-window-to-buffer)))
+;
+;	(setq embark-verbose-indicator-display-action
+;				`((display-buffer-below-selected display-buffer-in-side-window)
+;					(side . bottom)
+;					(slot . 0)
+;					(window-parameters
+;					 (mode-line-format
+;						. ,(propertize embark--verbose-indicator-buffer
+;													 'face 'bold)))
+;					(window-height . (lambda (win) (fit-window-to-buffer win (floor (frame-height) 3))))))
 	
 	(eval-when-compile
   (defmacro my/embark-ace-action (fn)
