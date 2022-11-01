@@ -64,10 +64,6 @@
                           (require 'lsp-pyright)
                           (lsp))))
 
-(use-package lsp-ui
-	:bind
-	("C-'" . lsp-ui-imenu))
-
 (use-package company
 	:config
 	(setq company-minimum-prefix-length 1)
