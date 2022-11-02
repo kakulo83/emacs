@@ -330,6 +330,25 @@
 	:config
 	(setq consult-project-root-function (lambda () (project-root (project-current))))) ;; consult for enhanced minibuffer commands
 
+(use-package ace-window
+	:config
+	(setq aw-keys '(?h ?j ?k ?l ?y ?u ?i ?o ?p))
+	(setq aw-dispatch-always t)
+  (setq aw-ignored-buffers '(" *Minibuf-1*"))
+  (setq aw-dispatch-alist
+				; NOTE:  triggering the ace action when the help window is open causes the action to
+				; double the buffers, seems to be a bug.  If trigger the action without consulting the help
+				; menu causes it to work perfectly
+	      '((?s aw-split-window-vert "Vertcal Split")
+					(?v aw-split-window-horz "Horizontal Split")
+				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
+					(?m aw-move-window "Move Buffer")
+					(?? aw-show-dispatch-help)
+					))
+	(ace-window-display-mode -1)
+	:bind
+	(("M-a" . 'ace-window)))
+
 (use-package embark
 	:defines aw-dispatch-always embark-completing-read-prompter-map embark-completing-read-prompter
 	:functions embark-completing-read-prompter-map with-minibuffer-keymap
@@ -355,14 +374,16 @@
 ;					(window-height . (lambda (win) (fit-window-to-buffer win (floor (frame-height) 3))))))
 	
 	(eval-when-compile
-  (defmacro my/embark-ace-action (fn)
-    `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
-       (interactive)
-       (with-demoted-errors "%s"
-         (require 'ace-window)
-         (let ((aw-dispatch-always t))
-           (aw-switch-to-window (aw-select nil))
-           (call-interactively (symbol-function ',fn)))))))
+		(defmacro my/embark-ace-action (fn)
+				`(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
+				(interactive)
+				(with-demoted-errors "%s"
+						(require 'ace-window)
+						(let ((aw-dispatch-always t))
+						(aw-switch-to-window (aw-select nil))
+						(call-interactively (symbol-function ',fn)))))))
+
+	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
@@ -412,20 +433,6 @@
   ;; auto-updating embark collect buffer
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package ace-window
-	:config
-	(setq aw-dispatch-always t)
-  (setq aw-dispatch-alist
-				; NOTE:  triggering the ace action when the help window is open causes the action to
-				; double the buffers, seems to be a bug.  If trigger the action without consulting the help
-				; menu causes it to work perfectly
-	      '((?s aw-split-window-vert "Vertcal Split")
-					(?v aw-split-window-horz "Horizontal Split")
-				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
-					(?m aw-move-window "Move Buffer")
-					(?? aw-show-dispatch-help)
-					)))
 
 (use-package helpful)
 
