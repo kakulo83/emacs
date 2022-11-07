@@ -18,6 +18,8 @@
   (interactive)
 	;(call-interactively 'split-window-vertically)
 	(call-interactively 'multi-vterm)
+	(if (projectile-project-root)
+			(process-send-string nil (concat "cd " (projectile-project-root) " \n")))
 	(rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")"))))
 
 (defun spawn-shell (name)
