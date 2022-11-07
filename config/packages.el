@@ -350,29 +350,19 @@
 	(("M-a" . 'ace-window)))
 
 (use-package embark
-	:defines aw-dispatch-always embark-completing-read-prompter-map embark-completing-read-prompter
+	:defines embark-indicator embark-mixed-indicator aw-dispatch-always embark-completing-read-prompter-map embark-completing-read-prompter
 	:functions embark-completing-read-prompter-map with-minibuffer-keymap
 	:bind
 	(("M-o" . embark-act))
-	:init
 	:config
   ;; NOTE:  embark shows UI in extended-mini-buffer
 	;;        from customizing this:  embark-verbose-indicator-display-action
 
-;  (setq embark-verbose-indicator-display-action
-;   '(display-buffer-at-bottom
-;  	 (window-height . fit-window-to-buffer)))
-;
-;	(setq embark-verbose-indicator-display-action
-;				`((display-buffer-below-selected display-buffer-in-side-window)
-;					(side . bottom)
-;					(slot . 0)
-;					(window-parameters
-;					 (mode-line-format
-;						. ,(propertize embark--verbose-indicator-buffer
-;													 'face 'bold)))
-;					(window-height . (lambda (win) (fit-window-to-buffer win (floor (frame-height) 3))))))
-	
+  (setq embark-indicator #'embark-mixed-indicator)
+  (setq embark-verbose-indicator-display-action
+   '(display-buffer-at-bottom
+  	 (window-height . fit-window-to-buffer)))
+
 	(eval-when-compile
 		(defmacro my/embark-ace-action (fn)
 				`(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
