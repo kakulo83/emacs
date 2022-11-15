@@ -339,7 +339,6 @@
 
 (use-package ace-window
 	:config
-	(setq aw-keys '(?h ?j ?k ?l ?y ?u ?i ?o ?p))
 	(setq aw-dispatch-always t)
   (setq aw-ignored-buffers '(" *Minibuf-1*"))
   (setq aw-dispatch-alist
