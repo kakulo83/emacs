@@ -49,21 +49,22 @@
 
 (setq show-paren-style 'parenthesis)
 
-;(setq eshell-prompt-regexp "^[^λ]+ λ ")
-;(setq eshell-prompt-function
-;			(lambda ()
-;				(concat
-;				 (propertize (concat (eshell/pwd)) 'face `(:foreground "black" :background "turquoise1"))
-;				 (propertize "" 'face `(:foreground "turquoise1" :background "gray34"))
-;				 (if (magit-get-current-branch)
-;						 (concat
-;							(propertize "  " 'face `(:foreground "turquoise1" :background "gray34"))
-;							(propertize (magit-get-current-branch) 'face `(:foreground "turquoise1" :background "gray34"))
-;							(propertize "" 'face `(:foreground "gray34"))
-;						 ))
-;				 (propertize "\n")
-;         (propertize "❱ " 'face `(:foreground "white"))
-;				 )))
+(setq eshell-banner-message "")
+(setq eshell-prompt-regexp "^[^λ]+ λ ")
+(setq eshell-prompt-function
+			(lambda ()
+				(concat
+				 (propertize (concat (eshell/pwd)) 'face `(:foreground "black" :background "turquoise1"))
+				 (propertize "" 'face `(:foreground "turquoise1" :background "gray34"))
+				 (if (magit-get-current-branch)
+						 (concat
+							(propertize "  " 'face `(:foreground "turquoise1" :background "gray34"))
+							(propertize (magit-get-current-branch) 'face `(:foreground "turquoise1" :background "gray34"))
+							(propertize "" 'face `(:foreground "gray34"))
+						 ))
+				 (propertize "\n")
+         (propertize "❱ " 'face `(:foreground "white"))
+				 )))
 
 (cond
   ((string-equal system-type "darwin")
