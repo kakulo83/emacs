@@ -56,6 +56,7 @@
 				lsp-keymap-prefix "C-c l"
 				lsp-headerline-breadcrumb-enable nil)
 	:hook (
+				 (go-mode . lsp-deferred)
 				 (sql-mode . lsp-deferred)
 				 (js-mode . lsp-deferred)))
 
