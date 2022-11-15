@@ -140,49 +140,11 @@
 	(blackout 'python-mode)
 	(blackout 'emacs-lisp-mode))
 
-(use-package evil-leader
-	:defines evil-leader/set-leader
-	:functions evil-leader/set-leader
-	:after evil perspective
-	:functions evil-leader/set-leader persp-current-name
-	:config
-	;; Tab Related
-  (defun my-persp-window-close()
-  	(interactive)
-     (if (= (length (window-list)) 1)
-  	  (call-interactively (persp-kill (persp-current-name)))
-  		(delete-window)))
-	(global-evil-leader-mode)
-	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
-	(evil-leader/set-leader ",")
-	(evil-leader/set-key
-	 "a" 'ace-window
-	 "cp" 'copy-filepath-to-clipboard
-	 "q"  'my-persp-window-close ; 'delete-window
-	 "o" 'delete-other-windows
-	 "e" 'flycheck-list-errors
-	 "s" 'yas-insert-snippet
-	 "m" 'consult-man
-	 "/" 'string-rectangle
-	 "f" 'avy-goto-char-2
-   "p" 'persp-switch
-	 "ya" 'yas-describe-tables
-	 "yn" 'yas-new-snippet
-	 "gl" 'magit-log-buffer-file
-	 "gL" 'magit-log-all
-	 "gb" 'magit-blame ; 'magit-show-commit
-	 "gs" 'magit-status
-	 "gc" 'magit-branch
-	 "gh" 'magit-log-buffer-file
-	 "gH" 'git-timemachine)
-	(evil-mode t))
-
-(use-package go-mode
-	:defines go-indent-level
-	:config
-	(setq gofmt-command "goimports")
-	(setq go-indent-level 2)
-	:hook (before-save-hook . gofmt-before-save))
+(defun go-before-save-actions ()
+		"Before save actions for golang."
+		(when lsp-mode
+			(lsp-organize-imports)
+			(lsp-format-buffer)))
 
 (use-package flycheck
 	:init (global-flycheck-mode)
@@ -634,4 +596,50 @@
 
 (use-package avy)
 
+(use-package evil-leader
+	:defines evil-leader/set-leader
+	:functions evil-leader/set-leader
+	:after evil perspective
+	:functions evil-leader/set-leader persp-current-name
+	:config
+	(defun my-test-dispatch()
+		"Run current test with respective test runner."
+		(interactive)
+		(if (eq major-mode 'go-mode)
+				(go-test-current-test))
+		(if (eq major-mode 'python-mode)
+				(python-pytest-dispatch))
+		(if (eq major-mode 'ruby-mode)
+				(rspec-verify-single)))
+  (defun my-persp-window-close()
+  	(interactive)
+     (if (= (length (window-list)) 1)
+  	  (call-interactively (persp-kill (persp-current-name)))
+  		(delete-window)))
+	(global-evil-leader-mode)
+	(add-to-list 'evil-buffer-regexps '("*Packages*" . normal)) ;; enable evil in packages-menu
+	(evil-leader/set-leader ",")
+	(evil-leader/set-key
+	 "a" 'ace-window
+	 "cp" 'copy-filepath-to-clipboard
+	 "q"  'my-persp-window-close ; 'delete-window
+	 "o" 'delete-other-windows
+	 "e" 'flycheck-list-errors
+	 "s" 'consult-yasnippet
+	 "m" 'consult-man
+	 "/" 'string-rectangle
+	 "f" 'avy-goto-char-2
+   "p" 'persp-switch
+	 "n" 'org-roam-node-find
+	 "t" 'my-test-dispatch
+	 "ya" 'yas-describe-tables
+	 "yn" 'yas-new-snippet
+	 "gl" 'magit-log-buffer-file
+	 "gL" 'magit-log-all
+	 "gb" 'magit-blame ; 'magit-show-commit
+	 "gs" 'magit-status
+	 "gc" 'magit-branch
+	 "gh" 'magit-log-buffer-file
+	 "gH" 'git-timemachine)
+	(evil-mode t))
 ;;; packages.el ends here
