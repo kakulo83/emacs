@@ -625,6 +625,8 @@
 	:config
 	(setq dired-sidebar-recenter-cursor-on-follow-file t)
 	(setq dired-sidebar-should-follow-file t)
+	:custom
+	(dired-subtree-line-prefix "      ")
 	:bind
 	(:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
