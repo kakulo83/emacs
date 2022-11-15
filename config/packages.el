@@ -64,6 +64,13 @@
                           (require 'lsp-pyright)
                           (lsp))))
 
+(use-package go-mode
+	:config
+	(add-hook 'before-save-hook #'gofmt-before-save)
+	(add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(use-package gotest)
+
 (use-package company
 	:config
 	(setq company-minimum-prefix-length 1)
@@ -539,6 +546,10 @@
 (use-package inf-ruby
 	:hook (inf-ruby-switch-setup))
 
+(use-package rspec-mode
+	:config
+	(setq rspec-use-bundler-when-possible nil))
+
 (use-package restclient
 	:config
 	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
@@ -571,6 +582,8 @@
   :demand t
   :after python
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
+(use-package python-pytest)
 
 (use-package typescript-mode
   :after tree-sitter
