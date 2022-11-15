@@ -478,7 +478,7 @@
           (history-list (with-temp-buffer
                           (insert-file-contents "~/.zsh_history")
                           (split-string (buffer-string) "\n" t))))
-			(delete-dups (append program-list file-directory-list history-list))))
+			(delete-dups (append program-list history-list))))
 	 (defun vterm-completion-choose-item ()
     (completing-read "Choose: " (get-full-list) nil nil (thing-at-point 'word 'no-properties)))
 
