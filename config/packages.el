@@ -364,7 +364,6 @@
 	:config
   ;; NOTE:  embark shows UI in extended-mini-buffer
 	;;        from customizing this:  embark-verbose-indicator-display-action
-
   (setq embark-indicator #'embark-mixed-indicator)
   (setq embark-verbose-indicator-display-action
    '(display-buffer-at-bottom
@@ -380,7 +379,6 @@
 						(aw-switch-to-window (aw-select nil))
 						(call-interactively (symbol-function ',fn)))))))
 
-	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
@@ -397,22 +395,25 @@
        (funcall #',split-type)
        (call-interactively #',fn))))
 
-	(add-to-list 'marginalia-prompt-categories '("consult-ripgrep" . consult-ripgrep))
+	; PERSPECTIVE KEYBINDINGS
+	(add-to-list 'marginalia-prompt-categories '("Perspective" . perspective))
+	(embark-define-keymap embark-perspective-keymap
+		"Keymap for perspective actions."
+		("k" persp-kill))
+	(add-to-list 'embark-keymap-alist '(perspective . embark-perspective-keymap))
 
-	;(embark-define-keymap embark-consult-ripgrep-actions
-	;	"Keymap for consult-ripgrep (when mentioned by name)."
-  ;  ((kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
-  ;  ((kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below)))
+	; ORG-ROAM KEYBINDINGS
+	(add-to-list 'marginalia-prompt-categories '("OrgRoam" . org-roam))
+	(embark-define-keymap embark-org-roam-node-keymap
+		"Keymap for org-roam actions."
+		("o" (my/embark-ace-action org-roam-node-find)))
+	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
-	;(add-to-list 'embark-keymap-alist '(consult-ripgrep . embark-consult-ripgrep-actions))
 	
-	;(define-key embark-consult-grep-map (kbd "C-v") (my/embark-split-action consult-ripgrep split-window-right))
-	;(define-key embark-consult-grep-map (kbd "C-s") (my/embark-split-action consult-ripgrep split-window-below))
-
-	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action lsp-find-definition split-window-right))
-	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action lsp-find-definition split-window-below))
-
 	(define-key embark-region-map "f" #'fill-region)
+
+	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action xref-find-definitions split-window-right))
+	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action xref-find-definitions split-window-below))
 	
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
