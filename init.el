@@ -17,26 +17,23 @@
 
 
 ;;; TODO
-;;;  - Add ability display Ripgrep results in new vertical/horizontal split via an Embark action
+;;;  - Add ability to select visual region in any mode and create a new org-roam note from the region's contents
+;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
+;;; 
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
 ;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)
 ;;;  - Figure out how to configure LSP for projects (ignore node-modules etc)
-;;;  - When opening a new projectile project, set emacs current working directory to root of project
-;;;  - Make Embark-Collect default to showing results in a vertical split
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
 ;;;      There is no value/reason for them to show up in the buffer-list
 ;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
 ;;;      This might be a solution to use evil to edit vterm commands etc
-;;;  - Add ability to select visual region in Org mode and create a new note from the region's contents
-;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
 ;;;  - Create my own theme
 ;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
 ;;;      Match grey colors from:  https://github.com/rougier/nano-emacs
 ;;;  - create Embark Action on an Identifier to perform a ripgrep search/export action
-;;;  - create Embark Action on perspective-list <leader>p to kill a perspective from the mini-buffer directly
 ;;;  - dig for gems here:  https://www.reddit.com/r/emacs/comments/nr3cxv/what_are_your_very_useful_emacs_key_bindings_fast/
 ;;;  - Create my own modeline, extract from: https://github.com/jessiehildebrandt/mood-line/blob/master/mood-line.el
 ;;;  - Searching by Tags in Notes should be orderless:
@@ -58,8 +55,10 @@
 ;;;      - he uses the cape package and corfu
 ;;;  - Investigate:  https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-738842507
 ;;;      Maybe some of these functions can be used to use evil in vterm commandline
+;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  - consider:  https://github.com/jgru/consult-org-roam
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
 ;;;  - consider:  https://github.com/dash-docs-el/dash-docs
