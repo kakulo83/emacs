@@ -68,3 +68,5 @@
 (setq comint-scroll-show-maximum-output nil)
 
 (setq js-indent-level 2)
+
+(setq electric-pair-mode 1)
