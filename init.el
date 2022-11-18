@@ -1,3 +1,4 @@
+
 ;;; package --- Summary
 ;;; Commentary:
 ;;;
@@ -58,6 +59,7 @@
 ;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  - consider:  https://gitlab.com/niklaseklund/dtache
 ;;;  - consider:  https://github.com/jgru/consult-org-roam
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
@@ -115,6 +117,6 @@
 		(load-file fountain-scripts)))
 
 ; add non package scripts
-(load "~/.emacs.d/private/custom/persp-projectile.el")
+(load "~/.emacs.d/private/persp/persp-projectile.el")
 
 ;;; init.el ends here
