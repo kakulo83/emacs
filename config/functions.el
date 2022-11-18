@@ -12,8 +12,21 @@
 ;  (tab-new)
 ;  (call-interactively 'projectile-switch-project)
 ;  (tab-rename (projectile-project-name)))
+(defun unique-eshell ()
+	"Create a new named eshell buffer."
+	(interactive)
+	(let (name (read-string "Enter name: "))
+		(if (projectile-project-root)
+				(progn
+					(eshell (round (float-time)))
+					(eshell-return-to-prompt)
+					(insert (concat "cd " (projectile-project-root) " \n"))
+					(eshell-send-input)
+					(rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")")))
+				)
+		(eshell name))))
 
-(defun unique-shell ()
+(defun unique-vterm-shell ()
 	"Create a new named shell buffer."
   (interactive)
 	;(call-interactively 'split-window-vertically)
@@ -27,8 +40,6 @@
 	(interactive "MName of the shell buffer to create: ")
 	(pop-to-buffer (get-buffer-create (generate-new-buffer-name
 																		 (shell (current-buffer))))))
-
-(global-set-key (kbd "C-z") #'unique-shell)
 
 (let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
   (setenv "PATH" path)

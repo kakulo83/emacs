@@ -12,6 +12,9 @@
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 
+(with-eval-after-load "evil-maps"
+	(define-key evil-normal-state-map (kbd "TAB") nil))
+
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
 (define-key evil-motion-state-map (kbd "C-z") nil)
@@ -44,6 +47,7 @@
 (define-key evil-normal-state-map "gr" 'xref-find-references)
 (define-key evil-normal-state-map "gt" 'persp-next)
 (define-key evil-normal-state-map "gT" 'persp-prev)
+(define-key evil-normal-state-map ",k" 'robert/quick-kill-process)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
@@ -61,3 +65,6 @@
 
 (evil-ex-define-cmd "q" 'persp-kill-buffer*)
 (evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
+
+;(global-set-key (kbd "C-z") #'unique-vterm-shell)
+(global-set-key (kbd "C-z") #'unique-eshell)
