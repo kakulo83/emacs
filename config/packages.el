@@ -141,12 +141,6 @@
 	(blackout 'python-mode)
 	(blackout 'emacs-lisp-mode))
 
-(defun go-before-save-actions ()
-		"Before save actions for golang."
-		(when lsp-mode
-			(lsp-organize-imports)
-			(lsp-format-buffer)))
-
 (use-package flycheck
 	:init (global-flycheck-mode)
 	:config
