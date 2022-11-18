@@ -593,6 +593,14 @@
 
 (use-package avy)
 
+(use-package eshell-git-prompt
+	:config
+	(eshell-git-prompt-use-theme 'powerline))
+
+(use-package nyan-mode
+	:init
+	(nyan-mode 1))
+
 (use-package evil-leader
 	:defines evil-leader/set-leader
 	:functions evil-leader/set-leader
