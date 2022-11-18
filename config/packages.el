@@ -192,7 +192,8 @@
   :diminish yas-minor-mode
   :preface (defvar tmp/company-point nil)
   :config
-	(setq yas-indent-line 'fixed)
+  (setq yas-also-auto-indent-first-line t)
+	(setq yas-indent-line 'auto)
   (yas-global-mode +1)
 
   (advice-add 'company-complete-common
