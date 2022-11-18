@@ -67,6 +67,7 @@
 
 (use-package go-mode
 	:config
+	(setq gofmt-show-errors nil)
 	(add-hook 'before-save-hook #'gofmt-before-save)
 	(add-hook 'before-save-hook #'lsp-organize-imports t t))
 
