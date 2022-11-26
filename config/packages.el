@@ -25,7 +25,7 @@
 	:config
   (setq evil-insert-state-cursor '(bar "#00FF00")
       evil-visual-state-cursor '(box "#FF00FF")
-      evil-normal-state-cursor '(box "#E2E8EF"))
+      evil-normal-state-cursor '(box "red"))
 	(evil-mode)
   (setq evil-shift-width 2))
 
