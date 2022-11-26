@@ -11,3 +11,4 @@ alias init find-file ~/.emacs.d/init.el
 alias alias find-file ~/.emacs.d/eshell/alias
 
 alias psql sql-postgres
+alias cdr cd (projectile-project-root)
