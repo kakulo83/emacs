@@ -87,6 +87,7 @@
 		(setq company-tooltip-align-annotations t))
 	:hook
 	(prog-mode . company-mode)
+	(eshell-mode . company-mode)
 	(shell-mode . company-mode))
 
 (use-package all-the-icons)
