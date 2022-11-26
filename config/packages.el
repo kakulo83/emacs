@@ -337,9 +337,10 @@
 						(aw-switch-to-window (aw-select nil))
 						(call-interactively (symbol-function ',fn)))))))
 
-  (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
-  (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
-  (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+	(eval-when-compile
+	(defun my/embark-find-org-roam-notes-for-identifier ()
+		"Find any org roam notes pertaining to identifier on point."
+		(message "searching notes for <identifier>")))
 
 	(eval-when-compile
   (defmacro my/embark-split-action (fn split-type)
@@ -367,11 +368,13 @@
 		("o" (my/embark-ace-action org-roam-node-find)))
 	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
+	;test-identifier
 	
 	(define-key embark-region-map "f" #'fill-region)
 
-	(define-key embark-identifier-map (kbd "C-v") (my/embark-split-action xref-find-definitions split-window-right))
-	(define-key embark-identifier-map (kbd "C-s") (my/embark-split-action xref-find-definitions split-window-below))
+	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
+
+	;(define-key embark-identifier-map (kbd "n") (my/embark-ace-action my/find-org-roam-notes-for-identifier))
 	
 	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
 	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
