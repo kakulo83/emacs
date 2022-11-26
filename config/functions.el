@@ -226,4 +226,10 @@
 
 ;		(breezeway/start-ec2-session (completing-read "ec2 instances" (split-string (shell-command-to-string list-ec2-instances) "\n" t)))))
 
+(defun robert/search-org-roam-notes-for-embark-target ()
+	"Search org-roam notes for target, restricted by tag."
 
+	"https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
+
+	" rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
+	(message "TODO IMPLEMENTATION"))
