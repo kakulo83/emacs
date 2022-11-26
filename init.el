@@ -18,6 +18,8 @@
 
 
 ;;; TODO
+;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
+;;;      and identifier as the search term
 ;;;  - Add ability to select visual region in any mode and create a new org-roam note from the region's contents
 ;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
 ;;; 
@@ -71,6 +73,7 @@
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
 ;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 ;;;  - consider:  https://www.emacswiki.org/emacs/AutoInsertMode
+;;;  - consider:  https://github.com/4DA/eshell-toggle
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
