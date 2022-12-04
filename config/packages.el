@@ -581,8 +581,8 @@
 
 (use-package dired-sidebar
 	:config
-	(setq dired-sidebar-recenter-cursor-on-follow-file t)
-	(setq dired-sidebar-should-follow-file t)
+	(setq dired-sidebar-recenter-cursor-on-follow-file nil)
+	(setq dired-sidebar-should-follow-file nil)
 	:custom
 	(dired-subtree-line-prefix "  ")
 	:bind

@@ -30,7 +30,7 @@
 (set-default-coding-systems 'utf-8-unix)
 
 ; M-x describe-font
-(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
+(set-frame-font "Roboto Mono:pixelsize=12:weight=semibold")
 ;(set-frame-font "Hack Nerd Font:pixelsize=10:weight=medium:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
 ;(set-frame-font "Inconsolata:pixelsize=12:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
 
@@ -40,13 +40,10 @@
 
 (set-default 'truncate-lines t) ;; Don't wrap lines
 
-(set-cursor-color "#00FFFF")
-
-
 ;(load-theme 'tron-legacy t)
 ;(load-theme 'granger  t)       ;; graham  fogus  granger
 ;(load-theme 'modus-vivendi t)  ;; modus-operandi    modus-vivendi
 ;(load-theme 'planet t)
-;(load-theme 'solarized-iceberg-dark t)
-(load-theme 'doom-outrun-electric t) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+(load-theme 'solarized-iceberg-dark t)
+;(load-theme 'doom-sourcerer t) ;; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 ;(load-theme 'nano-dark)         ;; nano-light
