@@ -49,7 +49,9 @@
 
 (setq show-paren-style 'parenthesis)
 
-(setq eshell-banner-message "")
+(setq
+ eshell-banner-message ""
+ eshell-history-size 1000)
 
 (cond
   ((string-equal system-type "darwin")
@@ -70,3 +72,7 @@
 (setq js-indent-level 2)
 
 (setq electric-pair-mode 1)
+
+(setenv "PAGER" "cat")
+
+(set-fringe-mode 0)

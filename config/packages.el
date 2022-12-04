@@ -373,6 +373,10 @@
 	
 	(define-key embark-region-map "f" #'fill-region)
 
+  (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
+  (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
+  (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
 
 	;(define-key embark-identifier-map (kbd "n") (my/embark-ace-action my/find-org-roam-notes-for-identifier))
@@ -586,8 +590,8 @@
 
 (use-package dired-sidebar
 	:config
-	(setq dired-sidebar-recenter-cursor-on-follow-file t)
-	(setq dired-sidebar-should-follow-file t)
+	(setq dired-sidebar-recenter-cursor-on-follow-file nil)
+	(setq dired-sidebar-should-follow-file nil)
 	:custom
 	(dired-subtree-line-prefix "  ")
 	:bind
