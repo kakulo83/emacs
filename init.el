@@ -61,6 +61,8 @@
 ;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
+;;;  - consider:  https://github.com/ch11ng/exwm/wiki
 ;;;  - consider:  https://gitlab.com/niklaseklund/dtache
 ;;;  - consider:  https://github.com/jgru/consult-org-roam
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)

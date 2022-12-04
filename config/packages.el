@@ -369,21 +369,16 @@
 		("o" (my/embark-ace-action org-roam-node-find)))
 	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
-	;test-identifier
-	
 	(define-key embark-region-map "f" #'fill-region)
 
+	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
-
-	;(define-key embark-identifier-map (kbd "n") (my/embark-ace-action my/find-org-roam-notes-for-identifier))
 	
-	(define-key embark-file-map     (kbd "C-s") (my/embark-split-action find-file split-window-below))
-	(define-key embark-buffer-map   (kbd "C-s") (my/embark-split-action switch-to-buffer split-window-below))
-	(define-key embark-bookmark-map (kbd "C-s") (my/embark-split-action bookmark-jump split-window-below))
+  (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
+  (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
+  (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+	)
 
-	(define-key embark-file-map     (kbd "C-v") (my/embark-split-action find-file split-window-right))
-	(define-key embark-buffer-map   (kbd "C-v") (my/embark-split-action switch-to-buffer split-window-right))
-	(define-key embark-bookmark-map (kbd "C-v") (my/embark-split-action bookmark-jump split-window-right)))
 
 (use-package embark-consult
   
@@ -604,6 +599,16 @@
 (use-package nyan-mode
 	:init
 	(nyan-mode 1))
+
+(use-package paredit
+	:init
+	(add-hook 'clojure-mode-hook #'enable-paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+	(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+	(add-hook 'ielm-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
 
 (use-package evil-leader
 	:defines evil-leader/set-leader

@@ -69,4 +69,4 @@
 
 (setq js-indent-level 2)
 
-(setq electric-pair-mode 1)
+(electric-pair-mode 1)

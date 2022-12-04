@@ -44,4 +44,4 @@
 
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 
-
+(add-hook 'evil-mode 'electric-pair-mode)
