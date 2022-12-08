@@ -58,6 +58,7 @@
 	:hook (
 				 (go-mode . lsp-deferred)
 				 (sql-mode . lsp-deferred)
+				 (typescript-mode . lsp-deferred)
 				 (js-mode . lsp-deferred)))
 
 (use-package lsp-pyright
