@@ -13,6 +13,7 @@
 ;;; exa
 ;;; man-db
 ;;; pip3 install epc
+;;; mandb (for creating man page db/cache) see: https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;; 
 ;;; Code:
 

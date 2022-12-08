@@ -428,72 +428,44 @@
 
 (use-package vterm
 	:config
-	(setq vterm-max-scrollback 20000)
-	;(advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
-	(defun get-full-list ()
-    (let ((program-list (split-string (shell-command-to-string "compgen -c") "\n" t ))
-          (file-directory-list (split-string (shell-command-to-string "compgen -f") "\n" t ))
-          (history-list (with-temp-buffer
-                          (insert-file-contents "~/.zsh_history")
-                          (split-string (buffer-string) "\n" t))))
-			(delete-dups (append program-list history-list))))
-	 (defun vterm-completion-choose-item ()
-    (completing-read "Choose: " (get-full-list) nil nil (thing-at-point 'word 'no-properties)))
+	(setq vterm-max-scrollback 20000))
 
-  (defun vterm-completion ()
-    (interactive)
-    ;(vterm-directory-sync)
-    (let ((vterm-chosen-item (vterm-completion-choose-item)))
-      (when (thing-at-point 'word)
-        (vterm-send-meta-backspace))
-      (vterm-send-string vterm-chosen-item)))
-             
-  (defun vterm-directory-sync ()
-  "Synchronize current working directory."
-  (interactive)
-  (when vterm--process
-    (let* ((pid (process-id vterm--process))
-           (dir (file-truename (format "/proc/%d/cwd/" pid))))
-      (setq default-directory dir))))
-
-	:bind
-	(:map vterm-mode-map ("<tab>" . 'vterm-completion)))
 
 (use-package multi-vterm
 	:functions vterm-send-return evil-insert-state
   :config
-  	(add-hook 'vterm-mode-hook
-  			(lambda ()
-  			(setq-local evil-insert-state-cursor 'box)
-  			(evil-insert-state)))
-  	(define-key vterm-mode-map [return]                      #'vterm-send-return)
+  (add-hook 'vterm-mode-hook
+  					(lambda ()
+  						(setq-local evil-insert-state-cursor 'box)
+  						(evil-insert-state)))
+  (define-key vterm-mode-map [return]                      #'vterm-send-return)
   
-  	(setq vterm-keymap-exceptions nil)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
-  	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
-  	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
-  	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
-  	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
-  	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
-  	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
-  	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
-  	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+  (setq vterm-keymap-exceptions nil)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+  (evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  (evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+  (evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+  (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+  (evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+  (evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+  (evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
 
 (use-package org-drill
 	:defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter

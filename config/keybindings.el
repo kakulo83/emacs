@@ -57,7 +57,7 @@
 (evil-define-key 'normal pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "d") 'pdf-view-next-page)
 (evil-define-key 'normal pdf-view-mode-map (kbd "u") 'pdf-view-previous-page)
-(evil-define-key 'insert shell-mode-map (kbd "C-h") 'consult-history)
+(evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
 
 (evil-define-key 'motion grep-mode-map (kbd "C-p") 'project-find-file)
 (evil-define-key 'motion grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
