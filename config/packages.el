@@ -220,6 +220,7 @@
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 	(setq org-src-preserve-indentation t)
 	(setq org-src-tab-acts-natively t)
+	(setq org-adapt-indentation t)
 	:bind (
 				 :map org-mode-map
 							("C-j" . windmove-down)
