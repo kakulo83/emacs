@@ -549,6 +549,13 @@
 
 (use-package avy)
 
+(use-package eshell
+	:config
+	(setq eshell-banner-message ""
+			eshell-history-size 1000
+			eshell-highlight-prompt t
+			eshell-hist-ignoredups t))
+
 (use-package eshell-git-prompt
 	:config
 	(eshell-git-prompt-use-theme 'powerline))
