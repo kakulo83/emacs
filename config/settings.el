@@ -49,10 +49,6 @@
 
 (setq show-paren-style 'parenthesis)
 
-(setq
- eshell-banner-message ""
- eshell-history-size 1000)
-
 (cond
   ((string-equal system-type "darwin")
       (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))))
@@ -76,3 +72,5 @@
 (setenv "PAGER" "cat")
 
 (set-fringe-mode 0)
+
+(setf dired-kill-when-opening-new-dired-buffer t)
