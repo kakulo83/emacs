@@ -74,23 +74,6 @@
 
 (use-package gotest)
 
-(use-package company
-	:config
-	(setq company-minimum-prefix-length 1)
-	(progn
-		;; don't add any dely before trying to complete thing being typed
-		;; the call/response to gopls is asynchronous so this should have little
-		;; to no affect on edit latency
-		(setq company-idle-delay 0)
-		;; start completing after a single character instead of 3
-		(setq company-minimum-prefix-length 1)
-		;; align fields in completions
-		(setq company-tooltip-align-annotations t))
-	:hook
-	(prog-mode . company-mode)
-	(eshell-mode . company-mode)
-	(shell-mode . company-mode))
-
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
@@ -583,6 +566,38 @@
   (add-hook 'lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook #'enable-paredit-mode))
+
+(use-package corfu
+	; https://kristofferbalintona.me/posts/202202270056/
+	:hook (lsp-completion-mode . my/corfu-setup-lsp)
+	:custom
+	(corfu-auto t)
+	(corfu-auto-delay 0)
+	(corfu-auto-prefix 0)
+	(completion-cycle-threshold nil)
+	(corfu-quit-at-boundary nil)
+  (corfu-separator ?\s) 
+	(corfu-quit-no-match 'separator)
+	(corfu-preview-current 'insert)
+	(corfu-preselect-first t)
+	(corfu-echo-documentation nil)
+	(corfu-popupinfo-max-height 14)
+	(lsp-completion-provider :none)
+	:bind
+	(:map corfu-map
+				("C-n" . corfu-next)
+				("C-p" . corfu-previous))
+	:init
+	(global-corfu-mode)
+	(corfu-popupinfo-mode)
+	:config
+	(advice-add 'corfu--setup :after 'evil-normalize-keymaps)
+  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps)
+	(defun my/corfu-setup-lsp ()
+    "Use orderless completion style with lsp-capf instead of the default lsp-passthrough."
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless)))
+	)
 
 (use-package evil-leader
 	:defines evil-leader/set-leader
