@@ -494,7 +494,7 @@
 	(add-hook 'ruby-mode-hook 'yafolding-mode))
 
 ; allows editing grep results and applying it to all files, good for global search/replace
-(require 'wgrep)
+(use-package wgrep)
 
 (use-package web-mode
 	:config
