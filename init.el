@@ -102,14 +102,6 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-
-(exec-path-from-shell-copy-env "PERF_PSQL_STRING")
-(exec-path-from-shell-copy-env "UAT_PSQL_STRING")
-(exec-path-from-shell-copy-env "PROD_MULTI_TENANT_PRIMARY_PSQL_STRING")
-(exec-path-from-shell-copy-env "PROD_MULTI_TENANT_SLAVE_PSQL_STRING")
-(exec-path-from-shell-copy-env "URL_SHORTENER_PSQL_STRING")
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
