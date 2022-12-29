@@ -66,5 +66,7 @@
 (evil-ex-define-cmd "q" 'persp-kill-buffer*)
 (evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
 
+(evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
+
 ;(global-set-key (kbd "C-z") #'unique-vterm-shell)
 (global-set-key (kbd "C-z") #'unique-eshell)
