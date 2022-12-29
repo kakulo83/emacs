@@ -23,3 +23,4 @@ tramp
 *.~undo-tree~
 quelpa
 themes
+org-persist
