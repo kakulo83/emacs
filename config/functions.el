@@ -55,20 +55,6 @@
 	  (completing-read "Find cmd: "
 									 (robert/eshell-history-list))))
 
-(defun robert/eshell-history-list ()
-  "Return the eshell history as a list."
-  (and (or (not (ring-p eshell-history-ring))
-	   (ring-empty-p eshell-history-ring))
-       (error "No history"))
-  (let* ((index (1- (ring-length eshell-history-ring)))
-	 (ref (- (ring-length eshell-history-ring) index))
-	 (items (list)))
-    (while (>= index 0)
-      (setq items (cons (format "%s" (eshell-get-history index)) items)
-	    index (1- index)
-	    ref (1+ ref)))
-    items))
-
 ; disable this so when embark is presented in the extended mini-buffer
 ; the cursor/active buffer is still embark and not the new buffer.  Without
 ; doing this the embark menu remains after the action and screws things up
@@ -228,8 +214,31 @@
 
 (defun robert/search-org-roam-notes-for-embark-target ()
 	"Search org-roam notes for target, restricted by tag."
-
-	"https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
-
-	" rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
+;;https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
+;; rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
 	(message "TODO IMPLEMENTATION"))
+
+(defun corfu-send-shell (&rest _)
+  "Send completion candidate when inside comint/eshell."
+  (cond
+   ((and (derived-mode-p 'eshell-mode) (fboundp 'eshell-send-input))
+    (eshell-send-input))
+   ((and (derived-mode-p 'comint-mode)  (fboundp 'comint-send-input))
+    (comint-send-input))))
+
+(defun robert/get-org-files-for-topic (topic)
+	"Function to generate list of files from TOPIC."
+	(interactive)
+	(let ((notes-dir-path "~/Notes/org-roam-notes/*"))
+		(file-expand-wildcards (concat notes-dir-path topic "*"))))
+
+(defun robert/drill-by-topic ()
+	"Wrapper function on org-drill to invoke against a list of files from TOPIC."
+	(interactive)
+	(let* ((topic (read-string "Enter topic to drill: "))
+				(files (robert/get-org-files-for-topic topic)))
+		(setq org-drill-scope files)
+		(org-drill files)))
+
+(provide 'functions)
+;;; functions.el ends here

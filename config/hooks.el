@@ -1,20 +1,3 @@
-(add-hook 'eshell-mode-hook
-          (lambda ()
-						(define-key eshell-mode-map (kbd "C-h") #'robert/eshell-history)))
-
-;; Try to use vterm-mode-map and keybind "C-h" to history completion function
-;; have to investigate whehther vterm exposes its history
-
-
-;; Insert at prompt only on eshell
-(add-hook 'eshell-mode-hook
-					'(lambda ()
-						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
-
-(add-hook 'vterm-mode-hook
-					'(lambda ()
-						 (define-key evil-normal-state-local-map (kbd "i") (lambda () (interactive) (evil-goto-line) (evil-append-line nil)))))
-
 (add-hook 'pdf-view-mode-hook
 					(lambda ()
 						(set (make-local-variable 'evil-normal-state-cursor) (list nil))
@@ -41,3 +24,10 @@
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 
 (add-hook 'evil-mode 'electric-pair-mode)
+
+(advice-add #'corfu-insert :after #'corfu-send-shell)
+
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setq-local corfu-auto nil)
+            (corfu-mode)))

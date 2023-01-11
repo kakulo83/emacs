@@ -231,6 +231,21 @@
 	:defines org-roam-v2-act org-roam-db-update-method org-roam-dailies-directory
 	:custom
 	(org-roam-directory "~/Notes/org-roam-notes/")
+	:config
+	(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
+;	(add-to-list 'display-buffer-alist
+;             '("\\*org-roam\\*"
+;               (display-buffer-in-side-window)
+;               (side . right)
+;               (slot . 0)
+;               (window-width . 0.33)
+;               (window-parameters . ((no-other-window . t)
+;                                     (no-delete-other-windows . t)))))
 	:init
 	(setq org-roam-v2-act t)
 	(setq org-roam-db-update-method 'immediate)
@@ -566,19 +581,23 @@
 	:config
 	(eshell-git-prompt-use-theme 'powerline))
 
+(use-package eshell-syntax-highlighting
+  :after eshell-mode
+)
+
 (use-package nyan-mode
 	:init
 	(nyan-mode 1))
 
-(use-package paredit
-	:init
-	(add-hook 'clojure-mode-hook #'enable-paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
-	(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-	(add-hook 'ielm-mode-hook #'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
+;(use-package paredit
+;	:init
+;	(add-hook 'clojure-mode-hook #'enable-paredit-mode)
+;  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+;	(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+;	(add-hook 'ielm-mode-hook #'enable-paredit-mode)
+;  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+;  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+;  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
 
 (use-package corfu
 	; https://kristofferbalintona.me/posts/202202270056/
@@ -617,14 +636,14 @@
   :custom
   (kind-icon-use-icons t)
   (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
-  (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
+  (kind-icon-blend-background nil) ; Use midpoint color between foreground and background colors ("blended")?
   (kind-icon-blend-frac 0.08)
 
   ;; NOTE 2022-02-05: `kind-icon' depends `svg-lib' which creates a cache
   ;; directory that defaults to the `user-emacs-directory'. Here, I change that
   ;; directory to a location appropriate to `no-littering' conventions, a
   ;; package which moves directories of other packages to sane locations.
-  (svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+																				;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
 

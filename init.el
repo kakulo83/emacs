@@ -5,6 +5,7 @@
 ;;; DEPENDENCIES
 ;;; MacTex
 ;;; nerd-fonts
+;;; devicons
 ;;; Roboto Mono font
 ;;; ripgrep
 ;;; pngpaste
@@ -61,8 +62,10 @@
 ;;;  - Investigate:  https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-738842507
 ;;;      Maybe some of these functions can be used to use evil in vterm commandline
 ;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
+;;;  - investigate config:   https://config.daviwil.com/emacs
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  - consider:  https://github.com/Harith163/TransSide-theme
 ;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
 ;;;  - consider:  https://github.com/ch11ng/exwm/wiki
 ;;;  - consider:  https://gitlab.com/niklaseklund/dtache
@@ -92,16 +95,18 @@
 
 (load "~/.emacs.d/config/custom.el")
 (load "~/.emacs.d/config/packages.el")
-(load "~/.emacs.d/config/appearance.el")
 (load "~/.emacs.d/config/settings.el")
 (load "~/.emacs.d/config/functions.el")
 (load "~/.emacs.d/config/hooks.el")
 (load "~/.emacs.d/config/keybindings.el")
+(load "~/.emacs.d/config/appearance.el")
 
 ; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
+;(when (memq window-system '(mac ns x))
+;  (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
