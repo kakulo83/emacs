@@ -226,19 +226,36 @@
    ((and (derived-mode-p 'comint-mode)  (fboundp 'comint-send-input))
     (comint-send-input))))
 
-(defun robert/get-org-files-for-topic (topic)
-	"Function to generate list of files from TOPIC."
+(defun robert/remove-empty-strs-from-list (list)
+	"Remove empty string values from LIST."
+	(--filter (not (string= "" it)) list))
+
+(defvar notes-dir-path "/Users/robertcarter/Notes/org-roam-notes/")
+(defvar rg-drill-cmd "rg -l '.*drill.*' ")
+
+(defun robert/org-files-by-tag (tag)
+	"Function to generate space separated string list of org files by TAG."
+	(cd notes-dir-path)
+	(let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
+		 (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
+
+(defun robert/get-org-files-for-topic (tag)
+	"Function to generate list of files from TAG."
 	(interactive)
-	(let ((notes-dir-path "~/Notes/org-roam-notes/*"))
-		(file-expand-wildcards (concat notes-dir-path topic "*"))))
+	; rg -l '^#\+tags:.*database.*' | xargs rg -l '.*drill.*'
+		(cd notes-dir-path)
+		; bind list of org files that have tag
+		(let ((files-by-tag (robert/org-files-by-tag tag)))
+	    ; filter list further with onlly files that have drill items
+			(split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
 
 (defun robert/drill-by-topic ()
 	"Wrapper function on org-drill to invoke against a list of files from TOPIC."
 	(interactive)
-	(let* ((topic (read-string "Enter topic to drill: "))
+	(let* ((topic (read-string "Enter subject to drill: "))
 				(files (robert/get-org-files-for-topic topic)))
-		(setq org-drill-scope files)
-		(org-drill files)))
+		(setq org-drill-scope (robert/remove-empty-strs-from-list files))
+		(org-drill)))
 
 (provide 'functions)
 ;;; functions.el ends here

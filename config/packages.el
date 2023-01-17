@@ -476,7 +476,7 @@
 (use-package org-drill
 	:defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
 	:init
-	(setq org-drill-scope 'directory)
+	(setq org-drill-scope 'file)
 	(setq org-drill-add-random-noise-to-intervals-p t)
 	(setq org-drill-hint-separator "||")
 	(setq org-drill-left-close-delimiter "<[")
