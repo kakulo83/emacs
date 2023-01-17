@@ -11,6 +11,7 @@
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
+(define-key evil-normal-state-map (kbd "TAB") nil)
 
 (with-eval-after-load "evil-maps"
 	(define-key evil-normal-state-map (kbd "TAB") nil))
