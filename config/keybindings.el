@@ -24,7 +24,7 @@
 (define-key evil-normal-state-map (kbd "-") 'dired)
 (define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
-(define-key evil-normal-state-map (kbd "C-b") 'persp-switch-to-buffer*)
+(define-key evil-normal-state-map (kbd "C-b") 'consult-project-buffer)  ; 'persp-switch-to-buffer*)
 (define-key evil-normal-state-map (kbd "C-S-b") 'list-buffers)
 (define-key evil-normal-state-map (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
