@@ -21,8 +21,6 @@
 
 
 ;;; TODO
-;;;  - Add ability to select visual region in any mode and create a new org-roam note from the region's contents
-;;; 
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
