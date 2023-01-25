@@ -21,11 +21,14 @@
 
 
 ;;; TODO
+;;;  - Add ability to select visual region in any mode and create a new org-roam note from the region's contents
+;;; 
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
-;;;  - Add ability to select visual region in any mode and create a new org-roam note from the region's contents
-;;;      Simultaneously delete the selected content and replace it with a link to the new Org note
-;;; 
+;;;
+;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
+;;;    but should have split first before finishing the Help/Doc command
+;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
 ;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)
