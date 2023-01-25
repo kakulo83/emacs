@@ -361,6 +361,42 @@
        (funcall #',split-type)
        (call-interactively #',fn))))
 
+	(defun my/embark-org-roam-cut-to-new-note (start end)
+		"Cut region and populate new org-roam note."
+		; capture content of current region and bind to variable
+		; (delete-and-extract-region (region-beginning) (region-end))
+		(interactive "r")
+				(let* ((text (delete-and-extract-region start end))
+							 (tags (read-string "Enter tags: "))
+							 (title (read-string "Title of note: "))
+							 (slug (org-roam-node-slug (org-roam-node-create :title title)))
+							 (filename (format "%s/%d-%s.org"
+	 														(expand-file-name org-roam-directory)
+	 														(time-convert (current-time) 'integer)
+	 														slug))
+							 (org-id-overriding-file-name filename)
+							 id)
+	 			(with-temp-buffer
+	 				(insert ":PROPERTIES:\n:ID:        \n:END:\n#+title: "
+	 						title)
+	 				(goto-char 25)
+	 				(setq id (org-id-get-create))
+					(goto-char (point-max))
+					(insert "\n#+startup: showall inlineimages")
+					(insert "\n#+tags:")
+					(insert "\n#+options: ^:{}")
+					(goto-char (point-max))
+					(insert "\n\n")
+					(goto-char (point-max))
+					(insert text)
+	 				(write-file filename)
+	 				(org-roam-db-update-file filename)
+	 				(format "[[id:%s][%s]]" id title))
+				; insert link in place of moved text
+				  (insert (concat "[[id:" id "][" title "]]"))
+				))
+
+
 	; PERSPECTIVE KEYBINDINGS
 	(add-to-list 'marginalia-prompt-categories '("Perspective" . perspective))
 	(embark-define-keymap embark-perspective-keymap
@@ -375,8 +411,11 @@
 		("o" (my/embark-ace-action org-roam-node-find)))
 	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
+	; REGION KEYBINDINGS
+	(define-key embark-region-map "c" #'my/embark-org-roam-cut-to-new-note)
 	(define-key embark-region-map "f" #'fill-region)
 
+	; ACE WINDOW KEYBINDINGS
 	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
 	
@@ -423,7 +462,8 @@
 
 (use-package undo-tree
 	:config
-	(setq undo-tree-auto-save-history nil)
+	(setq undo-tree-auto-save-history t)
+	(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
 	:init
 	(global-undo-tree-mode))
 
