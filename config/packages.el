@@ -199,7 +199,7 @@
 	(add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
                ))
-	(setq org-link-frame-setup '((file . find-file-other-window)))
+	(setq org-link-frame-setup '((file . find-file))) ; find-file-other-window
 	(setq org-return-follows-link t)
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
