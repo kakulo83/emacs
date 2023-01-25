@@ -49,7 +49,7 @@
 (define-key evil-normal-state-map "gt" 'persp-next)
 (define-key evil-normal-state-map "gT" 'persp-prev)
 (define-key evil-normal-state-map ",k" 'robert/quick-kill-process)
-(define-key evil-normal-state-map ",N" 'robert/drill-by-topic)
+(define-key evil-normal-state-map ",d" 'robert/drill-by-topic)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
