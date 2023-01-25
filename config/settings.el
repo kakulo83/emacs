@@ -74,3 +74,5 @@
 (set-fringe-mode 0)
 
 (setf dired-kill-when-opening-new-dired-buffer t)
+
+(setq auto-revert-check-vc-info t)
