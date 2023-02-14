@@ -396,32 +396,50 @@
 				  (insert (concat "[[id:" id "][" title "]]"))
 				))
 
+	(defun my/embark-convert-to-python-path (expression)
+		"Converts a filepath from EXPRESSION into a python module path."
+		(message expression))
 
-	; PERSPECTIVE KEYBINDINGS
+	(defun my/embark-test-function ()
+		(interactive)
+		(message "Input is `%s'." (read-from-minibuffer "Input: ")))
+
+	; EXPRESSION ACTIONS
+	(define-key embark-expression-map "." #'my/embark-convert-to-python-path)
+
+	; PERSPECTIVE ACTIONS
 	(add-to-list 'marginalia-prompt-categories '("Perspective" . perspective))
 	(embark-define-keymap embark-perspective-keymap
 		"Keymap for perspective actions."
 		("k" persp-kill))
 	(add-to-list 'embark-keymap-alist '(perspective . embark-perspective-keymap))
 
-	; ORG-ROAM KEYBINDINGS
+	(add-to-list 'marginalia-prompt-categories '("Consult-Grep" . consult-grep))
+	(embark-define-keymap embark-ripgrep-keymap
+		"Keymap for ripgrep actions."
+		("o" (my/embark-test-function)))
+	(add-to-list 'embark-keymap-alist '(consult-grep . embark-ripgrep-keymap))
+	
+	; ORG-ROAM ACTIONS
 	(add-to-list 'marginalia-prompt-categories '("OrgRoam" . org-roam))
 	(embark-define-keymap embark-org-roam-node-keymap
 		"Keymap for org-roam actions."
 		("o" (my/embark-ace-action org-roam-node-find)))
 	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
-	; REGION KEYBINDINGS
+	; REGION ACTIONS
 	(define-key embark-region-map "c" #'my/embark-org-roam-cut-to-new-note)
 	(define-key embark-region-map "f" #'fill-region)
 
-	; ACE WINDOW KEYBINDINGS
+	; ACE WINDOW ACTIONS
 	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
 	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+
+	(define-key embark-general-map (kbd "o") (my/embark-ace-action evil-lookup))
 	)
 
 
@@ -602,7 +620,7 @@
 	(setq dired-sidebar-recenter-cursor-on-follow-file nil)
 	(setq dired-sidebar-should-follow-file nil)
 	:custom
-	(dired-subtree-line-prefix "  ")
+	(dired-subtree-line-prefix "      ")
 	:bind
 	(:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
