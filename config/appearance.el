@@ -43,9 +43,10 @@
 ;(load-theme 'tron-legacy t)
 ;(load-theme 'granger  t)       ; graham  fogus  granger
 ;(load-theme 'planet t)
-(load-theme 'doom-outrun-electric t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+;(load-theme 'doom-outrun-electric t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
 ;(load-theme 'nano-dark t)         ; nano-light
-;(load-theme 'modus-operandi t) ; modus-operandi    modus-vivendi
+(load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
+;(load-theme 'nord t)
 
 (provide 'appearance)
 ;;; appearance.el ends here
