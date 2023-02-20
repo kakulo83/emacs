@@ -12,6 +12,13 @@
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 (define-key evil-normal-state-map (kbd "TAB") nil)
+(define-key evil-normal-state-map (kbd "s-}") 'persp-next)
+(define-key evil-normal-state-map (kbd "s-{") 'persp-prev)
+(define-key evil-normal-state-map (kbd "s-1") '(lambda ()(interactive) (tab-bar-select-tab 1)))
+(define-key evil-normal-state-map (kbd "s-2") '(lambda ()(interactive) (tab-bar-select-tab 2)))
+(define-key evil-normal-state-map (kbd "s-3") '(lambda ()(interactive) (tab-bar-select-tab 3)))
+(define-key evil-normal-state-map (kbd "s-4") '(lambda ()(interactive) (tab-bar-select-tab 4)))
+(define-key evil-normal-state-map (kbd "s-5") '(lambda ()(interactive) (tab-bar-select-tab 5)))
 
 (with-eval-after-load "evil-maps"
 	(define-key evil-normal-state-map (kbd "TAB") nil))
