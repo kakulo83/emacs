@@ -94,13 +94,27 @@
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 
+; install straight.el for git based packages
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(load "~/.emacs.d/config/appearance.el")
 (load "~/.emacs.d/config/custom.el")
 (load "~/.emacs.d/config/packages.el")
 (load "~/.emacs.d/config/settings.el")
 (load "~/.emacs.d/config/functions.el")
 (load "~/.emacs.d/config/hooks.el")
 (load "~/.emacs.d/config/keybindings.el")
-(load "~/.emacs.d/config/appearance.el")
 
 ; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
 (when (string= system-type "darwin")
