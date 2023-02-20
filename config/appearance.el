@@ -29,9 +29,6 @@
 
 (set-default-coding-systems 'utf-8-unix)
 
-
-;(set-face-attribute 'default nil :height 100)
-
 (global-font-lock-mode 1) ;; Enable syntax highlighting
 
 (set-default 'truncate-lines t) ;; Don't wrap lines
@@ -46,7 +43,9 @@
 ;(load-theme 'tron-legacy t)
 ;(load-theme 'granger  t)       ; graham  fogus  granger
 ;(load-theme 'planet t)
-;(load-theme 'solarized-iceberg-dark t)
-;(load-theme 'doom-opera t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
-(load-theme 'nano-dark)         ; nano-light
-;(load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
+(load-theme 'doom-outrun-electric t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem
+;(load-theme 'nano-dark t)         ; nano-light
+;(load-theme 'modus-operandi t) ; modus-operandi    modus-vivendi
+
+(provide 'appearance)
+;;; appearance.el ends here
