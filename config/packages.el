@@ -14,8 +14,8 @@
 	:init
 	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
 	(setq projectile-switch-project-action (lambda()
-																					 (projectile-dired)
-																					 (cd (projectile-project-root))))
+						 (projectile-dired)
+						 (cd (projectile-project-root))))
 	(projectile-mode 1))
 
 (use-package evil
@@ -384,9 +384,9 @@
 		"Converts a filepath from EXPRESSION into a python module path."
 		(message expression))
 
-	(defun my/embark-test-function ()
-		(interactive)
-		(message "Input is `%s'." (read-from-minibuffer "Input: ")))
+;	(defun my/embark-test-function ()
+;		(interactive)
+;		(message "Input is `%s'." (completing-read "Input: ")))
 
 	; EXPRESSION ACTIONS
 	(define-key embark-expression-map "." #'my/embark-convert-to-python-path)
@@ -398,11 +398,11 @@
 		("k" persp-kill))
 	(add-to-list 'embark-keymap-alist '(perspective . embark-perspective-keymap))
 
-	(add-to-list 'marginalia-prompt-categories '("Consult-Grep" . consult-grep))
-	(embark-define-keymap embark-ripgrep-keymap
-		"Keymap for ripgrep actions."
-		("o" (my/embark-test-function)))
-	(add-to-list 'embark-keymap-alist '(consult-grep . embark-ripgrep-keymap))
+;	(add-to-list 'marginalia-prompt-categories '("Consult-Grep" . consult-grep))
+;	(embark-define-keymap embark-ripgrep-keymap
+;		"Keymap for ripgrep actions."
+;		("o" (my/embark-test-function)))
+;	(add-to-list 'embark-keymap-alist '(consult-grep . embark-ripgrep-keymap))
 	
 	; ORG-ROAM ACTIONS
 	(add-to-list 'marginalia-prompt-categories '("OrgRoam" . org-roam))
@@ -425,7 +425,6 @@
 
 	(define-key embark-general-map (kbd "o") (my/embark-ace-action evil-lookup))
 	)
-
 
 (use-package embark-consult
   
@@ -477,7 +476,6 @@
 (use-package vterm
 	:config
 	(setq vterm-max-scrollback 20000))
-
 
 (use-package multi-vterm
 	:functions vterm-send-return evil-insert-state
