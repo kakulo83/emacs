@@ -76,3 +76,9 @@
 (setf dired-kill-when-opening-new-dired-buffer t)
 
 (setq auto-revert-check-vc-info t)
+
+(global-display-line-numbers-mode 1)
+
+(setq linum-format "%d ")
+
+(setq vc-follow-symlinks t)

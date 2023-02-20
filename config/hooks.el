@@ -31,3 +31,6 @@
           (lambda ()
             (setq-local corfu-auto nil)
             (corfu-mode)))
+
+(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
