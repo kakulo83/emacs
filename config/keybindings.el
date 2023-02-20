@@ -12,6 +12,13 @@
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 (define-key evil-normal-state-map (kbd "TAB") nil)
+(define-key evil-normal-state-map (kbd "s-}") 'persp-next)
+(define-key evil-normal-state-map (kbd "s-{") 'persp-prev)
+(define-key evil-normal-state-map (kbd "s-1") '(lambda ()(interactive) (tab-bar-select-tab 1)))
+(define-key evil-normal-state-map (kbd "s-2") '(lambda ()(interactive) (tab-bar-select-tab 2)))
+(define-key evil-normal-state-map (kbd "s-3") '(lambda ()(interactive) (tab-bar-select-tab 3)))
+(define-key evil-normal-state-map (kbd "s-4") '(lambda ()(interactive) (tab-bar-select-tab 4)))
+(define-key evil-normal-state-map (kbd "s-5") '(lambda ()(interactive) (tab-bar-select-tab 5)))
 
 (with-eval-after-load "evil-maps"
 	(define-key evil-normal-state-map (kbd "TAB") nil))
@@ -24,7 +31,7 @@
 (define-key evil-normal-state-map (kbd "-") 'dired)
 (define-key evil-normal-state-map (kbd "C-s") 'projectile-persp-switch-project)
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
-(define-key evil-normal-state-map (kbd "C-b") 'consult-project-buffer)  ; 'persp-switch-to-buffer*)
+(define-key evil-normal-state-map (kbd "C-b") 'persp-switch-to-buffer*) ;'consult-project-buffer)
 (define-key evil-normal-state-map (kbd "C-S-b") 'list-buffers)
 (define-key evil-normal-state-map (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)

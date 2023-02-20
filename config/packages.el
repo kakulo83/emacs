@@ -14,8 +14,8 @@
 	:init
 	(setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
 	(setq projectile-switch-project-action (lambda()
-																					 (projectile-dired)
-																					 (cd (projectile-project-root))))
+						 (projectile-dired)
+						 (cd (projectile-project-root))))
 	(projectile-mode 1))
 
 (use-package evil
@@ -107,23 +107,10 @@
 	:config
 	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
-(use-package doom-modeline
-	:defines doom-modeline-mode-alist doom-modeline-support-imenu
-	:functions doom-modeline-def-modeline
+(use-package nano-modeline
 	:config
-	(setq doom-modeline-time-icon t)
-	(setq doom-modeline-env-version nil)
-	(setq doom-modeline-workspace-name nil)
-	(setq doom-modeline-lsp nil)
-	(setq doom-modeline-major-mode-icon nil)
-	(setq doom-modeline-minor-modes nil)
-	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
-	(setq doom-modeline-vcs-max-length 40)
-	(setq doom-modeline-mode-alist nil)
-	(setq doom-modeline-height 30)
-	(setq doom-modeline-buffer-encoding nil)
-	(setq doom-modeline-display-misc-in-all-mode-lines nil)
-	:hook (after-init . doom-modeline-mode))
+	(setq nano-modeline-position "bottom")
+	(nano-modeline-mode))
 
 ; this package hides certain modes from cluttering the modeline
 (use-package blackout
@@ -155,10 +142,6 @@
 
 (use-package planet-theme)
 
-(use-package iceberg-theme
-	:config
-	(iceberg-theme-create-theme-file))
-
 (use-package doom-themes
 	:defines doom-themes-enable-bolt
  	:config
@@ -167,6 +150,7 @@
 
 (use-package nano-theme)
 
+(use-package nord-theme)
 
 (use-package hideshow
 	:defer t
@@ -396,34 +380,51 @@
 				  (insert (concat "[[id:" id "][" title "]]"))
 				))
 
+	(defun my/embark-convert-to-python-path (expression)
+		"Converts a filepath from EXPRESSION into a python module path."
+		(message expression))
 
-	; PERSPECTIVE KEYBINDINGS
+;	(defun my/embark-test-function ()
+;		(interactive)
+;		(message "Input is `%s'." (completing-read "Input: ")))
+
+	; EXPRESSION ACTIONS
+	(define-key embark-expression-map "." #'my/embark-convert-to-python-path)
+
+	; PERSPECTIVE ACTIONS
 	(add-to-list 'marginalia-prompt-categories '("Perspective" . perspective))
 	(embark-define-keymap embark-perspective-keymap
 		"Keymap for perspective actions."
 		("k" persp-kill))
 	(add-to-list 'embark-keymap-alist '(perspective . embark-perspective-keymap))
 
-	; ORG-ROAM KEYBINDINGS
+;	(add-to-list 'marginalia-prompt-categories '("Consult-Grep" . consult-grep))
+;	(embark-define-keymap embark-ripgrep-keymap
+;		"Keymap for ripgrep actions."
+;		("o" (my/embark-test-function)))
+;	(add-to-list 'embark-keymap-alist '(consult-grep . embark-ripgrep-keymap))
+	
+	; ORG-ROAM ACTIONS
 	(add-to-list 'marginalia-prompt-categories '("OrgRoam" . org-roam))
 	(embark-define-keymap embark-org-roam-node-keymap
 		"Keymap for org-roam actions."
 		("o" (my/embark-ace-action org-roam-node-find)))
 	(add-to-list 'embark-keymap-alist '(org-roam-node . embark-org-roam-node-keymap))
 
-	; REGION KEYBINDINGS
+	; REGION ACTIONS
 	(define-key embark-region-map "c" #'my/embark-org-roam-cut-to-new-note)
 	(define-key embark-region-map "f" #'fill-region)
 
-	; ACE WINDOW KEYBINDINGS
+	; ACE WINDOW ACTIONS
 	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
 	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
-	)
 
+	(define-key embark-general-map (kbd "o") (my/embark-ace-action evil-lookup))
+	)
 
 (use-package embark-consult
   
@@ -475,7 +476,6 @@
 (use-package vterm
 	:config
 	(setq vterm-max-scrollback 20000))
-
 
 (use-package multi-vterm
 	:functions vterm-send-return evil-insert-state
@@ -591,6 +591,61 @@
 	:init
 	(persp-mode))
 
+(use-package perspective-tabs
+  :after (perspective)
+  :straight (:host sourcehut :repo "woozong/perspective-tabs")
+	; http://www.gonsie.com/blorg/tab-bar.html
+  ;	https://github.com/jimeh/.emacs.d/blob/c845af831690d1ab575b691020fbe91ce6435647/modules/workspaces/siren-tab-bar.el#L119-L138
+  :init
+	(defface robert-tab-bar-tab
+    `((t :inherit 'tab-bar-tab
+         :foreground "white",(face-attribute 'font-lock-keyword-face :foreground nil t)
+				 ))
+    "Face for active tab in tab-bar."
+    :group 'robert-tab-bar)
+  (defface robert-tab-bar-tab-hint
+    `((t :inherit 'robert-tab-bar-tab
+         :foreground ,(face-attribute 'tab-bar-tab-inactive :foreground nil t)))
+    "Face for active tab hint in tab-bar."
+    :group 'robert-tab-bar)
+
+	(defface robert-tab-bar-tab-inactive
+    `((t :inherit 'tab-bar-tab-inactive
+				 :background ,(face-attribute 'font-lock-comment-face :background nil t)
+         :foreground "slate gray",(face-attribute 'font-lock-comment-face :foreground nil t)))
+    "Face for inactive tab in tab-bar."
+    :group 'robert-tab-bar)
+	(defface robert-tab-bar-tab-hint-inactive
+    `((t :inherit 'robert-tab-bar-tab-inactive
+         :foreground ,(face-attribute 'tab-bar-tab-inactive :foreground nil t)))
+    "Face for inactive tab hint in tab-bar."
+    :group 'robert-tab-bar)
+
+	(defun robert-tab-bar-tab-format-function (tab i)
+		(let* ((current-p (eq (car tab) 'current-tab))
+           (tab-face (if current-p
+                         'robert-tab-bar-tab
+                       'robert-tab-bar-tab-inactive))
+           (hint-face (if current-p
+                          'robert-tab-bar-tab-hint
+                        'robert-tab-bar-tab-hint-inactive)))
+      (concat (propertize (if tab-bar-tab-hints (format "  %d:" (- i 1)) "  ")
+                          'face hint-face)
+              (propertize
+               (concat
+                (alist-get 'name tab)
+                (or (and tab-bar-close-button-show
+                         (not (eq tab-bar-close-button-show
+                                  (if current-p 'non-selected 'selected)))
+                         tab-bar-close-button)
+                    "")
+                "  ")
+               'face tab-face))))
+	(setq tab-bar-close-button-show nil)
+	(setq tab-bar-new-button-show nil)
+	(setq tab-bar-tab-name-format-function #'robert-tab-bar-tab-format-function)
+  (perspective-tabs-mode +1))
+
 (use-package lox-mode)
 
 (use-package prettier-js
@@ -602,7 +657,7 @@
 	(setq dired-sidebar-recenter-cursor-on-follow-file nil)
 	(setq dired-sidebar-should-follow-file nil)
 	:custom
-	(dired-subtree-line-prefix "  ")
+	(dired-subtree-line-prefix "      ")
 	:bind
 	(:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
@@ -624,10 +679,6 @@
 (use-package eshell-syntax-highlighting
   :after eshell-mode
 )
-
-(use-package nyan-mode
-	:init
-	(nyan-mode 1))
 
 ;(use-package paredit
 ;	:init
