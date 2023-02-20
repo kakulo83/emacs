@@ -593,6 +593,61 @@
 	:init
 	(persp-mode))
 
+(use-package perspective-tabs
+  :after (perspective)
+  :straight (:host sourcehut :repo "woozong/perspective-tabs")
+	; http://www.gonsie.com/blorg/tab-bar.html
+  ;	https://github.com/jimeh/.emacs.d/blob/c845af831690d1ab575b691020fbe91ce6435647/modules/workspaces/siren-tab-bar.el#L119-L138
+  :init
+	(defface robert-tab-bar-tab
+    `((t :inherit 'tab-bar-tab
+         :foreground "white",(face-attribute 'font-lock-keyword-face :foreground nil t)
+				 ))
+    "Face for active tab in tab-bar."
+    :group 'robert-tab-bar)
+  (defface robert-tab-bar-tab-hint
+    `((t :inherit 'robert-tab-bar-tab
+         :foreground ,(face-attribute 'tab-bar-tab-inactive :foreground nil t)))
+    "Face for active tab hint in tab-bar."
+    :group 'robert-tab-bar)
+
+	(defface robert-tab-bar-tab-inactive
+    `((t :inherit 'tab-bar-tab-inactive
+				 :background ,(face-attribute 'font-lock-comment-face :background nil t)
+         :foreground "slate gray",(face-attribute 'font-lock-comment-face :foreground nil t)))
+    "Face for inactive tab in tab-bar."
+    :group 'robert-tab-bar)
+	(defface robert-tab-bar-tab-hint-inactive
+    `((t :inherit 'robert-tab-bar-tab-inactive
+         :foreground ,(face-attribute 'tab-bar-tab-inactive :foreground nil t)))
+    "Face for inactive tab hint in tab-bar."
+    :group 'robert-tab-bar)
+
+	(defun robert-tab-bar-tab-format-function (tab i)
+		(let* ((current-p (eq (car tab) 'current-tab))
+           (tab-face (if current-p
+                         'robert-tab-bar-tab
+                       'robert-tab-bar-tab-inactive))
+           (hint-face (if current-p
+                          'robert-tab-bar-tab-hint
+                        'robert-tab-bar-tab-hint-inactive)))
+      (concat (propertize (if tab-bar-tab-hints (format "  %d:" (- i 1)) "  ")
+                          'face hint-face)
+              (propertize
+               (concat
+                (alist-get 'name tab)
+                (or (and tab-bar-close-button-show
+                         (not (eq tab-bar-close-button-show
+                                  (if current-p 'non-selected 'selected)))
+                         tab-bar-close-button)
+                    "")
+                "  ")
+               'face tab-face))))
+	(setq tab-bar-close-button-show nil)
+	(setq tab-bar-new-button-show nil)
+	(setq tab-bar-tab-name-format-function #'robert-tab-bar-tab-format-function)
+  (perspective-tabs-mode +1))
+
 (use-package lox-mode)
 
 (use-package prettier-js
