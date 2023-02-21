@@ -34,6 +34,7 @@
 ;;;  - Create a command "repl" that lets me interactively select
 ;;;    a programming language REPL (i.e python, elisp, etc)
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
+;;;     https://emacs.stackexchange.com/questions/59177/how-to-tell-persp-mode-to-ignore-some-buffers-by-major-mode
 ;;;      There is no value/reason for them to show up in the buffer-list
 ;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
 ;;;      This might be a solution to use evil to edit vterm commands etc
@@ -66,6 +67,9 @@
 ;;;  - investigate config:   https://config.daviwil.com/emacs
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  - consider:  https://github.com/karthink/popper
+;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
+;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
 ;;;  - consider:  https://github.com/Harith163/TransSide-theme
 ;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
 ;;;  - consider:  https://github.com/ch11ng/exwm/wiki
