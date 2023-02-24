@@ -77,5 +77,23 @@
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 
+(evil-define-key 'normal grep-mode-map (kbd ",a")  'ace-window)
+(define-key grep-mode-map (kbd "C-h") 'evil-window-left)
+(define-key grep-mode-map (kbd "C-j") 'evil-window-down)
+(define-key grep-mode-map (kbd "C-k") 'evil-window-up)
+(define-key grep-mode-map (kbd "C-l") 'evil-window-right)
+
+(define-key grep-mode-map (kbd "s-1") '(lambda () (interactive) (tab-bar-select-tab 1)))
+(define-key grep-mode-map (kbd "s-2") '(lambda () (interactive) (tab-bar-select-tab 2)))
+(define-key grep-mode-map (kbd "s-3") '(lambda () (interactive) (tab-bar-select-tab 3)))
+(define-key grep-mode-map (kbd "s-4") '(lambda () (interactive) (tab-bar-select-tab 4)))
+(define-key grep-mode-map (kbd "s-5") '(lambda () (interactive) (tab-bar-select-tab 5)))
+
+(define-key grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
+
+;; add C-c o to jump to previous cursor position in buffer
+;; add C-c i to jump to next cursor position in buffer
+
+
 ;(global-set-key (kbd "C-z") #'unique-vterm-shell)
 (global-set-key (kbd "C-z") #'unique-eshell)
