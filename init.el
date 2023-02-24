@@ -67,6 +67,7 @@
 ;;;  - investigate config:   https://config.daviwil.com/emacs
 ;;;
 ;;;  PACKAGES TO CONSIDER
+;;;  guide:  https://github.com/emacs-tw/awesome-emacs
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
 ;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
