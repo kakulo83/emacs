@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 (setq use-package-always-ensure t)
 (setq warning-minimum-level :error)
 (setq use-dialog-box nil)
@@ -82,3 +85,6 @@
 (setq linum-format "%d ")
 
 (setq vc-follow-symlinks t)
+
+(provide 'settings)
+;;; settings.el ends here

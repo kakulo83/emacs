@@ -77,6 +77,7 @@
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 
+
 (evil-define-key 'normal grep-mode-map (kbd ",a")  'ace-window)
 (define-key grep-mode-map (kbd "C-h") 'evil-window-left)
 (define-key grep-mode-map (kbd "C-j") 'evil-window-down)
