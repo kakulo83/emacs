@@ -50,6 +50,7 @@
 ;;;  TO LEARN
 ;;;  - learn how to use Embarks Export for grep results and how to perform additional actions like wgrep
 ;;;  - learn grep-mode
+;;;  - https://reasonabledeviations.com/2023/02/05/gpt-for-second-brain/
 ;;;
 ;;;  SNIPPETS TO TRY
 ;;;
