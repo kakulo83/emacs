@@ -50,6 +50,7 @@
 ;;;  TO LEARN
 ;;;  - learn how to use Embarks Export for grep results and how to perform additional actions like wgrep
 ;;;  - learn grep-mode
+;;;  - https://reasonabledeviations.com/2023/02/05/gpt-for-second-brain/
 ;;;
 ;;;  SNIPPETS TO TRY
 ;;;
@@ -125,8 +126,8 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-;(when (memq window-system '(mac ns x))
-;  (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
