@@ -271,8 +271,12 @@
 
 (use-package dashboard
 	:config
-	(setq dashboard-items '((projects . 5)
-													(agenda . 5)))
+	(setq dashboard-items '((projects . 5) (agenda . 5))
+				dashboard-set-file-icons t
+				dashboard-image-banner-max-height 300 
+				dashboard-startup-banner "~/Downloads/small-farm.png"
+				dashboard-banner-logo-title "Buttercup was raised on a small farm in the country of Florin"
+				)
 	(dashboard-setup-startup-hook))
 
 (use-package rainbow-delimiters)

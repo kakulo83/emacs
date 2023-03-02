@@ -1,4 +1,3 @@
-
 ;;; package --- Summary
 ;;; Commentary:
 ;;;
@@ -24,6 +23,9 @@
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
+;;;  - Create a function that creates a project-relative python import path string for inserintg
+;;;      - https://github.com/Wilfred/pyimport/blob/master/pyimport.el might have some useful code
+;;;      - (file-relative-name buffer-file-name projectile-project-root)
 ;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
 ;;;    but should have split first before finishing the Help/Doc command
 ;;;
@@ -68,7 +70,10 @@
 ;;;
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
+;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
 ;;;  - consider:  https://github.com/karthink/popper
+;;;  - consider:  https://github.com/4DA/eshell-toggle
+;;;  - consider:  https://github.com/kyagi/shell-pop-el
 ;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
 ;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
 ;;;  - consider:  https://github.com/Harith163/TransSide-theme

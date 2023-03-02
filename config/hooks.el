@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 (add-hook 'pdf-view-mode-hook
 					(lambda ()
 						(set (make-local-variable 'evil-normal-state-cursor) (list nil))
@@ -36,3 +39,7 @@
 (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+(provide 'hooks)
+;;; hooks.el ends here
