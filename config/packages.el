@@ -189,6 +189,7 @@
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
 	(setq org-startup-with-inline-images t)
+	(setq org-startup-indented t)
 	;(setq org-startup-with-latex-preview t)
 	(setq org-preview-latex-default-process 'dvisvgm)
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -204,7 +205,8 @@
 							("C-c n" . org-roam-capture)
 							("C-'" . org-roam-buffer-toggle)
               ("C-c i" . org-roam-node-insert))
-	:hook((prog-mode . yas-minor-mode)))
+	:hook((prog-mode . yas-minor-mode)
+				(org-mode . org-modern-indent-mode)))
 
 (use-package org-bullets
 	:after org
@@ -265,6 +267,10 @@
 	(org-download-screenshot-method "/usr/local/bin/pngpaste %s")
 	:config
 	(require 'org-download))
+
+(use-package org-modern-indent
+	:config
+	(add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package simple-httpd)
 

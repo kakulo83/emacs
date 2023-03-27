@@ -148,5 +148,5 @@
 
 ; add non package scripts
 (load "~/.emacs.d/private/persp/persp-projectile.el")
-
+(load "~/.emacs.d/private/org-modern-indent/org-modern-indent.el")
 ;;; init.el ends here
