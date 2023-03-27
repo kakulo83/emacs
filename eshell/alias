@@ -3,7 +3,7 @@ alias clear clear 1
 alias open find-file $1
 alias ls ls -la $1
 
-alias dev cd ~/Development
+alias dev cd ~/Code
 alias desk cd ~/Desktop
 alias down cd ~/Downloads
 
@@ -13,3 +13,6 @@ alias alias find-file ~/.emacs.d/eshell/alias
 alias psql sql-postgres
 alias cdr cd (projectile-project-root)
 alias grep *grep
+
+alias python python3 $*
+alias pip pip3 $*

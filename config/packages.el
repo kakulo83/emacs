@@ -180,6 +180,7 @@
 
 (use-package org
 	:config
+	(add-to-list 'ibuffer-never-show-predicates "^\\*dired")
 	(add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
                ))
@@ -188,6 +189,7 @@
 	(setq org-pretty-entities t)
 	(setq org-hide-emphasis-markers t)
 	(setq org-startup-with-inline-images t)
+	(setq org-startup-indented t)
 	;(setq org-startup-with-latex-preview t)
 	(setq org-preview-latex-default-process 'dvisvgm)
 	(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -203,7 +205,8 @@
 							("C-c n" . org-roam-capture)
 							("C-'" . org-roam-buffer-toggle)
               ("C-c i" . org-roam-node-insert))
-	:hook((prog-mode . yas-minor-mode)))
+	:hook((prog-mode . yas-minor-mode)
+				(org-mode . org-modern-indent-mode)))
 
 (use-package org-bullets
 	:after org
@@ -265,14 +268,22 @@
 	:config
 	(require 'org-download))
 
+(use-package org-modern-indent
+	:config
+	(add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+
 (use-package simple-httpd)
 
 (use-package websocket)
 
 (use-package dashboard
 	:config
-	(setq dashboard-items '((projects . 5)
-													(agenda . 5)))
+	(setq dashboard-items '((projects . 5) (agenda . 5))
+				dashboard-set-file-icons t
+				dashboard-image-banner-max-height 300 
+				dashboard-startup-banner "~/Downloads/small-farm.png"
+				dashboard-banner-logo-title "Buttercup was raised on a small farm in the country of Florin"
+				)
 	(dashboard-setup-startup-hook))
 
 (use-package rainbow-delimiters)
@@ -660,6 +671,11 @@
 			eshell-highlight-prompt t
 			eshell-hist-ignoredups t))
 
+(use-package eat
+	:after eshell-mode
+	:hook
+	(eshell-mode . eat-eshell-visual-command-mode))
+
 (use-package eshell-git-prompt
 	:config
 	(eshell-git-prompt-use-theme 'powerline))
@@ -686,6 +702,10 @@
 ;  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 ;  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 ;  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
+
+(use-package arduino-mode)
+
+(use-package platformio-mode)
 
 (use-package corfu
 	; https://kristofferbalintona.me/posts/202202270056/
