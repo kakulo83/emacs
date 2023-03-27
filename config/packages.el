@@ -180,6 +180,7 @@
 
 (use-package org
 	:config
+	(add-to-list 'ibuffer-never-show-predicates "^\\*dired")
 	(add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
                ))
@@ -663,6 +664,11 @@
 			eshell-history-size 1000
 			eshell-highlight-prompt t
 			eshell-hist-ignoredups t))
+
+(use-package eat
+	:after eshell-mode
+	:hook
+	(eshell-mode . eat-eshell-visual-command-mode))
 
 (use-package eshell-git-prompt
 	:config
