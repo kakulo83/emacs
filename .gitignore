@@ -26,3 +26,4 @@ themes
 org-persist
 undo-tree
 straight
+async-bytecomp.log

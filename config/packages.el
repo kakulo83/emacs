@@ -703,6 +703,10 @@
 ;  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 ;  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
 
+(use-package arduino-mode)
+
+(use-package platformio-mode)
+
 (use-package corfu
 	; https://kristofferbalintona.me/posts/202202270056/
 	:hook (lsp-completion-mode . my/corfu-setup-lsp)
