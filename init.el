@@ -153,4 +153,5 @@
 ; add non package scripts
 (load "~/.emacs.d/private/persp/persp-projectile.el")
 (load "~/.emacs.d/private/org-modern-indent/org-modern-indent.el")
+(load "~/.emacs.d/private/vertico-postframe/vertico-postframe.el")
 ;;; init.el ends here
