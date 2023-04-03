@@ -23,6 +23,7 @@
   :init
 	(setq evil-want-keybinding nil)
 	:config
+	(modify-syntax-entry ?_ "w")
   (setq evil-insert-state-cursor '(bar "#00FF00")
       evil-visual-state-cursor '(box "#FF00FF")
       evil-normal-state-cursor '(box "red"))
@@ -90,6 +91,7 @@
 	:config
 	(setq vertico-count 20)
 	(setq vertico-resize nil)
+	(vertico-posframe-mode 1)
 	:init
 	(vertico-mode))
 
@@ -674,7 +676,8 @@
 (use-package eat
 	:after eshell-mode
 	:hook
-	(eshell-mode . eat-eshell-visual-command-mode))
+	(eshell-load-hook . eat-eshell-mode)
+	(eshell-load-hook . eat-eshell-visual-command-mode))
 
 (use-package eshell-git-prompt
 	:config
