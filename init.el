@@ -29,6 +29,8 @@
 ;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
 ;;;    but should have split first before finishing the Help/Doc command
 ;;;
+;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
+;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
 ;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)

@@ -159,6 +159,8 @@
 
 (use-package nord-theme)
 
+(use-package gruvbox-theme)
+
 (use-package hideshow
 	:defer t
   :diminish hs-minor-mode
