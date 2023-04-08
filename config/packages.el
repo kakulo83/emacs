@@ -91,9 +91,14 @@
 	:config
 	(setq vertico-count 20)
 	(setq vertico-resize nil)
-	(vertico-posframe-mode 1)
 	:init
 	(vertico-mode))
+
+(use-package vertico-posframe
+	:straight (vertico-posframe :type git :host github :repo "tumashu/vertico-posframe")
+	:init
+	(vertico-posframe-mode 1))
+
 
 (use-package orderless
 	:init
@@ -207,8 +212,7 @@
 							("C-c n" . org-roam-capture)
 							("C-'" . org-roam-buffer-toggle)
               ("C-c i" . org-roam-node-insert))
-	:hook((prog-mode . yas-minor-mode)
-				(org-mode . org-modern-indent-mode)))
+	:hook((prog-mode . yas-minor-mode)))
 
 (use-package org-bullets
 	:after org
@@ -270,9 +274,10 @@
 	:config
 	(require 'org-download))
 
-(use-package org-modern-indent
-	:config
-	(add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;(use-package org-modern-indent
+;	:straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
+;	:config
+;	(add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package simple-httpd)
 
@@ -592,9 +597,13 @@
 	:init
 	(persp-mode))
 
+(use-package persp-projectile
+	:after (perspective)
+	:straight (persp-projectile :host github :repo "bbatsov/persp-projectile"))
+
 (use-package perspective-tabs
   :after (perspective)
-  :straight (:host sourcehut :repo "woozong/perspective-tabs")
+  :straight (perspective-tabs :host sourcehut :repo "woozong/perspective-tabs")
 	; http://www.gonsie.com/blorg/tab-bar.html
   ;	https://github.com/jimeh/.emacs.d/blob/c845af831690d1ab575b691020fbe91ce6435647/modules/workspaces/siren-tab-bar.el#L119-L138
   :init
