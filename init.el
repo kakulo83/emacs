@@ -135,9 +135,6 @@
 ;when (memq window-system '(mac ns x))
 ; (exec-path-from-shell-initialize))
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
   '((display-buffer-reuse-window display-buffer-same-window)
@@ -150,8 +147,4 @@
 	(when (file-exists-p fountain-scripts)
 		(load-file fountain-scripts)))
 
-; add non package scripts
-(load "~/.emacs.d/private/persp/persp-projectile.el")
-(load "~/.emacs.d/private/org-modern-indent/org-modern-indent.el")
-(load "~/.emacs.d/private/vertico-postframe/vertico-postframe.el")
 ;;; init.el ends here
