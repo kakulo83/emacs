@@ -73,6 +73,10 @@
 ;;;
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
+;;;  - consider:  https://github.com/NicolasPetton/pass
+;;;  - consider:  https://github.com/ch11ng/exwm
+;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
+;;;
 ;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/4DA/eshell-toggle
@@ -134,8 +138,8 @@
   (setq dired-use-ls-dired nil))
 
 
-;when (memq window-system '(mac ns x))
-; (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns x))
+ (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action

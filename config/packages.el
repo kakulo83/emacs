@@ -89,16 +89,10 @@
 
 (use-package vertico
 	:config
-	(setq vertico-count 20)
+	(setq vertico-count 40)
 	(setq vertico-resize nil)
 	:init
 	(vertico-mode))
-
-(use-package vertico-posframe
-	:straight (vertico-posframe :type git :host github :repo "tumashu/vertico-posframe")
-	:init
-	(vertico-posframe-mode 1))
-
 
 (use-package orderless
 	:init
