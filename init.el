@@ -29,6 +29,8 @@
 ;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
 ;;;    but should have split first before finishing the Help/Doc command
 ;;;
+;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
+;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
 ;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)
@@ -71,6 +73,10 @@
 ;;;
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
+;;;  - consider:  https://github.com/NicolasPetton/pass
+;;;  - consider:  https://github.com/ch11ng/exwm
+;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
+;;;
 ;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/4DA/eshell-toggle
@@ -132,8 +138,8 @@
   (setq dired-use-ls-dired nil))
 
 
-;when (memq window-system '(mac ns x))
-; (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns x))
+ (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
