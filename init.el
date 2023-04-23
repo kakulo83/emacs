@@ -13,6 +13,8 @@
 ;;; exa
 ;;; man-db
 ;;; pip3 install epc
+;;; pip3 install python-lsp-black
+;;; pip3 install pyenv
 ;;; mandb (for creating man page db/cache) see: https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;; graphviz (for google profiling tools)
 ;;; 
@@ -30,6 +32,8 @@
 ;;;    but should have split first before finishing the Help/Doc command
 ;;;
 ;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
+;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
+;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
 ;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
