@@ -590,10 +590,15 @@
   (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
 (use-package perspective
+	:defer nil
+	:demand t
 	:custom
 	(persp-mode-prefix-key (kbd "C-c M-p"))
 	:config
-	(setq persp-modestring-short t)
+	(setq persp-modestring-short t
+				persp-state-default-file "~/.emacs.d/.cache/saved-perspective-state"
+				)
+	(add-hook 'kill-emacs-hook #'persp-state-save)
 	:init
 	(persp-mode))
 
