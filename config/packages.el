@@ -99,10 +99,23 @@
 	:config
 	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
-(use-package nano-modeline
+(use-package doom-modeline
+	:defines doom-modeline-mode-alist doom-modeline-support-imenu
+	:functions doom-modeline-def-modeline
 	:config
-	(setq nano-modeline-position "bottom")
-	(nano-modeline-mode))
+	(setq doom-modeline-time-icon t)
+	(setq doom-modeline-env-version nil)
+	(setq doom-modeline-workspace-name nil)
+	(setq doom-modeline-lsp nil)
+	(setq doom-modeline-major-mode-icon nil)
+	(setq doom-modeline-minor-modes nil)
+	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
+	(setq doom-modeline-vcs-max-length 40)
+	(setq doom-modeline-mode-alist nil)
+	(setq doom-modeline-height 30)
+	(setq doom-modeline-buffer-encoding nil)
+	(setq doom-modeline-display-misc-in-all-mode-lines nil)
+	:hook (after-init . doom-modeline-mode))
 
 ; this package hides certain modes from cluttering the modeline
 (use-package blackout
