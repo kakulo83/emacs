@@ -48,24 +48,15 @@
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-	:config
-	(setq lsp-lens-enable t
-        lsp-enable-links nil
-				lsp-signature-auto-activate nil
-				lsp-keymap-prefix "C-c l"
-				lsp-headerline-breadcrumb-enable nil)
+(use-package eglot
+	:ensure t
+	:defer t
 	:hook (
-				 (go-mode . lsp-deferred)
-				 (sql-mode . lsp-deferred)
-				 (typescript-mode . lsp-deferred)
-				 (js-mode . lsp-deferred)))
-
-(use-package lsp-pyright
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))
+				 (python-mode . eglot-ensure)
+				 (go-mode . eglot-ensure)
+				 (typescript-mode . eglot-ensure)
+				 (js-mode . eglot-ensure)
+				 (sql-mode . eglot-ensure)))
 
 (use-package go-mode
 	:config
@@ -108,10 +99,23 @@
 	:config
 	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
-(use-package nano-modeline
+(use-package doom-modeline
+	:defines doom-modeline-mode-alist doom-modeline-support-imenu
+	:functions doom-modeline-def-modeline
 	:config
-	(setq nano-modeline-position "bottom")
-	(nano-modeline-mode))
+	(setq doom-modeline-time-icon t)
+	(setq doom-modeline-env-version nil)
+	(setq doom-modeline-workspace-name nil)
+	(setq doom-modeline-lsp nil)
+	(setq doom-modeline-major-mode-icon nil)
+	(setq doom-modeline-minor-modes nil)
+	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
+	(setq doom-modeline-vcs-max-length 40)
+	(setq doom-modeline-mode-alist nil)
+	(setq doom-modeline-height 30)
+	(setq doom-modeline-buffer-encoding nil)
+	(setq doom-modeline-display-misc-in-all-mode-lines nil)
+	:hook (after-init . doom-modeline-mode))
 
 ; this package hides certain modes from cluttering the modeline
 (use-package blackout
@@ -419,7 +423,7 @@
 
 	; ACE WINDOW ACTIONS
 	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
-	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
+	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
 	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
@@ -567,7 +571,7 @@
 (use-package python-black
   :demand t
   :after python
-  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+  :hook (python-mode . python-black-on-save-mode))
 
 (use-package python-pytest)
 
@@ -586,10 +590,15 @@
   (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
 (use-package perspective
+	:defer nil
+	:demand t
 	:custom
 	(persp-mode-prefix-key (kbd "C-c M-p"))
 	:config
-	(setq persp-modestring-short t)
+	(setq persp-modestring-short t
+				persp-state-default-file "~/.emacs.d/.cache/saved-perspective-state"
+				)
+	(add-hook 'kill-emacs-hook #'persp-state-save)
 	:init
 	(persp-mode))
 
