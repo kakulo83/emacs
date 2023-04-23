@@ -48,24 +48,15 @@
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-	:config
-	(setq lsp-lens-enable t
-        lsp-enable-links nil
-				lsp-signature-auto-activate nil
-				lsp-keymap-prefix "C-c l"
-				lsp-headerline-breadcrumb-enable nil)
+(use-package eglot
+	:ensure t
+	:defer t
 	:hook (
-				 (go-mode . lsp-deferred)
-				 (sql-mode . lsp-deferred)
-				 (typescript-mode . lsp-deferred)
-				 (js-mode . lsp-deferred)))
-
-(use-package lsp-pyright
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))
+				 (python-mode . eglot-ensure)
+				 (go-mode . eglot-ensure)
+				 (typescript-mode . eglot-ensure)
+				 (js-mode . eglot-ensure)
+				 (sql-mode . eglot-ensure)))
 
 (use-package go-mode
 	:config
@@ -419,7 +410,7 @@
 
 	; ACE WINDOW ACTIONS
 	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
-	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action lsp-find-definition))
+	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
 	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
