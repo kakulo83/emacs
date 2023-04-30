@@ -25,6 +25,7 @@
 
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
+(define-key evil-motion-state-map (kbd "?") nil)
 (define-key evil-motion-state-map (kbd "C-z") nil)
 (define-key evil-motion-state-map (kbd "RET") nil)
 (define-key evil-motion-state-map (kbd "C-f") nil)
