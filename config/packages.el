@@ -467,6 +467,8 @@
 	(setq sqlformat-command 'pgformatter
 				sqlformat-args '("-s2" "-g" "-M" "-w100")))
 
+(use-package json-reformat)
+
 (use-package undo-tree
 	:config
 	(setq undo-tree-auto-save-history t)
