@@ -50,7 +50,7 @@
 
 (setq-default explicit-shell-file-name "/bin/zsh")
 
-(setq show-paren-style 'parenthesis)
+(setq show-paren-style 'expression)
 
 (cond
   ((string-equal system-type "darwin")
