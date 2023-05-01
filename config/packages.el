@@ -58,6 +58,10 @@
 				 (js-mode . eglot-ensure)
 				 (sql-mode . eglot-ensure)))
 
+(use-package consult-eglot
+	:bind 
+	("?" . consult-eglot-symbols))
+
 (use-package go-mode
 	:config
 	(setq gofmt-show-errors nil)
