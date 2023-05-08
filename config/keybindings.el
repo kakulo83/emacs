@@ -25,7 +25,6 @@
 
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
-(define-key evil-motion-state-map (kbd "?") nil)
 (define-key evil-motion-state-map (kbd "C-z") nil)
 (define-key evil-motion-state-map (kbd "RET") nil)
 (define-key evil-motion-state-map (kbd "C-f") nil)
@@ -58,6 +57,7 @@
 (define-key evil-normal-state-map "gT" 'persp-prev)
 (define-key evil-normal-state-map ",k" 'robert/quick-kill-process)
 (define-key evil-normal-state-map ",d" 'robert/drill-by-topic)
+(define-key evil-normal-state-map "?" 'consult-eglot-symbols)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)

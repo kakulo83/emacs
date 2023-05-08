@@ -58,9 +58,7 @@
 				 (js-mode . eglot-ensure)
 				 (sql-mode . eglot-ensure)))
 
-(use-package consult-eglot
-	:bind 
-	("?" . consult-eglot-symbols))
+(use-package consult-eglot)
 
 (use-package go-mode
 	:config
