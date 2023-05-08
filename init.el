@@ -31,9 +31,22 @@
 ;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
 ;;;    but should have split first before finishing the Help/Doc command
 ;;;
+;;;  - Create Embark Action for Region target that sends region to an interpreter, python repl for instance
+;;;      "run-python" starts an inferior python process
+;;;      "python-shell-send-region" sends current region to inferior python process
+;;;      "process-send-region" (non interactive function)
+;;;      https://emacs.stackexchange.com/questions/37887/send-region-to-shell-in-another-buffer
+;;;
 ;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
 ;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
 ;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
+;;;
+;;;  - Create emacs save-hook that looks at current file and parses it for constructs like classes and function names
+;;;    and attempts to find any relevant tests and automatically runs their tests
+;;;
+;;;  - Figure out how to use a git pre-commit hook to run pylint and integrate this output with magit
+;;; 
+;;;  - Figure out how to control or at least make predictable how Embark-Collect opens a target
 ;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
