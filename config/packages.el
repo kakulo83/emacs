@@ -48,6 +48,11 @@
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
+(use-package better-jumper
+	:after evil
+	:init
+	(better-jumper-mode 1))
+
 (use-package eglot
 	:ensure t
 	:defer t
