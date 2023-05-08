@@ -36,6 +36,7 @@
 	:config
 	(setq evil-collection-mode-list
 				'(vterm
+					occur
 					dired
 					dashboard
 					magit
