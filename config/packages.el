@@ -182,6 +182,8 @@
 								(side            . bottom)
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
+(use-package flycheck-eglot
+	:init (global-flycheck-eglot-mode 1))
 
 (use-package tron-legacy-theme
   :config
