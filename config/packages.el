@@ -558,17 +558,6 @@
 	:config
 	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
-; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
-(use-package tree-sitter-langs
-	:after tree-sitter)
-
-(use-package tree-sitter
-	:after tree-sitter-langs
-  :config
-	(require 'tree-sitter-langs)
-	(global-tree-sitter-mode)
-	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
 (use-package yafolding
 	:after evil
   :config
