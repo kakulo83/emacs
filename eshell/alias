@@ -3,7 +3,7 @@ alias clear clear 1
 alias open find-file $1
 alias ls ls -la $1
 
-alias dev cd ~/Code
+alias dev cd ~/Developer
 alias desk cd ~/Desktop
 alias down cd ~/Downloads
 

@@ -38,8 +38,10 @@
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'eshell-mode-hook (lambda () (eat-eshell-visual-command-mode 1)))
-(add-hook 'eshell-load-hook #'eat-eshell-mode)
+;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-visual-command-mode 1)))
+;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-mode)))
+;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-visual-command-mode)))
+;(add-hook 'eshell-load-hook #'eat-eshell-mode)
 (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode -1)))
 

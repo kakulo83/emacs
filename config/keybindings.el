@@ -25,7 +25,6 @@
 
 (define-key evil-insert-state-map (kbd "s-k") 'comint-clear-buffer)
 
-(define-key evil-motion-state-map (kbd "?") nil)
 (define-key evil-motion-state-map (kbd "C-z") nil)
 (define-key evil-motion-state-map (kbd "RET") nil)
 (define-key evil-motion-state-map (kbd "C-f") nil)
@@ -38,11 +37,12 @@
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 (define-key evil-normal-state-map (kbd "/") 'consult-line)
 (define-key evil-normal-state-map (kbd "*") 'isearch-forward-symbol-at-point)
-
+(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+(define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
 (define-key evil-normal-state-map (kbd "n") 'isearch-repeat-forward)
 (define-key evil-normal-state-map (kbd "N") 'isearch-repeat-backward)
-(define-key evil-normal-state-map (kbd "C-o") '(lambda ()(interactive) (projectile-previous-project-buffer))) ;'switch-to-prev-buffer)
-(define-key evil-normal-state-map (kbd "C-i") '(lambda ()(interactive) (projectile-next-project-buffer)))     ; 'switch-to-next-buffer)
+;(define-key evil-normal-state-map (kbd "C-o") '(lambda ()(interactive) (projectile-previous-project-buffer))) ;'switch-to-prev-buffer)
+;(define-key evil-normal-state-map (kbd "C-i") '(lambda ()(interactive) (projectile-next-project-buffer)))     ; 'switch-to-next-buffer)
 (define-key evil-normal-state-map (kbd "C-'") 'consult-imenu)
 (define-key evil-normal-state-map "zc" nil)
 (define-key evil-normal-state-map "zo" nil)
@@ -58,6 +58,7 @@
 (define-key evil-normal-state-map "gT" 'persp-prev)
 (define-key evil-normal-state-map ",k" 'robert/quick-kill-process)
 (define-key evil-normal-state-map ",d" 'robert/drill-by-topic)
+(define-key evil-normal-state-map "?" 'consult-eglot-symbols)
 
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)

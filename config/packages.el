@@ -36,6 +36,7 @@
 	:config
 	(setq evil-collection-mode-list
 				'(vterm
+					occur
 					dired
 					dashboard
 					magit
@@ -48,19 +49,60 @@
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
+(use-package better-jumper
+	:after evil
+	:init
+	(better-jumper-mode 1))
+
 (use-package eglot
 	:ensure t
+	:config
+	; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+	; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
+	(setq eglot-events-buffer-size 0)
 	:defer t
 	:hook (
 				 (python-mode . eglot-ensure)
 				 (go-mode . eglot-ensure)
-				 (typescript-mode . eglot-ensure)
 				 (js-mode . eglot-ensure)
+				 (typescript-ts-mode . eglot-ensure)
 				 (sql-mode . eglot-ensure)))
 
-(use-package consult-eglot
-	:bind 
-	("?" . consult-eglot-symbols))
+(use-package typescript-ts-mode
+	:config
+	(setq-default typescript-indent-level 4)
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
+
+; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
+(setq treesit-language-source-alist
+	'((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+		(c . ("https://github.com/tree-sitter/tree-sitter-c"))
+		(cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+		(css . ("https://github.com/tree-sitter/tree-sitter-css"))
+		(go . ("https://github.com/tree-sitter/tree-sitter-go"))
+		(html . ("https://github.com/tree-sitter/tree-sitter-html"))
+		(javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+		(json . ("https://github.com/tree-sitter/tree-sitter-json"))
+		(lua . ("https://github.com/Azganoth/tree-sitter-lua"))
+		(make . ("https://github.com/alemuller/tree-sitter-make"))
+		(ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "ocaml/src" "ocaml"))
+		(python . ("https://github.com/tree-sitter/tree-sitter-python"))
+		(php . ("https://github.com/tree-sitter/tree-sitter-php"))
+		(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+		(ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+		(rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+		(sql . ("https://github.com/m-novikov/tree-sitter-sql"))
+		(toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
+		(zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
+
+; https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+(push '(css-mode . css-ts-mode) major-mode-remap-alist)
+(push '(python-mode . python-ts-mode) major-mode-remap-alist)
+(push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+(push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
+
+(use-package consult-eglot)
 
 (use-package go-mode
 	:config
@@ -140,6 +182,8 @@
 								(side            . bottom)
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
+(use-package flycheck-eglot
+	:init (global-flycheck-eglot-mode 1))
 
 (use-package tron-legacy-theme
   :config
@@ -550,17 +594,6 @@
 	:config
 	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
-; https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022/
-(use-package tree-sitter-langs
-	:after tree-sitter)
-
-(use-package tree-sitter
-	:after tree-sitter-langs
-  :config
-	(require 'tree-sitter-langs)
-	(global-tree-sitter-mode)
-	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
 (use-package yafolding
 	:after evil
   :config
@@ -580,20 +613,6 @@
   :hook (python-mode . python-black-on-save-mode))
 
 (use-package python-pytest)
-
-(use-package typescript-mode
-  :after tree-sitter
-  :config
-  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
-  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
-  (define-derived-mode typescriptreact-mode typescript-mode
-    "TypeScript TSX")
-
-  ;; use our derived mode for tsx files
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-  ;; by default, typescript-mode is mapped to the treesitter typescript parser
-  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
-  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
 (use-package perspective
 	:defer nil
@@ -812,6 +831,7 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 		"a" 'ace-window
+		"cc" 'recenter-top-bottom
 		"cp" 'copy-filepath-to-clipboard
 		"q"  'my-persp-window-close					; 'delete-window
 		"o" 'delete-other-windows

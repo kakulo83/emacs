@@ -14,6 +14,7 @@
 
 (setq lexical-binding t)
 (setq evil-want-fine-undo 'yes)
+(evil-set-command-property 'xref-find-references :jump t)
 (setq initial-scratch-message "")
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
