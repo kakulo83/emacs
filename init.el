@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;;
 ;;; DEPENDENCIES
+;;; oh-my-zsh
 ;;; MacTex
 ;;; nerd-fonts
 ;;; devicons
@@ -25,6 +26,8 @@
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
+;;;  - Create a keybinding and function that takes the active buffer and places it in a new perspective
+;;;
 ;;;  - Create a function that creates a project-relative python import path string for inserintg
 ;;;      - https://github.com/Wilfred/pyimport/blob/master/pyimport.el might have some useful code
 ;;;      - (file-relative-name buffer-file-name projectile-project-root)
@@ -37,6 +40,12 @@
 ;;;      "process-send-region" (non interactive function)
 ;;;      https://emacs.stackexchange.com/questions/37887/send-region-to-shell-in-another-buffer
 ;;;
+;;;  - use Emacs registers more:  
+;;;
+;;;        window-configuration-to-register
+;;;        jump-to-register
+;;;        consult-register 
+;;;
 ;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
 ;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
 ;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
@@ -47,6 +56,8 @@
 ;;;  - Figure out how to use a git pre-commit hook to run pylint and integrate this output with magit
 ;;; 
 ;;;  - Figure out how to control or at least make predictable how Embark-Collect opens a target
+;;;
+;;;  - read this guide:  https://github.com/noctuid/evil-guide
 ;;;
 ;;;  - Figure out how to use snippets in vterm
 ;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
@@ -87,6 +98,7 @@
 ;;;      Maybe some of these functions can be used to use evil in vterm commandline
 ;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
 ;;;  - investigate config:   https://config.daviwil.com/emacs
+;;;  - investigate goodies:  https://blog.sumtypeofway.com/posts/emacs-config.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
@@ -115,7 +127,6 @@
 ;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
 ;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 ;;;  - consider:  https://www.emacswiki.org/emacs/AutoInsertMode
-;;;  - consider:  https://github.com/4DA/eshell-toggle
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
