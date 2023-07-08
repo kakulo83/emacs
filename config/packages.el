@@ -56,6 +56,10 @@
 
 (use-package eglot
 	:ensure t
+	:config
+	; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+	; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
+	(setq eglot-events-buffer-size 0)
 	:defer t
 	:hook (
 				 (python-mode . eglot-ensure)
