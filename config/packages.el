@@ -64,8 +64,8 @@
 	:hook (
 				 (python-mode . eglot-ensure)
 				 (go-mode . eglot-ensure)
-				 (typescript-mode . eglot-ensure)
 				 (js-mode . eglot-ensure)
+				 (typescript-ts-mode . eglot-ensure)
 				 (sql-mode . eglot-ensure)))
 
 (use-package consult-eglot)
