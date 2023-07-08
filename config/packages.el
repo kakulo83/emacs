@@ -795,6 +795,7 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 		"a" 'ace-window
+		"cc" 'recenter-top-bottom
 		"cp" 'copy-filepath-to-clipboard
 		"q"  'my-persp-window-close					; 'delete-window
 		"o" 'delete-other-windows
