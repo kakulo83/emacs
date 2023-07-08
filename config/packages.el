@@ -139,6 +139,7 @@
 
 (use-package magit
 	:config
+	(setq magit-prefer-remote-upstream t)
 	(setq magit-save-repository-buffers nil))
 
 (use-package git-timemachine
