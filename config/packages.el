@@ -365,7 +365,8 @@
 	      '((?s aw-split-window-vert "Vertcal Split")
 					(?v aw-split-window-horz "Horizontal Split")
 				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
-					(?m aw-move-window "Move Buffer")
+					(?m aw-swap-window "Swap Buffer")
+					(?o delete-other-windows "Delete Other Windows")
 					(?? aw-show-dispatch-help)
 					))
 	(ace-window-display-mode -1)
@@ -833,7 +834,6 @@
 		"cc" 'recenter-top-bottom
 		"cp" 'copy-filepath-to-clipboard
 		"q"  'my-persp-window-close					; 'delete-window
-		"o" 'delete-other-windows
 		"e" 'flycheck-list-errors
 		"s" 'consult-yasnippet
 		"m" 'consult-man
