@@ -812,6 +812,11 @@
 	:after evil perspective
 	:functions evil-leader/set-leader persp-current-name
 	:config
+	;; https://emacs.stackexchange.com/questions/69672/change-and-later-restore-the-window-configuration-of-a-frame
+	(defun my-save-windows-configuration-to-register()
+		"Save the current window configuration to a register"
+		(interactive)
+		(window-configuration-to-register (read-string "Enter register: ")))
 	(defun my-test-dispatch()
 		"Run current test with respective test runner."
 		(interactive)
@@ -835,6 +840,7 @@
 		"cp" 'copy-filepath-to-clipboard
 		"q"  'my-persp-window-close					; 'delete-window
 		"e" 'flycheck-list-errors
+		"r" 'my-save-windows-configuration-to-register
 		"s" 'consult-yasnippet
 		"m" 'consult-man
 		"/" 'string-rectangle
