@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: enter pip environment
+# key: pshell
+# --
+pipenv shell
