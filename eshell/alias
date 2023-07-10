@@ -16,3 +16,4 @@ alias grep *grep
 
 alias python python3 $*
 alias pip pip3 $*
+alias pshell pipenv shell
