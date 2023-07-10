@@ -126,7 +126,7 @@
 
 (use-package vertico
 	:config
-	(setq vertico-count 40)
+	(setq vertico-count 20)
 	(setq vertico-resize nil)
 	:init
 	(vertico-mode))
@@ -183,6 +183,7 @@
 								(side            . bottom)
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
+
 (use-package flycheck-eglot
 	:init (global-flycheck-eglot-mode 1))
 
@@ -587,10 +588,6 @@
 
 (use-package inf-ruby
 	:hook (inf-ruby-switch-setup))
-
-(use-package rspec-mode
-	:config
-	(setq rspec-use-bundler-when-possible nil))
 
 (use-package restclient
 	:config
