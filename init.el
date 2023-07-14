@@ -165,9 +165,9 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-
-(when (memq window-system '(mac ns x))
- (exec-path-from-shell-initialize))
+(if (fboundp 'exec-path-from-shell-initialize)
+		(when (memq window-system '(mac ns x))
+			(exec-path-from-shell-initialize)))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
