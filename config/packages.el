@@ -583,13 +583,6 @@
   :config
   (balanced-windows-mode))
 
-(use-package inf-ruby
-	:hook (inf-ruby-switch-setup))
-
-(use-package rspec-mode
-	:config
-	(setq rspec-use-bundler-when-possible nil))
-
 (use-package restclient
 	:config
 	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
