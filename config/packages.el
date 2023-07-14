@@ -713,7 +713,7 @@
 
 (use-package eshell-git-prompt
 	:config
-	(eshell-git-prompt-use-theme 'powerline))
+	(eshell-git-prompt-use-theme 'robbyrussell))
 
 (use-package eshell-syntax-highlighting
   :after eshell-mode
