@@ -35,7 +35,7 @@
 
 
 ; M-x describe-font
-(set-frame-font "Roboto Mono:pixelsize=15:weight=light")
+(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
 ;(set-frame-font "Hack Nerd Font:pixelsize=14:weight=light:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
 
 ;(set-frame-font "Inconsolata:pixelsize=12:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
