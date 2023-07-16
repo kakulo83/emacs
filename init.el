@@ -129,6 +129,7 @@
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 
+(setq straight-repository-branch "develop")
 ; install straight.el for git based packages
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -155,9 +156,6 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-
-(when (memq window-system '(mac ns x))
- (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
