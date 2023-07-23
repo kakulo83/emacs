@@ -40,16 +40,6 @@
 ;;;      "process-send-region" (non interactive function)
 ;;;      https://emacs.stackexchange.com/questions/37887/send-region-to-shell-in-another-buffer
 ;;;
-;;;  - use Emacs registers more:  
-;;;
-;;;        window-configuration-to-register
-;;;        jump-to-register
-;;;        consult-register 
-;;;
-;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
-;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
-;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
-;;;
 ;;;  - Create emacs save-hook that looks at current file and parses it for constructs like classes and function names
 ;;;    and attempts to find any relevant tests and automatically runs their tests
 ;;;
@@ -139,6 +129,7 @@
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 
+(setq straight-repository-branch "develop")
 ; install straight.el for git based packages
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -165,9 +156,6 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-
-(when (memq window-system '(mac ns x))
- (exec-path-from-shell-initialize))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action

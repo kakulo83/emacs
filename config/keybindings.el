@@ -37,12 +37,10 @@
 (define-key evil-normal-state-map (kbd "C-c n") 'org-roam-capture)
 (define-key evil-normal-state-map (kbd "/") 'consult-line)
 (define-key evil-normal-state-map (kbd "*") 'isearch-forward-symbol-at-point)
-(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-(define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
+(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward) ; projectile-previous-project-buffer
+(define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)  ; projectile-next-project-buffer
 (define-key evil-normal-state-map (kbd "n") 'isearch-repeat-forward)
 (define-key evil-normal-state-map (kbd "N") 'isearch-repeat-backward)
-;(define-key evil-normal-state-map (kbd "C-o") '(lambda ()(interactive) (projectile-previous-project-buffer))) ;'switch-to-prev-buffer)
-;(define-key evil-normal-state-map (kbd "C-i") '(lambda ()(interactive) (projectile-next-project-buffer)))     ; 'switch-to-next-buffer)
 (define-key evil-normal-state-map (kbd "C-'") 'consult-imenu)
 (define-key evil-normal-state-map "zc" nil)
 (define-key evil-normal-state-map "zo" nil)
@@ -93,9 +91,6 @@
 (define-key grep-mode-map (kbd "s-5") '(lambda () (interactive) (tab-bar-select-tab 5)))
 
 (define-key grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
-
-;; add C-c o to jump to previous cursor position in buffer
-;; add C-c i to jump to next cursor position in buffer
 
 (global-set-key (kbd "C-z") #'unique-vterm-shell)
 ;(global-set-key (kbd "C-z") #'unique-eshell)
