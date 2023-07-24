@@ -35,22 +35,22 @@
 
 
 ; M-x describe-font
-(set-frame-font "Roboto Mono:pixelsize=15:weight=light")
-;(set-frame-font "Hack Nerd Font:pixelsize=14:weight=light:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
+;(set-frame-font "Roboto Mono:pixelsize=12:weight=normal")
+;(set-frame-font "Hack Nerd Font:pixelsize=12:weight=light:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
 
 ;(set-frame-font "Inconsolata:pixelsize=12:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
-;(set-frame-font "Inconsolata Nerd Font:pixelsize=12:weight=Light")
+(set-frame-font "Inconsolata Nerd Font:pixelsize=14:weight=Light")
 
 ;(load-theme 'tron-legacy t)
 ;(load-theme 'granger t)       ; graham  fogus  granger
 ;(load-theme 'planet t)
-
 ;(load-theme 'doom-nord-aurora t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem  doom-moonlight
 ;(load-theme 'nano-dark t)         ; nano-light
-
+;(load-theme 'timu-macos t)
 (load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
 ;(load-theme 'nord t)
 ;(load-theme 'afternoon t)
+;(load-theme 'gruvbox t)
 
 (provide 'appearance)
 ;;; appearance.el ends here
