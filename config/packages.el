@@ -62,7 +62,7 @@
 	(setq eglot-events-buffer-size 0)
 	:defer t
 	:hook (
-				 (python-mode . eglot-ensure)
+				 (python-ts-mode . eglot-ensure)
 				 (go-mode . eglot-ensure)
 				 (js-mode . eglot-ensure)
 				 (typescript-ts-mode . eglot-ensure)
@@ -205,6 +205,8 @@
 (use-package nord-theme)
 
 (use-package gruvbox-theme)
+
+(use-package timu-macos-theme)
 
 (use-package hideshow
 	:defer t
@@ -363,7 +365,7 @@
 	      '((?s aw-split-window-vert "Vertcal Split")
 					(?v aw-split-window-horz "Horizontal Split")
 				  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
-					(?m aw-move-window "Move Buffer")
+					(?m aw-swap-window "Swap Windows")
 					(?? aw-show-dispatch-help)
 					))
 	(ace-window-display-mode -1)
@@ -673,6 +675,7 @@
                     "")
                 "  ")
                'face tab-face))))
+	(setq tab-bar-new-tab-to 'rightmost)
 	(setq tab-bar-close-button-show nil)
 	(setq tab-bar-new-button-show nil)
 	(setq tab-bar-tab-name-format-function #'robert-tab-bar-tab-format-function)
