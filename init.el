@@ -58,7 +58,6 @@
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
 ;;;     https://emacs.stackexchange.com/questions/59177/how-to-tell-persp-mode-to-ignore-some-buffers-by-major-mode
 ;;;      There is no value/reason for them to show up in the buffer-list
-;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
 ;;;      This might be a solution to use evil to edit vterm commands etc
 ;;;  - Create my own theme
 ;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
@@ -91,21 +90,23 @@
 ;;;  - investigate goodies:  https://blog.sumtypeofway.com/posts/emacs-config.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
-;;;  guide:  https://github.com/emacs-tw/awesome-emacs
+
+;;;  GUIDE:  https://github.com/emacs-tw/awesome-emacs
 ;;;  - consider:  https://github.com/NicolasPetton/pass
 ;;;  - consider:  https://github.com/ch11ng/exwm
 ;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
 ;;;
+;;;  - consider:  https://sr.ht/~niklaseklund/detached.el/
 ;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
+
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/4DA/eshell-toggle
 ;;;  - consider:  https://github.com/kyagi/shell-pop-el
+;;;  - consider:  https://github.com/jixiuf/vterm-toggle
+
 ;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
 ;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
-;;;  - consider:  https://github.com/Harith163/TransSide-theme
-;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
 ;;;  - consider:  https://github.com/ch11ng/exwm/wiki
-;;;  - consider:  https://gitlab.com/niklaseklund/dtache
 ;;;  - consider:  https://github.com/jgru/consult-org-roam
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
