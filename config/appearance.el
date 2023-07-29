@@ -35,10 +35,12 @@
 
 
 ; M-x describe-font
-(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
+(set-frame-font "JetBrains Mono:pixelsize=12")
+;(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
+;(set-frame-font "Roboto Mono:pixelsize=12:weight=regular:slant=normal:width=normal:spacing=100:scalable=true")
 ;(set-frame-font "Hack Nerd Font:pixelsize=14:weight=light:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
 
-;(set-frame-font "Inconsolata:pixelsize=12:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
+;(set-frame-font "Inconsolata:pixelsize=14:weight=medium:slant=normal:width=normal:spacing=100:scalable=true 12" nil t)
 ;(set-frame-font "Inconsolata Nerd Font:pixelsize=12:weight=Light")
 
 ;(load-theme 'tron-legacy t)

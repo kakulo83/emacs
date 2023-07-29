@@ -24,9 +24,9 @@
 	(setq evil-want-keybinding nil)
 	:config
 	(modify-syntax-entry ?_ "w")
-  (setq evil-insert-state-cursor '(bar "#00FF00")
-      evil-visual-state-cursor '(box "#FF00FF")
-      evil-normal-state-cursor '(box "red"))
+  (setq evil-insert-state-cursor '(bar "#4682b4")
+      evil-visual-state-cursor '(box "#b22222")
+      evil-normal-state-cursor '(box "#32cd32"))
 	(evil-mode)
   (setq evil-shift-width 2))
 
@@ -715,7 +715,7 @@
 
 (use-package eshell-git-prompt
 	:config
-	(eshell-git-prompt-use-theme 'powerline))
+	(eshell-git-prompt-use-theme 'multiline2))
 
 (use-package eshell-syntax-highlighting
   :after eshell-mode
@@ -851,6 +851,7 @@
 		"gs" 'magit-status
 		"gc" 'magit-branch
 		"gh" 'magit-log-buffer-file
+		"gp" 'magit-find-file
 		"gH" 'git-timemachine)
 	(evil-mode t))
 ;;; packages.el ends here

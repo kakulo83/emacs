@@ -257,5 +257,10 @@
 		(setq org-drill-scope (robert/remove-empty-strs-from-list files))
 		(org-drill)))
 
+(defun robert/cut-buffer-to-new-perspective ()
+	"Cut buffer from current perspective and put into a new perspective tab."
+	(interactive)
+	(message "moving buffer into own perspective"))
+
 (provide 'functions)
 ;;; functions.el ends here

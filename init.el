@@ -2,11 +2,11 @@
 ;;; Commentary:
 ;;;
 ;;; DEPENDENCIES
-;;; oh-my-zsh
 ;;; MacTex
-;;; nerd-fonts
 ;;; devicons
+;;; NerdFonts
 ;;; Roboto Mono font
+;;; JetBrains Mono Font
 ;;; ripgrep
 ;;; pngpaste
 ;;; pgformatter
