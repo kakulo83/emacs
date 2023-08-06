@@ -707,12 +707,6 @@
 			eshell-highlight-prompt t
 			eshell-hist-ignoredups t))
 
-(use-package eat
-	:after eshell-mode
-	:hook
-	(eshell-load-hook . eat-eshell-mode)
-	(eshell-load-hook . eat-eshell-visual-command-mode))
-
 (use-package eshell-git-prompt
 	:config
 	(eshell-git-prompt-use-theme 'robbyrussell))
