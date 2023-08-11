@@ -62,6 +62,8 @@
 	(setq eglot-events-buffer-size 0)
 	:defer t
 	:hook (
+				 (c-ts-mode . eglot-ensure)
+				 (c++-ts-mode . eglot-ensure)
 				 (python-ts-mode . eglot-ensure)
 				 (go-mode . eglot-ensure)
 				 (js-mode . eglot-ensure)
@@ -76,8 +78,10 @@
 ; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
 (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+		 (c "https://github.com/tree-sitter/tree-sitter-c")
      (cmake "https://github.com/uyha/tree-sitter-cmake")
      (css "https://github.com/tree-sitter/tree-sitter-css")
+		 (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
      (go "https://github.com/tree-sitter/tree-sitter-go")
      (html "https://github.com/tree-sitter/tree-sitter-html")
@@ -95,6 +99,7 @@
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
 ; https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+(push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
