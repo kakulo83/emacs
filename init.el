@@ -26,6 +26,8 @@
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
+;;;  - Create an Embark action that takes a Visual Region (highlighted words) and creates a new Org-Roam/Org document
+;;;  
 ;;;  - Create a keybinding and function that takes the active buffer and places it in a new perspective
 ;;;
 ;;;  - Create a function that creates a project-relative python import path string for inserintg
