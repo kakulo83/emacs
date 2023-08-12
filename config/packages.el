@@ -692,7 +692,16 @@
 (use-package dired-sidebar
 	:config
 	(setq dired-sidebar-recenter-cursor-on-follow-file nil)
-	(setq dired-sidebar-should-follow-file nil)
+	(setq dired-sidebar-should-follow-file t)
+	(defun robert-dired-find-file ()
+    "Like `find-file' but with `default-directory' set to the one specified by listing header."
+    (interactive)
+    (let ((default-directory (dired-current-directory)))
+      (call-interactively #'find-file)))
+
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal dired-mode-map
+      (kbd "C-x C-f") 'robert-dired-find-file))
 	:custom
 	(dired-subtree-line-prefix "  ")
 	:bind
