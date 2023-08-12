@@ -447,6 +447,9 @@
 				  (insert (concat "[[id:" id "][" title "]]"))
 				))
 
+	; Page has list of different map types
+	; https://github.com/oantolin/embark/wiki/Default-Actions
+	
 	; EXPRESSION ACTIONS
 	(define-key embark-expression-map "." #'my/embark-convert-to-python-path)
 
@@ -471,22 +474,16 @@
 	(define-key embark-region-map "f" #'fill-region)
 
 	; ACE WINDOW ACTIONS
-	(define-key embark-identifier-map (kbd "d") (my/embark-ace-action lsp-describe-thing-at-point))
 	(define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
 	
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
 
-	(define-key embark-general-map (kbd "o") (my/embark-ace-action evil-lookup))
+  (define-key embark-general-map (kbd "o") (my/embark-ace-action embark-dwim))
 	)
 
 (use-package embark-consult
-  
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -845,6 +842,7 @@
 		"q"  'my-persp-window-close					; 'delete-window
 		"e" 'flycheck-list-errors
 		"r" 'my-save-windows-configuration-to-register
+		"R" 'consult-register
 		"s" 'consult-yasnippet
 		"m" 'consult-man
 		"/" 'string-rectangle
