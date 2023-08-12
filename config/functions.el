@@ -192,6 +192,7 @@
 ;; need to parse JSON format
 
 (defalias 'elisp-repl 'ielm)
+(defalias 'python-repl 'run-python)
 
 (defun breezeway/start-ec2-session (instance-id)
 	"Start EC2 Session from INSTANCE-ID.  Wrapper for aws ssm command."
@@ -260,6 +261,14 @@
 (defun robert/cut-buffer-to-new-perspective ()
 	"Cut buffer from current perspective and put into a new perspective tab."
 	(interactive)
+	(call-interactively 'tab-new)
+
+	; save buffer file to register ?
+
+	; create new perspective with filename as name
+
+	; open file to buffer in new perspective using register content
+	
 	(message "moving buffer into own perspective"))
 
 (provide 'functions)
