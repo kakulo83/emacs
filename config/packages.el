@@ -60,6 +60,8 @@
 	; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 	; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
 	(setq eglot-events-buffer-size 0)
+	(with-eval-after-load 'eglot
+		(add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
 	:defer t
 	:hook (
 				 (c-ts-mode . eglot-ensure)
@@ -115,6 +117,13 @@
 	(add-hook 'before-save-hook #'lsp-organize-imports t t))
 
 (use-package gotest)
+
+(use-package rbenv
+	:config
+	(setq rbenv-show-active-ruby-in-modeline nil)
+	(rbenv-use-corresponding)
+	:init
+	(global-rbenv-mode))
 
 (use-package all-the-icons)
 
@@ -825,6 +834,7 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 		"a" 'ace-window
+		"b" 'consult-bookmark
 		"cc" 'recenter-top-bottom
 		"cp" 'copy-filepath-to-clipboard
 		"q"  'my-persp-window-close					; 'delete-window
