@@ -87,5 +87,12 @@
 
 (setq vc-follow-symlinks t)
 
+(pixel-scroll-mode)
+(setq pixel-dead-time 0) ; Never go back to the old scrolling behaviour.
+(setq pixel-resolution-fine-flag t) ; Scroll by number of pixels instead of lines (t = frame-char-height pixels).
+(setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
+(setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
+(setq pixel-resolution-fine-flag t)
+
 (provide 'settings)
 ;;; settings.el ends here

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: git file diff between branches
+# key: gfbd
+# --
+git diff branch1 brach2 -- /path/to/file
