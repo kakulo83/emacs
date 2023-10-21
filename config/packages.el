@@ -45,7 +45,10 @@
 					man
 					woman
 	 				completion
-					helpful))
+					helpful
+					bookmark
+					bookmark-edit-annotation
+					))
 	(setq evil-collection-company-use-tng nil)
 	(evil-collection-init))
 
