@@ -23,6 +23,12 @@
 
 
 ;;; TODO
+;;;  - Investigate https://emacs.stackexchange.com/questions/26226/looking-for-simple-bookmark-package
+;;;     - maybe have to create own utility for bookmarks
+;;;  - Investigate bookmark packages.. i want categories or some means of organizing them
+;;;  - Understand why autocomplete doesn't work often
+;;;  - Figure out how to disable autocomplete on delimieter characters like "," or ";"
+;;;
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
@@ -111,6 +117,7 @@
 ;;;  - consider:  https://github.com/ch11ng/exwm
 ;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
 ;;;
+;;;  - consider:  https://github.com/armindarvish/consult-gh
 ;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/4DA/eshell-toggle
@@ -143,6 +150,8 @@
 
 (setq custom-file "~/.emacs.d/config/custom.el")
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
+
+(setq straight-repository-branch "develop")
 
 ; install straight.el for git based packages
 (defvar bootstrap-version)
