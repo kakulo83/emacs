@@ -45,7 +45,9 @@
 (setq scroll-step 1
       scroll-conservatively  10000) ;; Smoother scrolling with smaller steps
 
-(setq-default tab-width 2) ;; Set tab space to 2
+;;(setq-default tab-width 2) ;; Set tab space to 2
+
+(setq-default indent-tabs-mode nil)
 
 (setq org-hidden-keywords '(title))
 
