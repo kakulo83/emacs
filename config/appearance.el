@@ -44,15 +44,15 @@
 ;(set-frame-font "Inconsolata Nerd Font:pixelsize=12:weight=Light")
 
 ;(load-theme 'tron-legacy t)
-;(load-theme 'granger t)       ; graham  fogus  granger
+;(load-theme 'graham t)       ; graham  fogus  granger
 ;(load-theme 'planet t)
-
-;(load-theme 'doom-nord-aurora t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem  doom-moonlight
-;(load-theme 'nano-dark t)         ; nano-light
-
-(load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
+;(load-theme 'doom-city-lights t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem  doom-moonlight
+;(load-theme 'nano-light t)         ; nano-light
+;(load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
 ;(load-theme 'nord t)
 ;(load-theme 'afternoon t)
+;(load-theme 'badwolf t)
+(load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-maris-light
 
 (provide 'appearance)
 ;;; appearance.el ends here

@@ -68,6 +68,43 @@
 				 (typescript-ts-mode . eglot-ensure)
 				 (sql-mode . eglot-ensure)))
 
+(use-package corfu
+  :demand t
+  :custom
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
+
+(use-package orderless
+	:init
+	(setq completion-styles '(orderless flex)
+              completion-category-overrides '((file (styles . (orderless flex))))))
+
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-use-icons t)
+  (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
+  (kind-icon-blend-background nil) ; Use midpoint color between foreground and background colors ("blended")?
+  (kind-icon-blend-frac 0.08)
+
+  ;; NOTE 2022-02-05: `kind-icon' depends `svg-lib' which creates a cache
+  ;; directory that defaults to the `user-emacs-directory'. Here, I change that
+  ;; directory to a location appropriate to `no-littering' conventions, a
+  ;; package which moves directories of other packages to sane locations.
+																				;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
+
+  ;; Add hook to reset cache so the icon colors match my theme
+  ;; NOTE 2022-02-05: This is a hook which resets the cache whenever I switch
+  ;; the theme using my custom defined command for switching themes. If I don't
+  ;; do this, then the backgound color will remain the same, meaning it will not
+  ;; match the background color corresponding to the current theme. Important
+  ;; since I have a light theme and dark theme I switch between. This has no
+  ;; function unless you use something similar
+  (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
+
 (use-package typescript-ts-mode
 	:config
 	(setq-default typescript-indent-level 4)
@@ -129,12 +166,6 @@
 	:init
 	(vertico-mode))
 
-(use-package orderless
-	:init
-	(setq completion-styles '(orderless basic)
-				completion-category-defaults nil
-				completion-category-overrides '((file (styles . (partial-completion))))))
-
 (use-package magit
 	:config
 	(setq magit-prefer-remote-upstream t)
@@ -144,23 +175,28 @@
 	:config
 	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
-(use-package doom-modeline
-	:defines doom-modeline-mode-alist doom-modeline-support-imenu
-	:functions doom-modeline-def-modeline
-	:config
-	(setq doom-modeline-time-icon t)
-	(setq doom-modeline-env-version nil)
-	(setq doom-modeline-workspace-name nil)
-	(setq doom-modeline-lsp nil)
-	(setq doom-modeline-major-mode-icon nil)
-	(setq doom-modeline-minor-modes nil)
-	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
-	(setq doom-modeline-vcs-max-length 40)
-	(setq doom-modeline-mode-alist nil)
-	(setq doom-modeline-height 30)
-	(setq doom-modeline-buffer-encoding nil)
-	(setq doom-modeline-display-misc-in-all-mode-lines nil)
-	:hook (after-init . doom-modeline-mode))
+(use-package nano-modeline
+  :config
+  (setq nano-modeline-position "bottom")
+  (nano-modeline-mode))
+
+;(use-package doom-modeline
+;	:defines doom-modeline-mode-alist doom-modeline-support-imenu
+;	:functions doom-modeline-def-modeline
+;	:config
+;	(setq doom-modeline-time-icon t)
+;	(setq doom-modeline-env-version nil)
+;	(setq doom-modeline-workspace-name nil)
+;	(setq doom-modeline-lsp nil)
+;	(setq doom-modeline-major-mode-icon nil)
+;	(setq doom-modeline-minor-modes nil)
+;	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
+;	(setq doom-modeline-vcs-max-length 40)
+;	(setq doom-modeline-mode-alist nil)
+;	(setq doom-modeline-height 30)
+;	(setq doom-modeline-buffer-encoding nil)
+;	(setq doom-modeline-display-misc-in-all-mode-lines nil)
+;	:hook (after-init . doom-modeline-mode))
 
 ; this package hides certain modes from cluttering the modeline
 (use-package blackout
@@ -206,6 +242,10 @@
 (use-package nord-theme)
 
 (use-package gruvbox-theme)
+
+(use-package badwolf-theme)
+
+(use-package ef-themes)
 
 (use-package hideshow
 	:defer t
@@ -750,63 +790,6 @@
 
 (use-package platformio-mode)
 
-(use-package corfu
-	; https://kristofferbalintona.me/posts/202202270056/
-	:hook (lsp-completion-mode . my/corfu-setup-lsp)
-	:custom
-	(corfu-auto t)
-	(corfu-auto-delay 0)
-	(corfu-auto-prefix 0)
-	(completion-cycle-threshold nil)
-	(corfu-quit-at-boundary nil)
-  (corfu-separator ?\s) 
-	(corfu-quit-no-match 'separator)
-	(corfu-preview-current 'insert)
-	(corfu-preselect-first t)
-	(corfu-echo-documentation nil)
-	(corfu-popupinfo-max-height 14)
-	(lsp-completion-provider :none)
-	:bind
-	(:map corfu-map
-				("C-n" . corfu-next)
-				("C-p" . corfu-previous))
-	:init
-	(global-corfu-mode)
-	(corfu-popupinfo-mode)
-	:config
-	(advice-add 'corfu--setup :after 'evil-normalize-keymaps)
-  (advice-add 'corfu--teardown :after 'evil-normalize-keymaps)
-	(defun my/corfu-setup-lsp ()
-    "Use orderless completion style with lsp-capf instead of the default lsp-passthrough."
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless)))
-	)
-
-(use-package kind-icon
-  :after corfu
-  :custom
-  (kind-icon-use-icons t)
-  (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
-  (kind-icon-blend-background nil) ; Use midpoint color between foreground and background colors ("blended")?
-  (kind-icon-blend-frac 0.08)
-
-  ;; NOTE 2022-02-05: `kind-icon' depends `svg-lib' which creates a cache
-  ;; directory that defaults to the `user-emacs-directory'. Here, I change that
-  ;; directory to a location appropriate to `no-littering' conventions, a
-  ;; package which moves directories of other packages to sane locations.
-																				;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
-
-  ;; Add hook to reset cache so the icon colors match my theme
-  ;; NOTE 2022-02-05: This is a hook which resets the cache whenever I switch
-  ;; the theme using my custom defined command for switching themes. If I don't
-  ;; do this, then the backgound color will remain the same, meaning it will not
-  ;; match the background color corresponding to the current theme. Important
-  ;; since I have a light theme and dark theme I switch between. This has no
-  ;; function unless you use something similar
-  (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
-
 (use-package evil-leader
 	:defines evil-leader/set-leader
 	:functions evil-leader/set-leader
@@ -837,8 +820,10 @@
 	(evil-leader/set-leader ",")
 	(evil-leader/set-key
 		"a" 'ace-window
+                "b" 'consult-bookmark
 		"cc" 'recenter-top-bottom
 		"cp" 'copy-filepath-to-clipboard
+                "cf" 'focus-mode
 		"q"  'my-persp-window-close					; 'delete-window
 		"e" 'flycheck-list-errors
 		"r" 'my-save-windows-configuration-to-register
