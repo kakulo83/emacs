@@ -4,8 +4,8 @@
 ;;; DEPENDENCIES
 ;;; oh-my-zsh
 ;;; MacTex
+;;; nerd-fonts
 ;;; devicons
-;;; NerdFonts
 ;;; Roboto Mono font
 ;;; JetBrains Mono Font
 ;;; ripgrep
@@ -24,9 +24,17 @@
 
 
 ;;; TODO
+;;;  - Investigate https://emacs.stackexchange.com/questions/26226/looking-for-simple-bookmark-package
+;;;     - maybe have to create own utility for bookmarks
+;;;  - Investigate bookmark packages.. i want categories or some means of organizing them
+;;;  - Understand why autocomplete doesn't work often
+;;;  - Figure out how to disable autocomplete on delimieter characters like "," or ";"
+;;;
 ;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
 ;;;      and identifier as the search term
 ;;;
+;;;  - Create an Embark action that takes a Visual Region (highlighted words) and creates a new Org-Roam/Org document
+;;;  
 ;;;  - Create a keybinding and function that takes the active buffer and places it in a new perspective
 ;;;
 ;;;  - Create a function that creates a project-relative python import path string for inserintg
@@ -40,6 +48,16 @@
 ;;;      "python-shell-send-region" sends current region to inferior python process
 ;;;      "process-send-region" (non interactive function)
 ;;;      https://emacs.stackexchange.com/questions/37887/send-region-to-shell-in-another-buffer
+;;;
+;;;  - use Emacs registers more:
+;;;
+;;;        window-configuration-to-register
+;;;        jump-to-register
+;;;        consult-register
+;;;
+;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
+;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
+;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
 ;;;
 ;;;  - Create emacs save-hook that looks at current file and parses it for constructs like classes and function names
 ;;;    and attempts to find any relevant tests and automatically runs their tests
@@ -59,6 +77,7 @@
 ;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
 ;;;     https://emacs.stackexchange.com/questions/59177/how-to-tell-persp-mode-to-ignore-some-buffers-by-major-mode
 ;;;      There is no value/reason for them to show up in the buffer-list
+;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
 ;;;      This might be a solution to use evil to edit vterm commands etc
 ;;;  - Create my own theme
 ;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
@@ -91,23 +110,25 @@
 ;;;  - investigate goodies:  https://blog.sumtypeofway.com/posts/emacs-config.html
 ;;;
 ;;;  PACKAGES TO CONSIDER
-
-;;;  GUIDE:  https://github.com/emacs-tw/awesome-emacs
+;;;  guide:  https://github.com/emacs-tw/awesome-emacs
+;;;
+;;;  - consider:  https://github.com/mickeynp/combobulate
+;;;
 ;;;  - consider:  https://github.com/NicolasPetton/pass
 ;;;  - consider:  https://github.com/ch11ng/exwm
 ;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
 ;;;
-;;;  - consider:  https://sr.ht/~niklaseklund/detached.el/
+;;;  - consider:  https://github.com/armindarvish/consult-gh
 ;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
-
 ;;;  - consider:  https://github.com/karthink/popper
 ;;;  - consider:  https://github.com/4DA/eshell-toggle
 ;;;  - consider:  https://github.com/kyagi/shell-pop-el
-;;;  - consider:  https://github.com/jixiuf/vterm-toggle
-
 ;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
 ;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
+;;;  - consider:  https://github.com/Harith163/TransSide-theme
+;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
 ;;;  - consider:  https://github.com/ch11ng/exwm/wiki
+;;;  - consider:  https://gitlab.com/niklaseklund/dtache
 ;;;  - consider:  https://github.com/jgru/consult-org-roam
 ;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
 ;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
@@ -132,6 +153,7 @@
 (setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
 
 (setq straight-repository-branch "develop")
+
 ; install straight.el for git based packages
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -158,6 +180,9 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
+(if (fboundp 'exec-path-from-shell-initialize)
+		(when (memq window-system '(mac ns x))
+			(exec-path-from-shell-initialize)))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action
