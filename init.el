@@ -112,6 +112,7 @@
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
 ;;;
+;;;  - consider:  https://magit.vc/manual/forge/
 ;;;  - consider:  https://github.com/mickeynp/combobulate
 ;;;
 ;;;  - consider:  https://github.com/NicolasPetton/pass
