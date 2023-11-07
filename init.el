@@ -114,6 +114,7 @@
 ;;;
 ;;;  - consider:  https://magit.vc/manual/forge/
 ;;;  - consider:  https://github.com/mickeynp/combobulate
+;;;  - consider: https://github.com/Shopify/ruby-lsp-rails
 ;;;
 ;;;  - consider:  https://github.com/NicolasPetton/pass
 ;;;  - consider:  https://github.com/ch11ng/exwm

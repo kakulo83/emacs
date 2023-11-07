@@ -1,5 +1,6 @@
 (with-eval-after-load 'prog-mode (bind-key "C-f" #'consult-ripgrep))
 
+
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
 (define-key package-menu-mode-map (kbd "C-k") 'evil-window-up)
@@ -77,6 +78,9 @@
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 
+(evil-define-key 'normal dired-mode-map (kbd "L") 'evil-window-bottom)
+(evil-define-key 'normal dired-mode-map (kbd "H") 'evil-window-top)
+(evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
 
 (evil-define-key 'normal grep-mode-map (kbd ",a")  'ace-window)
 (define-key grep-mode-map (kbd "C-h") 'evil-window-left)

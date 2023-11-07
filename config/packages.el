@@ -54,12 +54,16 @@
 	:init
 	(better-jumper-mode 1))
 
+; https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md
+; https://johnhame.link/posts/tweaking-emacs-for-ruby-development-in-2023/
 (use-package eglot
 	:ensure t
 	:config
 	; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 	; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
 	(setq eglot-events-buffer-size 0)
+        ;(with-eval-after-load 'eglot
+        ;  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
 	:defer t
 	:hook (
 				 (python-ts-mode . eglot-ensure)
@@ -69,9 +73,13 @@
 				 (sql-mode . eglot-ensure)))
 
 (use-package corfu
-  :demand t
-  :custom
-  (corfu-auto t)
+  :config
+  (setq corfu-auto t
+        corfu-cycle t)
+  (define-key corfu-map (kbd "<tab>") #'corfu-complete)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
   :init
   (global-corfu-mode))
 
@@ -147,6 +155,13 @@
 
 (use-package gotest)
 
+(use-package rbenv
+	:config
+	(setq rbenv-show-active-ruby-in-modeline nil)
+	(rbenv-use-corresponding)
+	:init
+	(global-rbenv-mode))
+
 (use-package all-the-icons)
 
 (use-package all-the-icons-completion
@@ -218,8 +233,10 @@
 								(reusable-frames . visible)
 								(window-height   . 0.33))))
 
-(use-package flycheck-eglot
-	:init (global-flycheck-eglot-mode 1))
+(use-package elisp-autofmt
+  :config
+  (setq elisp-autofmt-style 'native)
+  (setq elisp-autofmt-python-bin "/opt/homebrew/bin/python3"))
 
 (use-package tron-legacy-theme
   :config
@@ -755,13 +772,11 @@
 			eshell-highlight-prompt t
 			eshell-hist-ignoredups t))
 
-(use-package eat
-	:after eshell-mode
-	)
+;(use-package eshell-git-prompt
+;	:config
+;	(eshell-git-prompt-use-theme 'powerline))
 
-(use-package eshell-git-prompt
-	:config
-	(eshell-git-prompt-use-theme 'multiline2))
+(use-package eshell-prompt-extras)
 
 (use-package eshell-syntax-highlighting
   :after eshell-mode
@@ -792,7 +807,7 @@
 
 (use-package evil-leader
 	:defines evil-leader/set-leader
-	:functions evil-leader/set-leader
+        :functions evil-leader/set-leader
 	:after evil perspective
 	:functions evil-leader/set-leader persp-current-name
 	:config

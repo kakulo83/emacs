@@ -48,6 +48,8 @@
 ;;(setq-default tab-width 2) ;; Set tab space to 2
 
 (setq-default indent-tabs-mode nil)
+(setq-local lisp-indent-function nil)
+(setq-local lisp-indent-offset 2)
 
 (setq org-hidden-keywords '(title))
 
