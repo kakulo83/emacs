@@ -59,6 +59,8 @@
 (define-key evil-normal-state-map ",d" 'robert/drill-by-topic)
 (define-key evil-normal-state-map "?" 'consult-eglot-symbols)
 
+(define-key evil-insert-state-map (kbd "C-n") 'complete-symbol)
+
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 (evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
