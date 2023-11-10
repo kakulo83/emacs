@@ -2,14 +2,14 @@
 ;;; Commentary:
 ;;; Code:
 (add-hook 'pdf-view-mode-hook
-					(lambda ()
-						(set (make-local-variable 'evil-normal-state-cursor) (list nil))
-						(evil-set-initial-state 'pdf-view-mode 'normal)
-						(pdf-view-midnight-minor-mode)))
+	  (lambda ()
+	    (set (make-local-variable 'evil-normal-state-cursor) (list nil))
+	    (evil-set-initial-state 'pdf-view-mode 'normal)
+	    (pdf-view-midnight-minor-mode)))
 
 (add-hook 'outline-mode-hook
-					(lambda ()
-						(evil-set-initial-state 'outline-mode 'normal)))
+	  (lambda ()
+	    (evil-set-initial-state 'outline-mode 'normal)))
 
 (advice-add 'org-babel-do-key-sequence-in-edit-buffer
             :around #'evil-org-insert-state-in-edit-buffer)
@@ -22,7 +22,7 @@
 	  (lambda ()
 	    (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
 	    (sql-set-product-feature 'postgres :prompt-cont-regexp
-                           "^[-[:alnum:]_]*[-(][#>] ")))
+                                     "^[-[:alnum:]_]*[-(][#>] ")))
 
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 
@@ -38,10 +38,6 @@
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
-;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-visual-command-mode 1)))
-;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-mode)))
-;(add-hook 'eshell-mode-hook (lambda () (eat-eshell-visual-command-mode)))
-;(add-hook 'eshell-load-hook #'eat-eshell-mode)
 (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode -1)))
 

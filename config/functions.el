@@ -13,33 +13,33 @@
 ;  (call-interactively 'projectile-switch-project)
 ;  (tab-rename (projectile-project-name)))
 (defun unique-eshell ()
-	"Create a new named eshell buffer."
-	(interactive)
-	(let (name (read-string "Enter name: "))
-		(if (projectile-project-root)
-				(progn
-					(eshell (round (float-time)))
-					(eshell-return-to-prompt)
-					(insert (concat "cd " (projectile-project-root) " \n"))
-					(eshell-send-input)
-					(rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")")))
-				)
-		(eshell name))))
+  "Create a new named eshell buffer."
+  (interactive)
+  (let (name (read-string "Enter name: "))
+    (if (projectile-project-root)
+	(progn
+	  (eshell (round (float-time)))
+	  (eshell-return-to-prompt)
+	  (insert (concat "cd " (projectile-project-root) " \n"))
+	  (eshell-send-input)
+	  (rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")")))
+	  )
+      (eshell name))))
 
 (defun unique-vterm-shell ()
-	"Create a new named shell buffer."
+  "Create a new named shell buffer."
   (interactive)
-	;(call-interactively 'split-window-vertically)
-	(call-interactively 'multi-vterm)
-	(if (projectile-project-root)
-			(process-send-string nil (concat "cd " (projectile-project-root) " \n")))
-	(rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")"))))
+                                        ;(call-interactively 'split-window-vertically)
+  (call-interactively 'multi-vterm)
+  (if (projectile-project-root)
+      (process-send-string nil (concat "cd " (projectile-project-root) " \n")))
+  (rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")"))))
 
 (defun spawn-shell (name)
-	"Create a new shell buffer"
-	(interactive "MName of the shell buffer to create: ")
-	(pop-to-buffer (get-buffer-create (generate-new-buffer-name
-																		 (shell (current-buffer))))))
+  "Create a new shell buffer"
+  (interactive "MName of the shell buffer to create: ")
+  (pop-to-buffer (get-buffer-create (generate-new-buffer-name
+				     (shell (current-buffer))))))
 
 (let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
   (setenv "PATH" path)
@@ -49,18 +49,18 @@
          exec-path)))
 
 (defun robert/eshell-history (&optional initial-input)
-	"Find command from eshell history. Initial-input can be given as the initial minibuffer input."
-	(interactive)
-	(insert
-	  (completing-read "Find cmd: "
-									 (robert/eshell-history-list))))
+  "Find command from eshell history. Initial-input can be given as the initial minibuffer input."
+  (interactive)
+  (insert
+   (completing-read "Find cmd: "
+		    (robert/eshell-history-list))))
 
-; disable this so when embark is presented in the extended mini-buffer
-; the cursor/active buffer is still embark and not the new buffer.  Without
-; doing this the embark menu remains after the action and screws things up
-;(defadvice split-window (after move-point-to-new-window activate)
-;  "Moves the point to the newly created window after splitting."
-;  (other-window 1))
+                                        ; disable this so when embark is presented in the extended mini-buffer
+                                        ; the cursor/active buffer is still embark and not the new buffer.  Without
+                                        ; doing this the embark menu remains after the action and screws things up
+                                        ;(defadvice split-window (after move-point-to-new-window activate)
+                                        ;  "Moves the point to the newly created window after splitting."
+                                        ;  (other-window 1))
 
 (defun copy-filepath-to-clipboard ()
   "Put the current file name on the clipboard."
@@ -113,21 +113,21 @@
     (evil-refresh-cursor)))
 
 (defun collect-search-in-split
-  (split-window-right))
+    (split-window-right))
 (advice-add 'embark-collect-live :before #'collect-search-in-split)
 
 (push (list "open-profile-vsplit"
-						(lambda ()
-							(split-window-horizontally)
-							(find-file "~/.zshrc")))
-			vterm-eval-cmds)
+	    (lambda ()
+	      (split-window-horizontally)
+	      (find-file "~/.zshrc")))
+      vterm-eval-cmds)
 
 (require 'map)
 (require 'proced)
 (require 'seq)
 
 (defun robert/quick-kill-process ()
-	"Fuzzy search a list of active processes, choose, and kill the unresponsive target."
+  "Fuzzy search a list of active processes, choose, and kill the unresponsive target."
   (interactive)
   (let* ((pid-width 5)
          (comm-width 25)
@@ -168,12 +168,12 @@
 
 
 (defun robert/basic-auth-generator ()
-	"Prompt for username & password and generate base64 encoded basic auth string."
-	(interactive)
-	(let ((username (read-string "username: "))
-				(password (read-string "password: ")))
-		(insert (concat "Basic " (base64-encode-string
-											(concat username ":" password))))))
+  "Prompt for username & password and generate base64 encoded basic auth string."
+  (interactive)
+  (let ((username (read-string "username: "))
+	(password (read-string "password: ")))
+    (insert (concat "Basic " (base64-encode-string
+			      (concat username ":" password))))))
 
 ;; I want the ability to select an AWS EC2 instance from a list and connect to it.
 ;; I want to initiate this flow from a keybinding or from entering a function.
@@ -195,29 +195,29 @@
 (defalias 'python-repl 'run-python)
 
 (defun breezeway/start-ec2-session (instance-id)
-	"Start EC2 Session from INSTANCE-ID.  Wrapper for aws ssm command."
-	(multi-vterm)
-	(rename-buffer (concat "EC2" instance-id))
-	(process-send-string nil (concat  "aws ssm start-session --target " instance-id)))
+  "Start EC2 Session from INSTANCE-ID.  Wrapper for aws ssm command."
+  (multi-vterm)
+  (rename-buffer (concat "EC2" instance-id))
+  (process-send-string nil (concat  "aws ssm start-session --target " instance-id)))
 
 (defun generate-name-id-tuples ()
-	"Convert json format into more convenient form for further processing."
-	(message "transforming json"))
+  "Convert json format into more convenient form for further processing."
+  (message "transforming json"))
 
 (defun breezeway/select-ec2-instance ()
-	"Prompt for ec2 instance to select."
-	(interactive)
-	(let* ((list-ec2-instances "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\"  --query \"Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key=='Name']|[0].Value}\" --output json")
-				 (instances-json (shell-command-to-string list-ec2-instances)))
-		(message instances-json)))
+  "Prompt for ec2 instance to select."
+  (interactive)
+  (let* ((list-ec2-instances "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\"  --query \"Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key=='Name']|[0].Value}\" --output json")
+	 (instances-json (shell-command-to-string list-ec2-instances)))
+    (message instances-json)))
 
-;		(breezeway/start-ec2-session (completing-read "ec2 instances" (split-string (shell-command-to-string list-ec2-instances) "\n" t)))))
+                                        ;		(breezeway/start-ec2-session (completing-read "ec2 instances" (split-string (shell-command-to-string list-ec2-instances) "\n" t)))))
 
 (defun robert/search-org-roam-notes-for-embark-target ()
-	"Search org-roam notes for target, restricted by tag."
-;;https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
-;; rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
-	(message "TODO IMPLEMENTATION"))
+  "Search org-roam notes for target, restricted by tag."
+  ;;https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
+  ;; rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
+  (message "TODO IMPLEMENTATION"))
 
 (defun corfu-send-shell (&rest _)
   "Send completion candidate when inside comint/eshell."
@@ -228,48 +228,48 @@
     (comint-send-input))))
 
 (defun robert/remove-empty-strs-from-list (list)
-	"Remove empty string values from LIST."
-	(--filter (not (string= "" it)) list))
+  "Remove empty string values from LIST."
+  (--filter (not (string= "" it)) list))
 
 (defvar notes-dir-path "/Users/robertcarter/Notes/org-roam-notes/")
 (defvar rg-drill-cmd "rg -l '.*drill.*' ")
 
 (defun robert/org-files-by-tag (tag)
-	"Function to generate space separated string list of org files by TAG."
-	(cd notes-dir-path)
-	(let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
-		 (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
+  "Function to generate space separated string list of org files by TAG."
+  (cd notes-dir-path)
+  (let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
+    (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
 
 (defun robert/get-org-files-for-topic (tag)
-	"Function to generate list of files from TAG."
-	(interactive)
-	; rg -l '^#\+tags:.*database.*' | xargs rg -l '.*drill.*'
-		(cd notes-dir-path)
-		; bind list of org files that have tag
-		(let ((files-by-tag (robert/org-files-by-tag tag)))
-	    ; filter list further with onlly files that have drill items
-			(split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
+  "Function to generate list of files from TAG."
+  (interactive)
+                                        ; rg -l '^#\+tags:.*database.*' | xargs rg -l '.*drill.*'
+  (cd notes-dir-path)
+                                        ; bind list of org files that have tag
+  (let ((files-by-tag (robert/org-files-by-tag tag)))
+                                        ; filter list further with onlly files that have drill items
+    (split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
 
 (defun robert/drill-by-topic ()
-	"Wrapper function on org-drill to invoke against a list of files from TOPIC."
-	(interactive)
-	(let* ((topic (read-string "Enter subject to drill: "))
-				(files (robert/get-org-files-for-topic topic)))
-		(setq org-drill-scope (robert/remove-empty-strs-from-list files))
-		(org-drill)))
+  "Wrapper function on org-drill to invoke against a list of files from TOPIC."
+  (interactive)
+  (let* ((topic (read-string "Enter subject to drill: "))
+	 (files (robert/get-org-files-for-topic topic)))
+    (setq org-drill-scope (robert/remove-empty-strs-from-list files))
+    (org-drill)))
 
 (defun robert/cut-buffer-to-new-perspective ()
-	"Cut buffer from current perspective and put into a new perspective tab."
-	(interactive)
-	(call-interactively 'tab-new)
+  "Cut buffer from current perspective and put into a new perspective tab."
+  (interactive)
+  (call-interactively 'tab-new)
 
-	; save buffer file to register ?
+                                        ; save buffer file to register ?
 
-	; create new perspective with filename as name
+                                        ; create new perspective with filename as name
 
-	; open file to buffer in new perspective using register content
-	
-	(message "moving buffer into own perspective"))
+                                        ; open file to buffer in new perspective using register content
+  
+  (message "moving buffer into own perspective"))
 
 (provide 'functions)
 ;;; functions.el ends here
