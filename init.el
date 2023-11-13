@@ -112,9 +112,12 @@
 ;;;  PACKAGES TO CONSIDER
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
 ;;;
+;;;  - consider:  https://github.com/jojojames/smart-jump
 ;;;  - consider:  https://magit.vc/manual/forge/
 ;;;  - consider:  https://github.com/mickeynp/combobulate
-;;;  - consider: https://github.com/Shopify/ruby-lsp-rails
+;;;  - consider:  https://github.com/Shopify/ruby-lsp-rails
+;;;  - consider:  https://github.com/postmodern/chruby
+;;;  - consider:  https://github.com/plexus/chruby.el#readme
 ;;;
 ;;;  - consider:  https://github.com/NicolasPetton/pass
 ;;;  - consider:  https://github.com/ch11ng/exwm
