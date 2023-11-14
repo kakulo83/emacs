@@ -65,6 +65,7 @@
                                         ;  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
   :defer t
   :hook (
+         (ruby-mode . eglot-ensure)
 	 (python-ts-mode . eglot-ensure)
 	 (go-mode . eglot-ensure)
 	 (js-mode . eglot-ensure)
@@ -74,18 +75,42 @@
 (use-package corfu
   :config
   (setq corfu-auto t
-        corfu-cycle t)
+        corfu-auto-prefix 2
+        corfu-auto-delay 0.0
+        corfu-cycle t
+        corfu-preview-current 'insert
+        )
   (define-key corfu-map (kbd "<tab>") #'corfu-complete)
+  (add-hook 'eshell-mode-hook
+            (lambda () (setq-local corfu-quit-at-boundary t
+                                   corfu-quit-no-match t
+                                   corfu-auto nil)
+              (corfu-mode)))
+  ; note:  M-spc inserts a separator, allowing you to further restrict
   :hook ((prog-mode . corfu-mode)
          (shell-mode . corfu-mode)
          (eshell-mode . corfu-mode))
   :init
   (global-corfu-mode))
 
+(use-package cape
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-symbol))
+
 (use-package orderless
   :init
   (setq completion-styles '(orderless flex)
         completion-category-overrides '((file (styles . (orderless flex))))))
+
+(use-package format-all
+  :commands format-all-mode
+  :hook (prog-mode . format-all-mode)
+  :config
+  (setq-default format-all-formatters '(("ruby" (astyle "--mode=ruby")))))
 
 (use-package kind-icon
   :after corfu
@@ -151,6 +176,17 @@
   (setq gofmt-show-errors nil)
   (add-hook 'before-save-hook #'gofmt-before-save)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(use-package ruby-mode
+  :ensure t
+  :mode "\\.rb\\'"
+  :mode "Rakefile\\'"
+  :mode "Gemfile\\'"
+  :interpreter "ruby"
+  :init
+  (setq ruby-indent-level 2
+        ruby-indent-tabs-mode nil)
+  (add-hook 'ruby-mode 'superword-mode))
 
 (use-package gotest)
 
@@ -223,21 +259,17 @@
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically '(save mode-enable))
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (add-to-list 'display-buffer-alist
                `(,(rx bos "*Flycheck errors*" eos)
-		 (display-buffer-reuse-window
-		  display-buffer-in-side-window)
-		 (side            . bottom)
-		 (reusable-frames . visible)
-		 (window-height   . 0.33))))
+        	 (display-buffer-reuse-window
+        	  display-buffer-in-side-window)
+        	 (side            . bottom)
+        	 (reusable-frames . visible)
+        	 (window-height   . 0.33))))
 
 (use-package aggressive-indent)
-
-                                        ;(use-package elisp-autofmt
-                                        ;  :config
-                                        ;  (setq elisp-autofmt-style 'native)
-                                        ;  (setq elisp-autofmt-python-bin "/opt/homebrew/bin/python3"))
 
 (use-package tron-legacy-theme
   :config
@@ -271,23 +303,33 @@
   :hook (prog-mode  . hs-minor-mode))
 
 (use-package yasnippet
-  :functions yas-expand
-  :diminish yas-minor-mode
-  :preface (defvar tmp/company-point nil)
+  :ensure t
+  :hook
+  (prog-mode . yas-minor-mode)
   :config
-  (setq yas-also-auto-indent-first-line t)
-  (setq yas-indent-line 'auto)
-  (yas-global-mode +1)
+  (yas-reload-all)
+  (setq yas-snippet-dirs
+        '("~/.emacs.d/snippets")
+        yas-indent-line 'auto))
 
-  (advice-add 'company-complete-common
-              :before
-              #'(lambda ()
-                  (setq tmp/company-point (point))))
-  (advice-add 'company-complete-common
-              :after
-              #'(lambda ()
-                  (when (equal tmp/company-point (point))
-                    (yas-expand)))))
+;(use-package yasnippet
+;  :functions yas-expand
+;  :diminish yas-minor-mode
+;  :preface (defvar tmp/company-point nil)
+;  :config
+;  (setq yas-also-auto-indent-first-line t)
+;  (setq yas-indent-line 'auto)
+;  (yas-global-mode +1)
+;
+;  (advice-add 'company-complete-common
+;              :before
+;              #'(lambda ()
+;                  (setq tmp/company-point (point))))
+;  (advice-add 'company-complete-common
+;              :after
+;              #'(lambda ()
+;                  (when (equal tmp/company-point (point))
+;                    (yas-expand)))))
 
 (use-package yasnippet-snippets)
 
@@ -438,6 +480,7 @@
   :config
   ;; NOTE:  embark shows UI in extended-mini-buffer
   ;;        from customizing this:  embark-verbose-indicator-display-action
+  ;(setq embark-prompter 'embark-completing-read-prompter)
   (setq embark-indicator #'embark-mixed-indicator)
   (setq embark-verbose-indicator-display-action
         '(display-buffer-at-bottom
@@ -538,8 +581,7 @@
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
 
-  (define-key embark-general-map (kbd "o") (my/embark-ace-action embark-dwim))
-  )
+  (define-key embark-general-map (kbd "o") (my/embark-ace-action embark-dwim)))
 
 (use-package embark-consult
   :hook
@@ -768,16 +810,24 @@
 
 (use-package eshell
   :config
+  (setq eshell-prompt-function
+     (lambda ()
+       (concat
+        (propertize "\n┌─ " 'face `(:foreground "royal blue"))
+        (propertize (concat (eshell/pwd)) 'face `(:foreground "SteelBlue1"))
+        (propertize " (" 'face `(:foreground "green"))
+        (if (magit-get-current-branch)
+            (propertize (magit-get-current-branch) 'face `(:foreground "green"))
+            (propertize "z" 'face `(:foreground "yellow")))
+        (propertize ")" 'face `(:foreground "green"))
+        (propertize "\n" 'face `(:foreground "green"))
+        (propertize "└─>" 'face `(:foreground "royal blue"))
+        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "royal blue"))
+        )))
   (setq eshell-banner-message ""
 	eshell-history-size 1000
 	eshell-highlight-prompt t
 	eshell-hist-ignoredups t))
-
-                                        ;(use-package eshell-git-prompt
-                                        ;	:config
-                                        ;	(eshell-git-prompt-use-theme 'powerline))
-
-(use-package eshell-prompt-extras)
 
 (use-package eshell-syntax-highlighting
   :after eshell-mode
@@ -851,8 +901,9 @@
     "p" 'persp-switch
     "n" 'org-roam-node-find
     "t" 'my-test-dispatch
-    "ya" 'yas-describe-tables
-    "yn" 'yas-new-snippet
+    "y" 'consult-yank-from-kill-ring
+    ;"ya" 'yas-describe-tables
+    ;"yn" 'yas-new-snippet
     "gl" 'magit-log-buffer-file
     "gL" 'magit-log-all
     "gb" 'magit-blame										; 'magit-show-commit
