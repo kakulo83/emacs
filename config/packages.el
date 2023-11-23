@@ -305,13 +305,12 @@
 
 (use-package yasnippet
   :ensure t
-  :hook
-  (prog-mode . yas-minor-mode)
   :config
   (yas-reload-all)
   (setq yas-snippet-dirs
         '("~/.emacs.d/snippets")
-        yas-indent-line 'auto))
+        yas-indent-line 'auto)
+  (yas-global-mode +1))
 
 ;(use-package yasnippet
 ;  :functions yas-expand
@@ -354,14 +353,13 @@
   (setq org-adapt-indentation t)
   :bind (
 	 :map org-mode-map
-	 ("C-j" . windmove-down)
-	 ("C-k" . windmove-up)
-	 ("C-p" . org-roam-node-find)
-	 ("C-f" . consult-ripgrep)
-	 ("C-c n" . org-roam-capture)
-	 ("C-'" . org-roam-buffer-toggle)
-         ("C-c i" . org-roam-node-insert))
-  :hook((prog-mode . yas-minor-mode)))
+         ("C-j" . windmove-down)
+         ("C-k" . windmove-up)
+         ("C-p" . org-roam-node-find)
+         ("C-f" . consult-ripgrep)
+         ("C-c n" . org-roam-capture)
+         ("C-'" . org-roam-buffer-toggle)
+         ("C-c i" . org-roam-node-insert)))
 
 (use-package org-bullets
   :after org
@@ -423,10 +421,12 @@
   :config
   (require 'org-download))
 
-                                        ;(use-package org-modern-indent
-                                        ;	:straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
-                                        ;	:config
-                                        ;	(add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+(use-package org-modern)
+
+(use-package org-modern-indent
+  :load-path "~/.emacs.d/straight/repos/org-modern-indent/"
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package simple-httpd)
 
@@ -558,6 +558,8 @@
     "k" #'persp-kill)
   (add-to-list 'embark-keymap-alist '(perspective . embark-perspective-keymap))
 
+  (define-key embark-bookmark-map (kbd "p") (my/embark-perspective-action bookmark-jump))
+
                                         ; ORG-ROAM ACTIONS
   (add-to-list 'marginalia-prompt-categories '("OrgRoam" . org-roam))
   (defvar-keymap embark-org-roam-node-keymap
@@ -577,7 +579,8 @@
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
 
-  (define-key embark-general-map (kbd "o") (my/embark-ace-action embark-dwim)))
+  (define-key embark-general-map (kbd "o") (my/embark-ace-action embark-dwim))
+  )
 
 (use-package embark-consult
   :hook
