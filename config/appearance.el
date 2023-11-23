@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Code:
+;;; Commentary:
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -23,7 +26,7 @@
 
 (toggle-scroll-bar -1) ;; Don't show scroll bars
 
-(set-face-bold-p 'bold nil)
+(set-face-bold 'bold nil)
 
 (set-language-environment "UTF-8")
 
@@ -52,7 +55,7 @@
 ;(load-theme 'nord t)
 ;(load-theme 'afternoon t)
 ;(load-theme 'badwolf t)
-(load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-maris-light
+(load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light
 
 (provide 'appearance)
 ;;; appearance.el ends here
