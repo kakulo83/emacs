@@ -492,22 +492,17 @@
 	     (call-interactively (symbol-function ',fn)))))))
 
   (eval-when-compile
-    (defun my/embark-find-org-roam-notes-for-identifier ()
-      "Find any org roam notes pertaining to identifier on point."
-      (message "searching notes for <identifier>")))
-
-  (eval-when-compile
-    (defmacro my/embark-split-action (fn split-type)
-      "Split buffer and perform passed function"
-      `(defun ,(intern (concat "my/embark-"
-                               (symbol-name fn)
-                               "-"
-                               (car (last  (split-string
-                                            (symbol-name split-type) "-"))))) ()
-         (interactive)
-         (funcall #',split-type)
-         (call-interactively #',fn))))
-
+    (defmacro my/embark-perspective-action (fn)
+      `(defun ,(intern (concat "my/embark-perspective-" (symbol-name fn))) ()
+	 (interactive)
+	 (with-demoted-errors "%s"
+	   (require 'perspective)
+           (persp-new "scratch")
+           (tab-bar-select-tab-by-name "scratch")
+           (call-interactively (symbol-function ',fn))
+           (call-interactively 'tab-rename)
+           ))))
+  
   (defun my/embark-org-roam-cut-to-new-note (start end)
     "Cut region and populate new org-roam note."
                                         ; capture content of current region and bind to variable
