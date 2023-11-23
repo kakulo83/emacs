@@ -116,7 +116,7 @@
   :commands format-all-mode
   :hook (prog-mode . format-all-mode)
   :config
-  (setq-default format-all-formatters '(("ruby" (astyle "--mode=ruby")))))
+  (setq-default format-all-formatters '(("Ruby" (rubocop"-a")))))
 
 (use-package kind-icon
   :after corfu
