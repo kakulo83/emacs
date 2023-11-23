@@ -61,6 +61,7 @@
 
 (define-key evil-insert-state-map (kbd "C-n") 'complete-symbol)
 
+(evil-define-key 'normal org-mode-map (kbd "C-f") 'consult-ripgrep)
 (evil-define-key 'normal org-mode-map (kbd "C-j") 'evil-window-down)
 (evil-define-key 'normal org-mode-map (kbd "C-k") 'evil-window-up)
 (evil-define-key 'normal vterm-mode-map (kbd "C-z") 'unique-shell)
