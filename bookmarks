@@ -1,0 +1,42 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("oauth token refresh jobs"
+ (filename . "~/Developer/pybrzw/brzwint/jobs/oauth.py")
+ (front-context-string . "celeryapp.task(n")
+ (rear-context-string . "ns('apaleo')\n\n\n@") (position . 2649)
+ (last-modified 25975 39403 528021 0))
+("lockcode task history filtered from web-react ui"
+ (filename . "~/Developer/pybrzw/brzwapi/utils/task_history.py")
+ (front-context-string . "ASK_TYPES_HIDDEN")
+ (rear-context-string . "create_failed'\nT") (position . 952)
+ (last-modified 25867 31586 507373 0))
+("query for task assignees needing codes"
+ (filename .
+           "~/Developer/pybrzw/brzwint/jobs/task/kaba_doorcode_util.py")
+ (front-context-string . "   query = base_")
+ (rear-context-string . "CREATE_WINDOW)\n ") (position . 840)
+ (last-modified 25867 31460 47190 0))
+("task rescheduled"
+ (filename . "~/Developer/pybrzw/pybrzw/tasks/events/schedule.py")
+ (front-context-string . "       data['sch")
+ (rear-context-string . "vation_change:\n ") (position . 735)
+ (last-modified 25867 31410 139461 0))
+("task offer accepted by worker"
+ (filename . "~/Developer/pybrzw/pybrzw/tasks/events/assignment.py")
+ (front-context-string . "ef task_offer_ac")
+ (rear-context-string . "sk, bind=True)\nd") (position . 3954)
+ (last-modified 25867 31352 168796 0))
+("refresh lockcode"
+ (filename .
+           "~/Developer/pybrzw/brzwapi/resources/tasks/v5/assignees.py")
+ (front-context-string . "def refresh_task")
+ (rear-context-string . ".jwt_required()\n") (position . 3006)
+ (last-modified 25867 30915 769970 0))
+("48hr lockcode generation job"
+ (filename . "~/Developer/pybrzw/brzwint/jobs/devices.py")
+ (front-context-string . "ef create_doorco")
+ (rear-context-string . "tion_window'\n)\nd") (position . 10582)
+ (last-modified 25867 30853 834425 0))
+)
