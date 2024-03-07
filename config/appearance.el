@@ -36,9 +36,14 @@
 
 (set-default 'truncate-lines t) ;; Don't wrap lines
 
+(global-display-line-numbers-mode 1)
+
+; Give all windows a 3 pixel border
+(setq-default left-margin-width 3 right-margin-width 3) ; Define new widths.
+(set-window-buffer nil (current-buffer)) ; Use them now.
 
 ; M-x describe-font
-;(set-frame-font "JetBrains Mono:pixelsize=12")
+(set-frame-font "JetBrains Mono:pixelsize=12")
 ;(set-frame-font "Roboto Mono:pixelsize=12:weight=light")
 ;(set-frame-font "Roboto Mono:pixelsize=12:weight=regular:slant=normal:width=normal:spacing=100:scalable=true")
 ;(set-frame-font "Hack Nerd Font:pixelsize=14:weight=light:slant=normal:width=normal:spacing=0:scalable=true 10" nil t)
@@ -49,13 +54,13 @@
 ;(load-theme 'tron-legacy t)
 ;(load-theme 'graham t)       ; graham  fogus  granger
 ;(load-theme 'planet t)
-;(load-theme 'doom-city-lights t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem  doom-moonlight
-;(load-theme 'nano-light t)         ; nano-light
+;(load-theme 'doom-sourcerer t) ; doom-nord  doom-wilmersdorf  doom-city-lights  doom-sourcerer  doom-outrun-electric  doom-vibrant  doom-nord-aurora  doom-Iosvkem  doom-moonlight
+;(load-theme 'nano-dark t)         ; nano-light
 ;(load-theme 'modus-vivendi t) ; modus-operandi    modus-vivendi
 ;(load-theme 'nord t)
 ;(load-theme 'afternoon t)
 ;(load-theme 'badwolf t)
-(load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light
+(load-theme  'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter
 
 (provide 'appearance)
 ;;; appearance.el ends here

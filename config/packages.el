@@ -55,6 +55,7 @@
   (better-jumper-mode 1))
                                         ; https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md
                                         ; https://johnhame.link/posts/tweaking-emacs-for-ruby-development-in-2023/
+
 (use-package eglot
   :ensure t
   :config
@@ -72,40 +73,43 @@
 	 (typescript-ts-mode . eglot-ensure)
 	 (sql-mode . eglot-ensure)))
 
-(use-package corfu
-  :config
-  (setq corfu-auto t
-        corfu-auto-prefix 2
-        corfu-auto-delay 0.0
-        corfu-cycle t
-        corfu-preview-current 'insert
-        )
-  (define-key corfu-map (kbd "<tab>") #'corfu-complete)
-  (add-hook 'eshell-mode-hook
-            (lambda () (setq-local corfu-quit-at-boundary t
-                                   corfu-quit-no-match t
-                                   corfu-auto nil)
-              (corfu-mode)))
-  ; note:  M-spc inserts a separator, allowing you to further restrict
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode))
-  :init
-  (global-corfu-mode))
-
-(use-package cape
-  :init
-  ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-symbol))
+; (use-package corfu
+;   :config
+;   (setq corfu-auto t
+;         corfu-auto-prefix 2
+;         corfu-auto-delay 0.0
+;         corfu-cycle t
+;         corfu-preview-current 'insert
+;         )
+;   (define-key corfu-map (kbd "<tab>") #'corfu-complete)
+;   (add-hook 'eshell-mode-hook
+;             (lambda () (setq-local corfu-quit-at-boundary t
+;                                    corfu-quit-no-match t
+;                                    corfu-auto nil)
+;               (corfu-mode)))
+;   ; note:  M-spc inserts a separator, allowing you to further restrict
+;   :hook ((prog-mode . corfu-mode)
+;          (shell-mode . corfu-mode)
+;          (eshell-mode . corfu-mode))
+;   :init
+;   (global-corfu-mode))
+; 
+ (use-package cape
+   :init
+   ;; Add `completion-at-point-functions', used by `completion-at-point'.
+   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+   (add-to-list 'completion-at-point-functions #'cape-file)
+   (add-to-list 'completion-at-point-functions #'cape-keyword)
+   (add-to-list 'completion-at-point-functions #'cape-symbol))
 
 (use-package yasnippet-capf
   :after cape
   :config
   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
+  :ensure t)
 
 (use-package orderless
   :init
@@ -298,11 +302,6 @@
 
 (use-package ef-themes)
 
-(use-package hideshow
-  :defer t
-  :diminish hs-minor-mode
-  :hook (prog-mode  . hs-minor-mode))
-
 (use-package yasnippet
   :ensure t
   :config
@@ -421,12 +420,12 @@
   :config
   (require 'org-download))
 
-(use-package org-modern)
+;(use-package org-modern)
 
-(use-package org-modern-indent
-  :load-path "~/.emacs.d/straight/repos/org-modern-indent/"
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;(use-package org-modern-indent
+;  :load-path "~/.emacs.d/straight/repos/org-modern-indent/"
+;  :config
+;  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package simple-httpd)
 
@@ -574,7 +573,8 @@
 
                                         ; ACE WINDOW ACTIONS
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
-  
+  (define-key embark-identifier-map "n" #'eglot-rename)
+
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
@@ -687,13 +687,7 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
-(use-package yafolding
-  :after evil
-  :config
-  (add-hook 'ruby-mode-hook 'yafolding-mode))
-
-                                        ; allows editing grep results and applying it to all files, good for global search/replace
-(use-package wgrep)
+(use-package wgrep) ;; allows editing grep results and applying it to all files, good for global search/replace
 
 (use-package web-mode
   :config
@@ -705,7 +699,10 @@
   :after python
   :hook (python-mode . python-black-on-save-mode))
 
-(use-package python-pytest)
+(use-package nvm
+  :straight (:host github :repo "rejeep/nvm.el")
+  :config
+  (nvm-use "20.9.0"))
 
 (use-package perspective
   :defer nil
@@ -826,6 +823,7 @@
   (setq eshell-banner-message ""
 	eshell-history-size 1000
 	eshell-highlight-prompt t
+        ; eshell-scroll-to-bottom-on-input t
 	eshell-hist-ignoredups t))
 
 (use-package eshell-syntax-highlighting
@@ -837,23 +835,19 @@
   (eshell-toggle-size-fraction 3)
   (eshell-toggle-use-projectile-root t)
   (eshell-toggle-run-command nil)
-                                        ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
+  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
   :bind
   ("s-`" . eshell-toggle))
 
-                                        ;(use-package paredit
-                                        ;	:init
-                                        ;	(add-hook 'clojure-mode-hook #'enable-paredit-mode)
-                                        ;  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
-                                        ;	(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-                                        ;	(add-hook 'ielm-mode-hook #'enable-paredit-mode)
-                                        ;  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-                                        ;  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-                                        ;  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
-
-(use-package arduino-mode)
-
-(use-package platformio-mode)
+;(use-package paredit
+;	:init
+;	(add-hook 'clojure-mode-hook #'enable-paredit-mode)
+;  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+;	(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+;	(add-hook 'ielm-mode-hook #'enable-paredit-mode)
+;  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+;  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+;  (add-hook 'scheme-mode-hook #'enable-paredit-mode))
 
 (use-package evil-leader
   :defines evil-leader/set-leader

@@ -85,11 +85,13 @@
 
 (setq auto-revert-check-vc-info t)
 
-(global-display-line-numbers-mode 1)
-
 (setq linum-format "%d ")
 
 (setq vc-follow-symlinks t)
+
+(setq auto-window-vscroll nil)
+
+(setq bookmark-save-flag 1)
 
 (provide 'settings)
 ;;; settings.el ends here

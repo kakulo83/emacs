@@ -76,8 +76,8 @@
 (evil-define-key 'motion grep-mode-map (kbd "C-b") 'persp-switch-to-buffer)
 (evil-define-key 'motion grep-mode-map (kbd "/") 'consult-line)
 
-(evil-ex-define-cmd "q" 'persp-kill-buffer*)
-(evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
+;(evil-ex-define-cmd "q" 'persp-kill-buffer*)
+;(evil-ex-define-cmd "noh" 'lazy-highlight-cleanup)
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 

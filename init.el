@@ -24,6 +24,8 @@
 
 
 ;;; TODO
+;;;  - Investigate: https://gitlab.com/ideasman42/dotfiles/-/tree/main/.config/emacs?ref_type=heads    VERY FAST STARTUP
+;;;       - taken from this thread on emacs perf:  https://news.ycombinator.com/item?id=39119835  
 ;;;  - Investigate https://emacs.stackexchange.com/questions/26226/looking-for-simple-bookmark-package
 ;;;     - maybe have to create own utility for bookmarks
 ;;;  - Investigate bookmark packages.. i want categories or some means of organizing them
@@ -97,6 +99,7 @@
 ;;;
 ;;;  - GREAT EXAMPLE:   https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
 ;;;
+;;;  - Lots of good stuff here:  https://github.com/bling/dotemacs/tree/master
 ;;;  - Investigate my magit status bug:  https://github.com/magit/magit/issues/4744
 ;;;                                      https://github.com/magit/magit/issues/4739
 ;;;  - investigate https://issuecloser.com/blog/vterm-completion-for-files-directories-command-history-and-programs-in-emacs
@@ -113,6 +116,7 @@
 ;;;  guide:  https://github.com/emacs-tw/awesome-emacs
 ;;;
 ;;;  - consider:  https://github.com/jojojames/smart-jump
+;;;  - consider:  https://github.com/jacktasia/dumb-jump
 ;;;  - consider:  https://github.com/minad/tempel
 ;;;  - consider:  https://github.com/Crandel/tempel-collection
 ;;;  - consider:  https://magit.vc/manual/forge/
@@ -188,9 +192,9 @@
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
-(if (fboundp 'exec-path-from-shell-initialize)
-		(when (memq window-system '(mac ns x))
-			(exec-path-from-shell-initialize)))
+;(if (fboundp 'exec-path-from-shell-initialize)
+;		(when (memq window-system '(mac ns x))
+;			(exec-path-from-shell-initialize)))
 
 ; as recommended by perspective.el readme
 (customize-set-variable 'display-buffer-base-action

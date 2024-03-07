@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: local staging
+# key: c-ec2
+# --
+ENV=staging make api

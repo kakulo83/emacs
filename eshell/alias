@@ -17,3 +17,4 @@ alias grep *grep
 alias pip pip3 $*
 alias pshell pipenv shell
 alias pytest pytest -svv
+alias cb { magit-get-current-branch }
