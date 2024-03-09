@@ -28,12 +28,12 @@
 
 (add-hook 'evil-mode 'electric-pair-mode)
 
-(advice-add #'corfu-insert :after #'corfu-send-shell)
+;(advice-add #'corfu-insert :after #'corfu-send-shell)
 
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (setq-local corfu-auto nil)
-            (corfu-mode)))
+;(add-hook 'eshell-mode-hook
+;          (lambda ()
+;            (setq-local corfu-auto nil)
+;            (corfu-mode)))
 
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))

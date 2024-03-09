@@ -53,17 +53,17 @@
   :after evil
   :init
   (better-jumper-mode 1))
-                                        ; https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md
-                                        ; https://johnhame.link/posts/tweaking-emacs-for-ruby-development-in-2023/
+  ; https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md
+  ; https://johnhame.link/posts/tweaking-emacs-for-ruby-development-in-2023/
 
 (use-package eglot
   :ensure t
   :config
-                                        ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-                                        ; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
+  ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+  ; tl;dr eglot writes events to an events-buffer that can become very large, parsing this is slow and causes eglot to slow emacs down alot
   (setq eglot-events-buffer-size 0)
-                                        ;(with-eval-after-load 'eglot
-                                        ;  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
+  ;(with-eval-after-load 'eglot
+  ;  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
   :defer t
   :hook (
          (ruby-mode . eglot-ensure)
@@ -73,43 +73,24 @@
 	 (typescript-ts-mode . eglot-ensure)
 	 (sql-mode . eglot-ensure)))
 
-; (use-package corfu
-;   :config
-;   (setq corfu-auto t
-;         corfu-auto-prefix 2
-;         corfu-auto-delay 0.0
-;         corfu-cycle t
-;         corfu-preview-current 'insert
-;         )
-;   (define-key corfu-map (kbd "<tab>") #'corfu-complete)
-;   (add-hook 'eshell-mode-hook
-;             (lambda () (setq-local corfu-quit-at-boundary t
-;                                    corfu-quit-no-match t
-;                                    corfu-auto nil)
-;               (corfu-mode)))
-;   ; note:  M-spc inserts a separator, allowing you to further restrict
-;   :hook ((prog-mode . corfu-mode)
-;          (shell-mode . corfu-mode)
-;          (eshell-mode . corfu-mode))
-;   :init
-;   (global-corfu-mode))
-; 
- (use-package cape
-   :init
-   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-   (add-to-list 'completion-at-point-functions #'cape-file)
-   (add-to-list 'completion-at-point-functions #'cape-keyword)
-   (add-to-list 'completion-at-point-functions #'cape-symbol))
-
-(use-package yasnippet-capf
-  :after cape
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
-  :ensure t)
+  :ensure t
+  :config 
+  ; https://forum.shakacode.com/t/making-copilot-work-in-emacs-installation-and-keybindings/2491
+  ; If you need to use Copilot behind a network proxy
+  ; '(copilot-network-proxy
+  ; '(:host <host-string> :port <port-number> :username <username-string> :password <password-string>))
+  (defun robert/tab ()
+    "Command to complete a copilot suggestion if available otherwise insert a tab."
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+  (define-key global-map (kbd "<tab>") #'robert/tab)
+  (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
+  (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
+  :hook
+  (prog-mode . copilot-mode))
 
 (use-package orderless
   :init
@@ -152,7 +133,7 @@
   (setq-default typescript-indent-level 4)
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
-                                        ; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
+; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
         (css "https://github.com/tree-sitter/tree-sitter-css")
@@ -172,7 +153,7 @@
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
 
-                                        ; https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+; https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
@@ -310,25 +291,6 @@
         '("~/.emacs.d/snippets")
         yas-indent-line 'auto)
   (yas-global-mode +1))
-
-;(use-package yasnippet
-;  :functions yas-expand
-;  :diminish yas-minor-mode
-;  :preface (defvar tmp/company-point nil)
-;  :config
-;  (setq yas-also-auto-indent-first-line t)
-;  (setq yas-indent-line 'auto)
-;  (yas-global-mode +1)
-;
-;  (advice-add 'company-complete-common
-;              :before
-;              #'(lambda ()
-;                  (setq tmp/company-point (point))))
-;  (advice-add 'company-complete-common
-;              :after
-;              #'(lambda ()
-;                  (when (equal tmp/company-point (point))
-;                    (yas-expand)))))
 
 (use-package yasnippet-snippets)
 
@@ -883,7 +845,7 @@
     "cc" 'recenter-top-bottom
     "cp" 'copy-filepath-to-clipboard
     "cf" 'focus-mode
-    "q"  'my-persp-window-close					; 'delete-window
+    "q"  'my-persp-window-close	; 'delete-window
     "e" 'flycheck-list-errors
     "r" 'my-save-windows-configuration-to-register
     "R" 'consult-register
@@ -899,7 +861,7 @@
     ;"yn" 'yas-new-snippet
     "gl" 'magit-log-buffer-file
     "gL" 'magit-log-all
-    "gb" 'magit-blame										; 'magit-show-commit
+    "gb" 'magit-blame ; 'magit-show-commit
     "gs" 'magit-status
     "gc" 'magit-branch
     "gh" 'magit-log-buffer-file
