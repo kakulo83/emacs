@@ -189,23 +189,20 @@
   (setq magit-prefer-remote-upstream t)
   (setq magit-save-repository-buffers nil))
 
+(use-package simple-modeline
+  :ensure t
+  :custom
+  (simple-modeline-segments
+   '((simple-modeline-segment-modified
+      simple-modeline-segment-buffer-name
+      simple-modeline-segment-vc
+      simple-modeline-segment-process)))
+  :hook
+  (emacs-startup . simple-modeline-mode))
+
 (use-package git-timemachine
   :config
   (add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
-
-(use-package mood-line
-  :config
-  (mood-line-mode)
-  :custom
-  (mood-line-glyph-alist mood-line-glyphs-fira-code))
-
-; this package hides certain modes from cluttering the modeline
-(use-package blackout
-  :config
-  (blackout 'js-mode)
-  (blackout 'ruby-mode)
-  (blackout 'python-mode)
-  (blackout 'emacs-lisp-mode))
 
 (use-package flycheck
   :init (global-flycheck-mode)
