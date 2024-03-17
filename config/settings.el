@@ -16,7 +16,7 @@
 (setq evil-want-fine-undo 'yes)
 (evil-set-command-property 'xref-find-references :jump t)
 (setq initial-scratch-message "")
-(setq gc-cons-threshold (* 100 1024 1024)
+(setq gc-cons-threshold 20000000
       read-process-output-max (* 1024 1024)
       ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
       ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp

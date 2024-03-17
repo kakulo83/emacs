@@ -14,8 +14,8 @@
   :init
   (setq projectile-globally-ignored-file-suffixes '("~undo-tree~"))
   (setq projectile-switch-project-action (lambda()
-	 				   (projectile-dired)
-					   (cd (projectile-project-root))))
+                                           (projectile-dired)
+                                           (cd (projectile-project-root))))
   (projectile-mode 1))
 
 (use-package evil
@@ -92,6 +92,36 @@
   :hook
   (prog-mode . copilot-mode))
 
+(use-package nyan-mode
+  :config
+  (setq nyan-animate-nyancat t)
+  :init
+  (nyan-mode 1))
+
+(use-package doom-modeline
+	:defines doom-modeline-mode-alist doom-modeline-support-imenu
+	:functions doom-modeline-def-modeline
+	:config
+        (setq doom-modeline-hud t
+              doom-modeline-persp-name nil
+              doom-modeline-persp-icon nil
+              doom-modeline-time-icon t
+              doom-modeline-env-version nil
+              doom-modeline-workspace-name nil
+              doom-modeline-lsp nil
+              doom-modeline-major-mode-icon nil
+              doom-modeline-minor-modes nil
+              doom-modeline-buffer-file-name-style 'relative-to-project
+              doom-modeline-vcs-max-length 40
+              doom-modeline-mode-alist nil
+              doom-modeline-height 30
+              doom-modeline-buffer-encoding nil
+              doom-modeline-display-misc-in-all-mode-lines nil
+              doom-modeline-position-line-format nil
+              doom-modeline-percent-position nil
+              doom-modeline-env-enable-ruby nil)
+	:hook (after-init . doom-modeline-mode))
+
 (use-package vertico
   :config
   (setq vertico-count 20)
@@ -99,14 +129,27 @@
   :init
   (vertico-mode))
 
-(use-package vertico-posframe
-  :init
-  (vertico-posframe-mode 1))
+;(use-package vertico-posframe
+;  :init
+;  (vertico-posframe-mode 1))
+
+(use-package fussy
+  :ensure t
+  :config
+  (push 'fussy completion-styles)
+  (setq
+   ;; For example, project-find-file uses 'project-files which uses
+   ;; substring completion by default. Set to nil to make sure it's using
+   ;; flx.
+   completion-category-defaults nil
+   completion-category-overrides nil))
 
 (use-package orderless
   :init
   (setq completion-styles '(orderless flex)
         completion-category-overrides '((file (styles . (orderless flex))))))
+
+(setq fussy-filter-fn 'fussy-filter-orderless)
 
 (use-package format-all
   :commands format-all-mode
@@ -168,9 +211,9 @@
 (use-package rbenv
   :config
   (setq rbenv-show-active-ruby-in-modeline nil)
-  (rbenv-use-corresponding)
-  :init
-  (global-rbenv-mode))
+  (rbenv-use-corresponding))
+  ;:init
+  ;(global-rbenv-mode))
 
 (use-package all-the-icons)
 
@@ -188,17 +231,6 @@
   :config
   (setq magit-prefer-remote-upstream t)
   (setq magit-save-repository-buffers nil))
-
-(use-package simple-modeline
-  :ensure t
-  :custom
-  (simple-modeline-segments
-   '((simple-modeline-segment-modified
-      simple-modeline-segment-buffer-name
-      simple-modeline-segment-vc
-      simple-modeline-segment-process)))
-  :hook
-  (emacs-startup . simple-modeline-mode))
 
 (use-package git-timemachine
   :config
@@ -632,12 +664,14 @@
   :custom
   (persp-mode-prefix-key (kbd "C-c M-p"))
   :config
-  (setq persp-modestring-short t
+  (setq persp-modestring-short nil
+        persp-show-modestring nil
 	persp-state-default-file "~/.emacs.d/.cache/saved-perspective-state"
 	)
   (add-hook 'kill-emacs-hook #'persp-state-save)
   :init
-  (persp-mode))
+  (persp-mode)
+  (persp-turn-off-modestring))
 
 (use-package persp-projectile
   :after (perspective)
@@ -646,8 +680,8 @@
 (use-package perspective-tabs
   :after (perspective)
   :straight (perspective-tabs :host sourcehut :repo "woozong/perspective-tabs")
-                                        ; http://www.gonsie.com/blorg/tab-bar.html
-                                        ;	https://github.com/jimeh/.emacs.d/blob/c845af831690d1ab575b691020fbe91ce6435647/modules/workspaces/siren-tab-bar.el#L119-L138
+  ; http://www.gonsie.com/blorg/tab-bar.html
+  ; https://github.com/jimeh/.emacs.d/blob/c845af831690d1ab575b691020fbe91ce6435647/modules/workspaces/siren-tab-bar.el#L119-L138
   :init
   (defface robert-tab-bar-tab
     `((t :inherit 'tab-bar-tab
