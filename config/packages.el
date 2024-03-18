@@ -76,7 +76,7 @@
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
   :ensure t
-  :config 
+  :config
   ; https://forum.shakacode.com/t/making-copilot-work-in-emacs-installation-and-keybindings/2491
   ; If you need to use Copilot behind a network proxy
   ; '(copilot-network-proxy
@@ -119,7 +119,8 @@
               doom-modeline-display-misc-in-all-mode-lines nil
               doom-modeline-position-line-format nil
               doom-modeline-percent-position nil
-              doom-modeline-env-enable-ruby nil)
+              doom-modeline-env-enable-ruby nil
+              doom-modeline-env-version nil)
 	:hook (after-init . doom-modeline-mode))
 
 (use-package vertico
