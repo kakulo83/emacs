@@ -1,4 +1,4 @@
-;;; init.el --- Init file -*- lexical-binding: t -*-
+;; init.el --- Init file -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;;
@@ -46,16 +46,31 @@
 (setq default-buffer-file-coding-system 'utf-8)
 
 ;; Garbage-collect on focus-out, Emacs should feel snappier.
+(unless (version< emacs-version "27.0")
+  (add-function :after after-focus-change-function
+                (lambda ()
+                  (unless (frame-focus-state)
+                    (garbage-collect)))))
 
+;; do not wrap lines
+(set-default 'truncate-lines t)
 
 ;; allow y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; disable dialog box
+(setq use-dialog-box nil)
 
 ;; Disable backup.
 (setq backup-inhibited t)
 
 ;; Disable auto save.
 (setq auto-save-default nil)
+;; Prevent creation of auto-save-list directory
+(setq auto-save-list-file-prefix nil)
+
+;; Disable splash screen
+(setq inhibit-splash-screen t)
 
 ;; Show text instead of popups.
 (setq use-dialog-box nil)
@@ -65,6 +80,12 @@
 
 ;; Scroll to first error.
 (setq compilation-scroll-output 'first-error)
+
+;; Always redraw immediately when scrolling,
+;; more responsive and doesn't hang!
+;; http://emacs.stackexchange.com/a/31427/2418
+(setq fast-but-imprecise-scrolling nil)
+(setq jit-lock-defer-time 0)
 
 ;; disable Emacs from ever displaying text right-to-left like arabic etc
 (setq-default bidi-paragraph-direction 'left-to-right)
@@ -91,12 +112,64 @@
 ;; Scroll N lines to screen edge.
 (setq scroll-margin 2)
 
+;; Smoother scrolling with smaller steps
+(setq scroll-step 1
+      scroll-conservatively  10000)
 
+;; Hide initial scratch message
+(setq initial-scratch-message "")
+
+;; Silence alert sound
+(setq ring-bell-function 'ignore)
+
+(setq
+ make-backup-files nil
+ auto-save-default nil
+ create-lockfiles nil)
+
+;; Highlight inner expression delineated by parentheses
+(setq show-paren-style 'expression)
+
+;; Do not clone current buffer into new tab
+(setq tab-bar-new-tab-choice "*scratch*")
+
+;; Remove undo-tree from completions
+(setq completion-ignored-extensions
+      (append completion-ignored-extensions
+	      (quote
+	       ("~undo-tree~"))))
 
 (defconst my-num-processors (num-processors))
 ;; Avoid using too much memory.
 (defconst my-num-processors-limited (/ my-num-processors 2))
 
+;; Evil settings
+;; allow C-u to perfrom evil scroll up, needs to be set before loading evil
+(setq evil-want-C-u-scroll t)
+(setq evil-want-fine-undo 'yes)
+
+;; Kill scratch buffer on startup
+;(kill-buffer "*scratch*")
+
+;; Taken from perspective.el suggestions
+;; Reuse windows as much as possible to minimize changes to layout
+(customize-set-variable 'display-buffer-base-action
+  '((display-buffer-reuse-window display-buffer-same-window)
+    (reusable-frames . t)))
+
+(customize-set-variable 'even-window-sizes nil)
+
+;; Avoid prompt, just follow symbolic-links.
+(setq vc-follow-symlinks t)
+
+
+;; config use-package
+(eval-when-compile
+  (require 'use-package))
+
+;; install packages automatically if they are not present
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 
 (let ((gc-cons-threshold (* 256 1024 1024))
@@ -109,8 +182,7 @@
   (setq package-enable-at-startup nil)
   (package-initialize)
 
-
-
+  ;; Place custom.el in config folder
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (when (file-exists-p custom-file)
     (load custom-file))
