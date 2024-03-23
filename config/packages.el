@@ -12,6 +12,11 @@
 (use-package magit)
 
 
+(use-package git-timemachine
+  :config
+  (add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
+
+
 (use-package dired-sidebar
   :init
   (setq dired-sidebar-recenter-cursor-on-follow-file nil)
@@ -59,15 +64,17 @@
 
 
 (use-package tabspaces
- :commands (tabspaces-switch-or-create-workspace
+  ;; minor-mode loaded at startup
+  :hook (after-init . tabspaces-mode)
+  :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
   :custom
-  ;; Scopes buffer list to only workspace available
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
+  (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*"))
-  ;; Removes buffers from the default tabspace 
-  (tabspaces-remove-to-default nil)
+  (tabspaces-initialize-project-with-todo t)
+  (tabspaces-todo-file-name "project-todo.org")
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t))
@@ -101,3 +108,18 @@
   	  (window-height . fit-window-to-buffer)))
   :bind
   (("M-o" . embark-act)))
+
+
+(use-package all-the-icons)
+
+
+(use-package all-the-icons-dired
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
+
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+

@@ -2,7 +2,7 @@
 ;; -------------------------------------------------------------------------
 ;; Tabspaces Session File for Emacs
 ;; -------------------------------------------------------------------------
-;; Created Fri Mar 22 12:43:42 2024
+;; Created Sat Mar 23 16:06:12 2024
 
 ;; Tabs and buffers:
-(setq tabspaces--session-list '((("/Users/robertcarter/.emacs.d/config/packages.el" "/Users/robertcarter/.emacs.d/config/bindings.el") . "emacs")))
+(setq tabspaces--session-list '((("/Users/robertcarter/.emacs.d/config/bindings.el" "/Users/robertcarter/.emacs.d/config/packages.el") . "emacs") (nil . "pybrzw")))

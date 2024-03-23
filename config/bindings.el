@@ -19,7 +19,6 @@
 )
 
 (define-key evil-normal-state-map (kbd "s-t") 'tabspaces-switch-or-create-workspace)
-;(define-key evil-normal-state-map (kbd "C-s") 'tabspaces-project-switch-project-open-file)
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
 (define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
@@ -41,8 +40,13 @@
 
 (define-key evil-normal-state-map (kbd "C-b") 'tabspaces-switch-to-buffer)
 
-(after 'embark-autoloads
+(after 'embark
     (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
     (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
-    (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump)))
+    (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+    (define-key embark-region-map "f" #'fill-region)
+    (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions)))
+    ;;(define-key embark-general-map  (kbd "o") (my/embark-ace-action magit-find-file)))  ;; this can't be magit-find-file because this will be too broad, it needs to apply only to magit actions
+
+
 

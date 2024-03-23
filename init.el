@@ -52,6 +52,30 @@
                   (unless (frame-focus-state)
                     (garbage-collect)))))
 
+(defmacro after (feature &rest body)
+  "Executes BODY after FEATURE has been loaded.
+
+FEATURE may be any one of:
+    'evil            => (with-eval-after-load 'evil BODY)
+    \"evil-autoloads\" => (with-eval-after-load \"evil-autolaods\" BODY)
+    [evil cider]     => (with-eval-after-load 'evil
+                          (with-eval-after-load 'cider
+                            BODY))
+"
+  (declare (indent 1))
+  (cond
+   ((vectorp feature)
+    (let ((prog (macroexp-progn body)))
+      (cl-loop for f across feature
+               do
+               (progn
+                 (setq prog (append `(',f) `(,prog)))
+                 (setq prog (append '(with-eval-after-load) prog))))
+      prog))
+   (t
+    `(with-eval-after-load ,feature ,@body))))
+
+
 ;; do not wrap lines
 (set-default 'truncate-lines t)
 
@@ -148,9 +172,6 @@
 (setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
 
-;; Kill scratch buffer on startup
-;(kill-buffer "*scratch*")
-
 ;; Taken from perspective.el suggestions
 ;; Reuse windows as much as possible to minimize changes to layout
 (customize-set-variable 'display-buffer-base-action
@@ -162,6 +183,24 @@
 ;; Avoid prompt, just follow symbolic-links.
 (setq vc-follow-symlinks t)
 
+; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+	(ruby  "https://github.com/tree-sitter/tree-sitter-ruby")
+	(sql "https://github.com/m-novikov/tree-sitter-sql")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
 ;; config use-package
 (eval-when-compile
