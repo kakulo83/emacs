@@ -5,8 +5,30 @@
 
 
 (use-package evil
+  :init
   :config
+  (evil-set-initial-state 'package-menu-mode 'motion)
   (evil-mode 1))
+
+
+(use-package evil-collection
+  :defines evil-collection-company-use-tng
+  :after evil
+  :config
+  (setq evil-collection-mode-list
+	'(vterm
+	  occur
+	  dired
+	  dashboard
+	  magit
+	  proced
+	  help
+	  man
+	  woman
+	  completion
+	  helpful))
+  (setq evil-collection-company-use-tng nil)
+  (evil-collection-init))
 
 
 (use-package magit)
@@ -110,6 +132,21 @@
   (("M-o" . embark-act)))
 
 
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+
+(use-package consult
+  :defines consult-project-root-function
+  :after vertico
+  :config
+  (setq consult-project-root-function (lambda () (project-root (project-current)))))
+
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
 (use-package all-the-icons)
 
 
@@ -118,8 +155,43 @@
   (dired-mode . all-the-icons-dired-mode))
 
 
-(use-package marginalia
-  :init
-  (marginalia-mode))
+(use-package eglot
+  :config
+  ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+  ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
+  (setq eglot-events-buffer-size 0)
+  :defer t
+  :hook (
+     (ruby-mode . eglot-ensure)
+	 (python-ts-mode . eglot-ensure)
+	 (go-mode . eglot-ensure)
+	 (js-mode . eglot-ensure)
+	 (typescript-ts-mode . eglot-ensure)
+	 (sql-mode . eglot-ensure)))
+
+
+(use-package eshell
+  :config
+  (setq eshell-prompt-function
+     (lambda ()
+       (concat
+        (propertize "\n┌─ " 'face `(:foreground "royal blue"))
+        (propertize (concat (eshell/pwd)) 'face `(:foreground "SteelBlue1"))
+        (propertize " (" 'face `(:foreground "green"))
+        (if (magit-get-current-branch)
+            (propertize (magit-get-current-branch) 'face `(:foreground "green"))
+            (propertize "z" 'face `(:foreground "yellow")))
+        (propertize ")" 'face `(:foreground "green"))
+        (propertize "\n" 'face `(:foreground "green"))
+        (propertize "└─>" 'face `(:foreground "royal blue"))
+        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "royal blue"))
+        )))
+  (setq eshell-banner-message ""
+	eshell-history-size 1000
+	eshell-highlight-prompt t
+    ; eshell-scroll-to-bottom-on-input t
+	eshell-hist-ignoredups t))
+
+
 
 

@@ -171,6 +171,7 @@ FEATURE may be any one of:
 ;; allow C-u to perfrom evil scroll up, needs to be set before loading evil
 (setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
+(setq evil-want-keybinding nil)
 
 ;; Taken from perspective.el suggestions
 ;; Reuse windows as much as possible to minimize changes to layout
@@ -202,6 +203,21 @@ FEATURE may be any one of:
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
+(push '(css-mode . css-ts-mode) major-mode-remap-alist)
+(push '(python-mode . python-ts-mode) major-mode-remap-alist)
+(push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+(push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
+
+
+(setq display-buffer-alist
+	  '(
+		("\\*Embark Export: .*"
+		 (display-buffer-reuse-mode-window
+		  display-buffer-below-selected))
+		))
+
+
 ;; config use-package
 (eval-when-compile
   (require 'use-package))
@@ -209,6 +225,16 @@ FEATURE may be any one of:
 ;; install packages automatically if they are not present
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+;; prevent package.el loading packages prior to their init-file loading
+(setq package-enable-at-startup nil)
+
+;; install quelpa
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
 
 
 (let ((gc-cons-threshold (* 256 1024 1024))

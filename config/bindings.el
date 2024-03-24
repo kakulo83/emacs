@@ -11,12 +11,15 @@
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "cc" 'recenter-top-bottom
+  "cp" 'copy-filepath-to-clipboard
   "gf" 'magit-find-file
   "gs" 'magit-status
   "hv" 'helpful-variable
   "hf" 'helpful-function
   "hk" 'helpful-key
 )
+
+(define-key evil-normal-state-map (kbd "C-f") 'consult-ripgrep)
 
 (define-key evil-normal-state-map (kbd "s-t") 'tabspaces-switch-or-create-workspace)
 
@@ -48,5 +51,10 @@
     (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions)))
     ;;(define-key embark-general-map  (kbd "o") (my/embark-ace-action magit-find-file)))  ;; this can't be magit-find-file because this will be too broad, it needs to apply only to magit actions
 
+
+(define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)
+(define-key package-menu-mode-map (kbd "C-j") 'evil-window-down)
+(define-key package-menu-mode-map (kbd "C-k") 'evil-window-up)
+(define-key package-menu-mode-map (kbd "C-l") 'evil-window-right)
 
 

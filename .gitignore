@@ -26,3 +26,4 @@ org-persist
 undo-tree
 straight
 async-bytecomp.log
+tabsession.el
