@@ -49,7 +49,6 @@
     (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
     (define-key embark-region-map "f" #'fill-region)
     (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions)))
-    ;;(define-key embark-general-map  (kbd "o") (my/embark-ace-action magit-find-file)))  ;; this can't be magit-find-file because this will be too broad, it needs to apply only to magit actions
 
 
 (define-key package-menu-mode-map (kbd "C-h") 'evil-window-left)

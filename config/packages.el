@@ -147,6 +147,8 @@
 (use-package marginalia
   :init
   (marginalia-mode))
+
+
 (use-package all-the-icons)
 
 
@@ -193,5 +195,20 @@
 	eshell-hist-ignoredups t))
 
 
-
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "copilot-emacs/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el"))
+  :config
+  (defun robert/tab ()
+    "Command to complete a copilot suggestion if available otherwise insert a tab."
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+  (define-key global-map (kbd "<tab>") #'robert/tab)
+  (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
+  (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
+  :hook
+  (prog-mode . copilot-mode))
 

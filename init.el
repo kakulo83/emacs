@@ -75,6 +75,7 @@ FEATURE may be any one of:
    (t
     `(with-eval-after-load ,feature ,@body))))
 
+(setq lisp-indent-offset 4)
 
 ;; do not wrap lines
 (set-default 'truncate-lines t)
@@ -161,7 +162,7 @@ FEATURE may be any one of:
 (setq completion-ignored-extensions
       (append completion-ignored-extensions
 	      (quote
-	       ("~undo-tree~"))))
+		  ("~undo-tree~"))))
 
 (defconst my-num-processors (num-processors))
 ;; Avoid using too much memory.
@@ -235,6 +236,12 @@ FEATURE may be any one of:
     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
     (eval-buffer)
     (quelpa-self-upgrade)))
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+(require 'quelpa)
 
 
 (let ((gc-cons-threshold (* 256 1024 1024))
