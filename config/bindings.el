@@ -5,18 +5,25 @@
 (keymap-set evil-normal-state-map "," 'my-leader-map)
 
 (evil-define-key nil my-leader-map
-  ;; add your bindings here:
-  "a"  'ace-window
-  "b"  'switch-to-buffer
-  "p"  'tabspaces-project-switch-project-open-file
-  "q"  'my/delete-buffer-or-workspace
-  "cc" 'recenter-top-bottom
-  "cp" 'copy-filepath-to-clipboard
-  "gf" 'magit-find-file
-  "gs" 'magit-status
-  "hv" 'helpful-variable
-  "hf" 'helpful-function
-  "hk" 'helpful-key
+    ;; add your bindings here:
+    "`"  'vterm-toggle
+    "a"  'ace-window
+    "b"  'consult-bookmark
+    "f"  'avy-goto-char-2
+    "p"  'tabspaces-project-switch-project-open-file
+    "q"  'my/delete-buffer-or-workspace
+    "y"  'consult-yank-from-kill-ring
+    "cc" 'recenter-top-bottom
+    "cp" 'copy-filepath-to-clipboard
+    "gb" 'magit-blame
+    "gH" 'git-timemachine
+    "gl" 'magit-log-buffer-file
+    "gL" 'magit-log-all
+    "gf" 'magit-find-file
+    "gs" 'magit-status
+    "hv" 'helpful-variable
+    "hf" 'helpful-function
+    "hk" 'helpful-key
 )
 
 (define-key evil-normal-state-map (kbd "C-f") 'consult-ripgrep)
@@ -37,6 +44,8 @@
 
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 
+(define-key evil-normal-state-map (kbd "/") 'consult-line)
+(define-key evil-normal-state-map (kbd "C-'") 'consult-imenu)
 
 (define-key evil-normal-state-map (kbd "s-}") 'tab-bar-switch-to-next-tab)
 (define-key evil-normal-state-map (kbd "s-{") 'tab-bar-switch-to-prev-tab)
@@ -57,3 +66,12 @@
 (define-key package-menu-mode-map (kbd "C-l") 'evil-window-right)
 
 
+(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+(define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
+
+(evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
+
+(define-key evil-normal-state-map (kbd "-") 'dired)
+
+(define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
+(define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)

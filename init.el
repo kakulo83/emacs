@@ -100,6 +100,9 @@ FEATURE may be any one of:
 ;; Show text instead of popups.
 (setq use-dialog-box nil)
 
+;; when we move outside the screen we always recenter
+(setq scroll-conservatively scroll-margin)
+
 ;; Always reuse existing compilation window.
 (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
 
@@ -158,6 +161,7 @@ FEATURE may be any one of:
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
 
+
 ;; Remove undo-tree from completions
 (setq completion-ignored-extensions
       (append completion-ignored-extensions
@@ -173,6 +177,7 @@ FEATURE may be any one of:
 (setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
 (setq evil-want-keybinding nil)
+
 
 ;; Taken from perspective.el suggestions
 ;; Reuse windows as much as possible to minimize changes to layout
@@ -209,14 +214,6 @@ FEATURE may be any one of:
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
 (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-
-
-(setq display-buffer-alist
-	  '(
-		("\\*Embark Export: .*"
-		 (display-buffer-reuse-mode-window
-		  display-buffer-below-selected))
-		))
 
 
 ;; config use-package

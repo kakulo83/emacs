@@ -7,6 +7,7 @@
 (use-package evil
   :init
   :config
+  (evil-set-undo-system 'undo-redo)
   (evil-set-initial-state 'package-menu-mode 'motion)
   (evil-mode 1))
 
@@ -85,6 +86,12 @@
   (load-theme 'ef-duo-dark))
 
 
+(use-package modus-themes)
+
+
+(use-package nano-theme)
+
+
 (use-package tabspaces
   ;; minor-mode loaded at startup
   :hook (after-init . tabspaces-mode)
@@ -124,6 +131,7 @@
   ;; NOTE:  embark shows UI in extended-mini-buffer from customizing the variable
   ;;        embark-verbose-indicator-display-action
   ;(setq embark-prompter 'embark-completing-read-prompter)
+  (setq display-buffer-alist '(("\\*Embark Export: .*" (display-buffer-reuse-mode-window display-buffer-below-selected))))
   (setq embark-indicator #'embark-mixed-indicator)
   (setq embark-verbose-indicator-display-action
         '(display-buffer-at-bottom
@@ -195,6 +203,46 @@
 	eshell-hist-ignoredups t))
 
 
+(use-package eshell-toggle
+  :custom
+  (eshell-toggle-size-fraction 3)
+  (eshell-toggle-use-git-root t)
+  (eshell-toggle-run-command nil)
+  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
+  :bind
+  ("s-`" . eshell-toggle))
+
+
+(use-package vterm
+  :config
+  (setq vterm-max-scrollback 20000))
+
+
+(use-package multi-vterm
+  :functions vterm-send-return evil-insert-state
+  :config
+  (add-hook 'vterm-mode-hook
+  	    (lambda ()
+  	      (setq-local evil-insert-state-cursor 'box)
+  	      (evil-insert-state))))
+
+
+(use-package vterm-toggle
+  :config
+  (add-to-list 'display-buffer-alist
+             '((lambda (buffer-or-name _)
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+               (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . bottom)
+               (reusable-frames . visible)
+               (window-height . 0.5)))
+  (setq vterm-toggle-fullscreen-p nil
+        vterm-toggle-project-root t
+        vterm-toggle-scope 'project))
+
 (use-package copilot
   :quelpa (copilot :fetcher github
                    :repo "copilot-emacs/copilot.el"
@@ -212,3 +260,72 @@
   :hook
   (prog-mode . copilot-mode))
 
+
+(use-package undo-tree
+  :config
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
+  :init
+  (global-undo-tree-mode))
+
+
+(use-package better-jumper
+  :after evil
+  :init
+  (better-jumper-mode 1))
+
+
+(use-package avy)
+
+
+(use-package org
+  :config
+  (add-to-list 'org-emphasis-alist
+               '("*" (:foreground "red")
+                 ))
+  (setq org-link-frame-setup '((file . find-file))) ; find-file-other-window
+  (setq org-return-follows-link t)
+  (setq org-pretty-entities t)
+  (setq org-hide-emphasis-markers t)
+  (setq org-startup-with-inline-images t)
+  (setq org-startup-indented t)
+  ;(setq org-startup-with-latex-preview t)
+  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  (setq org-src-preserve-indentation t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-adapt-indentation t)
+  :bind (
+	 :map org-mode-map
+         ("C-j" . windmove-down)
+         ("C-k" . windmove-up)
+         ("C-p" . org-roam-node-find)
+         ("C-f" . consult-ripgrep)
+         ("C-c n" . org-roam-capture)
+         ("C-'" . org-roam-buffer-toggle)
+         ("C-c i" . org-roam-node-insert)))
+
+
+(use-package org-bullets
+  :after org
+  :init
+  (setq org-bullets-bullet-list '("\u200b"))
+  :hook (org-mode . org-bullets-mode))
+
+
+(use-package olivetti
+  :defines olivetti-set-width
+  :functions olivetti-set-width
+  :hook (
+	 (org-mode . olivetti-mode)
+	 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
+  :config
+  (setq-default olivetti-body-width 128))
+
+
+(use-package restclient
+  :config
+  (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
+
+
+(use-package nvm)
