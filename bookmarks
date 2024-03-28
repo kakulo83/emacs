@@ -2,7 +2,27 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("home model"
+(("home pull import job"
+ (filename . "~/Developer/pybrzw/brzwint/jobs/rentals.py")
+ (front-context-string . "def import_renta")
+ (rear-context-string . "ort_rentals',\n)\n") (position . 962)
+ (last-modified 26115 3787 354072 0))
+("org-capture-last-stored"
+ (filename . "~/Notes/org-roam-notes/20240321084155-new_job.org")
+ (front-context-string . "\n\nI have a very ")
+ (rear-context-string . "#+options: ^:{}\n") (position . 198)
+ (last-modified 26108 21871 90621 0))
+("sync database types"
+ (filename . "~/Developer/pybrzw/db/scripts/synchronize_types.py")
+ (front-context-string . "synchronize_type")
+ (rear-context-string . "        )\n\n\ndef ") (position . 1643)
+ (last-modified 26108 18497 702771 0))
+("create breezeway API credentials"
+ (filename . "~/Developer/pybrzw/scripts/create_sandbox_account.py")
+ (front-context-string . "  external_api_u")
+ (rear-context-string . "al_api_data)\n\n  ") (position . 1629)
+ (last-modified 26107 13882 847065 0))
+("home model"
  (filename .
            "~/Developer/pybrzw/pybrzw/db/models/breezeway/home/home.py")
  (front-context-string . "class Home(\n    ")
