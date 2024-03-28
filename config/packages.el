@@ -81,13 +81,12 @@
   (balanced-windows-mode))
 
 
-(use-package ef-themes
+(use-package ef-themes)
+
+
+(use-package modus-themes
   :config
-  (load-theme 'ef-duo-dark))
-
-
-(use-package modus-themes)
-
+  (load-theme 'modus-vivendi-tinted t))
 
 (use-package nano-theme)
 
@@ -329,3 +328,12 @@
 
 
 (use-package nvm)
+
+
+(use-package hydra)
+
+
+(use-package nyan-mode
+  :config
+  (setq nyan-animate-nyancat t)
+  (nyan-mode 1))

@@ -33,3 +33,30 @@
 (defadvice compile-goto-error (around my-compile-goto-error activate)
   (let ((display-buffer-overriding-action '(display-buffer-in-side-window (inhibit-same-window . nil))))
     ad-do-it))
+
+
+(defhydra hydra-zoom ()
+  "zoom"
+  ("g" text-scale-increase "in")
+  ("l" text-scale-decrease "out"))
+
+
+(defhydra hydra-magit ()
+   "magit"
+   ("s" magit-status "status")
+   ("b" magit-blame "blame")
+   ("l" magit-log "log")
+   ("c" magit-checkout "checkout")
+   ("C" magit-commit "commit")
+   ("P" magit-push "push")
+   ("F" magit-fetch "fetch")
+   ("M" magit-merge "merge")
+   ("R" magit-rebase "rebase")
+   ("t" magit-tag "tag")
+   ("T" magit-tag-delete "delete tag")
+   ("r" magit-revert "revert")
+   ("d" magit-diff "diff")
+   ("D" magit-diff-buffer-file "diff buffer")
+   ("f" magit-find-file "find file")
+   ("L" magit-list-repositories "list repositories")
+   ("q" nil "quit"))

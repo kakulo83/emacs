@@ -9,12 +9,15 @@
     "`"  'vterm-toggle
     "a"  'ace-window
     "b"  'consult-bookmark
+    "B"  'list-buffers
     "f"  'avy-goto-char-2
     "p"  'tabspaces-project-switch-project-open-file
     "q"  'my/delete-buffer-or-workspace
     "y"  'consult-yank-from-kill-ring
+    "z"  'hydra-zoom/body
     "cc" 'recenter-top-bottom
     "cp" 'copy-filepath-to-clipboard
+    "G"  'hydra-magit/body
     "gb" 'magit-blame
     "gH" 'git-timemachine
     "gl" 'magit-log-buffer-file
@@ -75,3 +78,5 @@
 
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
+
+

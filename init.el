@@ -22,16 +22,20 @@
 ;;; 
 ;;;
 ;;; TODO 
-;;; create a simple organization scheme for loading elisp files
-;;; add packages
-;;; use display-buffer-alist
 ;;; use hydra package
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
+;;; Investigate how i want to handle linting errors
+;;; Investigate how I want to handle autoformatting
 
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+;; Remove frmae title and icon
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq frame-title-format '("\n"))
+(setq ns-use-proxy-icon nil)
 
 ;; Disable frames resizing implicitly. Why?
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the font.
@@ -150,17 +154,28 @@ FEATURE may be any one of:
 ;; Silence alert sound
 (setq ring-bell-function 'ignore)
 
+;; keep version control updated
+(setq auto-revert-check-vc-info t)
+
+;; Save bookmarks after every change
+(setq bookmark-save-flag 1)
+
 (setq
  make-backup-files nil
  auto-save-default nil
  create-lockfiles nil)
+
+;; Remove duplicate commands from history
+(setq comint-input-ignoredups t) 
+
+;; Automatically revert buffers for changed files
+(global-auto-revert-mode 1) 
 
 ;; Highlight inner expression delineated by parentheses
 (setq show-paren-style 'expression)
 
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
-
 
 ;; Remove undo-tree from completions
 (setq completion-ignored-extensions
@@ -178,6 +193,8 @@ FEATURE may be any one of:
 (setq evil-want-fine-undo 'yes)
 (setq evil-want-keybinding nil)
 
+;; Hide tab-bar close button
+(setq tab-bar-close-button-show nil) 
 
 ;; Taken from perspective.el suggestions
 ;; Reuse windows as much as possible to minimize changes to layout
@@ -189,6 +206,9 @@ FEATURE may be any one of:
 
 ;; Avoid prompt, just follow symbolic-links.
 (setq vc-follow-symlinks t)
+
+;; Hide frame border (called the fringe)
+(set-fringe-mode 0)
 
 ; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
 (setq treesit-language-source-alist
@@ -214,6 +234,14 @@ FEATURE may be any one of:
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
 (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
+
+
+(setq-default mode-line-format
+    '("%e"
+	 (:eval (format "%s" (buffer-name)))
+	 "  "
+	 ;(:eval (list (nyan-create)))
+	 ))
 
 
 ;; config use-package
