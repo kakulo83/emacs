@@ -465,10 +465,10 @@
 	 (term-mode . hide-mode-line-mode)
 	 (dired-sidebar)))
 
-;(use-package typescript-ts-mode
-;  :config
-;  (setq-default typescript-indent-level 4)
-;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
+(use-package typescript-ts-mode
+  :config
+  ;(setq-default typescript-indent-level 4)
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
 (provide 'packages)
 ;;; packages.el ends here
