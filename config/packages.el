@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
 ;; :init executes code BEFORE a package is loaded
 ;; :config executes code AFTER a package is loaded
 
@@ -81,18 +85,15 @@
   (balanced-windows-mode))
 
 
-(use-package ef-themes)
-
-
-(use-package modus-themes
+(use-package ef-themes
   :config
-  (load-theme 'modus-vivendi-tinted t))
-
-(use-package nano-theme)
+  (load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter
+)
+(use-package modus-themes) ; modus-operandi  modus-vivendi
+(use-package nano-theme) ; nano-light  nano-dark
 
 
 (use-package tabspaces
-  ;; minor-mode loaded at startup
   :hook (after-init . tabspaces-mode)
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
@@ -101,9 +102,8 @@
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-initialize-project-with-todo t)
+  (tabspaces-initialize-project-with-todo nil)
   (tabspaces-todo-file-name "project-todo.org")
-  ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t))
 
@@ -243,17 +243,14 @@
         vterm-toggle-scope 'project))
 
 (use-package copilot
-  :quelpa (copilot :fetcher github
-                   :repo "copilot-emacs/copilot.el"
-                   :branch "main"
-                   :files ("dist" "*.el"))
   :config
   (defun robert/tab ()
     "Command to complete a copilot suggestion if available otherwise insert a tab."
     (interactive)
-    (or (copilot-accept-completion)
+    (or (copilot-accept-completion-by-word)
         (indent-for-tab-command)))
   (define-key global-map (kbd "<tab>") #'robert/tab)
+  (define-key global-map (kbd "S-<return>") #'copilot-accept-completion)
   (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
   :hook
@@ -312,6 +309,55 @@
   :hook (org-mode . org-bullets-mode))
 
 
+
+(use-package org-roam
+  :defines org-roam-v2-act org-roam-db-update-method org-roam-dailies-directory
+  :custom
+  (org-roam-directory "~/Notes/org-roam-notes/")
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+  :init
+  (setq org-roam-v2-act t)
+  (setq org-roam-db-update-method 'immediate)
+  (setq org-roam-dailies-directory "~/Notes/org-roam-daily")
+  (setq org-roam-db-node-include-function
+	(lambda()
+	  (not (member 'drill' (org-get-tags)))))
+  (setq org-roam-capture-templates
+	;; M-x describe-variable on:  org-roam-capture-templates
+	'(
+	  ("d" "default" plain "%?"
+	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+			      "#+title: ${title}\n#+startup: showall inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}\n")
+	   :unnarrowed t)
+	  ("c" "code snippet" plain "%?"
+	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+			      "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
+	  )))
+
+
+(use-package org-drill
+  :defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
+  :init
+  (setq org-drill-scope 'file)
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-hint-separator "||")
+  (setq org-drill-left-close-delimiter "<[")
+  (setq org-drill-right-close-delimiter "]>")
+  (setq org-drill-learn-fraction 0.25))
+
+
+(use-package simple-httpd)
+
+
+(use-package websocket)
+
+
 (use-package olivetti
   :defines olivetti-set-width
   :functions olivetti-set-width
@@ -333,7 +379,21 @@
 (use-package hydra)
 
 
-(use-package nyan-mode
+(use-package flycheck
   :config
-  (setq nyan-animate-nyancat t)
-  (nyan-mode 1))
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  :init
+  (global-flycheck-mode))
+    
+    
+;(use-package format-all)
+
+
+;(use-package typescript-ts-mode
+;  :config
+;  (setq-default typescript-indent-level 4)
+;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
+
+
+;;; packages.el ends here
