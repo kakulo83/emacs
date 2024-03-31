@@ -36,6 +36,33 @@
   (evil-collection-init))
 
 
+(use-package doom-modeline
+  :defines doom-modeline-mode-alist doom-modeline-support-imenu
+  :functions doom-modeline-def-modeline
+  :config
+  (setq doom-modeline-hud t
+    doom-modeline-modal nil
+    doom-modeline-persp-name nil
+    doom-modeline-persp-icon nil
+    doom-modeline-time-icon t
+    doom-modeline-env-version nil
+    doom-modeline-workspace-name nil
+    doom-modeline-lsp nil
+    doom-modeline-major-mode-icon nil
+    doom-modeline-minor-modes nil
+    doom-modeline-buffer-file-name-style 'relative-to-project
+    doom-modeline-vcs-max-length 40
+    doom-modeline-mode-alist nil
+    doom-modeline-height 30
+    doom-modeline-buffer-encoding nil
+    doom-modeline-display-misc-in-all-mode-lines nil
+    doom-modeline-position-line-format nil
+    doom-modeline-percent-position nil
+    doom-modeline-env-enable-ruby nil
+    doom-modeline-env-version nil)
+  :hook (after-init . doom-modeline-mode))
+
+
 (use-package magit)
 
 
@@ -214,7 +241,23 @@
 
 (use-package vterm
   :config
-  (setq vterm-max-scrollback 20000))
+  (setq vterm-max-scrollback 20000)
+  (defun get-full-list ()
+    (let ((history-list (with-temp-buffer
+                          (insert-file-contents "~/.zsh_history")
+                          (split-string (buffer-string) "\n" t))))
+
+      (delete-dups (append history-list))))
+
+  (defun vterm-completion-choose-item ()
+    (completing-read "History: " (get-full-list) nil nil (thing-at-point 'word 'no-properties)))
+
+  (defun vterm-completion ()
+    (interactive)
+    (setq vterm-chosen-item (vterm-completion-choose-item))
+    (when (thing-at-point 'word)
+      (vterm-send-meta-backspace))
+    (vterm-send-string vterm-chosen-item)))
 
 
 (use-package multi-vterm
@@ -382,13 +425,30 @@
 (use-package flycheck
   :init
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq flycheck-indication-mode 'left-fringe)
+  (setq-default flycheck-indication-mode 'left-fringe)
   (setq flycheck-python-pylint-executable "/opt/homebrew/bin/pylint")
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (global-flycheck-mode +1))
+
+  ;(add-hook 'after-init-hook #'global-flycheck-mode))
     
     
-;(use-package format-all)
+(use-package format-all
+  :commands format-all-mode
+  :hook (prog-mode . format-all-mode)
+  :config
+  (setq-default format-all-formatters
+    '(("Python" (black))
+       ("Go"    (gofmt) (goimports))
+       ("JS"    (prettier))
+       ("TS"    (prettier))
+       ("HTML"  (prettier))
+       ("CSS"   (prettier))
+       ("JSON"  (prettier))
+       ("YAML"  (prettier))
+       ("XML"   (prettier))
+       ("SQL"   (sqlformat)))))
+                  
 
 
 ;(use-package typescript-ts-mode
@@ -396,5 +456,5 @@
 ;  (setq-default typescript-indent-level 4)
 ;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
-
+(provide 'packages)
 ;;; packages.el ends here

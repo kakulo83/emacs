@@ -1,7 +1,6 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-;;; Leader
 
 (define-prefix-command 'my-leader-map)
 
@@ -86,6 +85,7 @@
 (evil-define-key 'normal dired-mode-map (kbd "H") 'evil-window-top)
 (evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
 (evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
+(evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
 
 (provide 'bindings)
 ;;; bindings.el ends here

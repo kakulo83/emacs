@@ -27,6 +27,9 @@
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
 ;;; Investigate how i want to handle linting errors
 ;;; Investigate how I want to handle autoformatting
+;;; Create an elisp command to connect to breezeway AWS instances
+;;; Investigate how to send string commands to vterm, maybe its possible to have pybrzw test file with cursor on
+;;; a test, use Emacs to grab the file path and the name of the test and send "pytest /path/to/file::test_case" to vterm
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -242,12 +245,15 @@ FEATURE may be any one of:
 (set-face-attribute 'tab-bar-tab nil :foreground "SkyBlue1")
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
-(setq-default mode-line-format
-    '("%e"
-	 (:eval (format "%s" (buffer-name)))
-	 "  "
-	 ;(:eval (list (nyan-create)))
-	 ))
+
+
+;; Set the modeline to show only the buffer name
+;(setq-default mode-line-format
+;    '("%e"
+;	 (:eval (format "%s" (buffer-name)))
+;	 "  "
+;	 ;(:eval (list (nyan-create)))
+;	 ))
 
 (set-frame-font "JetBrains Mono:pixelsize=12")
 
@@ -281,10 +287,9 @@ FEATURE may be any one of:
            do (condition-case ex
                   (load (file-name-sans-extension file))
                 ('error (with-current-buffer "*scratch*"
-                          (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))
-			  (bug-hunter-file "~/.emacs.d/config/packages.el")
-			  (bug-hunter-file "~/.emacs.d/config/functions.el")
-			  (bug-hunter-file "~/.emacs.d/config/bindings.el")
+			  ; TDOO add to run bug-hunter on error
+                          ;(insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))
+			  (bug-hunter-file file)
 			  )))))
 
 ;;; init.el ends here
