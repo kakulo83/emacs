@@ -380,11 +380,12 @@
 
 
 (use-package flycheck
-  :config
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
   :init
-  (global-flycheck-mode))
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-indication-mode 'left-fringe)
+  (setq flycheck-python-pylint-executable "/opt/homebrew/bin/pylint")
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
     
     
 ;(use-package format-all)
