@@ -25,8 +25,6 @@
 ;;; use hydra package
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
-;;; Investigate how i want to handle linting errors
-;;; Investigate how I want to handle autoformatting
 ;;; Create an elisp command to connect to breezeway AWS instances
 ;;; Investigate how to send string commands to vterm, maybe its possible to have pybrzw test file with cursor on
 ;;; a test, use Emacs to grab the file path and the name of the test and send "pytest /path/to/file::test_case" to vterm

@@ -95,5 +95,16 @@
   ("=" eglot-format-buffer "format")
   ("a" eglot-code-actions "apply code action"))
 
+;; TODO create function to connect to production server
+(defun connect-production ()
+  "Connect to breezeway production server."
+  ; if named eshell exists send command to instance
+  ; if no eshell instances, create a new one and send command
+  (with-current-buffer "eshell"
+    (eshell-return-to-prompt)
+    (insert "ls")
+    (eshell-send-input))
+  )
+  
 (provide 'functions)
 ;;; functions.el ends here
