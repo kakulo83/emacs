@@ -384,6 +384,11 @@
 	  )))
 
 
+(use-package org-roam-ui
+  :config
+  (setq org-roam-ui-follow t))
+
+
 (use-package org-drill
   :defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
   :init
