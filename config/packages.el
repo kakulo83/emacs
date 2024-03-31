@@ -449,7 +449,16 @@
        ("XML"   (prettier))
        ("SQL"   (sqlformat)))))
                   
-
+(use-package hide-mode-line
+	:hook
+	((completion-list-mode . hide-mode-line-mode)
+	 (help-mode . hide-mode-line-mode)
+	 (compilation-mode . hide-mode-line-mode)
+	 (vterm-mode . hide-mode-line-mode)
+	 (eshell-mode . hide-mode-line-mode)
+	 (shell-mode . hide-mode-line-mode)
+	 (term-mode . hide-mode-line-mode)
+	 (dired-sidebar)))
 
 ;(use-package typescript-ts-mode
 ;  :config
