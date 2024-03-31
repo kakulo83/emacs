@@ -21,13 +21,14 @@
 ;;; graphviz (for google profiling tools)
 ;;; 
 ;;;
-;;; TODO 
+;;; TODO
 ;;; use hydra package
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
 ;;; Investigate how i want to handle linting errors
 ;;; Investigate how I want to handle autoformatting
 
+;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -57,7 +58,7 @@
                     (garbage-collect)))))
 
 (defmacro after (feature &rest body)
-  "Executes BODY after FEATURE has been loaded.
+"Execute BODY after FEATURE has been loaded.
 
 FEATURE may be any one of:
     'evil            => (with-eval-after-load 'evil BODY)
@@ -79,7 +80,7 @@ FEATURE may be any one of:
    (t
     `(with-eval-after-load ,feature ,@body))))
 
-(setq lisp-indent-offset 4)
+(setq lisp-indent-offset 2)
 
 ;; do not wrap lines
 (set-default 'truncate-lines t)
@@ -166,7 +167,7 @@ FEATURE may be any one of:
  create-lockfiles nil)
 
 ;; Remove duplicate commands from history
-(setq comint-input-ignoredups t) 
+(setq comint-input-ignoredups t)
 
 ;; Automatically revert buffers for changed files
 (global-auto-revert-mode 1) 
@@ -235,7 +236,12 @@ FEATURE may be any one of:
 (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
 
-
+;; Tab bar settings
+(setq tab-bar-new-button-show nil)
+(set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
+(set-face-attribute 'tab-bar-tab nil :foreground "SkyBlue1")
+(set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+(set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (setq-default mode-line-format
     '("%e"
 	 (:eval (format "%s" (buffer-name)))
@@ -243,6 +249,7 @@ FEATURE may be any one of:
 	 ;(:eval (list (nyan-create)))
 	 ))
 
+(set-frame-font "JetBrains Mono:pixelsize=12")
 
 ;; config use-package
 (eval-when-compile
@@ -254,20 +261,6 @@ FEATURE may be any one of:
 
 ;; prevent package.el loading packages prior to their init-file loading
 (setq package-enable-at-startup nil)
-
-;; install quelpa
-(unless (package-installed-p 'quelpa)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-    (eval-buffer)
-    (quelpa-self-upgrade)))
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://github.com/quelpa/quelpa-use-package.git"))
-(require 'quelpa-use-package)
-(require 'quelpa)
-
 
 (let ((gc-cons-threshold (* 256 1024 1024))
       (config-directory (concat user-emacs-directory "config/")))
@@ -288,6 +281,10 @@ FEATURE may be any one of:
            do (condition-case ex
                   (load (file-name-sans-extension file))
                 ('error (with-current-buffer "*scratch*"
-                          (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex)))))))
+                          (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))
+			  (bug-hunter-file "~/.emacs.d/config/packages.el")
+			  (bug-hunter-file "~/.emacs.d/config/functions.el")
+			  (bug-hunter-file "~/.emacs.d/config/bindings.el")
+			  )))))
 
 ;;; init.el ends here
