@@ -33,6 +33,7 @@ brew "python@3.11"
 brew "python-tk@3.11"
 brew "rbenv"
 brew "ripgrep"
+brew "pngpaste"
 brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-native-comp"]
 cask "amethyst"
 cask "font-devicons"
