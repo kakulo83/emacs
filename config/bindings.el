@@ -73,6 +73,7 @@
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
   (define-key embark-region-map "f" #'fill-region)
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
+  (define-key embark-identifier-map "n" #'eglot-rename)
   )
 
 
