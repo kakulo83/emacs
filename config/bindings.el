@@ -66,7 +66,6 @@
 (define-key evil-normal-state-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
 (define-key evil-normal-state-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
-(define-key evil-normal-state-map (kbd "s-0") #'(lambda ()(interactive) (tab-bar-select-tab 0)))
 
 (after 'embark
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
