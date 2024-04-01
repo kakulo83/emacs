@@ -285,7 +285,10 @@
         vterm-toggle-project-root t
         vterm-toggle-scope 'project))
 
+
 (use-package copilot
+  :vc (copilot :url "https://github.com/copilot-emacs/copilot.el"
+	:branch "main")
   :config
   (defun robert/tab ()
     "Command to complete a copilot suggestion if available otherwise insert a tab."
