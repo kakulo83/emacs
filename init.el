@@ -194,6 +194,10 @@ FEATURE may be any one of:
 (setq evil-want-C-u-scroll t)
 (setq evil-want-fine-undo 'yes)
 (setq evil-want-keybinding nil)
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
 
 ;; Hide tab-bar close button
 (setq tab-bar-close-button-show nil) 

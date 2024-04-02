@@ -54,7 +54,6 @@
 (define-key evil-normal-state-map (kbd "-") 'dired)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
-(define-key evil-normal-state-map (kbd "*") 'isearch-forward-symbol-at-point)
 (define-key evil-normal-state-map "gd" 'xref-find-definitions)
 (define-key evil-normal-state-map "gr" 'xref-find-references)
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
@@ -75,7 +74,6 @@
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
   (define-key embark-identifier-map "n" #'eglot-rename)
   )
-
 
 (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
 (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
