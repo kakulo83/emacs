@@ -15,6 +15,7 @@
   "B"  'list-buffers
   "d"  'robert/drill-by-topic
   "f"  'avy-goto-char-2
+  "k"  'robert/quick-kill-process
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "r"  'eval-region
