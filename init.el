@@ -51,6 +51,13 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+;; Session management
+(require 'desktop)
+(setq desktop-path (list "~/.emacs.d/sessions/"))
+(desktop-save-mode 1)
+;(desktop-read)
+;(tab-bar-history-mode)
+
 ;; Garbage-collect on focus-out, Emacs should feel snappier.
 (unless (version< emacs-version "27.0")
   (add-function :after after-focus-change-function

@@ -121,17 +121,14 @@
 
 
 (use-package tabspaces
-  :hook (after-init . tabspaces-mode)
+  :hook
+  (after-init . tabspaces-mode)
+  (after-init . tabspaces-reset-buffer-list)
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
   :custom
   (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-initialize-project-with-todo nil)
-  (tabspaces-session t)
-  (tabspaces-session-auto-restore t))
+  (tabspaces-remove-to-default t))
 
 
 (use-package vertico
