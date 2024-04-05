@@ -25,9 +25,21 @@
 ;;; use hydra package
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
-;;; Create an elisp command to connect to breezeway AWS instances
-;;; Investigate how to send string commands to vterm, maybe its possible to have pybrzw test file with cursor on
-;;; a test, use Emacs to grab the file path and the name of the test and send "pytest /path/to/file::test_case" to vterm
+;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
+;;;
+;;; Goal:
+;;;        find a way to have a history of commands in pipenv shell
+;;;        https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
+;;;
+;;; Goal:
+;;;        create an embark command that runs the test under cursor in eshell
+;;;        https://blog.meain.io/2022/more-treesitter-emacs/
+;;;        https://github.com/meain/toffee/
+;;;
+;;; Goal:
+;;;        create a synchronous function that conects to a breezeway production instance
+;;;        it should wait for commands to finish and parse the buffer for container ids
+
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
