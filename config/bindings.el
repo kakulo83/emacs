@@ -77,6 +77,7 @@
   (define-key embark-identifier-map "t" #'hydra-test-runner/body)
   )
 
+(define-key evil-motion-state-map (kbd "RET") nil) ; allows other mode maps to override RET
 (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
 (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
 

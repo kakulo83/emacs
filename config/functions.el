@@ -124,8 +124,8 @@
           (message "killed: %s" prompt-title)
         (message "error: could not kill %s" prompt-title)))))
 
-(defun robert/run-pytest-under-cursor (&optional full-file)
-  "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
+(defun robert/run-test-under-cursor (&optional full-file)
+  "Run the nearest pytest using toffee.  Pass `FULL-FILE' to run all test in file."
   (interactive "P")
   (let ((test-file-name (buffer-file-name))
 	 (line-number (line-number-at-pos)))
@@ -137,7 +137,7 @@
 
 (defhydra hydra-test-runner ()
   "testing"
-  ("p" robert/run-pytest-under-cursor "run pytest"))
+  ("p" robert/run-test-under-cursor "pytest"))
 
 (defhydra hydra-zoom ()
   "zoom"

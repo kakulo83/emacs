@@ -32,13 +32,13 @@
 ;;;        https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
 ;;;
 ;;; Goal:
-;;;        create an embark command that runs the test under cursor in eshell
-;;;        https://blog.meain.io/2022/more-treesitter-emacs/
-;;;        https://github.com/meain/toffee/
-;;;
-;;; Goal:
 ;;;        create a synchronous function that conects to a breezeway production instance
 ;;;        it should wait for commands to finish and parse the buffer for container ids
+;;;
+;;; Goal:
+;;;        enable autocompletion in vertico for finding files, selecting projects, or anything else that needs navigation
+;;;
+;;; Goal:  modify eshell so typing automatically goes to the prompt
 
 
 ;;; Code:
@@ -267,6 +267,7 @@ FEATURE may be any one of:
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
+(setenv "PYTEST_ADDOPTS" "--color=yes")
 
 ;; Set the modeline to show only the buffer name
 ;(setq-default mode-line-format
