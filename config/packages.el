@@ -114,7 +114,7 @@
 
 (use-package ef-themes
   :config
-  (load-theme 'ef-duo-dark t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter
+  (load-theme 'ef-night t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 )
 (use-package modus-themes) ; modus-operandi  modus-vivendi
 (use-package nano-theme) ; nano-light  nano-dark
@@ -204,6 +204,7 @@
 
 (use-package eshell
   :config
+  (require 'em-smart)
   (setq eshell-prompt-function
      (lambda ()
        (concat
@@ -219,10 +220,11 @@
         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "royal blue"))
         )))
   (setq eshell-banner-message ""
-	eshell-history-size 1000
-	eshell-highlight-prompt t
-    ; eshell-scroll-to-bottom-on-input t
-	eshell-hist-ignoredups t))
+    eshell-smart-space-goes-to-end t
+    eshell-history-size 1000
+    eshell-highlight-prompt t
+    eshell-scroll-to-bottom-on-input t
+    eshell-hist-ignoredups t))
 
 
 (use-package eshell-toggle

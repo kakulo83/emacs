@@ -12,7 +12,6 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
-  "B"  'list-buffers
   "d"  'robert/drill-by-topic
   "f"  'avy-goto-char-2
   "k"  'robert/quick-kill-process
@@ -52,6 +51,7 @@
 (define-key evil-normal-state-map (kbd "s-}") 'tab-bar-switch-to-next-tab)
 (define-key evil-normal-state-map (kbd "s-{") 'tab-bar-switch-to-prev-tab)
 (define-key evil-normal-state-map (kbd "C-b") 'tabspaces-switch-to-buffer)
+(define-key evil-normal-state-map (kbd "C-S-B") 'list-buffers)
 (define-key evil-normal-state-map (kbd "-") 'dired)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)

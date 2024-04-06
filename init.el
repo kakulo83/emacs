@@ -34,11 +34,6 @@
 ;;; Goal:
 ;;;        create a synchronous function that conects to a breezeway production instance
 ;;;        it should wait for commands to finish and parse the buffer for container ids
-;;;
-;;; Goal:
-;;;        enable autocompletion in vertico for finding files, selecting projects, or anything else that needs navigation
-;;;
-;;; Goal:  modify eshell so typing automatically goes to the prompt
 
 
 ;;; Code:
