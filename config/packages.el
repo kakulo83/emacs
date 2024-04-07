@@ -113,10 +113,12 @@
 
 
 (use-package ef-themes
-  :config
-  (load-theme 'ef-night t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+  ;:config
+  ;(load-theme 'ef-maris-light t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 )
-(use-package modus-themes) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+  :config
+  (load-theme 'modus-vivendi-tinted t)) ; modus-operandi  modus-vivendi
 (use-package nano-theme) ; nano-light  nano-dark
 
 
@@ -469,6 +471,17 @@
   :init
   ;; If you prefer viewing assembly code in `nasm-mode` instead of `asm-mode`
   (setq disaster-assembly-mode 'asm-mode))
+
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-reload-all)
+  (setq yas-snippet-dirs
+        '("~/.emacs.d/snippets")
+        yas-indent-line 'auto)
+  (yas-global-mode +1))
+
 
 (provide 'packages)
 ;;; packages.el ends here

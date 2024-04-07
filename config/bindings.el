@@ -18,6 +18,7 @@
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "r"  'eval-region
+  "s"  'hydra-snippets/body
   "y"  'consult-yank-from-kill-ring
   "z"  'hydra-zoom/body
   "cc" 'recenter-top-bottom
@@ -52,7 +53,7 @@
 (define-key evil-normal-state-map (kbd "s-{") 'tab-bar-switch-to-prev-tab)
 (define-key evil-normal-state-map (kbd "C-b") 'tabspaces-switch-to-buffer)
 (define-key evil-normal-state-map (kbd "C-S-B") 'list-buffers)
-(define-key evil-normal-state-map (kbd "-") 'dired)
+(define-key evil-normal-state-map (kbd "-") 'dired-jump)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 (define-key evil-normal-state-map "gd" 'xref-find-definitions)

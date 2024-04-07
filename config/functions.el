@@ -151,6 +151,13 @@
   ("=" eglot-format-buffer "format")
   ("a" eglot-code-actions "apply code action"))
 
+(defhydra hydra-snippets ()
+  "snippets"
+  ("i" yas-insert-snippet "insert")
+  ("n" yas-new-snippet "new")
+  ("e" yas-visit-snippet-file "edit")
+  ("l" yas-describe-tables "list"))
+
 ;; TODO create function to connect to production server
 (defun connect-production ()
   "Connect to breezeway production server."
