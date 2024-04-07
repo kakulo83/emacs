@@ -288,13 +288,6 @@
   :vc (copilot :url "https://github.com/copilot-emacs/copilot.el"
 	:branch "main")
   :config
-  (defun robert/tab ()
-    "Command to complete a copilot suggestion if available otherwise insert a tab."
-    (interactive)
-    (or (copilot-accept-completion-by-word)
-        (indent-for-tab-command)))
-  (define-key global-map (kbd "<tab>") #'robert/tab)
-  (define-key global-map (kbd "S-<return>") #'copilot-accept-completion)
   (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
   :hook
@@ -470,6 +463,12 @@
   :config
   ;(setq-default typescript-indent-level 4)
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
+
+
+(use-package disaster
+  :init
+  ;; If you prefer viewing assembly code in `nasm-mode` instead of `asm-mode`
+  (setq disaster-assembly-mode 'asm-mode))
 
 (provide 'packages)
 ;;; packages.el ends here

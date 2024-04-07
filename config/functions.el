@@ -162,5 +162,12 @@
     (eshell-send-input))
   )
   
+(defun robert/tab ()
+  "Command to complete a copilot suggestion if available otherwise insert a tab."
+  (interactive)
+  (or (copilot-accept-completion-by-word)
+    (indent-for-tab-command)))
+
+
 (provide 'functions)
 ;;; functions.el ends here
