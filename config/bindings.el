@@ -14,7 +14,9 @@
   "b"  'consult-bookmark
   "d"  'robert/drill-by-topic
   "f"  'avy-goto-char-2
+  "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
+  "n"  'robert/open-notes-dired-in-tab
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "r"  'eval-region
@@ -68,6 +70,7 @@
 (define-key evil-normal-state-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 (define-key evil-insert-state-map (kbd "TAB") 'robert/tab)
+(define-key evil-insert-state-map (kbd "C-n") 'company-complete)
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
 
 (after 'embark

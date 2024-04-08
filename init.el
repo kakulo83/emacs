@@ -28,6 +28,10 @@
 ;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
 ;;;
 ;;; Goal:
+;;;        Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
+;;;        Find out if I should use cape or company
+;;;
+;;; Goal:
 ;;;        find a way to have a history of commands in pipenv shell
 ;;;        https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
 ;;;
@@ -258,7 +262,7 @@ FEATURE may be any one of:
 ;; Tab bar settings
 (setq tab-bar-new-button-show nil)
 (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-(set-face-attribute 'tab-bar-tab nil :foreground "Blue")
+(set-face-attribute 'tab-bar-tab nil :foreground "Red")
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 

@@ -22,13 +22,13 @@
   "Open Notes in its own workspace."
   (interactive)
   (cond ((member "Notes" (tabspaces--list-tabspaces))
-         (tab-bar-switch-to-tab "Notes"))
-        (t
-         (tab-bar-new-tab)
-         (tab-bar-rename-tab "Notes")
-         (message "TODO: open org notes")
-	 (message "TODO: give this function a binding")
-         )))
+	  (tab-bar-switch-to-tab "Notes"))
+    (t
+      (tab-bar-new-tab)
+      (tab-bar-rename-tab "Notes")
+      (message "TODO: open org notes")
+      (message "TODO: give this function a binding")
+      )))
 
 
 (defun copy-filepath-to-clipboard ()
@@ -158,6 +158,13 @@
   ("e" yas-visit-snippet-file "edit")
   ("l" yas-describe-tables "list"))
 
+(defhydra hydra-repl ()
+  "run repl"
+  ("p" run-python "python")
+  ("r" inf-ruby "ruby")
+  ("n" nodejs-repl "nodejs"))
+
+
 ;; TODO create function to connect to production server
 (defun connect-production ()
   "Connect to breezeway production server."
@@ -174,6 +181,13 @@
   (interactive)
   (or (copilot-accept-completion-by-word)
     (indent-for-tab-command)))
+
+(defun robert/open-notes-dired-in-tab()
+	"Open a new tab with notes."
+	(interactive)
+	(tab-bar-new-tab)
+	(tab-bar-rename-tab "Notes")
+	(find-file "~/Notes/org-roam-notes/"))
 
 
 (provide 'functions)

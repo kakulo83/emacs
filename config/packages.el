@@ -103,6 +103,7 @@
   	  (?e aw-switch-buffer-other-window "Switch Buffer Other Window")
   	  (?m aw-swap-window "Swap Buffer")
   	  (?o delete-other-windows "Delete Other Windows")
+	  (?x aw-delete-window "Delete Window")
   	  (?? aw-show-dispatch-help)
   	  )))
 
@@ -118,7 +119,7 @@
 )
 (use-package modus-themes
   :config
-  (load-theme 'modus-vivendi-tinted t)) ; modus-operandi  modus-vivendi
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 (use-package nano-theme) ; nano-light  nano-dark
 
 
@@ -294,6 +295,16 @@
   (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
   :hook
   (prog-mode . copilot-mode))
+
+
+(use-package company
+  :config
+  (setq company-idle-delay 50.0)
+  (global-company-mode 1))
+
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 
 (use-package undo-tree
@@ -482,6 +493,11 @@
         yas-indent-line 'auto)
   (yas-global-mode +1))
 
+
+(use-package inf-ruby)
+
+
+(use-package nodejs-repl)
 
 (provide 'packages)
 ;;; packages.el ends here
