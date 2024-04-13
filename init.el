@@ -66,8 +66,6 @@
 (require 'desktop)
 (setq desktop-path (list "~/.emacs.d/sessions/"))
 (desktop-save-mode 1)
-;(desktop-read)
-;(tab-bar-history-mode)
 
 ;; Garbage-collect on focus-out, Emacs should feel snappier.
 (unless (version< emacs-version "27.0")
@@ -194,9 +192,6 @@ FEATURE may be any one of:
 ;; Highlight inner expression delineated by parentheses
 (setq show-paren-style 'expression)
 
-;; Do not clone current buffer into new tab
-(setq tab-bar-new-tab-choice "*scratch*")
-
 ;; Remove undo-tree from completions
 (setq completion-ignored-extensions
       (append completion-ignored-extensions
@@ -217,8 +212,6 @@ FEATURE may be any one of:
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
 
-;; Hide tab-bar close button
-(setq tab-bar-close-button-show nil) 
 
 ;; Taken from perspective.el suggestions
 ;; Reuse windows as much as possible to minimize changes to layout
@@ -265,6 +258,12 @@ FEATURE may be any one of:
 (set-face-attribute 'tab-bar-tab nil :foreground "Red")
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+
+;; Do not clone current buffer into new tab
+(setq tab-bar-new-tab-choice "*scratch*")
+
+;; Hide tab-bar close button
+(setq tab-bar-close-button-show nil) 
 
 (setenv "PYTEST_ADDOPTS" "--color=yes")
 
