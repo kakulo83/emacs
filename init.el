@@ -19,7 +19,7 @@
 ;;; pip3 install pyenv
 ;;; mandb (for creating man page db/cache) see: https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;; graphviz (for google profiling tools)
-;;; 
+;;; man-db see:  https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;;
 ;;; TODO
 ;;; use hydra package
@@ -267,6 +267,8 @@ FEATURE may be any one of:
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
 (setenv "PYTEST_ADDOPTS" "--color=yes")
+
+(setq manual-program "gman")
 
 ;; Set the modeline to show only the buffer name
 ;(setq-default mode-line-format

@@ -82,6 +82,14 @@
   (let ((display-buffer-overriding-action '(display-buffer-in-side-window (inhibit-same-window . nil))))
     ad-do-it))
 
+;(advice-add 'evil-goto-mark-line :after #'recenter-top-bottom)
+(defun scroll-to-center-advice (&rest args)
+  (evil-scroll-line-to-center (line-number-at-pos)))
+(advice-add #'evil-goto-line :after #'scroll-to-center-advice)
+(advice-add #'better-jumper-jump-backward :after #'scroll-to-center-advice)
+(advice-add #'better-jumper-jump-forward  :after #'scroll-to-center-advice)
+(advice-add #'xref-find-definitions :after #'scroll-to-center-advice)
+
 
 (autoload 'proced-process-attributes "proced" nil t)
 (defun robert/quick-kill-process ()

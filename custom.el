@@ -14,11 +14,12 @@
        "7af2a6fcd1e743d165c58fd95d20b46c2d96d9873ab67fc9371bdc8fda463de7"
        default))
  '(package-selected-packages
-    '(all-the-icons all-the-icons-dired better-jumper consult copilot
-       dired-sidebar disaster doom-modeline editorconfig ef-themes
-       embark eshell-toggle evil evil-collection flycheck format-all
-       helpful hide-mode-line hydra lambda-themes magit marginalia
-       modus-themes multi-vterm nano-theme nvm olivetti org-bullets
+    '(all-the-icons all-the-icons-dired better-jumper company company-box
+       consult copilot dired-sidebar disaster doom-modeline
+       editorconfig ef-themes embark eshell-toggle evil
+       evil-collection flycheck format-all helpful hide-mode-line
+       hydra inf-ruby lambda-themes magit marginalia modus-themes
+       multi-vterm nano-theme nodejs-repl nvm olivetti org-bullets
        org-drill org-roam org-roam-ui restclient simple-httpd
        undo-tree use-package-ensure-system-package vterm vterm-toggle
        websocket yasnippet)))
@@ -27,15 +28,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; example:  '(org-level-1 ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 2.75))))
- '(org-level-1 ((t (:inherit default :weight bold  :height 2.75))))
- '(org-level-2 ((t (:inherit default :weight bold  :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold  :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold  :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold ))))
- '(org-level-6 ((t (:inherit default :weight bold ))))
- '(org-level-7 ((t (:inherit default :weight bold ))))
- '(org-level-8 ((t (:inherit default :weight bold )))))
+ '(org-level-1 ((t (:inherit default :weight bold :height 2.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold))))
+ '(org-level-6 ((t (:inherit default :weight bold))))
+ '(org-level-7 ((t (:inherit default :weight bold))))
+ '(org-level-8 ((t (:inherit default :weight bold)))))
 
 (provide 'custom)
 ;;; custom.el ends here
