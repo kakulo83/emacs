@@ -56,7 +56,6 @@
     doom-modeline-height 30
     doom-modeline-buffer-encoding nil
     doom-modeline-display-misc-in-all-mode-lines nil
-    doom-modeline-position-line-format nil
     doom-modeline-percent-position nil
     doom-modeline-env-enable-ruby nil
     doom-modeline-env-version nil)
