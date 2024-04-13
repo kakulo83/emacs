@@ -191,11 +191,12 @@
     (indent-for-tab-command)))
 
 (defun robert/open-notes-dired-in-tab()
-	"Open a new tab with notes."
-	(interactive)
-	(tab-bar-new-tab)
-	(tab-bar-rename-tab "Notes")
-	(find-file "~/Notes/org-roam-notes/"))
+  "Open a new tab with notes."
+  (interactive)
+  (tab-bar-new-tab)
+  (tab-bar-rename-tab "Notes")
+  (find-file "~/Notes/org-roam-notes/")
+  (call-interactively 'project-find-file))
 
 
 (provide 'functions)
