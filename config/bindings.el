@@ -75,6 +75,7 @@
 
 (after 'embark
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
+  (define-key embark-file-map     (kbd "z") #'dired-do-compress)
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
   (define-key embark-region-map "f" #'fill-region)

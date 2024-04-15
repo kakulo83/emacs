@@ -255,7 +255,7 @@ FEATURE may be any one of:
 ;; Tab bar settings
 (setq tab-bar-new-button-show nil)
 (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-(set-face-attribute 'tab-bar-tab nil :foreground "Red")
+(set-face-attribute 'tab-bar-tab nil :foreground "SlateBlue2")
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
@@ -266,6 +266,8 @@ FEATURE may be any one of:
 (setq tab-bar-close-button-show nil) 
 
 (setenv "PYTEST_ADDOPTS" "--color=yes")
+
+(setq flymake-start-on-flymake-mode nil)
 
 (setq manual-program "gman")
 
