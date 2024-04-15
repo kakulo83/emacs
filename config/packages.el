@@ -155,6 +155,10 @@
   ;; NOTE:  embark shows UI in extended-mini-buffer from customizing the variable
   ;;        embark-verbose-indicator-display-action
   ;(setq embark-prompter 'embark-completing-read-prompter)
+  (setq embark-indicators
+      '(embark-minimal-indicator  ; default is embark-mixed-indicator
+        embark-highlight-indicator
+        embark-isearch-highlight-indicator))
   (setq display-buffer-alist '(("\\*Embark Export: .*" (display-buffer-reuse-mode-window display-buffer-below-selected))))
   (setq embark-indicator #'embark-mixed-indicator)
   (setq embark-verbose-indicator-display-action
