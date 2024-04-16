@@ -125,8 +125,9 @@ FEATURE may be any one of:
 ;; when we move outside the screen we always recenter
 (setq scroll-conservatively scroll-margin)
 
-;; Always reuse existing compilation window.
-(push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
+;; set window margin
+(setq-default left-margin-width 2 right-margin-width 0) ; Define new widths.
+(set-window-buffer nil (current-buffer)) ; Use them now.
 
 ;; Scroll to first error.
 (setq compilation-scroll-output 'first-error)
@@ -220,6 +221,9 @@ FEATURE may be any one of:
     (reusable-frames . t)))
 
 (customize-set-variable 'even-window-sizes nil)
+
+;; Always reuse existing compilation window.
+(push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
 
 ;; Avoid prompt, just follow symbolic-links.
 (setq vc-follow-symlinks t)
