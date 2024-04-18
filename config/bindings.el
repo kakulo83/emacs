@@ -41,6 +41,8 @@
 (define-key package-menu-mode-map (kbd "C-k") 'evil-window-up)
 (define-key package-menu-mode-map (kbd "C-l") 'evil-window-right)
 
+(define-key evil-normal-state-map (kbd "M-s-<left>") 'tab-bar-move-tab-backward)
+(define-key evil-normal-state-map (kbd "M-s-<right>") 'tab-bar-move-tab)
 (define-key evil-normal-state-map (kbd "C-f") 'consult-ripgrep)
 (define-key evil-normal-state-map (kbd "s-t") 'tabspaces-switch-or-create-workspace)
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
