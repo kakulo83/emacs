@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: connect to ec2 instance
-# key: c-ec2
-# --
-aws ssm start-session --target <EC2-instance-id>

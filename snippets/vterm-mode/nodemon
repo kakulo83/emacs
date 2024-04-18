@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: nodemon
-# key: nm
-# --
-nodemon --exec "${1:command-to-run}" ${2:thing-to-watch}
