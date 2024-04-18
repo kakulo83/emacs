@@ -259,7 +259,7 @@ FEATURE may be any one of:
 ;; Tab bar settings
 (setq tab-bar-new-button-show nil)
 (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-(set-face-attribute 'tab-bar-tab nil :foreground "SlateBlue2")
+(set-face-attribute 'tab-bar-tab nil :foreground "red2")
 (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
