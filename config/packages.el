@@ -129,6 +129,8 @@
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
   :custom
+  (tabspaces-session nil)
+  (tabspaces-session-auto-restore nil)
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-remove-to-default t))
 
