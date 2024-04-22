@@ -16,13 +16,16 @@
  '(package-selected-packages
     '(all-the-icons all-the-icons-dired better-jumper company company-box
        consult copilot dired-sidebar disaster doom-modeline
-       editorconfig ef-themes embark eshell-toggle evil
+       editorconfig ef-themes eglot-booster embark eshell-toggle evil
        evil-collection flycheck format-all helpful hide-mode-line
        hydra inf-ruby lambda-themes magit marginalia modus-themes
        multi-vterm nano-theme nodejs-repl nvm olivetti org-bullets
        org-drill org-roam org-roam-ui restclient simple-httpd
        undo-tree use-package-ensure-system-package vterm vterm-toggle
-       websocket yasnippet)))
+       websocket yasnippet))
+ '(package-vc-selected-packages
+    '((eglot-booster :vc-backend Git :url
+	"https://github.com/jdtsmith/eglot-booster"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

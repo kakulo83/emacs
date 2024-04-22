@@ -207,7 +207,13 @@
 	 (go-mode . eglot-ensure)
 	 (js-mode . eglot-ensure)
 	 (typescript-ts-mode . eglot-ensure)
+
 	 (sql-mode . eglot-ensure)))
+
+
+(use-package eglot-booster
+	:after eglot
+	:config	(eglot-booster-mode))
 
 
 (use-package eshell
@@ -293,8 +299,7 @@
 
 
 (use-package copilot
-  :vc (copilot :url "https://github.com/copilot-emacs/copilot.el"
-	:branch "main")
+  :vc (copilot :url "https://github.com/copilot-emacs/copilot.el" :branch "main")
   :config
   (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
@@ -355,14 +360,6 @@
          ("C-c n" . org-roam-capture)
          ("C-'" . org-roam-buffer-toggle)
          ("C-c i" . org-roam-node-insert)))
-
-
-(use-package org-bullets
-  :after org
-  :init
-  (setq org-bullets-bullet-list '("\u200b"))
-  :hook (org-mode . org-bullets-mode))
-
 
 
 (use-package org-roam
