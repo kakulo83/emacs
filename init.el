@@ -278,6 +278,8 @@ FEATURE may be any one of:
 
 (setq manual-program "gman")
 
+(add-to-list 'exec-path "~/.emacs.d/bin")
+
 ;; Set the modeline to show only the buffer name
 ;(setq-default mode-line-format
 ;    '("%e"
