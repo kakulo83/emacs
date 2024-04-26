@@ -13,6 +13,7 @@
   "a"  'ace-window
   "b"  'consult-bookmark
   "d"  'robert/drill-by-topic
+  "e"  'hydra-flymake/body
   "f"  'avy-goto-char-2
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process

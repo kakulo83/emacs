@@ -172,6 +172,13 @@
   ("r" inf-ruby "ruby")
   ("n" nodejs-repl "nodejs"))
 
+(defhydra hydra-flymake ()
+	"flymake"
+	("l" flymake-show-diagnostics-buffer "list")
+	("c" flymake-start "check")
+	("n" flymake-goto-next-error "next")
+	("p" flymake-goto-prev-error "prev"))
+
 
 ;; TODO create function to connect to production server
 (defun connect-production ()
