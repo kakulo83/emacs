@@ -17,12 +17,12 @@
     '(all-the-icons all-the-icons-dired better-jumper company company-box
        consult copilot dired-sidebar disaster doom-modeline
        editorconfig ef-themes eglot-booster embark eshell-toggle evil
-       evil-collection flycheck format-all helpful hide-mode-line
-       hydra inf-ruby lambda-themes magit marginalia modus-themes
-       multi-vterm nano-theme nodejs-repl nvm olivetti org-bullets
-       org-drill org-roam org-roam-ui restclient simple-httpd
-       undo-tree use-package-ensure-system-package vterm vterm-toggle
-       websocket yasnippet))
+       evil-collection format-all helpful hide-mode-line hydra
+       inf-ruby lambda-themes magit marginalia modus-themes
+       multi-vterm nano-theme nodejs-repl nvm nyan-mode nyancat
+       olivetti org-bullets org-drill org-roam org-roam-ui restclient
+       simple-httpd undo-tree use-package-ensure-system-package vterm
+       vterm-toggle websocket wgrep yasnippet))
  '(package-vc-selected-packages
     '((eglot-booster :vc-backend Git :url
 	"https://github.com/jdtsmith/eglot-booster"))))
@@ -31,6 +31,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 6.0 :underline nil))))
  '(org-level-1 ((t (:inherit default :weight bold :height 2.75))))
  '(org-level-2 ((t (:inherit default :weight bold :height 1.5))))
  '(org-level-3 ((t (:inherit default :weight bold :height 1.25))))
