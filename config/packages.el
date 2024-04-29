@@ -504,5 +504,9 @@
 
 (use-package nodejs-repl)
 
+
+(use-package highlight-symbol)
+
+
 (provide 'packages)
 ;;; packages.el ends here

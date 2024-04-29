@@ -63,6 +63,10 @@
 (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo)
 (define-key evil-normal-state-map "gd" 'xref-find-definitions)
 (define-key evil-normal-state-map "gr" 'xref-find-references)
+(define-key evil-normal-state-map "*" 'highlight-symbol)
+(define-key evil-normal-state-map "n" 'highlight-symbol-next)
+(define-key evil-normal-state-map "N" 'highlight-symbol-prev)
+
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
 (define-key evil-normal-state-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))
