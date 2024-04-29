@@ -14,15 +14,16 @@
        "7af2a6fcd1e743d165c58fd95d20b46c2d96d9873ab67fc9371bdc8fda463de7"
        default))
  '(package-selected-packages
-    '(all-the-icons all-the-icons-dired better-jumper company company-box
-       consult copilot dired-sidebar disaster doom-modeline
-       editorconfig ef-themes eglot-booster embark eshell-toggle evil
-       evil-collection format-all helpful hide-mode-line hydra
-       inf-ruby lambda-themes magit marginalia modus-themes
-       multi-vterm nano-theme nodejs-repl nvm nyan-mode nyancat
-       olivetti org-bullets org-drill org-roam org-roam-ui restclient
-       simple-httpd undo-tree use-package-ensure-system-package vterm
-       vterm-toggle websocket wgrep yasnippet))
+    '(ace-window all-the-icons-dired balanced-windows better-jumper
+       bug-hunter company-box copilot dired-sidebar disaster
+       doom-modeline ef-themes eglot-booster embark-consult envrc
+       eshell-toggle evil-collection format-all git-timemachine
+       helpful hide-mode-line highlight-symbol hydra inf-ruby magit
+       marginalia modus-themes multi-vterm nano-theme nodejs-repl nvm
+       nyan-mode olivetti orderless org-bullets org-drill org-roam-ui
+       package-lint pythonic pyvenv quelpa-use-package restclient
+       tabspaces undo-tree use-package-ensure-system-package vertico
+       vterm-toggle wgrep yasnippet))
  '(package-vc-selected-packages
     '((eglot-booster :vc-backend Git :url
 	"https://github.com/jdtsmith/eglot-booster"))))
