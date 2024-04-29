@@ -483,6 +483,11 @@
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
 
+(use-package pyvenv
+	:config
+	(pyvenv-mode 1))
+
+
 (use-package disaster
   :init
   ;; If you prefer viewing assembly code in `nasm-mode` instead of `asm-mode`
