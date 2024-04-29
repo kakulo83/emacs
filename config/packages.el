@@ -62,6 +62,12 @@
   :hook (after-init . doom-modeline-mode))
 
 
+(use-package nyan-mode
+  :after doom-modeline
+  :config
+  (nyan-mode 1))
+
+
 (use-package magit)
 
 
