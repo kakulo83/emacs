@@ -345,18 +345,23 @@
 
 (use-package org
   :config
-  (add-to-list 'org-emphasis-alist
-               '("*" (:foreground "red")
-                 ))
+  (setq org-emphasis-alist
+    '(("*" (bold :foreground "Red" ))
+       ("/" (italic :foreground "Yellow"))
+       ("_" underline)
+       ("=" (:background "maroon" :foreground "white"))
+       ("~" (:background "deep sky blue" :foreground "MidnightBlue"))
+       ("+" (:strike-through t))))
   (setq org-link-frame-setup '((file . find-file))) ; find-file-other-window
   (setq org-return-follows-link t)
   (setq org-pretty-entities t)
   (setq org-hide-emphasis-markers t)
+  (setq org-hidden-keywords '(title))
   (setq org-startup-with-inline-images t)
   (setq org-startup-indented t)
   ;(setq org-startup-with-latex-preview t)
-  (setq org-preview-latex-default-process 'dvisvgm)
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  ;(setq org-preview-latex-default-process 'dvisvgm)
+  ;(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
   (setq org-src-preserve-indentation t)
   (setq org-src-tab-acts-natively t)
   (setq org-adapt-indentation t)
@@ -394,7 +399,7 @@
 	'(
 	  ("d" "default" plain "%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			      "#+title: ${title}\n#+startup: showall inlineimages latexpreview\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}\n")
+			      "#+title: ${title}\n#+startup: showall inlineimages\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}\n")
 	   :unnarrowed t)
 	  ("c" "code snippet" plain "%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
