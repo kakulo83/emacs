@@ -53,7 +53,7 @@
     doom-modeline-buffer-file-name-style 'relative-to-project
     doom-modeline-vcs-max-length 40
     doom-modeline-mode-alist nil
-    doom-modeline-height 30
+    doom-modeline-height 16
     doom-modeline-buffer-encoding nil
     doom-modeline-display-misc-in-all-mode-lines nil
     doom-modeline-percent-position nil
