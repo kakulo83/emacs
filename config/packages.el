@@ -449,17 +449,6 @@
 
 (use-package hydra)
 
-
-(use-package flycheck
-  :init
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq-default flycheck-indication-mode 'left-fringe)
-  (setq flycheck-python-pylint-executable "/opt/homebrew/bin/pylint")
-  :config
-  (global-flycheck-mode +1))
-
-  ;(add-hook 'after-init-hook #'global-flycheck-mode))
-    
     
 (use-package format-all
   :commands format-all-mode
