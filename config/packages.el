@@ -181,6 +181,9 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 
+(use-package wgrep)
+
+
 (use-package consult
   :defines consult-project-root-function
   :after vertico
