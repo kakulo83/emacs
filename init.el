@@ -290,6 +290,12 @@ FEATURE may be any one of:
 
 (set-frame-font "JetBrains Mono:pixelsize=12")
 
+
+; configure ipython as the python shell
+(when (executable-find "ipython")
+  (setq python-shell-interpreter "ipython")
+	(setq python-shell-interpreter-args "-i --simple-prompt"))
+
 ;; config use-package
 (eval-when-compile
   (require 'use-package))
