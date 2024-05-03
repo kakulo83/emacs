@@ -290,6 +290,15 @@ FEATURE may be any one of:
 
 (set-frame-font "JetBrains Mono:pixelsize=12")
 
+; set clock for different timezones
+(setq world-clock-list
+      '(("America/Los_Angeles" "San Francisco")
+        ("America/New_York" "New York")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")
+        ("Europe/Frankfurt" "Frankfurt")
+        ("Asia/Calcutta" "Bangalore")
+        ("Asia/Tokyo" "Tokyo")))
 
 ; configure ipython as the python shell
 (when (executable-find "ipython")

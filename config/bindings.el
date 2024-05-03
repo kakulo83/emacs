@@ -20,7 +20,8 @@
   "n"  'robert/open-notes-dired-in-tab
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
-  "r"  'eval-region
+  "r"  'hydra-register/body
+  "x"  'eval-region
   "s"  'hydra-snippets/body
   "y"  'consult-yank-from-kill-ring
   "z"  'hydra-zoom/body

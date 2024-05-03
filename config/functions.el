@@ -173,11 +173,16 @@
   ("n" nodejs-repl "nodejs"))
 
 (defhydra hydra-flymake ()
-	"flymake"
-	("l" flymake-show-diagnostics-buffer "list")
-	("c" flymake-start "check")
-	("n" flymake-goto-next-error "next")
-	("p" flymake-goto-prev-error "prev"))
+  "flymake"
+  ("l" flymake-show-diagnostics-buffer "list")
+  ("c" flymake-start "check")
+  ("n" flymake-goto-next-error "next")
+  ("p" flymake-goto-prev-error "prev"))
+
+(defhydra hydra-register ()
+  "register"
+  ("s" consult-register-store "save")
+  ("l" consult-register "list"))
 
 
 ;; TODO create function to connect to production server
