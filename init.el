@@ -2,6 +2,11 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;;
+;;;   Zzzzz      |\      _,,,--,,_,
+;;;              /,`.-'`'   ._  \-;;,__.
+;;;             |,4-  ) )_   .;.(  `'___'
+;;;            '---''(_/._)-'(_\_)
+;;;
 ;;; DEPENDENCIES
 ;;; MacTex
 ;;; nerd-fonts
@@ -38,6 +43,10 @@
 ;;; Goal:
 ;;;        create a synchronous function that conects to a breezeway production instance
 ;;;        it should wait for commands to finish and parse the buffer for container ids
+;;;
+;;; Goal:
+;;;        grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
+;;;        Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
 
 
 ;;; Code:
@@ -99,6 +108,13 @@ FEATURE may be any one of:
       prog))
    (t
     `(with-eval-after-load ,feature ,@body))))
+
+;; Tab bar settings
+(setq tab-bar-new-button-show nil)
+(set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
+(set-face-attribute 'tab-bar-tab nil :foreground "red2")
+(set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+(set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
 (setq lisp-indent-offset 2)
 
@@ -258,13 +274,6 @@ FEATURE may be any one of:
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
 (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-
-;; Tab bar settings
-(setq tab-bar-new-button-show nil)
-(set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-(set-face-attribute 'tab-bar-tab nil :foreground "red2")
-(set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
-(set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
 
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
