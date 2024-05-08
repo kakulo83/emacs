@@ -16,17 +16,21 @@
  '(package-selected-packages
     '(ace-window all-the-icons-dired balanced-windows better-jumper
        bug-hunter company-box copilot dired-sidebar disaster
-       doom-modeline ef-themes eglot-booster embark-consult envrc
-       eshell-toggle evil-collection format-all git-timemachine
-       helpful hide-mode-line highlight-symbol hydra inf-ruby magit
-       marginalia modus-themes multi-vterm nano-theme nodejs-repl nvm
-       nyan-mode olivetti orderless org-bullets org-drill org-roam-ui
+       doom-modeline doom-themes ef-themes eglot-booster
+       embark-consult envrc eshell-toggle evil-collection format-all
+       git-timemachine helpful hide-mode-line highlight-symbol hydra
+       hydra-posframe inf-ruby load-env-vars magit marginalia
+       modus-themes multi-vterm nano-theme nodejs-repl nvm nyan-mode
+       olivetti orderless org-bullets org-drill org-roam-ui
        package-lint pythonic pyvenv quelpa-use-package restclient
-       tabspaces undo-tree use-package-ensure-system-package vertico
-       vterm-toggle wgrep yasnippet))
+       tabspaces undo-tree use-package-ensure-system-package
+       vertico-posframe vterm-toggle wgrep yasnippet
+       yasnippet-snippets))
  '(package-vc-selected-packages
-    '((eglot-booster :vc-backend Git :url
-	"https://github.com/jdtsmith/eglot-booster"))))
+    '((hydra-posframe :url "https://github.com/Ladicle/hydra-posframe"
+	:branch "master")
+       (eglot-booster :vc-backend Git :url
+	 "https://github.com/jdtsmith/eglot-booster"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

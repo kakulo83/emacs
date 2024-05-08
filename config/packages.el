@@ -118,14 +118,19 @@
   (balanced-windows-mode))
 
 
-(use-package ef-themes
-  ;:config
-  ;(load-theme 'ef-maris-light t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
-)
-(use-package modus-themes
-  :config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme) ; nano-light  nano-dark
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light
+;(use-package ef-themes
+;  :config
+;  (load-theme 'ef-night t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+;)
+;(use-package modus-themes
+;  :config
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;(use-package nano-theme
+;  :config
+;  (load-theme 'nano-dark)) ; nano-light  nano-dark
 
 
 (use-package tabspaces
@@ -147,6 +152,13 @@
   (setq vertico-resize nil)
   :init
   (vertico-mode))
+
+
+(use-package vertico-posframe
+  :init
+  :config
+  (setq vertico-posframe-border-width 1)
+  (vertico-posframe-mode 1))
 
 
 (use-package orderless
@@ -450,6 +462,18 @@
 (use-package hydra)
 
     
+(use-package hydra-posframe
+  :vc (hydra-posframe :url "https://github.com/Ladicle/hydra-posframe" :branch "master")
+  :after hydra
+  :config
+  (setq hydra-posframe-width 0.3
+      hydra-posframe-height 0.3)
+  (setq hydra-posframe-border-width 1)
+  (setq hydra-posframe-background-color "#222222")
+  (setq hydra-posframe-foreground-color "#ffffff")
+  (hydra-posframe-enable))
+
+
 (use-package format-all
   :commands format-all-mode
   :hook (prog-mode . format-all-mode)
@@ -503,6 +527,9 @@
         yas-indent-line 'auto)
   (yas-global-mode +1))
 
+
+(use-package yasnippet-snippets
+	:after yasnippet)
 
 (use-package inf-ruby)
 

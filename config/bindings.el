@@ -15,6 +15,7 @@
   "d"  'robert/drill-by-topic
   "e"  'hydra-flymake/body
   "f"  'avy-goto-char-2
+  "g"  'hydra-vc/body
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
   "n"  'robert/open-notes-dired-in-tab
@@ -27,12 +28,6 @@
   "z"  'hydra-zoom/body
   "cc" 'recenter-top-bottom
   "cp" 'copy-filepath-to-clipboard
-  "gb" 'magit-blame
-  "gH" 'git-timemachine
-  "gl" 'magit-log-buffer-file
-  "gL" 'magit-log-all
-  "gf" 'magit-find-file
-  "gs" 'magit-status
   "hv" 'helpful-variable
   "hf" 'helpful-function
   "hk" 'helpful-key
@@ -67,6 +62,7 @@
 (define-key evil-normal-state-map "*" 'highlight-symbol)
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
+(define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -87,6 +83,7 @@
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
   (define-key embark-region-map "f" #'fill-region)
+  (define-key embark-region-map "b" #'vc-region-history)
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
   (define-key embark-identifier-map "n" #'eglot-rename)
   (define-key embark-identifier-map "t" #'hydra-test-runner/body)

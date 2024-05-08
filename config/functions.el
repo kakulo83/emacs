@@ -143,6 +143,22 @@
 	      (format "toffee '%s' '%s'" test-file-name line-number)))
     (eshell-send-input)))
 
+; https://www.reddit.com/r/emacs/comments/ynbbu7/store_autoyasnippets_in_registers_and_expand_on/
+(defun robert/yasnippet-insert ()
+  "Insert a yasnippet.  If buffer is vterm, send to vterm."
+  (interactive)
+  (if (eq major-mode 'vterm-mode)
+    (message "inserting vterm snippet")
+    (yas-insert-snippet)))
+    ;(robert/vterm-insert-snip (yas-choose-value (yas--all-templates)))
+
+(defun robert/vterm-insert-snip (str)
+  "Insert a snippet into the vterm buffer."
+  (interactive)
+  (let* ((inhibit-read-only t))
+    (vterm-send-string str nil)))
+  ;(vterm-send-string (concat "echo " (yas-choose-value (yas--all-templates)) " \n")))
+
 (defhydra hydra-test-runner ()
   "testing"
   ("p" robert/run-test-under-cursor "pytest"))
@@ -161,7 +177,7 @@
 
 (defhydra hydra-snippets ()
   "snippets"
-  ("i" yas-insert-snippet "insert")
+  ("i" robert/yasnippet-insert "insert")
   ("n" yas-new-snippet "new")
   ("e" yas-visit-snippet-file "edit")
   ("l" yas-describe-tables "list"))
@@ -183,6 +199,20 @@
   "register"
   ("s" consult-register-store "save")
   ("l" consult-register "list"))
+
+
+(defhydra hydra-vc (:color green :hint nil)
+  "vc"
+  ("a" vc-annotate "Annotate" :exit t)
+  ("b" magit-blame "Blame" :exit t)
+  ("d" vc-diff "Diff" :exit t)
+  ("f" magit-find-file "Find file" :exit t)
+  ("H" git-timemachine "Time-machine" :exit t)
+  ("l" magit-log-buffer-file "File log" :exit t)
+  ("L" magit-log-all "Global log" :exit t)
+  ("s" magit-status "Status" :exit t))
+
+
 
 
 ;; TODO create function to connect to production server
@@ -234,6 +264,17 @@
   (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
       (org-show-properties)
     (org-hide-properties)))
+
+(defun robert/unique-vterm-shell ()
+  "Create a new named vterm buffer."
+  (interactive)
+  (call-interactively 'multi-vterm)
+  (if (vc-root-dir)
+    (vterm-send-string (concat "cd " (vc-root-dir) " \n"))))
+  ;(rename-buffer (concat (read-string "Enter name: ") (concat " (" (project-name) ")")))))
+      ;(process-send-string nil (concat "cd " (vc-root-dir) " \n")))
+  ;(rename-buffer (concat (read-string "Enter name: ") (concat " (" (project-name) ")"))))
+
 
 (provide 'functions)
 ;;; functions.el ends here
