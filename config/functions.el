@@ -197,7 +197,7 @@
 
 (defhydra hydra-register ()
   "register"
-  ("s" consult-register-store "save")
+  ("s" window-configuration-to-register "save")
   ("l" consult-register "list"))
 
 
