@@ -125,9 +125,9 @@
 ;  :config
 ;  (load-theme 'ef-night t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 ;)
-;(use-package modus-themes
-;  :config
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+  :config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark)) ; nano-light  nano-dark
@@ -143,7 +143,15 @@
   (tabspaces-session nil)
   (tabspaces-session-auto-restore nil)
   (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-remove-to-default t))
+  (tabspaces-remove-to-default t)
+  :config
+  ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
+  (setq tab-bar-new-button-show nil)
+  (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
+  (set-face-attribute 'tab-bar-tab nil :foreground "red2")
+  (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+  (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+  )
 
 
 (use-package vertico
@@ -179,7 +187,7 @@
       '(embark-minimal-indicator  ; default is embark-mixed-indicator
         embark-highlight-indicator
         embark-isearch-highlight-indicator))
-  (setq display-buffer-alist '(("\\*Embark Export: .*" (display-buffer-reuse-mode-window display-buffer-below-selected))))
+  (setq display-buffer-alist '(("\\*Embark Export: .*" (display-buffer-reuse-mode-window display-buffer-same-window))))
   (setq embark-indicator #'embark-mixed-indicator)
   (setq embark-verbose-indicator-display-action
         '(display-buffer-at-bottom
