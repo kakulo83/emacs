@@ -246,9 +246,11 @@ FEATURE may be any one of:
 ;; Hide frame border (called the fringe)
 (set-fringe-mode 0)
 
+; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 ; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	(c "https://github.com/tree-sitter/tree-sitter-c")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (elisp "https://github.com/Wilfred/tree-sitter-elisp")
         (go "https://github.com/tree-sitter/tree-sitter-go")
