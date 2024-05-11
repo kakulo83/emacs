@@ -449,6 +449,19 @@
   (setq org-drill-learn-fraction 0.25))
 
 
+(use-package org-download
+  :after org
+  :custom
+  (org-download-method 'directory)
+  (org-download-image-dir "images")
+  (org-download-heading-lvl nil)
+  (org-download-timestamp "%Y%m%d-%H%M%S_")
+  (org-image-actual-width 300)
+  (org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
+  :config
+  (require 'org-download))
+
+
 (use-package simple-httpd)
 
 
