@@ -234,6 +234,9 @@ FEATURE may be any one of:
 
 (customize-set-variable 'even-window-sizes nil)
 
+;; Set default ibuffer sorting
+(setq ibuffer-default-sorting-mode 'filename/process)
+
 ;; Always reuse existing compilation window.
 (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
 

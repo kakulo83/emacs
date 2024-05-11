@@ -23,6 +23,7 @@
   (setq evil-collection-mode-list
 	'(vterm
 	  occur
+	  ibuffer
 	  dired
 	  dashboard
 	  magit
@@ -222,6 +223,11 @@
 (use-package all-the-icons-dired
   :hook
   (dired-mode . all-the-icons-dired-mode))
+
+
+(use-package all-the-icons-ibuffer
+	:hook
+	(ibuffer-mode . all-the-icons-ibuffer-mode))
 
 
 (use-package eglot
