@@ -403,6 +403,14 @@
          ("C-c i" . org-roam-node-insert)))
 
 
+(use-package org-bullets
+  :after org
+  :init
+  (custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
+  ;(setq org-bullets-bullet-list '("\u200b")) ; for a blank bullet (hiding them)
+  :hook (org-mode . org-bullets-mode))
+
+
 (use-package org-roam
   :defines org-roam-v2-act org-roam-db-update-method org-roam-dailies-directory
   :custom
