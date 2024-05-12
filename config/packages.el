@@ -150,7 +150,7 @@
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
   (setq tab-bar-new-button-show nil)
   (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-  (set-face-attribute 'tab-bar-tab nil :foreground "red2")
+  (set-face-attribute 'tab-bar-tab nil :foreground "orange")
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
