@@ -66,7 +66,8 @@
 (use-package nyan-mode
   :after doom-modeline
   :config
-  (nyan-mode 1))
+  (nyan-mode 1)
+  (nyan-start-animation))
 
 
 (use-package magit)
