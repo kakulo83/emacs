@@ -374,7 +374,7 @@
   :config
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
-       ("/" (italic :foreground "Yellow"))
+       ("/" (italic :foreground "Orange"))
        ("_" underline)
        ("=" (:background "maroon" :foreground "white"))
        ("~" (:background "deep sky blue" :foreground "MidnightBlue"))
@@ -421,12 +421,10 @@
 
   (custom-theme-set-faces
    'user
-   '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
    '(org-document-info ((t (:foreground "dark orange"))))
    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-link ((t (:foreground "royal blue" :underline t))))
+   '(org-link ((t (:foreground "deep sky blue" :underline t))))
    '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-property-value ((t (:inherit fixed-pitch))) t)
    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
@@ -435,14 +433,14 @@
    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
   :bind (
-	 :map org-mode-map
-         ("C-j" . windmove-down)
-         ("C-k" . windmove-up)
-         ("C-p" . org-roam-node-find)
-         ("C-f" . consult-ripgrep)
-         ("C-c n" . org-roam-capture)
-         ("C-'" . org-roam-buffer-toggle)
-         ("C-c i" . org-roam-node-insert)))
+	  :map org-mode-map
+	  ("C-j" . windmove-down)
+          ("C-k" . windmove-up)
+          ("C-p" . org-roam-node-find)
+          ("C-f" . consult-ripgrep)
+          ("C-c n" . org-roam-capture)
+          ("C-'" . org-roam-buffer-toggle)
+          ("C-c i" . org-roam-node-insert)))
 
 
 (use-package org-bullets
@@ -601,8 +599,8 @@
   :config
   (yas-reload-all)
   (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets")
-        yas-indent-line 'auto)
+    '("~/.emacs.d/snippets" "~/.emacs.d/elpa/yasnippet-snippets-20240221.1621/snippets")
+    yas-indent-line 'auto)
   (yas-global-mode +1))
 
 
