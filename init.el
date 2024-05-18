@@ -27,10 +27,10 @@
 ;;; man-db see:  https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;;
 ;;; TODO
-;;; use hydra package
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
 ;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
+;;; interesting package:      https://github.com/emarsden/pgmacs
 ;;;
 ;;; Goal:
 ;;;        Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
@@ -77,6 +77,15 @@
 ;; Session management
 (require 'desktop)
 (setq desktop-path (list "~/.emacs.d/sessions/"))
+;; Prevent desktop file from saving theme settings
+;; https://superuser.com/questions/859761/prevent-emacs-desktop-save-from-holding-onto-theme-elements
+(push '(foreground-color . :never) frameset-filter-alist)
+(push '(background-color . :never) frameset-filter-alist)
+(push '(font . :never) frameset-filter-alist)
+(push '(cursor-color . :never) frameset-filter-alist)
+(push '(background-mode . :never) frameset-filter-alist)
+(push '(ns-appearance . :never) frameset-filter-alist)
+(push '(background-mode . :never) frameset-filter-alist)
 (desktop-save-mode 1)
 
 ;; Garbage-collect on focus-out, Emacs should feel snappier.
