@@ -474,12 +474,15 @@
 	'(
 	  ("d" "default" plain "%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			      "#+title: ${title}\n#+startup: showall inlineimages\n#+tags: %^{org-roam-tags}\n#+created: %u\n#+options: ^:{}\n")
-	   :unnarrowed t)
-	  ("c" "code snippet" plain "%?"
-	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			      "#+title: ${title}\n#+tags: %^{org-roam-tags}\n#+created: %u\n\n#+BEGIN_SRC\n\n#+END_SRC\n"))
-	  )))
+		     "#+title: ${title}
+#------------------------------------------------------------------------------------------------------------------------------
+#+startup: showall inlineimages
+#+tags: %^{org-roam-tags}
+#+created: %u
+#+options: ^:{}
+#------------------------------------------------------------------------------------------------------------------------------
+")
+	    :unnarrowed t))))
 
 
 (use-package org-roam-ui
