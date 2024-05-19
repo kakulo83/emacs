@@ -267,7 +267,7 @@
         (propertize ")" 'face `(:foreground "green"))
         (propertize "\n" 'face `(:foreground "green"))
         (propertize "└─>" 'face `(:foreground "royal blue"))
-        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "royal blue"))
+        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "white"))  ;; prompt color
         )))
   (setq eshell-banner-message ""
     eshell-smart-space-goes-to-end t
