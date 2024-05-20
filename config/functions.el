@@ -276,5 +276,62 @@
   ;(rename-buffer (concat (read-string "Enter name: ") (concat " (" (project-name) ")"))))
 
 
+
+; https://github.com/meain/toffee/blob/master/src/pickers/python.rs
+
+(setq meain/tree-sitter-calss-like '((rust-mode . (impl_item))
+				      (python-mode . (class_definition))))
+(setq meain/tree-sitter-function-like '((rust-mode . (function_item))
+					 (go-mode . (function_declaration method_declaration))
+					 (python-mode . (function_definition))))
+
+(defun meain/tree-sitter-thing-name (kind)
+  "Get name of tree-sitter THING-KIND."
+  (if tree-sitter-mode
+    (let* ((node-types-list (pcase kind
+			      ('class-like meain/tree-sitter-calss-like)
+			      ('function-like meain/tree-sitter-function-like)))
+	    (node-types (alist-get major-mode node-types-list)))
+      (if node-types
+	(let ((node-at-point (car (remove-if (lambda (x) (eq nil x))
+				    (seq-map (lambda (x) (tree-sitter-node-at-point x))
+				      node-types)))))
+	  (if node-at-point
+	    (let ((node-name-node-at-point (tsc-get-child-by-field node-at-point ':name)))
+	      (if node-name-node-at-point
+		(tsc-node-text node-name-node-at-point)))))))))
+
+
+(defun robert/embark-org-roam-cut-to-new-note (start end)
+  "Cut region and populate new org-roam note."
+  (interactive "r")
+  (let* ((text (delete-and-extract-region start end))
+	  (tags (read-string "Enter tags: "))
+	  (title (read-string "Title of note: "))
+	  (slug (org-roam-node-slug (org-roam-node-create :title title)))
+	  (filename (format "%s/%d-%s.org"
+		      (expand-file-name org-roam-directory)
+		      (time-convert (current-time) 'integer)
+		      slug))
+	  (org-id-overriding-file-name filename)
+	  id)
+    (with-temp-buffer
+      (insert ":PROPERTIES:\n:ID:        \n:END:\n#+title: "
+	title)
+      (goto-char 25)
+      (setq id (org-id-get-create))
+      (goto-char (point-max))
+      (insert "\n#+startup: showall inlineimages")
+      (insert "\n#+tags:")
+      (insert "\n#+options: ^:{}")
+      (goto-char (point-max))
+      (insert "\n\n")
+      (goto-char (point-max))
+      (insert text)
+      (write-file filename)
+      (org-roam-db-update-file filename)
+      (format "[[id:%s][%s]]" id title))
+      ; insert link in place of moved text
+    (insert (concat "[[id:" id "][" title "]]"))))
 (provide 'functions)
 ;;; functions.el ends here

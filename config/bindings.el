@@ -87,7 +87,8 @@
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
   (define-key embark-identifier-map "n" #'eglot-rename)
   (define-key embark-identifier-map "t" #'hydra-test-runner/body)
-  )
+  (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
+)
 
 (define-key evil-motion-state-map (kbd "RET") nil) ; allows other mode maps to override RET
 (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
