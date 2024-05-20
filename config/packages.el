@@ -267,7 +267,7 @@
         (propertize ")" 'face `(:foreground "green"))
         (propertize "\n" 'face `(:foreground "green"))
         (propertize "└─>" 'face `(:foreground "royal blue"))
-        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "white"))  ;; prompt color
+        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "DeepSkyBlue1"))  ;; prompt color
         )))
   (setq eshell-banner-message ""
     eshell-smart-space-goes-to-end t
@@ -425,7 +425,7 @@
    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
    '(org-link ((t (:foreground "deep sky blue" :underline t))))
-   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
    '(org-property-value ((t (:inherit fixed-pitch))) t)
    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
