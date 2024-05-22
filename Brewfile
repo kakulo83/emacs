@@ -1,15 +1,20 @@
-# Description: Brewfile for my macOS setup
-# Usage: brew bundle --file=Brewfile
+# Create brew bundle file
+# brew bundle dump
+
+# Use brew bundle file
+# brew bundle --file=Brewfile
 
 tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
+tap "meain/meain"
 brew "zstd"
 brew "libtiff"
 brew "little-cms2"
 brew "webp"
 brew "jpeg-xl"
 brew "aom"
+brew "black"
 brew "ccls"
 brew "cmake"
 brew "difftastic"
@@ -17,6 +22,7 @@ brew "gcc"
 brew "libavif"
 brew "gd"
 brew "gdk-pixbuf"
+brew "gh"
 brew "unbound"
 brew "gnutls"
 brew "go"
@@ -26,14 +32,22 @@ brew "gts"
 brew "librsvg"
 brew "graphviz"
 brew "guile"
+brew "man-db"
 brew "node"
 brew "nvm"
+brew "pipenv"
+brew "platformio"
+brew "pngpaste"
+brew "prettier"
+brew "pyenv"
+brew "pyright"
 brew "python@3.11"
 brew "python-tk@3.11"
 brew "rbenv"
 brew "ripgrep"
-brew "pngpaste"
-brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-native-comp"]
+brew "starship"
+brew "d12frosted/emacs-plus/emacs-plus@30", args: ["with-native-comp", "with-no-frame-refocus"]
+brew "meain/meain/toffee"
 cask "amethyst"
 cask "font-devicons"
 cask "font-hack-nerd-font"
