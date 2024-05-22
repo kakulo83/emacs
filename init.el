@@ -31,6 +31,7 @@
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
 ;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
 ;;; interesting package:      https://github.com/emarsden/pgmacs
+;;; interesting package:      https://github.com/jxq0/org-tidy
 ;;;
 ;;; Goal:
 ;;;        Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
