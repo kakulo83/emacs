@@ -211,6 +211,9 @@ FEATURE may be any one of:
 
 ;; Automatically revert buffers for changed files
 (global-auto-revert-mode 1) 
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+
 
 ;; Highlight inner expression delineated by parentheses
 (setq show-paren-style 'expression)
@@ -304,7 +307,6 @@ FEATURE may be any one of:
 ;	 "  "
 ;	 ;(:eval (list (nyan-create)))
 ;	 ))
-
 (set-frame-font "JetBrains Mono:pixelsize=12")
 
 ; set clock for different timezones

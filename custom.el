@@ -13,18 +13,25 @@
        "1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5"
        "7af2a6fcd1e743d165c58fd95d20b46c2d96d9873ab67fc9371bdc8fda463de7"
        default))
+ '(org-bullets-bullet-list '("🌺" "🌸" "🌼" "🌿" "🍀"))
  '(package-selected-packages
-    '(ace-window all-the-icons-dired balanced-windows better-jumper
-       bug-hunter company-box copilot dired-sidebar disaster
-       doom-modeline doom-themes ef-themes eglot-booster
-       embark-consult envrc eshell-toggle evil-collection format-all
-       git-timemachine helpful hide-mode-line highlight-symbol hydra
-       hydra-posframe inf-ruby load-env-vars magit marginalia
-       modus-themes multi-vterm nano-theme nodejs-repl nvm nyan-mode
-       olivetti orderless org-bullets org-drill org-roam-ui
-       package-lint pythonic pyvenv quelpa-use-package restclient
-       tabspaces undo-tree use-package-ensure-system-package
-       vertico-posframe vterm-toggle wgrep yasnippet
+    '(ace-window aggressive-indent all-the-icons-completion
+       all-the-icons-dired all-the-icons-ibuffer auctex badwolf-theme
+       balanced-windows better-jumper blackout bug-hunter cape
+       company-box consult-dir consult-eglot consult-yasnippet copilot
+       dashboard deadgrep dired-sidebar disaster doom-modeline
+       doom-themes ef-themes eglot-booster embark-consult
+       eshell-syntax-highlighting eshell-toggle evil-collection
+       evil-leader flycheck focus format-all fussy git-timemachine
+       go-mode gotest gruvbox-theme helpful hide-mode-line
+       highlight-symbol hydra-posframe inf-ruby json-reformat
+       kind-icon lox-mode magit marginalia modus-themes multi-vterm
+       nano-theme nodejs-repl nord-theme nvm nyan-mode olivetti
+       orderless org-bullets org-download org-drill org-roam-ui
+       perspective planet-theme prettier-js projectile python-black
+       pyvenv rainbow-delimiters rbenv restclient rg simple-modeline
+       sqlformat sublime-themes tabspaces tron-legacy-theme undo-tree
+       vertico-posframe vterm-toggle web-mode yasnippet-capf
        yasnippet-snippets))
  '(package-vc-selected-packages
     '((hydra-posframe :url "https://github.com/Ladicle/hydra-posframe"
@@ -36,7 +43,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
+ '(org-document-info ((t (:foreground "dark orange"))))
+ '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#B0CCDC" :font "Hack Nerd Font Bold" :height 6.0 :underline nil))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
  '(org-level-1 ((t (:inherit default :weight bold :height 2.75))))
  '(org-level-2 ((t (:inherit default :weight bold :height 1.5))))
  '(org-level-3 ((t (:inherit default :weight bold :height 1.25))))
@@ -44,7 +56,15 @@
  '(org-level-5 ((t (:inherit default :weight bold))))
  '(org-level-6 ((t (:inherit default :weight bold))))
  '(org-level-7 ((t (:inherit default :weight bold))))
- '(org-level-8 ((t (:inherit default :weight bold)))))
+ '(org-level-8 ((t (:inherit default :weight bold))))
+ '(org-link ((t (:foreground "deep sky blue" :underline t))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-property-value ((t (:inherit fixed-pitch))))
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+ '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin)))))
 
 (provide 'custom)
 ;;; custom.el ends here
