@@ -34,8 +34,9 @@
        vertico-posframe vterm-toggle web-mode yasnippet-capf
        yasnippet-snippets))
  '(package-vc-selected-packages
-    '((hydra-posframe :url "https://github.com/Ladicle/hydra-posframe"
-	:branch "master")
+    '((org-margin :url "https://github.com/rougier/org-margin")
+       (hydra-posframe :url
+	 "https://github.com/Ladicle/hydra-posframe" :branch "master")
        (eglot-booster :vc-backend Git :url
 	 "https://github.com/jdtsmith/eglot-booster"))))
 (custom-set-faces
