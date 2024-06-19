@@ -25,7 +25,7 @@
   "x"  'eval-region
   "s"  'hydra-snippets/body
   "y"  'consult-yank-from-kill-ring
-  "z"  'hydra-zoom/body
+  "w"  'hydra-window-utils/body
   "cc" 'recenter-top-bottom
   "cp" 'copy-filepath-to-clipboard
   "hv" 'helpful-variable

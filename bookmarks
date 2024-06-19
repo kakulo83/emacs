@@ -2,7 +2,24 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("(pybrzw) feature flags"
+(("(BAT) integration specific pages"
+  (filename
+    . "~/Developer/pybrzw/brzwapi/api/admin/views/integrations/partners/")
+  (front-context-string . "..\n  -rw-r--r-- ")
+  (rear-context-string . "60 Feb 13 12:07 ") (position . 193)
+  (last-modified 26211 5413 520315 0))
+("import integration account ledger job"
+  (filename . "~/Developer/pybrzw/brzwint/jobs/accounting.py")
+  (front-context-string . "\n\n@celeryapp.tas")
+  (rear-context-string . "LedgerDriver,\n}\n") (position . 904)
+  (last-modified 26210 13833 750565 0))
+("(BAT) company integration details"
+  (filename
+    . "~/Developer/pybrzw/brzwapi/api/admin/views/company_integration_partner.py")
+  (front-context-string . "   def details(s")
+  (rear-context-string . "e('/details/')\n ") (position . 5916)
+  (last-modified 26210 11730 621565 0))
+("(pybrzw) feature flags"
   (filename
     . "~/Developer/pybrzw/pybrzw/feature_flag/flags/integrations.py")
   (front-context-string . "rom typing impor") (rear-context-string)
@@ -14,10 +31,10 @@
   (rear-context-string . "urce,\n    '',\n)\n") (position . 1652)
   (last-modified 26189 61443 125775 0))
 ("org-capture-last-stored"
-  (filename . "~/Notes/org-roam-notes/20240516170533-d3.org")
-  (front-context-string . "\n\nhttps://www.d3")
-  (rear-context-string . "#+options: ^:{}\n") (position . 196)
-  (last-modified 26182 40809 2086 0))
+  (filename . "~/Notes/org-roam-notes/20240614093136-graphics.org")
+  (front-context-string . "https://www.taic")
+  (rear-context-string . "--------------\n\n") (position . 438)
+  (last-modified 26220 28904 649215 0))
 ("repush task"
   (filename . "~/Developer/pybrzw/brzwapi/api/admin/views/task.py")
   (front-context-string . "_pending_tasks.d")

@@ -163,8 +163,11 @@
   "testing"
   ("p" robert/run-test-under-cursor "pytest"))
 
-(defhydra hydra-zoom ()
-  "zoom"
+(defhydra hydra-window-utils ()
+  "window utils"
+  ("n" global-display-line-numbers-mode "toggle line numbers")
+  ("s" shrink-window-horizontally "shrink")
+  ("S" enlarge-window-horizontally "grow")
   ("g" text-scale-increase "in")
   ("l" text-scale-decrease "out"))
 
@@ -198,6 +201,10 @@
 (defhydra hydra-register ()
   "register"
   ("s" window-configuration-to-register "save")
+  ;("d" (lambda ()
+  ;	 (interactive)
+  ;	 ((let ((register (string-to-char (read-string "select register: "))))
+  ;	    (set-register ?register nil)))) "delete")
   ("l" consult-register "list"))
 
 
@@ -210,9 +217,9 @@
   ("H" git-timemachine "Time-machine" :exit t)
   ("l" magit-log-buffer-file "File log" :exit t)
   ("L" magit-log-all "Global log" :exit t)
-  ("s" magit-status "Status" :exit t))
-
-
+  ("s" magit-status "Status" :exit t)
+  ("u" git-link "link" :exit t)
+  )
 
 
 ;; TODO create function to connect to production server
@@ -333,5 +340,8 @@
       (format "[[id:%s][%s]]" id title))
       ; insert link in place of moved text
     (insert (concat "[[id:" id "][" title "]]"))))
+
+(defalias 'dired-refresh 'revert-buffer)
+
 (provide 'functions)
 ;;; functions.el ends here

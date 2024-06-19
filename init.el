@@ -256,8 +256,15 @@ FEATURE may be any one of:
 ;; Avoid prompt, just follow symbolic-links.
 (setq vc-follow-symlinks t)
 
+;; Disable prompt to save modified buffers
+(set-buffer-modified-p nil)
+
 ;; Hide frame border (called the fringe)
 (set-fringe-mode 0)
+
+;; Stop eldoc from echoing in minibuffer
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-echo-area-prefer-doc-buffer t)
 
 ; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 ; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
