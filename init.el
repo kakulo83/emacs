@@ -77,6 +77,8 @@
 ;; By inhibiting this, we easily halve startup times with fonts that are larger than the system default.
 (setq frame-inhibit-implied-resize t)
 
+(setq inhibit-startup-echo-area-message t)
+
 ;; UTF-8 everywhere
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
