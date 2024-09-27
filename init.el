@@ -48,7 +48,19 @@
 ;;; Goal:
 ;;;        grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
 ;;;        Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
-
+;;;
+;;; Goal:
+;;;        look into dape debugger: https://www.youtube.com/watch?v=YKkyfz4cU8g
+;;;        https://github.com/svaante/dape?tab=readme-ov-file#configuration
+;;;        https://github.com/svaante/dape
+;;;        https://github.com/microsoft/debugpy
+;;;  Goal:
+;;;        investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
+;;;  Goal:
+;;;        look into cleaning up buffer lists at midnight:  https://www.emacswiki.org/emacs/KillingBuffers#h5o-12
+;;;
+;;;  Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
+;;;  Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
