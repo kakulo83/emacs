@@ -2,196 +2,21 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("(BAT) integration specific pages"
-  (filename
-    . "~/Developer/pybrzw/brzwapi/api/admin/views/integrations/partners/")
-  (front-context-string . "..\n  -rw-r--r-- ")
-  (rear-context-string . "60 Feb 13 12:07 ") (position . 193)
-  (last-modified 26211 5413 520315 0))
-("import integration account ledger job"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/accounting.py")
-  (front-context-string . "\n\n@celeryapp.tas")
-  (rear-context-string . "LedgerDriver,\n}\n") (position . 904)
-  (last-modified 26210 13833 750565 0))
-("(BAT) company integration details"
-  (filename
-    . "~/Developer/pybrzw/brzwapi/api/admin/views/company_integration_partner.py")
-  (front-context-string . "   def details(s")
-  (rear-context-string . "e('/details/')\n ") (position . 5916)
-  (last-modified 26210 11730 621565 0))
-("(pybrzw) feature flags"
-  (filename
-    . "~/Developer/pybrzw/pybrzw/feature_flag/flags/integrations.py")
-  (front-context-string . "rom typing impor") (rear-context-string)
-  (position . 2) (last-modified 26191 26339 197941 0))
-("webhook routes and handlers"
-  (filename
-    . "~/Developer/pybrzw/brzwapi/api/public/subscription/v1.py")
-  (front-context-string . "\nbp.add_url_rule")
-  (rear-context-string . "urce,\n    '',\n)\n") (position . 1652)
-  (last-modified 26189 61443 125775 0))
-("org-capture-last-stored"
-  (filename . "~/Notes/org-roam-notes/20240614093136-graphics.org")
-  (front-context-string . "https://www.taic")
-  (rear-context-string . "--------------\n\n") (position . 438)
-  (last-modified 26220 28904 649215 0))
-("repush task"
-  (filename . "~/Developer/pybrzw/brzwapi/api/admin/views/task.py")
-  (front-context-string . "_pending_tasks.d")
-  (rear-context-string . "task = bulk_push") (position . 3075)
-  (last-modified 26182 6516 124066 0))
-("Downloads" (filename . "~/Downloads/")
+(("org-capture-last-stored"
+  (filename . "~/Notes/org-roam-notes/20240922132952-liveview.org")
+  (front-context-string . "\n#+BEGIN_SRC eli")
+  (rear-context-string . "---------------\n") (position . 443)
+  (last-modified 26352 32340 791451 0))
+("Developer directory" (filename . "~/Developer/")
   (front-context-string . ".DS_Store\n  -rw-")
-  (rear-context-string . "48 Mar 31 21:47 ") (position . 213)
-  (last-modified 26180 63076 606582 0))
-("beat celery jobs"
-  (filename . "~/Developer/pybrzw/pybrzw/config/celery/beat.py")
-  (front-context-string . "rom dataclasses ") (rear-context-string)
-  (position . 2) (last-modified 26180 60685 154535 0))
-("zshrc" (filename . "~/.zshrc") (front-context-string)
-  (rear-context-string . "rter/.local/bin\n") (position . 1818)
-  (last-modified 26172 44502 250845 0))
-("import photos for home"
-  (filename . "~/Developer/pybrzw/brzwapi/api/admin/views/home.py")
-  (front-context-string . "def queue_import")
-  (rear-context-string . "es?\",\n    )\n    ") (position . 14306)
-  (last-modified 26150 41930 465138 0))
-("home model"
-  (filename
-    . "~/Developer/pybrzw/pybrzw/db/models/breezeway/home/home.py")
-  (front-context-string . "class Home(\n    ")
-  (rear-context-string . "t()\n        )\n\n\n") (position . 7480)
-  (last-modified 26087 49770 441005 0))
-("push home status job"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/home_status.py")
-  (front-context-string . "push_home_status")
-  (rear-context-string . "onlyTask,\n)\ndef ") (position . 1038)
-  (last-modified 26078 18623 987293 0))
-("report for failing integrations"
-  (filename
-    . "~/Developer/pybrzw/brzwint/jobs/report_failing_accounts.py")
-  (front-context-string . "        f\"{((row")
-  (rear-context-string . "rvation_run = (\n") (position . 765)
-  (last-modified 26076 48251 365855 0))
-("endpoint for listing self-serve integrations"
-  (filename . "~/Developer/pybrzw/brzwapi/api/integration/v1.py")
-  (front-context-string . "ef list_self_ser")
-  (rear-context-string . "onify_response\nd") (position . 208)
-  (last-modified 26068 64439 796019 0))
-("query for available self-serve integrations"
-  (filename
-    . "~/Developer/pybrzw/brzwint/data_source/company_integration_partner.py")
-  (front-context-string . "get_self_service")
-  (rear-context-string . "l()\n    )\n\n\ndef ") (position . 2764)
-  (last-modified 26068 63812 796307 0))
-("available self-serve integrations"
-  (filename
-    . "~/Developer/pybrzw/brzwapi/resources/companies/v3/integrations.py")
-  (front-context-string . "lass SelfService")
-  (rear-context-string . "turn {}, 204\n\n\nc") (position . 3998)
-  (last-modified 26068 63774 910492 0))
-("integration model"
-  (filename
-    . "~/Developer/pybrzw/pybrzw/db/models/breezeway/company/company_integration_partner.py")
-  (front-context-string . "           'comp")
-  (rear-context-string . "'id': self.id,\n ") (position . 904)
-  (last-modified 26051 59361 312973 0))
-("reservation model"
-  (filename
-    . "~/Developer/pybrzw/pybrzw/db/models/breezeway/reservation/reservation.py")
-  (front-context-string . "class Reservatio")
-  (rear-context-string . "ger(__name__)\n\n\n") (position . 1481)
-  (last-modified 26050 42009 803510 0))
-("generic job for reservation lockcodes"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/access_codes.py")
-  (front-context-string . "def run_reservat")
-  (rear-context-string . "odes_import',\n)\n") (position . 468)
-  (last-modified 26049 31441 218472 0))
-("(webreact) integration configurations"
-  (filename
-    . "~/Developer/web-react/src/@common/utils/integrations_settings_constants.ts")
-  (front-context-string . "    logo: stream")
-  (rear-context-string . "TH_INTEGRATION,\n") (position . 6760)
-  (last-modified 26049 13471 753502 0))
-("(webreact) feature flags"
-  (filename
-    . "~/Developer/web-react/src/@common/utils/feature_flags.ts")
-  (front-context-string . "xport const FEAT")
-  (rear-context-string . "/type_utils';\n\ne") (position . 99)
-  (last-modified 26049 12546 646370 0))
-("(webreact) proxy request to brzwapi for oauth callback request"
-  (filename
-    . "~/Developer/web-react/src/integrations/components/integration_loader.tsx")
-  (front-context-string . "useEffect(() => ")
-  (rear-context-string . "Toast],\n  );\n\n  ") (position . 3591)
-  (last-modified 26049 11569 936644 0))
-("(webreact) Integration Component"
-  (filename
-    . "~/Developer/web-react/src/settings/integrations/Integrations.tsx")
-  (front-context-string . "Integrations = (")
-  (rear-context-string . "al',\n]);\n\nconst ") (position . 1910)
-  (last-modified 26049 11423 185961 0))
-("full pull reservation import job"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/reservations.py")
-  (front-context-string . "def run_reservat")
-  (rear-context-string . "tion_import',\n)\n") (position . 20996)
-  (last-modified 26049 10725 839838 0))
-("endpoint for creating new oauth integration client"
-  (filename . "~/Developer/pybrzw/brzwapi/api/company/v3.py")
-  (front-context-string . "t = integrations")
-  (rear-context-string . "ration\n    resul") (position . 4337)
-  (last-modified 26049 10389 724226 0))
-("partner ENV configs"
-  (filename . "~/Developer/pybrzw/pybrzw/config/__init__.py")
-  (front-context-string . "vantio import Av")
-  (rear-context-string . "t AwsS3\n\nfrom .a") (position . 106)
-  (last-modified 26049 10263 934861 0))
-("oauth configs"
-  (filename . "~/Developer/pybrzw/pybrzw/config/oauth.py")
-  (front-context-string . "dataclass\nclass ")
-  (rear-context-string . "rt dataclass\n\n\n@") (position . 77)
-  (last-modified 26049 10240 563112 0))
-("lockcode model"
-  (filename
-    . "~/Developer/pybrzw/pybrzw/db/models/breezeway/lock_code.py")
-  (front-context-string . "class TaskLockCo")
-  (rear-context-string . "de_user_level\n\n\n") (position . 2455)
-  (last-modified 26049 10172 68765 0))
-("oauth token refresh jobs"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/oauth.py")
-  (front-context-string . "celeryapp.task(n")
-  (rear-context-string . "ns('apaleo')\n\n\n@") (position . 2649)
-  (last-modified 25975 39403 528021 0))
-("lockcode task history filtered from web-react ui"
-  (filename . "~/Developer/pybrzw/brzwapi/utils/task_history.py")
-  (front-context-string . "ASK_TYPES_HIDDEN")
-  (rear-context-string . "create_failed'\nT") (position . 952)
-  (last-modified 25867 31586 507373 0))
-("query for task assignees needing codes"
-  (filename
-    . "~/Developer/pybrzw/brzwint/jobs/task/kaba_doorcode_util.py")
-  (front-context-string . "   query = base_")
-  (rear-context-string . "CREATE_WINDOW)\n ") (position . 840)
-  (last-modified 25867 31460 47190 0))
-("task rescheduled"
-  (filename . "~/Developer/pybrzw/pybrzw/tasks/events/schedule.py")
-  (front-context-string . "       data['sch")
-  (rear-context-string . "vation_change:\n ") (position . 735)
-  (last-modified 25867 31410 139461 0))
-("task offer accepted by worker"
-  (filename . "~/Developer/pybrzw/pybrzw/tasks/events/assignment.py")
-  (front-context-string . "ef task_offer_ac")
-  (rear-context-string . "sk, bind=True)\nd") (position . 3954)
-  (last-modified 25867 31352 168796 0))
-("refresh lockcode"
-  (filename
-    . "~/Developer/pybrzw/brzwapi/resources/tasks/v5/assignees.py")
-  (front-context-string . "def refresh_task")
-  (rear-context-string . ".jwt_required()\n") (position . 3006)
-  (last-modified 25867 30915 769970 0))
-("48hr kaba lockcode generation job"
-  (filename . "~/Developer/pybrzw/brzwint/jobs/devices.py")
-  (front-context-string . "ef create_doorco")
-  (rear-context-string . "tion_window'\n)\nd") (position . 10582)
-  (last-modified 25867 30853 834425 0))
+  (rear-context-string . "96 Sep  3 18:06 ") (position . 201)
+  (last-modified 26347 43296 190512 0))
+("zshrc" (filename . "~/.zshrc")
+  (front-context-string . "alias history='h")
+  (rear-context-string . "per/web-react/'\n") (position . 212)
+  (last-modified 26347 43259 856912 0))
+("emacs init" (filename . "~/.emacs.d/init.el")
+  (front-context-string . "setq native-comp")
+  (rear-context-string . "buffering nil)\n(") (position . 12281)
+  (last-modified 26347 43240 240726 0))
 )

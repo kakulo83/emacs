@@ -187,6 +187,7 @@
 
 (defhydra hydra-repl ()
   "run repl"
+  ("e" inf-elixir "elixir")
   ("p" run-python "python")
   ("r" inf-ruby "ruby")
   ("n" nodejs-repl "nodejs"))
@@ -342,6 +343,9 @@
     (insert (concat "[[id:" id "][" title "]]"))))
 
 (defalias 'dired-refresh 'revert-buffer)
+
+;; todo add tooling for sql
+;; https://arjanvandergaag.nl/blog/using-emacs-as-a-database-client.html
 
 (provide 'functions)
 ;;; functions.el ends here
