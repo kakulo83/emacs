@@ -285,6 +285,8 @@ FEATURE may be any one of:
 	(c "https://github.com/tree-sitter/tree-sitter-c")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	(heex "https://github.com/phoenixframework/tree-sitter-heex")
+	(elixir "https://github.com/elixir-lang/tree-sitter-elixir")
         (go "https://github.com/tree-sitter/tree-sitter-go")
         (html "https://github.com/tree-sitter/tree-sitter-html")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
