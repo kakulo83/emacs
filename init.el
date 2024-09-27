@@ -342,7 +342,13 @@ FEATURE may be any one of:
 ;; prevent package.el loading packages prior to their init-file loading
 (setq package-enable-at-startup nil)
 
-(let ((gc-cons-threshold (* 256 1024 1024))
+;; performance improvements
+(setq read-process-output-max (* 4 1024 1024))
+(setq process-adaptive-read-buffering nil)
+(setq native-comp-speed 2)
+(setq native-comp-async-report-warnings-errors nil)
+
+(let ((gc-cons-threshold most-positive-fixnum) ;(* 256 1024 1024))
       (config-directory (concat user-emacs-directory "config/")))
   (unless (display-graphic-p) (menu-bar-mode -1))
 
