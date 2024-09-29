@@ -23,6 +23,8 @@
   (setq evil-collection-mode-list
 	'(vterm
 	  occur
+	  ; https://github.com/emacs-evil/evil-collection/issues/100
+	  ;(occur ,(if (<= emacs-major-version 25) "replace" 'replace))
 	  ibuffer
 	  dired
 	  dashboard
