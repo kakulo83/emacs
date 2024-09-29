@@ -180,6 +180,7 @@
   ;; NOTE:  embark shows UI in extended-mini-buffer from customizing the variable
   ;;        embark-verbose-indicator-display-action
   ;(setq embark-prompter 'embark-completing-read-prompter)
+  ;; NOTE:  show all available actions after a target is set with <C-h>
   (setq embark-indicators
       '(embark-minimal-indicator  ; default is embark-mixed-indicator
         embark-highlight-indicator
