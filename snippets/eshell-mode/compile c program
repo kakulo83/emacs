@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: compile c program
+# key: comp
+# --
+cc -o ${1:file} ${2:object_file}

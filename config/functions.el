@@ -1,66 +1,35 @@
-; Tab Related
-;(defun new-named-tab ()
-;	"Create a new named tab."
-;	(interactive)
-;	(call-interactively 'tab-new)
-;	(tab-rename (read-string "Enter tab name: ")))
-;
-;(global-set-key (kbd "s-t") 'new-named-tab)
-;
-;(defun switch-project-with-new-tab ()
-;	(interactive)
-;  (tab-new)
-;  (call-interactively 'projectile-switch-project)
-;  (tab-rename (projectile-project-name)))
-(defun unique-eshell ()
-  "Create a new named eshell buffer."
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+(defun my/delete-buffer-or-workspace ()
+"Delete the current buffer or workspace/tab."
   (interactive)
-  (let (name (read-string "Enter name: "))
-    (if (projectile-project-root)
-	(progn
-	  (eshell (round (float-time)))
-	  (eshell-return-to-prompt)
-	  (insert (concat "cd " (projectile-project-root) " \n"))
-	  (eshell-send-input)
-	  (rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")")))
-	  )
-      (eshell name))))
+  (if (= (length (window-list)) 1)
+      (call-interactively (tabspaces-close-workspace))
+    (delete-window)))
 
-(defun unique-vterm-shell ()
-  "Create a new named shell buffer."
+(eval-when-compile
+  (defmacro my/embark-ace-action (fn)
+    `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
+      (interactive)
+      (with-demoted-errors "%s"
+       (require 'ace-window)
+       (let ((aw-dispatch-always t))
+        (aw-switch-to-window (aw-select nil))
+        (call-interactively (symbol-function ',fn)))))))
+
+(defun my/cpm-open-notes-in-workspace ()
+  "Open Notes in its own workspace."
   (interactive)
-                                        ;(call-interactively 'split-window-vertically)
-  (call-interactively 'multi-vterm)
-  (if (projectile-project-root)
-      (process-send-string nil (concat "cd " (projectile-project-root) " \n")))
-  (rename-buffer (concat (read-string "Enter name: ") (concat " (" (projectile-project-name) ")"))))
+  (cond ((member "Notes" (tabspaces--list-tabspaces))
+	  (tab-bar-switch-to-tab "Notes"))
+    (t
+      (tab-bar-new-tab)
+      (tab-bar-rename-tab "Notes")
+      (message "TODO: open org notes")
+      (message "TODO: give this function a binding")
+      )))
 
-(defun spawn-shell (name)
-  "Create a new shell buffer"
-  (interactive "MName of the shell buffer to create: ")
-  (pop-to-buffer (get-buffer-create (generate-new-buffer-name
-				     (shell (current-buffer))))))
-
-(let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
-  (setenv "PATH" path)
-  (setq exec-path
-        (append
-         (split-string-and-unquote path ":")
-         exec-path)))
-
-(defun robert/eshell-history (&optional initial-input)
-  "Find command from eshell history. Initial-input can be given as the initial minibuffer input."
-  (interactive)
-  (insert
-   (completing-read "Find cmd: "
-		    (robert/eshell-history-list))))
-
-                                        ; disable this so when embark is presented in the extended mini-buffer
-                                        ; the cursor/active buffer is still embark and not the new buffer.  Without
-                                        ; doing this the embark menu remains after the action and screws things up
-                                        ;(defadvice split-window (after move-point-to-new-window activate)
-                                        ;  "Moves the point to the newly created window after splitting."
-                                        ;  (other-window 1))
 
 (defun copy-filepath-to-clipboard ()
   "Put the current file name on the clipboard."
@@ -74,58 +43,55 @@
         (clipboard-kill-region (point-min) (point-max)))
       (message filename))))
 
-(defun org-hide-properties ()
-  "Hide all 'org-mode' headline property drawers in buffer.  Could be slow if it has a lot of overlays."
+
+(defun robert/remove-empty-strs-from-list (list)
+  "Remove empty string values from LIST."
+  (--filter (not (string= "" it)) list))
+
+(defvar notes-dir-path "/Users/robertcarter/Notes/org-roam-notes/")
+(defvar rg-drill-cmd "rg -l '.*drill.*' ")
+
+(defun robert/org-files-by-tag (tag)
+  "Function to generate space separated string list of org files by TAG."
+  (cd notes-dir-path)
+  (let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
+    (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
+
+(defun robert/get-org-files-for-topic (tag)
+  "Function to generate list of files from TAG."
   (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward
-            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
-      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
-        (overlay-put ov_this 'display "")
-        (overlay-put ov_this 'hidden-prop-drawer t))))
-  (put 'org-toggle-properties-hide-state 'state 'hidden))
+                                        ; rg -l '^#\+tags:.*database.*' | xargs rg -l '.*drill.*'
+  (cd notes-dir-path)
+                                        ; bind list of org files that have tag
+  (let ((files-by-tag (robert/org-files-by-tag tag)))
+                                        ; filter list further with onlly files that have drill items
+    (split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
 
-(defun org-show-properties ()
-  "Show all 'org-mode' property drawers hidden by org-hide-properties."
+(defun robert/drill-by-topic ()
+  "Wrapper function on org-drill to invoke against a list of files from TOPIC."
   (interactive)
-  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
-  (put 'org-toggle-properties-hide-state 'state 'shown))
+  (let* ((topic (read-string "Enter subject to drill: "))
+	 (files (robert/get-org-files-for-topic topic)))
+    (setq org-drill-scope (robert/remove-empty-strs-from-list files))
+    (org-drill)))
 
-(defun org-toggle-properties ()
-  "Toggle visibility of property drawers."
-  (interactive)
-  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
-      (org-show-properties)
-    (org-hide-properties)))
 
-(defun evil-org-insert-state-in-edit-buffer (fun &rest args)
-  "Bind `evil-default-state' to `insert' before calling FUN with ARGS."
-  (let ((evil-default-state 'insert)
-        ;; Force insert state
-        evil-emacs-state-modes
-        evil-normal-state-modes
-        evil-motion-state-modes
-        evil-visual-state-modes
-        evil-operator-state-modes
-        evil-replace-state-modes)
-    (apply fun args)
-    (evil-refresh-cursor)))
+;; Results of Embark Collection are displayed by invoking the compile-goto-error function.
+;; Advise this function to do `display-buffer-in-side-window` instead
+(defadvice compile-goto-error (around my-compile-goto-error activate)
+  (let ((display-buffer-overriding-action '(display-buffer-in-side-window (inhibit-same-window . nil))))
+    ad-do-it))
 
-(defun collect-search-in-split
-    (split-window-right))
-(advice-add 'embark-collect-live :before #'collect-search-in-split)
+;(advice-add 'evil-goto-mark-line :after #'recenter-top-bottom)
+(defun scroll-to-center-advice (&rest args)
+  (evil-scroll-line-to-center (line-number-at-pos)))
+(advice-add #'evil-goto-line :after #'scroll-to-center-advice)
+(advice-add #'better-jumper-jump-backward :after #'scroll-to-center-advice)
+(advice-add #'better-jumper-jump-forward  :after #'scroll-to-center-advice)
+(advice-add #'xref-find-definitions :after #'scroll-to-center-advice)
 
-(push (list "open-profile-vsplit"
-	    (lambda ()
-	      (split-window-horizontally)
-	      (find-file "~/.zshrc")))
-      vterm-eval-cmds)
 
-(require 'map)
-(require 'proced)
-(require 'seq)
-
+(autoload 'proced-process-attributes "proced" nil t)
 (defun robert/quick-kill-process ()
   "Fuzzy search a list of active processes, choose, and kill the unresponsive target."
   (interactive)
@@ -166,110 +132,220 @@
           (message "killed: %s" prompt-title)
         (message "error: could not kill %s" prompt-title)))))
 
+(defun robert/run-test-under-cursor (&optional full-file)
+  "Run the nearest pytest using toffee.  Pass `FULL-FILE' to run all test in file."
+  (interactive "P")
+  (let ((test-file-name (buffer-file-name))
+	 (line-number (line-number-at-pos)))
+    (eshell-toggle)
+    (eshell-return-to-prompt)
+    (insert (shell-command-to-string
+	      (format "toffee '%s' '%s'" test-file-name line-number)))
+    (eshell-send-input)))
 
-(defun robert/basic-auth-generator ()
-  "Prompt for username & password and generate base64 encoded basic auth string."
+; https://www.reddit.com/r/emacs/comments/ynbbu7/store_autoyasnippets_in_registers_and_expand_on/
+(defun robert/yasnippet-insert ()
+  "Insert a yasnippet.  If buffer is vterm, send to vterm."
   (interactive)
-  (let ((username (read-string "username: "))
-	(password (read-string "password: ")))
-    (insert (concat "Basic " (base64-encode-string
-			      (concat username ":" password))))))
+  (if (eq major-mode 'vterm-mode)
+    (message "inserting vterm snippet")
+    (yas-insert-snippet)))
+    ;(robert/vterm-insert-snip (yas-choose-value (yas--all-templates)))
 
-;; I want the ability to select an AWS EC2 instance from a list and connect to it.
-;; I want to initiate this flow from a keybinding or from entering a function.
-
-;; I want the ability to connect to a MySQL process from a list and connect to it.
-;; likewise initiate from a keybinding or entering a function
-
-;; I want the ability to list EC2 log files and possibly download them for
-;; viewing in emacs
-
-;; maybe can use 'shell-quote-argument' to escape quotes
-
-;; https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
-;; https://emacs.stackexchange.com/questions/27407/accessing-json-data-in-elisp
-;; https://stackoverflow.com/questions/35390729/how-to-return-the-value-instead-of-key-by-completing-read
-;; need to parse JSON format
-
-(defalias 'elisp-repl 'ielm)
-(defalias 'python-repl 'run-python)
-
-(defun breezeway/start-ec2-session (instance-id)
-  "Start EC2 Session from INSTANCE-ID.  Wrapper for aws ssm command."
-  (multi-vterm)
-  (rename-buffer (concat "EC2" instance-id))
-  (process-send-string nil (concat  "aws ssm start-session --target " instance-id)))
-
-(defun generate-name-id-tuples ()
-  "Convert json format into more convenient form for further processing."
-  (message "transforming json"))
-
-(defun breezeway/select-ec2-instance ()
-  "Prompt for ec2 instance to select."
+(defun robert/vterm-insert-snip (str)
+  "Insert a snippet into the vterm buffer."
   (interactive)
-  (let* ((list-ec2-instances "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\"  --query \"Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key=='Name']|[0].Value}\" --output json")
-	 (instances-json (shell-command-to-string list-ec2-instances)))
-    (message instances-json)))
+  (let* ((inhibit-read-only t))
+    (vterm-send-string str nil)))
+  ;(vterm-send-string (concat "echo " (yas-choose-value (yas--all-templates)) " \n")))
 
-                                        ;		(breezeway/start-ec2-session (completing-read "ec2 instances" (split-string (shell-command-to-string list-ec2-instances) "\n" t)))))
+(defhydra hydra-test-runner ()
+  "testing"
+  ("p" robert/run-test-under-cursor "pytest"))
 
-(defun robert/search-org-roam-notes-for-embark-target ()
-  "Search org-roam notes for target, restricted by tag."
-  ;;https://stackoverflow.com/questions/59052703/grep-or-ripgrep-how-to-find-only-files-that-match-multiple-patterns-not-only-o"
-  ;; rg -0 -l crit1 | xargs -0 -I % rg -H crit2 % "
-  (message "TODO IMPLEMENTATION"))
+(defhydra hydra-window-utils ()
+  "window utils"
+  ("n" global-display-line-numbers-mode "toggle line numbers")
+  ("s" shrink-window-horizontally "shrink")
+  ("S" enlarge-window-horizontally "grow")
+  ("g" text-scale-increase "in")
+  ("l" text-scale-decrease "out"))
 
-(defun corfu-send-shell (&rest _)
-  "Send completion candidate when inside comint/eshell."
-  (cond
-   ((and (derived-mode-p 'eshell-mode) (fboundp 'eshell-send-input))
+(defhydra hydra-eglot ()
+  "eglot"
+  ("d" xref-find-definitions "xref definitions")
+  ("r" xref-find-references "xref references")
+  ("=" eglot-format-buffer "format")
+  ("a" eglot-code-actions "apply code action"))
+
+(defhydra hydra-snippets ()
+  "snippets"
+  ("i" robert/yasnippet-insert "insert")
+  ("n" yas-new-snippet "new")
+  ("e" yas-visit-snippet-file "edit")
+  ("l" yas-describe-tables "list"))
+
+(defhydra hydra-repl ()
+  "run repl"
+  ("e" inf-elixir "elixir")
+  ("p" run-python "python")
+  ("r" inf-ruby "ruby")
+  ("n" nodejs-repl "nodejs"))
+
+(defhydra hydra-flymake ()
+  "flymake"
+  ("l" flymake-show-diagnostics-buffer "list")
+  ("c" flymake-start "check")
+  ("n" flymake-goto-next-error "next")
+  ("p" flymake-goto-prev-error "prev"))
+
+(defhydra hydra-register ()
+  "register"
+  ("s" window-configuration-to-register "save")
+  ;("d" (lambda ()
+  ;	 (interactive)
+  ;	 ((let ((register (string-to-char (read-string "select register: "))))
+  ;	    (set-register ?register nil)))) "delete")
+  ("l" consult-register "list"))
+
+
+(defhydra hydra-vc (:color green :hint nil)
+  "vc"
+  ("a" vc-annotate "Annotate" :exit t)
+  ("b" magit-blame "Blame" :exit t)
+  ("d" vc-diff "Diff" :exit t)
+  ("f" magit-find-file "Find file" :exit t)
+  ("H" git-timemachine "Time-machine" :exit t)
+  ("l" magit-log-buffer-file "File log" :exit t)
+  ("L" magit-log-all "Global log" :exit t)
+  ("s" magit-status "Status" :exit t)
+  ("u" git-link "link" :exit t)
+  )
+
+
+;; TODO create function to connect to production server
+(defun connect-production ()
+  "Connect to breezeway production server."
+  ; if named eshell exists send command to instance
+  ; if no eshell instances, create a new one and send command
+  (with-current-buffer "eshell"
+    (eshell-return-to-prompt)
+    (insert "ls")
     (eshell-send-input))
-   ((and (derived-mode-p 'comint-mode)  (fboundp 'comint-send-input))
-    (comint-send-input))))
-
-(defun robert/remove-empty-strs-from-list (list)
-  "Remove empty string values from LIST."
-  (--filter (not (string= "" it)) list))
-
-(defvar notes-dir-path "/Users/robertcarter/Notes/org-roam-notes/")
-(defvar rg-drill-cmd "rg -l '.*drill.*' ")
-
-(defun robert/org-files-by-tag (tag)
-  "Function to generate space separated string list of org files by TAG."
-  (cd notes-dir-path)
-  (let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
-    (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
-
-(defun robert/get-org-files-for-topic (tag)
-  "Function to generate list of files from TAG."
-  (interactive)
-                                        ; rg -l '^#\+tags:.*database.*' | xargs rg -l '.*drill.*'
-  (cd notes-dir-path)
-                                        ; bind list of org files that have tag
-  (let ((files-by-tag (robert/org-files-by-tag tag)))
-                                        ; filter list further with onlly files that have drill items
-    (split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
-
-(defun robert/drill-by-topic ()
-  "Wrapper function on org-drill to invoke against a list of files from TOPIC."
-  (interactive)
-  (let* ((topic (read-string "Enter subject to drill: "))
-	 (files (robert/get-org-files-for-topic topic)))
-    (setq org-drill-scope (robert/remove-empty-strs-from-list files))
-    (org-drill)))
-
-(defun robert/cut-buffer-to-new-perspective ()
-  "Cut buffer from current perspective and put into a new perspective tab."
-  (interactive)
-  (call-interactively 'tab-new)
-
-                                        ; save buffer file to register ?
-
-                                        ; create new perspective with filename as name
-
-                                        ; open file to buffer in new perspective using register content
+  )
   
-  (message "moving buffer into own perspective"))
+(defun robert/tab ()
+  "Command to complete a copilot suggestion if available otherwise insert a tab."
+  (interactive)
+  (or (copilot-accept-completion-by-word)
+    (indent-for-tab-command)))
+
+(defun robert/open-notes-dired-in-tab()
+  "Open a new tab with notes."
+  (interactive)
+  (tab-bar-new-tab)
+  (tab-bar-rename-tab "Notes")
+  (find-file "~/Notes/org-roam-notes/")
+  (call-interactively 'project-find-file))
+
+(defun org-hide-properties ()
+  "Hide all 'org-mode' headline property drawers in buffer.  Could be slow if it has a lot of overlays."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward
+            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
+      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
+        (overlay-put ov_this 'display "")
+        (overlay-put ov_this 'hidden-prop-drawer t))))
+  (put 'org-toggle-properties-hide-state 'state 'hidden))
+
+(defun org-show-properties ()
+  "Show all 'org-mode' property drawers hidden by org-hide-properties."
+  (interactive)
+  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
+  (put 'org-toggle-properties-hide-state 'state 'shown))
+
+(defun org-toggle-properties ()
+  "Toggle visibility of property drawers."
+  (interactive)
+  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
+      (org-show-properties)
+    (org-hide-properties)))
+
+(defun robert/unique-vterm-shell ()
+  "Create a new named vterm buffer."
+  (interactive)
+  (call-interactively 'multi-vterm)
+  (if (vc-root-dir)
+    (vterm-send-string (concat "cd " (vc-root-dir) " \n"))))
+  ;(rename-buffer (concat (read-string "Enter name: ") (concat " (" (project-name) ")")))))
+      ;(process-send-string nil (concat "cd " (vc-root-dir) " \n")))
+  ;(rename-buffer (concat (read-string "Enter name: ") (concat " (" (project-name) ")"))))
+
+
+
+; https://github.com/meain/toffee/blob/master/src/pickers/python.rs
+
+(setq meain/tree-sitter-calss-like '((rust-mode . (impl_item))
+				      (python-mode . (class_definition))))
+(setq meain/tree-sitter-function-like '((rust-mode . (function_item))
+					 (go-mode . (function_declaration method_declaration))
+					 (python-mode . (function_definition))))
+
+(defun meain/tree-sitter-thing-name (kind)
+  "Get name of tree-sitter THING-KIND."
+  (if tree-sitter-mode
+    (let* ((node-types-list (pcase kind
+			      ('class-like meain/tree-sitter-calss-like)
+			      ('function-like meain/tree-sitter-function-like)))
+	    (node-types (alist-get major-mode node-types-list)))
+      (if node-types
+	(let ((node-at-point (car (remove-if (lambda (x) (eq nil x))
+				    (seq-map (lambda (x) (tree-sitter-node-at-point x))
+				      node-types)))))
+	  (if node-at-point
+	    (let ((node-name-node-at-point (tsc-get-child-by-field node-at-point ':name)))
+	      (if node-name-node-at-point
+		(tsc-node-text node-name-node-at-point)))))))))
+
+
+(defun robert/embark-org-roam-cut-to-new-note (start end)
+  "Cut region and populate new org-roam note."
+  (interactive "r")
+  (let* ((text (delete-and-extract-region start end))
+	  (tags (read-string "Enter tags: "))
+	  (title (read-string "Title of note: "))
+	  (slug (org-roam-node-slug (org-roam-node-create :title title)))
+	  (filename (format "%s/%d-%s.org"
+		      (expand-file-name org-roam-directory)
+		      (time-convert (current-time) 'integer)
+		      slug))
+	  (org-id-overriding-file-name filename)
+	  id)
+    (with-temp-buffer
+      (insert ":PROPERTIES:\n:ID:        \n:END:\n#+title: "
+	title)
+      (goto-char 25)
+      (setq id (org-id-get-create))
+      (goto-char (point-max))
+      (insert "\n#+startup: showall inlineimages")
+      (insert "\n#+tags:")
+      (insert "\n#+options: ^:{}")
+      (goto-char (point-max))
+      (insert "\n\n")
+      (goto-char (point-max))
+      (insert text)
+      (write-file filename)
+      (org-roam-db-update-file filename)
+      (format "[[id:%s][%s]]" id title))
+      ; insert link in place of moved text
+    (insert (concat "[[id:" id "][" title "]]"))))
+
+(defalias 'dired-refresh 'revert-buffer)
+
+;; todo add tooling for sql
+;; https://arjanvandergaag.nl/blog/using-emacs-as-a-database-client.html
 
 (provide 'functions)
 ;;; functions.el ends here

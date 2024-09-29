@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: enter the breezeway docker container
-# key: breez
-# --
-sudo docker exec -it $(sudo docker ps | grep pybrzw | head -1 | awk '{print $1}') bash

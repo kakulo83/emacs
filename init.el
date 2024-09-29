@@ -1,8 +1,13 @@
+;; init.el --- Init file -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;;
+;;;   Zzzzz      |\      _,,,--,,_,
+;;;              /,`.-'`'   ._  \-;;,__.
+;;;             |,4-  ) )_   .;.(  `'___'
+;;;            '---''(_/._)-'(_\_)
+;;;
 ;;; DEPENDENCIES
-;;; oh-my-zsh
 ;;; MacTex
 ;;; nerd-fonts
 ;;; devicons
@@ -19,193 +24,410 @@
 ;;; pip3 install pyenv
 ;;; mandb (for creating man page db/cache) see: https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;; graphviz (for google profiling tools)
-;;; 
-;;; Code:
-
-
+;;; man-db see:  https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
+;;;
 ;;; TODO
-;;;  - Investigate: https://gitlab.com/ideasman42/dotfiles/-/tree/main/.config/emacs?ref_type=heads    VERY FAST STARTUP
-;;;       - taken from this thread on emacs perf:  https://news.ycombinator.com/item?id=39119835  
-;;;  - Investigate https://emacs.stackexchange.com/questions/26226/looking-for-simple-bookmark-package
-;;;     - maybe have to create own utility for bookmarks
-;;;  - Investigate bookmark packages.. i want categories or some means of organizing them
-;;;  - Understand why autocomplete doesn't work often
-;;;  - Figure out how to disable autocomplete on delimieter characters like "," or ";"
+;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
+;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
+;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
+;;; interesting package:      https://github.com/emarsden/pgmacs
+;;; interesting package:      https://github.com/jxq0/org-tidy
 ;;;
-;;;  - Add Embark Action for Identifier target that seraching org-roam notes with current mode as a TAG value
-;;;      and identifier as the search term
+;;; Goal:
+;;;        Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
+;;;        Find out if I should use cape or company
 ;;;
-;;;  - Create an Embark action that takes a Visual Region (highlighted words) and creates a new Org-Roam/Org document
-;;;  
-;;;  - Create a keybinding and function that takes the active buffer and places it in a new perspective
+;;; Goal:
+;;;        find a way to have a history of commands in pipenv shell
+;;;        https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
 ;;;
-;;;  - Create a function that creates a project-relative python import path string for inserintg
-;;;      - https://github.com/Wilfred/pyimport/blob/master/pyimport.el might have some useful code
-;;;      - (file-relative-name buffer-file-name projectile-project-root)
-;;;  - Figure out how to add ace-split action for ALL targets and for the scenario where I initiate a function like Help
-;;;    but should have split first before finishing the Help/Doc command
+;;; Goal:
+;;;        create a synchronous function that conects to a breezeway production instance
+;;;        it should wait for commands to finish and parse the buffer for container ids
 ;;;
-;;;  - Create Embark Action for Region target that sends region to an interpreter, python repl for instance
-;;;      "run-python" starts an inferior python process
-;;;      "python-shell-send-region" sends current region to inferior python process
-;;;      "process-send-region" (non interactive function)
-;;;      https://emacs.stackexchange.com/questions/37887/send-region-to-shell-in-another-buffer
+;;; Goal:
+;;;        grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
+;;;        Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
 ;;;
-;;;  - use Emacs registers more:
+;;; Goal:
+;;;        look into dape debugger: https://www.youtube.com/watch?v=YKkyfz4cU8g
+;;;        https://github.com/svaante/dape?tab=readme-ov-file#configuration
+;;;        https://github.com/svaante/dape
+;;;        https://github.com/microsoft/debugpy
+;;;  Goal:
+;;;        investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
+;;;  Goal:
+;;;        look into cleaning up buffer lists at midnight:  https://www.emacswiki.org/emacs/KillingBuffers#h5o-12
 ;;;
-;;;        window-configuration-to-register
-;;;        jump-to-register
-;;;        consult-register
-;;;
-;;;  - Figure out how to advise any jumping command to run `recenter-top-bottom` so the buffer is centered on the new location
-;;;      - https://emacs.stackexchange.com/questions/14309/is-there-a-setting-to-automatically-center-the-text-after-any-jump
-;;;      - https://stackoverflow.com/questions/11052678/emacs-combine-iseach-forward-and-recenter-top-bottom
-;;;
-;;;  - Create emacs save-hook that looks at current file and parses it for constructs like classes and function names
-;;;    and attempts to find any relevant tests and automatically runs their tests
-;;;
-;;;  - Figure out how to use a git pre-commit hook to run pylint and integrate this output with magit
-;;; 
-;;;  - Figure out how to control or at least make predictable how Embark-Collect opens a target
-;;;
-;;;  - read this guide:  https://github.com/noctuid/evil-guide
-;;;
-;;;  - Figure out how to use snippets in vterm
-;;;  - Investigate if a Yasnippet can be saved into a register, if it can then it might be possible to
-;;;      load a register with the contents of a snippet and paste that into Vterm (instead of having to save to a temp buffer)
-;;;  - Figure out how to configure LSP for projects (ignore node-modules etc)
-;;;  - Create a command "repl" that lets me interactively select
-;;;    a programming language REPL (i.e python, elisp, etc)
-;;;  - Find out if buffers like magit-diff/status etc can be ignored by perspective
-;;;     https://emacs.stackexchange.com/questions/59177/how-to-tell-persp-mode-to-ignore-some-buffers-by-major-mode
-;;;      There is no value/reason for them to show up in the buffer-list
-;;;  - Investigate:  https://github.com/jixiuf/vterm-toggle
-;;;      This might be a solution to use evil to edit vterm commands etc
-;;;  - Create my own theme
-;;;      Use font from: https://www.labri.fr/perso/nrougier/GTD/index.html
-;;;      Match grey colors from:  https://github.com/rougier/nano-emacs
-;;;  - create Embark Action on an Identifier to perform a ripgrep search/export action
-;;;  - dig for gems here:  https://www.reddit.com/r/emacs/comments/nr3cxv/what_are_your_very_useful_emacs_key_bindings_fast/
-;;;  - Create my own modeline, extract from: https://github.com/jessiehildebrandt/mood-line/blob/master/mood-line.el
-;;;  - Searching by Tags in Notes should be orderless:
-;;;      example:  if searching for ec2, aws, breezeway, any order should match
-;;;
-;;;  TO LEARN
-;;;  - learn how to use Embarks Export for grep results and how to perform additional actions like wgrep
-;;;  - learn grep-mode
-;;;  - https://reasonabledeviations.com/2023/02/05/gpt-for-second-brain/
-;;;
-;;;  SNIPPETS TO TRY
-;;;
-;;;  - GREAT EXAMPLE:   https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
-;;;
-;;;  - Lots of good stuff here:  https://github.com/bling/dotemacs/tree/master
-;;;  - Investigate my magit status bug:  https://github.com/magit/magit/issues/4744
-;;;                                      https://github.com/magit/magit/issues/4739
-;;;  - investigate https://issuecloser.com/blog/vterm-completion-for-files-directories-command-history-and-programs-in-emacs
-;;;  - investigate this emacs config:  https://ladicle.com/post/config/#doom-dracula-theme-modeline
-;;;  - investigate this dudes config: https://github.com/jakebox/jake-emacs
-;;;      - he uses the cape package and corfu
-;;;  - Investigate:  https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-738842507
-;;;      Maybe some of these functions can be used to use evil in vterm commandline
-;;;  - investigate: https://localauthor.github.io/posts/aw-select.html
-;;;  - investigate config:   https://config.daviwil.com/emacs
-;;;  - investigate goodies:  https://blog.sumtypeofway.com/posts/emacs-config.html
-;;;
-;;;  PACKAGES TO CONSIDER
-;;;  guide:  https://github.com/emacs-tw/awesome-emacs
-;;;
-;;;  - consider:  https://github.com/jojojames/smart-jump
-;;;  - consider:  https://github.com/jacktasia/dumb-jump
-;;;  - consider:  https://github.com/minad/tempel
-;;;  - consider:  https://github.com/Crandel/tempel-collection
-;;;  - consider:  https://magit.vc/manual/forge/
-;;;  - consider:  https://github.com/mickeynp/combobulate
-;;;  - consider:  https://github.com/Shopify/ruby-lsp-rails
-;;;  - consider:  https://github.com/postmodern/chruby
-;;;  - consider:  https://github.com/plexus/chruby.el#readme
-;;;  - consider:  https://github.com/dgutov/robe
-;;;
-;;;  - consider:  https://github.com/NicolasPetton/pass
-;;;  - consider:  https://github.com/ch11ng/exwm
-;;;               https://www.youtube.com/watch?v=MquoGuU8sHM
-;;;
-;;;  - consider:  https://github.com/armindarvish/consult-gh
-;;;  - consider:  https://github.com/ronisbr/doom-nano-modeline
-;;;  - consider:  https://github.com/karthink/popper
-;;;  - consider:  https://github.com/4DA/eshell-toggle
-;;;  - consider:  https://github.com/kyagi/shell-pop-el
-;;;  - consider:  https://github.com/jessiehildebrandt/mood-line  (easy package to understand, maybe customize it or make my own package ?)
-;;;  - consider:  https://www.emacswiki.org/emacs/MidnightMode
-;;;  - consider:  https://github.com/Harith163/TransSide-theme
-;;;  - consider:  https://elpa.nongnu.org/nongnu/paredit.html
-;;;  - consider:  https://github.com/ch11ng/exwm/wiki
-;;;  - consider:  https://gitlab.com/niklaseklund/dtache
-;;;  - consider:  https://github.com/jgru/consult-org-roam
-;;;  - consider:  creating a documentation system within emacs (https://hynek.me/articles/productive-fruit-fly-programmer/)
-;;;  - consider:  https://elpa.gnu.org/packages/devdocs.html
-;;;  - consider:  https://github.com/dash-docs-el/dash-docs
-;;;  - consider:  https://github.com/radian-software/ctrlf
-;;;  - consider:  https://github.com/Silex/docker.el
-;;;  - consider:  https://github.com/justbur/emacs-which-key
-;;;  - consider:  https://github.com/alexluigit/dirvish
-;;;  - consider:  https://github.com/lassik/emacs-format-all-the-code
-;;;  - consider:  https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/
-;;;  - consider:  https://www.emacswiki.org/emacs/AutoInsertMode
+;;;  Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
+;;;  Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;;; Code:
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(package-initialize)
-(package-refresh-contents)
+;; Remove frmae title and icon
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq frame-title-format '("\n"))
+(setq ns-use-proxy-icon nil)
 
-(require 'use-package-ensure)
+;; Disable frames resizing implicitly. Why?
+;; Resizing the Emacs frame can be a terribly expensive part of changing the font.
+;; By inhibiting this, we easily halve startup times with fonts that are larger than the system default.
+(setq frame-inhibit-implied-resize t)
 
-(setq custom-file "~/.emacs.d/config/custom.el")
-(setq evil-want-C-u-scroll t) ; this needs to be executed before requiring 'evil
+(setq inhibit-startup-echo-area-message t)
 
-(setq straight-repository-branch "develop")
+;; UTF-8 everywhere
+(prefer-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
+(setq default-file-name-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
 
-; install straight.el for git based packages
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; Session management
+(require 'desktop)
+(setq desktop-path (list "~/.emacs.d/sessions/"))
+;; Prevent desktop file from saving theme settings
+;; https://superuser.com/questions/859761/prevent-emacs-desktop-save-from-holding-onto-theme-elements
+(push '(foreground-color . :never) frameset-filter-alist)
+(push '(background-color . :never) frameset-filter-alist)
+(push '(font . :never) frameset-filter-alist)
+(push '(cursor-color . :never) frameset-filter-alist)
+(push '(background-mode . :never) frameset-filter-alist)
+(push '(ns-appearance . :never) frameset-filter-alist)
+(push '(background-mode . :never) frameset-filter-alist)
+(desktop-save-mode 1)
 
-(load "~/.emacs.d/config/appearance.el")
-(load "~/.emacs.d/config/custom.el")
-(load "~/.emacs.d/config/packages.el")
-(load "~/.emacs.d/config/settings.el")
-(load "~/.emacs.d/config/functions.el")
-(load "~/.emacs.d/config/hooks.el")
-(load "~/.emacs.d/config/keybindings.el")
+;; Garbage-collect on focus-out, Emacs should feel snappier.
+(unless (version< emacs-version "27.0")
+  (add-function :after after-focus-change-function
+                (lambda ()
+                  (unless (frame-focus-state)
+                    (garbage-collect)))))
 
-; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
-(when (string= system-type "darwin")
-  (setq dired-use-ls-dired nil))
+(defmacro after (feature &rest body)
+"Execute BODY after FEATURE has been loaded.
 
-;(if (fboundp 'exec-path-from-shell-initialize)
-;		(when (memq window-system '(mac ns x))
-;			(exec-path-from-shell-initialize)))
+FEATURE may be any one of:
+    'evil            => (with-eval-after-load 'evil BODY)
+    \"evil-autoloads\" => (with-eval-after-load \"evil-autolaods\" BODY)
+    [evil cider]     => (with-eval-after-load 'evil
+                          (with-eval-after-load 'cider
+                            BODY))
+"
+  (declare (indent 1))
+  (cond
+   ((vectorp feature)
+    (let ((prog (macroexp-progn body)))
+      (cl-loop for f across feature
+               do
+               (progn
+                 (setq prog (append `(',f) `(,prog)))
+                 (setq prog (append '(with-eval-after-load) prog))))
+      prog))
+   (t
+    `(with-eval-after-load ,feature ,@body))))
 
-; as recommended by perspective.el readme
+(setq lisp-indent-offset 2)
+
+;; do not wrap lines
+(set-default 'truncate-lines t)
+
+;; allow y/n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; disable dialog box
+(setq use-dialog-box nil)
+
+;; Disable backup.
+(setq backup-inhibited t)
+
+;; Disable auto save.
+(setq auto-save-default nil)
+;; Prevent creation of auto-save-list directory
+(setq auto-save-list-file-prefix nil)
+
+;; Disable splash screen
+(setq inhibit-splash-screen t)
+
+;; Show text instead of popups.
+(setq use-dialog-box nil)
+
+;; when we move outside the screen we always recenter
+(setq scroll-conservatively scroll-margin)
+
+;; set window margin
+(setq-default left-margin-width 2 right-margin-width 0) ; Define new widths.
+(set-window-buffer nil (current-buffer)) ; Use them now.
+
+;; Scroll to first error.
+(setq compilation-scroll-output 'first-error)
+
+;; Always redraw immediately when scrolling,
+;; more responsive and doesn't hang!
+;; http://emacs.stackexchange.com/a/31427/2418
+(setq fast-but-imprecise-scrolling nil)
+(setq jit-lock-defer-time 0)
+
+;; disable Emacs from ever displaying text right-to-left like arabic etc
+(setq-default bidi-paragraph-direction 'left-to-right)
+
+;; Don't show empty lines.
+(setq indicate-empty-lines nil)
+
+;; Don't show where buffer starts/ends.
+(setq indicate-buffer-boundaries nil)
+
+;; Quiet warnings
+(setq ad-redefinition-action 'accept)
+
+;; Never split windows
+(setq split-width-threshold nil)
+
+;; Don't put two spaces after full-stop.
+(setq sentence-end-double-space nil)
+
+;; Emacs redraw while scrolling tends to lazy-update,
+;; at times this can *"get behind"*, causing annoying lags.
+;; These settings favor immediate updates.
+
+;; Scroll N lines to screen edge.
+(setq scroll-margin 2)
+
+;; Smoother scrolling with smaller steps
+(setq scroll-step 1
+      scroll-conservatively  10000)
+
+;; Hide initial scratch message
+(setq initial-scratch-message "")
+
+;; Silence alert sound
+(setq ring-bell-function 'ignore)
+
+;; keep version control updated
+(setq auto-revert-check-vc-info t)
+
+;; Save bookmarks after every change
+(setq bookmark-save-flag 1)
+
+(setq
+ make-backup-files nil
+ auto-save-default nil
+ create-lockfiles nil)
+
+;; Remove duplicate commands from history
+(setq comint-input-ignoredups t)
+
+;; Automatically revert buffers for changed files
+(global-auto-revert-mode 1) 
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+
+
+;; Highlight inner expression delineated by parentheses
+(setq show-paren-style 'expression)
+
+;; Remove undo-tree from completions
+(setq completion-ignored-extensions
+      (append completion-ignored-extensions
+	      (quote
+		  ("~undo-tree~"))))
+
+;; experimental
+(setq completion-in-region-function #'consult-completion-in-region)
+
+(defconst my-num-processors (num-processors))
+;; Avoid using too much memory.
+(defconst my-num-processors-limited (/ my-num-processors 2))
+
+;; Evil settings
+;; allow C-u to perfrom evil scroll up, needs to be set before loading evil
+(setq evil-want-C-u-scroll t)
+(setq evil-want-fine-undo 'yes)
+(setq evil-want-keybinding nil)
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
+
+
+;; Taken from perspective.el suggestions
+;; Reuse windows as much as possible to minimize changes to layout
 (customize-set-variable 'display-buffer-base-action
   '((display-buffer-reuse-window display-buffer-same-window)
     (reusable-frames . t)))
 
-(customize-set-variable 'even-window-sizes nil)     ; avoid resizing
+(customize-set-variable 'even-window-sizes nil)
+
+;; Set default ibuffer sorting
+(setq ibuffer-default-sorting-mode 'filename/process)
+
+;; Always reuse existing compilation window.
+(push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
+
+;; Avoid prompt, just follow symbolic-links.
+(setq vc-follow-symlinks t)
+
+;; Disable prompt to save modified buffers
+(set-buffer-modified-p nil)
+
+;; Hide frame border (called the fringe)
+(set-fringe-mode 0)
+
+;; Stop eldoc from echoing in minibuffer
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-echo-area-prefer-doc-buffer t)
+
+; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
+; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	(c "https://github.com/tree-sitter/tree-sitter-c")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	(heex "https://github.com/phoenixframework/tree-sitter-heex")
+	(elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+	(ruby  "https://github.com/tree-sitter/tree-sitter-ruby")
+	(sql "https://github.com/m-novikov/tree-sitter-sql")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+(push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
+(push '(css-mode . css-ts-mode) major-mode-remap-alist)
+(push '(python-mode . python-ts-mode) major-mode-remap-alist)
+(push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+(push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
+
+;; Do not clone current buffer into new tab
+(setq tab-bar-new-tab-choice "*scratch*")
+
+;; Hide tab-bar close button
+(setq tab-bar-close-button-show nil) 
+
+(setenv "PYTEST_ADDOPTS" "--color=yes")
+
+(setq flymake-start-on-flymake-mode nil)
+
+(setq manual-program "gman")
+
+(add-to-list 'exec-path "~/.emacs.d/bin")
+
+;; Set the modeline to show only the buffer name
+;(setq-default mode-line-format
+;    '("%e"
+;	 (:eval (format "%s" (buffer-name)))
+;	 "  "
+;	 ;(:eval (list (nyan-create)))
+;	 ))
+;; font size
+(set-frame-font "JetBrains Mono:pixelsize=12")
+
+; set clock for different timezones
+(setq world-clock-list
+      '(("America/Los_Angeles" "San Francisco")
+        ("America/New_York" "New York")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")
+        ("Europe/Frankfurt" "Frankfurt")
+        ("Asia/Calcutta" "Bangalore")
+        ("Asia/Tokyo" "Tokyo")))
+
+; configure ipython as the python shell
+(when (executable-find "ipython")
+  (setq python-shell-interpreter "ipython")
+	(setq python-shell-interpreter-args "-i --simple-prompt"))
+
+;; config use-package
+(eval-when-compile
+  (require 'use-package))
+
+;; install packages automatically if they are not present
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+;; prevent package.el loading packages prior to their init-file loading
+(setq package-enable-at-startup nil)
+
+;; performance improvements
+(setq read-process-output-max (* 4 1024 1024))
+(setq process-adaptive-read-buffering nil)
+(setq native-comp-speed 2)
+(setq native-comp-async-report-warnings-errors nil)
+
+(let ((gc-cons-threshold most-positive-fixnum) ;(* 256 1024 1024))
+      (config-directory (concat user-emacs-directory "config/")))
+  (unless (display-graphic-p) (menu-bar-mode -1))
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("gnu" . "https://elpa.gnu.org/packages/")))
+  (setq package-enable-at-startup nil)
+  (package-initialize)
+
+  (cl-loop for file in (append (reverse (directory-files-recursively config-directory "\\.el$")))
+           do (condition-case ex
+                  (load (file-name-sans-extension file))
+                ('error (with-current-buffer "*scratch*"
+			  ; TDOO add to run bug-hunter on error
+                          ;(insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))
+			  (bug-hunter-file file)
+			  )))))
+
+;; maximize emacs frame
+(toggle-frame-maximized)
 
 
-(let ((fountain-scripts "~/.emacs.d/private/fountain/fountain.el"))
-	(when (file-exists-p fountain-scripts)
-		(load-file fountain-scripts)))
+;; kill inactive buffers every 30 mins if they have been inactive for 30mins
+(require 'midnight)
+
+;;kill buffers if they were last disabled more than this seconds ago
+(setq clean-buffer-list-delay-special 1800)
+
+(defvar clean-buffer-list-timer nil
+  "Stores clean-buffer-list timer if there is one. You can disable clean-buffer-list by (cancel-timer clean-buffer-list-timer).")
+
+;; run clean-buffer-list every 30mins 
+(setq clean-buffer-list-timer (run-at-time t 1800 'clean-buffer-list))
+
+;; kill everything, clean-buffer-list is very intelligent at not killing
+;; unsaved buffer.
+(setq clean-buffer-list-kill-regexps '("^.*$"))
+(add-to-list 'clean-buffer-list-kill-regexps
+             (rx buffer-start "magit-" (or "process" "diff")))
+
+;; keep these buffer untouched
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-buffer-names-init
+  clean-buffer-list-kill-never-buffer-names
+  "Init value for clean-buffer-list-kill-never-buffer-names")
+(setq clean-buffer-list-kill-never-buffer-names
+      (append
+       '("*vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
+       clean-buffer-list-kill-never-buffer-names-init))
+
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-regexps-init
+  clean-buffer-list-kill-never-regexps
+  "Init value for clean-buffer-list-kill-never-regexps")
+;; append to *-init instead of itself
+(setq clean-buffer-list-kill-never-regexps
+      (append '("^\\*EMMS Playlist\\*.*$")
+	      clean-buffer-list-kill-never-regexps-init))
+
 
 ;;; init.el ends here
