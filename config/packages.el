@@ -537,18 +537,6 @@
 (use-package hydra)
 
     
-(use-package hydra-posframe
-  :vc (hydra-posframe :url "https://github.com/Ladicle/hydra-posframe" :branch "master")
-  :after hydra
-  :config
-  (setq hydra-posframe-width 0.3
-      hydra-posframe-height 0.3)
-  (setq hydra-posframe-border-width 1)
-  (setq hydra-posframe-background-color "#222222")
-  (setq hydra-posframe-foreground-color "#ffffff")
-  (hydra-posframe-enable))
-
-
 (use-package format-all
   :commands format-all-mode
   :hook (prog-mode . format-all-mode)
