@@ -238,6 +238,9 @@ FEATURE may be any one of:
 	      (quote
 		  ("~undo-tree~"))))
 
+;; experimental
+(setq completion-in-region-function #'consult-completion-in-region)
+
 (defconst my-num-processors (num-processors))
 ;; Avoid using too much memory.
 (defconst my-num-processors-limited (/ my-num-processors 2))
@@ -303,6 +306,7 @@ FEATURE may be any one of:
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
+(push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
@@ -330,6 +334,7 @@ FEATURE may be any one of:
 ;	 "  "
 ;	 ;(:eval (list (nyan-create)))
 ;	 ))
+;; font size
 (set-frame-font "JetBrains Mono:pixelsize=12")
 
 ; set clock for different timezones
@@ -374,11 +379,6 @@ FEATURE may be any one of:
   (setq package-enable-at-startup nil)
   (package-initialize)
 
-  ;; Place custom.el in config folder
-  (setq custom-file (concat user-emacs-directory "custom.el"))
-  (when (file-exists-p custom-file)
-    (load custom-file))
-
   (cl-loop for file in (append (reverse (directory-files-recursively config-directory "\\.el$")))
            do (condition-case ex
                   (load (file-name-sans-extension file))
@@ -391,7 +391,8 @@ FEATURE may be any one of:
 ;; maximize emacs frame
 (toggle-frame-maximized)
 
-;; kill inactive buffers every 2 hours if they have been inactive for 30mins
+
+;; kill inactive buffers every 30 mins if they have been inactive for 30mins
 (require 'midnight)
 
 ;;kill buffers if they were last disabled more than this seconds ago
@@ -400,8 +401,8 @@ FEATURE may be any one of:
 (defvar clean-buffer-list-timer nil
   "Stores clean-buffer-list timer if there is one. You can disable clean-buffer-list by (cancel-timer clean-buffer-list-timer).")
 
-;; run clean-buffer-list every 2 hours
-(setq clean-buffer-list-timer (run-at-time t 7200 'clean-buffer-list))
+;; run clean-buffer-list every 30mins 
+(setq clean-buffer-list-timer (run-at-time t 1800 'clean-buffer-list))
 
 ;; kill everything, clean-buffer-list is very intelligent at not killing
 ;; unsaved buffer.
@@ -416,7 +417,7 @@ FEATURE may be any one of:
   "Init value for clean-buffer-list-kill-never-buffer-names")
 (setq clean-buffer-list-kill-never-buffer-names
       (append
-       '("*Messages*" "*cmd*" "*scratch*" "*w3m*" "*w3m-cache*" "*Inferior Octave*")
+       '("*vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
        clean-buffer-list-kill-never-buffer-names-init))
 
 ;; prevent append multiple times

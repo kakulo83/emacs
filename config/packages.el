@@ -124,17 +124,16 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light
+;  (load-theme 'doom-nord-light t))  ; doom-acario-light  doom-nord-light
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-night t) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
-;)
+;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 (use-package modus-themes
   :config
   (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
-;  (load-theme 'nano-dark)) ; nano-light  nano-dark
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 
 
 (use-package tabspaces
@@ -156,6 +155,39 @@
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
+
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0)
+  (corfu-quit-no-match 'separator)
+
+  :config
+  (setq completion-cycle-threshold 3)
+  (setq tab-always-indent 'complete)
+  (global-corfu-mode)
+  (corfu-popupinfo-mode))
+
+
+(use-package corfu-popupinfo
+  :ensure nil
+  :after corfu
+  :hook (corfu-mode . corfu-popupinfo-mode)
+  :custom
+  (corfu-popupinfo-delay '(0.25 . 0.1))
+  (corfu-popupinfo-hide nil)
+  :config
+  (corfu-popupinfo-mode))
+
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 
 (use-package vertico
@@ -227,25 +259,49 @@
 	(ibuffer-mode . all-the-icons-ibuffer-mode))
 
 
+(use-package gcmh
+  :ensure t
+  :config
+  (setq gcmh-high-cons-threshold (* 128 1024 1024))
+  (add-hook 'after-init-hook (lambda ()
+                               (gcmh-mode))))
+
+
 (use-package eglot
   :config
   ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
   ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
+  (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
+
+  ;; setting language specific lsp configs
+  (setq-default eglot-workspace-configuration
+    '((elixir-ls
+	(elixirLS.autoInsertRequiredAlias . nil))))
   (setq eglot-events-buffer-size 0)
   :defer t
   :hook (
-     (ruby-mode . eglot-ensure)
-	 (python-ts-mode . eglot-ensure)
-	 (go-mode . eglot-ensure)
-	 (js-mode . eglot-ensure)
-	 (typescript-ts-mode . eglot-ensure)
+	  (ruby-mode . eglot-ensure)
+	  (elixir-ts-mode . eglot-ensure)
+	  (go-mode . eglot-ensure)
+	  (js-mode . eglot-ensure)
+	  (typescript-ts-mode . eglot-ensure)
+	  (sql-mode . eglot-ensure)))
 
-	 (sql-mode . eglot-ensure)))
-
+;; ignore jsonrpc events to speed up eglot
+(fset #'jsonrpc--log-event #'ignore)
 
 (use-package eglot-booster
 	:after eglot
 	:config	(eglot-booster-mode))
+
+
+(with-eval-after-load 'eglot
+  (setq completion-category-defaults nil))
+
+
+(use-package dape
+  ;;https://github.com/svaante/dape?tab=readme-ov-file#configuration
+  )
 
 
 (use-package eshell
@@ -335,18 +391,9 @@
   :config
   (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
+  (add-to-list 'copilot-indentation-alist '(elixir-ts-mode . 2))
   :hook
   (prog-mode . copilot-mode))
-
-
-(use-package company
-  :config
-  (setq company-idle-delay 50.0)
-  (global-company-mode 1))
-
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
 
 
 (use-package undo-tree
@@ -355,12 +402,6 @@
   (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
   :init
   (global-undo-tree-mode))
-
-
-(use-package better-jumper
-  :after evil
-  :init
-  (better-jumper-mode 1))
 
 
 (use-package avy)
@@ -407,7 +448,7 @@
      `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
      `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
      `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75 ))))
+     `(org-level-1 ((t (,@headline ,@variable-tuple :height 2.75 ))))
      `(org-document-title ((t (,@headline ,@variable-tuple :height 4.0 :underline nil))))))
 
   (custom-theme-set-faces
@@ -439,12 +480,13 @@
           ("C-c i" . org-roam-node-insert)))
 
 
-;(use-package org-bullets
-;  :after org
-;  :init
-;  ;(custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
-;  ;(setq org-bullets-bullet-list '("\u200b")) ; for a blank bullet (hiding them)
-;  :hook (org-mode . org-bullets-mode))
+(use-package org-bullets
+  :after org
+  :init
+  (custom-set-variables '(org-bullets-bullet-list (quote ("◉" "○" "✸" "◉🌿"))))
+  ;(custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
+  ;(setq org-bullets-bullet-list '("\u200b")) ; for a blank bullet (hiding them)
+  :hook (org-mode . org-bullets-mode))
 
 
 (use-package org-roam
@@ -586,18 +628,37 @@
   :config
   (yas-reload-all)
   (setq yas-snippet-dirs
-    '("~/.emacs.d/snippets" "~/.emacs.d/elpa/yasnippet-snippets-20240221.1621/snippets")
+    '("~/.emacs.d/snippets")
     yas-indent-line 'auto)
   (yas-global-mode +1))
 
 
 (use-package yasnippet-snippets
-	:after yasnippet)
+  :after yasnippet)
 
 (use-package inf-ruby)
 
 
 (use-package nodejs-repl)
+
+
+(use-package inf-elixir
+  :bind (("C-c i i" . 'inf-elixir)
+	  ("C-c i p" . 'inf-elixir-project)
+	  ("C-c i l" . 'inf-elixir-send-line)
+          ("C-c C-c" . 'inf-elixir-send-region)
+          ("C-c i b" . 'inf-elixir-send-buffer)
+          ("C-c i R" . 'inf-elixir-reload-module)))
+
+;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
+(use-package elixir-ts-mode
+  :hook
+  (before-save . eglot-format)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
+
+
+(use-package heex-ts-mode)
 
 
 (use-package highlight-symbol)

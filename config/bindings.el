@@ -72,7 +72,6 @@
 (define-key evil-normal-state-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
 (define-key evil-normal-state-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
-(define-key evil-insert-state-map (kbd "TAB") 'robert/tab)
 (define-key evil-insert-state-map (kbd "C-n") 'company-complete)
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
 
@@ -90,8 +89,6 @@
 )
 
 (define-key evil-motion-state-map (kbd "RET") nil) ; allows other mode maps to override RET
-(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-(define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
 
 (define-key vertico-map (kbd "TAB") 'vertico-insert)
 
