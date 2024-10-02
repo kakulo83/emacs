@@ -248,6 +248,13 @@
   (find-file "~/Notes/org-roam-notes/")
   (call-interactively 'project-find-file))
 
+(defun robert/open-notes-in-split-with-embark()
+  "This is meant to be invoked with embark.  Once <leader-N> is pressed, you must also press
+M-o and o."
+  (interactive)
+  (cd "~/Notes/org-roam-notes/")
+  (call-interactively 'project-find-file))
+
 (defun org-hide-properties ()
   "Hide all 'org-mode' headline property drawers in buffer.  Could be slow if it has a lot of overlays."
   (interactive)

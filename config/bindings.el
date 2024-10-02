@@ -19,6 +19,7 @@
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
   "n"  'robert/open-notes-dired-in-tab
+  "N"  'robert/open-notes-in-split-with-embark
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
