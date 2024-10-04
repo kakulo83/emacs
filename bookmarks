@@ -2,7 +2,15 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
+(("emacs font config" (filename . "~/.emacs.d/init.el")
+  (front-context-string . "set-frame-font \"")
+  (rear-context-string . "pixelsize=12\")\n(") (position . 12215)
+  (last-modified 26368 26287 842919 0))
+("emacs theme config" (filename . "~/.emacs.d/config/packages.el")
+  (front-context-string . "kage doom-themes")
+  (rear-context-string . "de))\n\n\n;(use-pac") (position . 3287)
+  (last-modified 26368 26259 462260 0))
+("org-capture-last-stored"
   (filename . "~/Notes/org-roam-notes/20240922132952-liveview.org")
   (front-context-string . "\n#+BEGIN_SRC eli")
   (rear-context-string . "---------------\n") (position . 443)
