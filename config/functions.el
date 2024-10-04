@@ -192,13 +192,6 @@
   ("r" inf-ruby "ruby")
   ("n" nodejs-repl "nodejs"))
 
-(defhydra hydra-flymake ()
-  "flymake"
-  ("l" flymake-show-diagnostics-buffer "list")
-  ("c" flymake-start "check")
-  ("n" flymake-goto-next-error "next")
-  ("p" flymake-goto-prev-error "prev"))
-
 (defhydra hydra-register ()
   "register"
   ("s" window-configuration-to-register "save")
@@ -208,6 +201,46 @@
   ;	    (set-register ?register nil)))) "delete")
   ("l" consult-register "list"))
 
+
+;; following from https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
+(defvar robert/copilot-manual-mode nil
+  "When `t' will only show completions when manually triggered, e.g. via M-C-<return>.")
+
+(defun robert/copilot-change-activation ()
+  "Switch between three activation modes:
+    - automatic: copilot will automatically overlay completions
+    - manual: you need to press a key (M-C-<return>) to trigger completions
+    - off: copilot is completely disabled."
+  (interactive)
+  (if (and copilot-mode robert/copilot-manual-mode)
+    (progn
+      (message "deactivating copilot")
+      (global-copilot-mode -1)
+      (setq robert/copilot-manual-mode nil))
+    (if copilot-mode
+      (progn
+	(message "activating copilot manual mode")
+	(setq robert/copilot-manual-mode t))
+      (message "activating copilot mode")
+      (copilot-mode))))
+
+(defun robert/copilot-complete-or-accept ()
+  "Command that either triggers a completion or accepts one if one is available. Useful if you tend to hammer your keys like I do."
+  (interactive)
+  (if (copilot--overlay-visible)
+    (progn
+      (copilot-accept-completion)
+      (open-line 1)
+      (next-line))
+    (copilot-complete)))
+
+(defhydra hydra-copilot ()
+  "copilot"
+  ("t" #'robert/copilot-change-activation "toggle copilot")
+  ("c" copilot-chat-display "start copilot chat")
+  ("e" copilot-chat-explain "explain code in region")
+  ("d" copilot-chat-doc     "document code in region")
+  ("x" copilot-chat-del-current-buffer "remove current buffer"))
 
 (defhydra hydra-vc (:color green :hint nil)
   "vc"

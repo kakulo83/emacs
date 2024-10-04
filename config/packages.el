@@ -124,17 +124,16 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-nord-light t))  ; doom-acario-light  doom-nord-light
+;  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 (use-package modus-themes
   :config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+  (load-theme 'modus-operandi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
-
 
 (use-package tabspaces
   :hook
@@ -158,13 +157,17 @@
 
 
 (use-package corfu
+  ;; corfu provides in-buffer completion with a small completion popup
   :ensure t
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 1)
   (corfu-auto-delay 0)
   (corfu-quit-no-match 'separator)
-
+  :bind
+  (:map corfu-map
+    ("M-n" . corfu-next)
+    ("M-p" . corfu-previous))
   :config
   (setq completion-cycle-threshold 3)
   (setq tab-always-indent 'complete)
@@ -191,6 +194,7 @@
 
 
 (use-package vertico
+  ;; vertico provides mini-buffer completion
   :config
   (setq vertico-count 20)
   (setq vertico-resize nil)
@@ -268,6 +272,10 @@
 
 
 (use-package eglot
+  ; Documentation:
+  ; configuring eglot: https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#Project_002dspecific-configuration
+  ; 
+  ; M-x eglot-workspace-configuration
   :config
   ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
   ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
@@ -387,13 +395,21 @@
 
 
 (use-package copilot
-  :vc (copilot :url "https://github.com/copilot-emacs/copilot.el" :branch "main")
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+	:rev :newest
+	:branch "main")
   :config
-  (define-key copilot-mode-map (kbd "M-n") #'copilot-next-completion)
-  (define-key copilot-mode-map (kbd "M-p") #'copilot-previous-completion)
-  (add-to-list 'copilot-indentation-alist '(elixir-ts-mode . 2))
-  :hook
-  (prog-mode . copilot-mode))
+  (define-key copilot-mode-map (kbd "M-C-n") #'copilot-next-completion)
+  (define-key copilot-mode-map (kbd "M-C-p") #'copilot-previous-completion)
+  (define-key copilot-mode-map (kbd "M-C-l") #'copilot-accept-completion-by-word))
+
+
+(use-package copilot-chat
+  :vc (:url "https://github.com/chep/copilot-chat.el"
+	:rev :newest
+	:branch "master")
+  :custom
+  (copilot-chat-frontend 'org))
 
 
 (use-package undo-tree
@@ -643,12 +659,17 @@
 
 
 (use-package inf-elixir
+  :after consult
   :bind (("C-c i i" . 'inf-elixir)
 	  ("C-c i p" . 'inf-elixir-project)
 	  ("C-c i l" . 'inf-elixir-send-line)
           ("C-c C-c" . 'inf-elixir-send-region)
           ("C-c i b" . 'inf-elixir-send-buffer)
           ("C-c i R" . 'inf-elixir-reload-module)))
+(add-hook 'inferior-elixir-mode-hook
+  (lambda ()
+    (setq-local corfu-auto nil)
+    (corfu-mode)))
 
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
 (use-package elixir-ts-mode
@@ -664,5 +685,31 @@
 (use-package highlight-symbol)
 
 
+(use-package flycheck
+  :ensure t
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-display-errors-delay 0.5)
+  (setq flycheck-idle-change-delay 0.5)
+  (setq flycheck-highlighting-mode 'lines)
+  (setq flycheck-indication-mode 'left-fringe)
+  :init (global-flycheck-mode))
+
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
+
+(use-package flycheck-pos-tip
+  :after flycheck-mode
+  :config
+  (setq flycheck-pos-tip-timeout 10))
+(with-eval-after-load 'flycheck
+(flycheck-pos-tip-mode))
+
 (provide 'packages)
+
 ;;; packages.el ends here

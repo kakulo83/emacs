@@ -12,8 +12,8 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
+  "c"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
-  "e"  'hydra-flymake/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
   "i"  'hydra-repl/body
@@ -73,7 +73,7 @@
 (define-key evil-normal-state-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
 (define-key evil-normal-state-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
-(define-key evil-insert-state-map (kbd "C-n") 'company-complete)
+;(define-key evil-insert-state-map (kbd "C-n") 'cape-prefix-map)
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
 
 (after 'embark
@@ -99,6 +99,7 @@
 (evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
 (evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
+(evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
 
 (provide 'bindings)
 ;;; bindings.el ends here
