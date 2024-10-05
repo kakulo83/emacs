@@ -52,7 +52,7 @@
 (define-key evil-normal-state-map (kbd "C-'") 'consult-imenu)
 (define-key evil-normal-state-map (kbd "s-}") 'tab-bar-switch-to-next-tab)
 (define-key evil-normal-state-map (kbd "s-{") 'tab-bar-switch-to-prev-tab)
-(define-key evil-normal-state-map (kbd "C-b") 'tabspaces-switch-to-buffer)
+(define-key evil-normal-state-map (kbd "C-b") 'consult-buffer);; 'tabspaces-switch-to-buffer)
 (define-key evil-normal-state-map (kbd "C-S-B") 'ibuffer)
 (define-key evil-normal-state-map (kbd "-") 'dired-jump)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)

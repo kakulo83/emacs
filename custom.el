@@ -14,6 +14,12 @@
        (copilot :url "https://github.com/copilot-emacs/copilot.el"
 	 :branch "main"))))
 ;(set-face-attribute 'dired-perm-write nil :foreground "dark red")
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (custom-set-faces
+	      '(dired-perm-write ((t (:foreground "dark red" :underline t))))
+	      )))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

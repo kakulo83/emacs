@@ -122,12 +122,12 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf
-(use-package ef-themes
+(use-package doom-themes
   :config
-  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf
+;(use-package ef-themes
+;  :config
+;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 ;(use-package modus-themes
 ;  :config
 ;  (load-theme 'modus-operandi t)) ; modus-operandi  modus-vivendi
@@ -147,6 +147,26 @@
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-remove-to-default t)
   :config
+
+  ;; Filter buffers for Consult-Buffer
+  (with-eval-after-load 'consult
+    ;; hide full buffer list (still available with "b" prefix)
+    (consult-customize consult--source-buffer :hidden t :default nil)
+    ;; set consult-workspace buffer list
+    (defvar consult--source-workspace
+    (list :name     "Workspace Buffers"
+	    :narrow   ?w
+	    :history  'buffer-name-history
+	    :category 'buffer
+	    :state    #'consult--buffer-state
+	    :default  t
+	    :items    (lambda () (consult--buffer-query
+			    :predicate #'tabspaces--local-buffer-p
+			    :sort 'visibility
+			    :as #'buffer-name)))
+
+    "Set workspace buffer list for consult-buffer.")
+    (add-to-list 'consult-buffer-sources 'consult--source-workspace))
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
   (setq tab-bar-new-button-show nil)
   (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
