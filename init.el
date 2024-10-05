@@ -75,7 +75,11 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; Remove frmae title and icon
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+;; Remove frame title and icon
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq frame-title-format '("\n"))
@@ -343,8 +347,11 @@ FEATURE may be any one of:
 ;	 "  "
 ;	 ;(:eval (list (nyan-create)))
 ;	 ))
+
 ;; font size
-;(set-frame-font "JetBrains Mono:pixelsize=12")
+(set-face-attribute 'default nil :height 120)
+;; font family
+;(set-frame-font "JetBrains Mono")
 (set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 
 ; set clock for different timezones
@@ -379,6 +386,48 @@ FEATURE may be any one of:
 (setq native-comp-speed 2)
 (setq native-comp-async-report-warnings-errors nil)
 
+
+;; kill inactive buffers every 30 mins if they have been inactive for 30mins
+(require 'midnight)
+
+;;kill buffers if they were last disabled more than this seconds ago
+(setq clean-buffer-list-delay-special 1800)
+
+(defvar clean-buffer-list-timer nil
+  "Stores `clean-buffer-list` timer if there is one.
+You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
+
+;; run clean-buffer-list every 30mins 
+(setq clean-buffer-list-timer (run-at-time t 1800 'clean-buffer-list))
+
+;; kill everything, clean-buffer-list is very intelligent at not killing
+;; unsaved buffer.
+(setq clean-buffer-list-kill-regexps '("^.*$"))
+(add-to-list 'clean-buffer-list-kill-regexps
+             (rx buffer-start "magit-" (or "process" "diff")))
+
+;; keep these buffer untouched
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-buffer-names-init
+  clean-buffer-list-kill-never-buffer-names
+  "Init value for clean-buffer-list-kill-never-buffer-names.")
+(setq clean-buffer-list-kill-never-buffer-names
+      (append
+       '("*vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
+       clean-buffer-list-kill-never-buffer-names-init))
+
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-regexps-init
+  clean-buffer-list-kill-never-regexps
+  "Init value for clean-buffer-list-kill-never-regexps.")
+;; append to *-init instead of itself
+(setq clean-buffer-list-kill-never-regexps
+      (append '("^\\*EMMS Playlist\\*.*$")
+	      clean-buffer-list-kill-never-regexps-init))
+
+
+
+
 (let ((gc-cons-threshold most-positive-fixnum) ;(* 256 1024 1024))
       (config-directory (concat user-emacs-directory "config/")))
   (unless (display-graphic-p) (menu-bar-mode -1))
@@ -398,86 +447,7 @@ FEATURE may be any one of:
 			  (bug-hunter-file file)
 			  )))))
 
-
-
-;; kill inactive buffers every 30 mins if they have been inactive for 30mins
-(require 'midnight)
-
-;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-special 1800)
-
-(defvar clean-buffer-list-timer nil
-  "Stores clean-buffer-list timer if there is one. You can disable clean-buffer-list by (cancel-timer clean-buffer-list-timer).")
-
-;; run clean-buffer-list every 30mins 
-(setq clean-buffer-list-timer (run-at-time t 1800 'clean-buffer-list))
-
-;; kill everything, clean-buffer-list is very intelligent at not killing
-;; unsaved buffer.
-(setq clean-buffer-list-kill-regexps '("^.*$"))
-(add-to-list 'clean-buffer-list-kill-regexps
-             (rx buffer-start "magit-" (or "process" "diff")))
-
-;; keep these buffer untouched
-;; prevent append multiple times
-(defvar clean-buffer-list-kill-never-buffer-names-init
-  clean-buffer-list-kill-never-buffer-names
-  "Init value for clean-buffer-list-kill-never-buffer-names")
-(setq clean-buffer-list-kill-never-buffer-names
-      (append
-       '("*vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
-       clean-buffer-list-kill-never-buffer-names-init))
-
-;; prevent append multiple times
-(defvar clean-buffer-list-kill-never-regexps-init
-  clean-buffer-list-kill-never-regexps
-  "Init value for clean-buffer-list-kill-never-regexps")
-;; append to *-init instead of itself
-(setq clean-buffer-list-kill-never-regexps
-      (append '("^\\*EMMS Playlist\\*.*$")
-	      clean-buffer-list-kill-never-regexps-init))
-
 ;; maximize emacs frame
 (toggle-frame-maximized)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-bullets-bullet-list '("◉" "○" "✸" "◉"))
- '(package-selected-packages nil)
- '(package-vc-selected-packages
-    '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
-	"master")
-       (copilot :url "https://github.com/copilot-emacs/copilot.el"
-	 :branch "main"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(dired-perm-write ((t (:foreground "dark red" :underline t))))
- '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
- '(line-number ((t (:inherit default :background "#ffffff00" :foreground "#989898"))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 4.0 :underline nil))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 2.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo"))))
- '(org-link ((t (:foreground "deep sky blue" :underline t))))
- '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
- '(org-property-value ((t (:inherit fixed-pitch))))
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
- '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin)))))

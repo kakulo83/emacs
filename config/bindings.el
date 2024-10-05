@@ -12,7 +12,7 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
-  "c"  'hydra-copilot/body
+  "C"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
