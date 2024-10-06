@@ -64,6 +64,9 @@
 ;;;  Goal:
 ;;;        Investigate this: https://github.com/rksm/org-ai
 ;;;
+;;;  Investigate:  https://github.com/emacsmirror/undo-fu?tab=readme-ov-file
+;;;                https://codeberg.org/ideasman42/emacs-undo-fu-session
+;;;
 ;;;  Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
 ;;;  Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
 ;;;
@@ -290,7 +293,7 @@ FEATURE may be any one of:
 (set-buffer-modified-p nil)
 
 ;; Hide frame border (called the fringe)
-(set-fringe-mode 0)
+(set-fringe-mode '(8 . 0))
 
 ;; Stop eldoc from echoing in minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -351,8 +354,8 @@ FEATURE may be any one of:
 ;; font size
 (set-face-attribute 'default nil :height 120)
 ;; font family
-;(set-frame-font "JetBrains Mono")
-(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "JetBrains Mono")
+;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 
 ; set clock for different timezones
 (setq world-clock-list

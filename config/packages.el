@@ -93,10 +93,19 @@
   (with-eval-after-load 'evil
     (evil-define-key 'normal dired-mode-map
       (kbd "C-x C-f") 'robert-dired-find-file))
+  ;(add-hook 'dired-sidebar-mode-hook
+  ;  (lambda ()
+  ;    (unless (file-remote-p default-directory)
+  ;	(auto-revert-mode))))
   :custom
   (dired-subtree-line-prefix "  ")
   :bind
   (:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
+
+
+(use-package diredfl
+  :hook
+  (dired-mode . diredfl-global-mode))
 
 
 (use-package ace-window
@@ -122,15 +131,15 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
-;(use-package modus-themes
-;  :config
-;  (load-theme 'modus-operandi t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+  :config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
@@ -693,7 +702,19 @@
 
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
 (use-package elixir-ts-mode
-  :hook
+  :hook (elixir-ts-mode . eglot-ensure)
+  (elixir-ts-mode
+    .
+    (lambda ()
+      (push '(">=" . ?\u2265) prettify-symbols-alist)
+      (push '("<=" . ?\u2264) prettify-symbols-alist)
+      (push '("!=" . ?\u2260) prettify-symbols-alist)
+      (push '("==" . ?\u2A75) prettify-symbols-alist)
+      (push '("=~" . ?\u2245) prettify-symbols-alist)
+      (push '("<-" . ?\u2190) prettify-symbols-alist)
+      (push '("->" . ?\u2192) prettify-symbols-alist)
+      (push '("<-" . ?\u2190) prettify-symbols-alist)
+      (push '("|>" . ?\u25B7) prettify-symbols-alist)))
   (before-save . eglot-format)
   :config
   (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
@@ -708,11 +729,16 @@
 (use-package flycheck
   :ensure t
   :config
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq flycheck-display-errors-delay 0.5)
-  (setq flycheck-idle-change-delay 0.5)
-  (setq flycheck-highlighting-mode 'lines)
+  (setq flycheck-check-syntax-automatically '(save new-line))
+  (setq flycheck-display-errors-delay 0.2)
+  (setq flycheck-highlighting-mode 'symbol)
   (setq flycheck-indication-mode 'left-fringe)
+  (add-to-list 'display-buffer-alist
+    `(,(rx bos "*Flycheck errors*" eos)
+       (display-buffer-in-side-window)
+       (side . bottom)
+       (reusable-frames . visible)
+       (window-height . 0.33)))
   :init (global-flycheck-mode))
 
 
@@ -722,13 +748,6 @@
   :config
   (global-flycheck-eglot-mode 1))
 
-
-(use-package flycheck-pos-tip
-  :after flycheck-mode
-  :config
-  (setq flycheck-pos-tip-timeout 10))
-(with-eval-after-load 'flycheck
-(flycheck-pos-tip-mode))
 
 (provide 'packages)
 

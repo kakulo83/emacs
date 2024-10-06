@@ -14,6 +14,8 @@
   "b"  'consult-bookmark
   "C"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
+  "e"  'hydra-flycheck/body
+  "E"  'hydra-eglot/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
   "i"  'hydra-repl/body
@@ -100,6 +102,7 @@
 (evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
 (evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
+(evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'previous-buffer)
 
 (provide 'bindings)
 ;;; bindings.el ends here

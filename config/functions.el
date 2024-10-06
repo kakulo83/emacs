@@ -166,10 +166,10 @@
 (defhydra hydra-window-utils ()
   "window utils"
   ("n" global-display-line-numbers-mode "toggle line numbers")
-  ("s" shrink-window-horizontally "shrink")
-  ("S" enlarge-window-horizontally "grow")
-  ("g" text-scale-increase "in")
-  ("l" text-scale-decrease "out"))
+  ("s" shrink-window-horizontally "shrink buffer width")
+  ("S" enlarge-window-horizontally "increase buffer width")
+  ("g" text-scale-increase "increase font")
+  ("l" text-scale-decrease "decrease font"))
 
 (defhydra hydra-eglot ()
   "eglot"
@@ -185,12 +185,19 @@
   ("e" yas-visit-snippet-file "edit")
   ("l" yas-describe-tables "list"))
 
-(defhydra hydra-repl ()
-  "run repl"
-  ("e" inf-elixir "elixir")
-  ("p" run-python "python")
-  ("r" inf-ruby "ruby")
-  ("n" nodejs-repl "nodejs"))
+(defhydra hydra-repl (:color green :hint nil)
+  "
+Inferior REPL
+---------------
+_e_: elixir
+_p_: python
+_r_: ruby
+_n_: node
+"
+  ("e" inf-elixir)
+  ("p" run-python)
+  ("r" inf-ruby)
+  ("n" nodejs-repl))
 
 (defhydra hydra-register ()
   "register"
@@ -234,13 +241,19 @@
       (next-line))
     (copilot-complete)))
 
-(defhydra hydra-copilot ()
-  "copilot"
-  ("t" #'robert/copilot-change-activation "toggle copilot")
-  ("c" copilot-chat-display "start copilot chat")
-  ("e" copilot-chat-explain "explain code in region")
-  ("d" copilot-chat-doc     "document code in region")
-  ("x" copilot-chat-del-current-buffer "remove current buffer"))
+(defhydra hydra-copilot (:color green :hint nil)
+  "
+Copilot
+----------
+_t_: toggle on/off
+_c_: chat
+_e_: explain region
+_d_: document region
+"
+  ("t" #'robert/copilot-change-activation)
+  ("c" copilot-chat-display)
+  ("e" copilot-chat-explain)
+  ("d" copilot-chat-doc))
 
 (defhydra hydra-vc (:color green :hint nil)
   "vc"
@@ -255,6 +268,17 @@
   ("u" git-link "link" :exit t)
   )
 
+(defhydra hydra-flycheck (:color red :hint nil)
+  "
+Actions
+----------
+_l_: list
+_n_: next error
+_p_: prev error
+"
+  ("l" flycheck-list-errors)
+  ("n" flycheck-next-error)
+  ("p" flycheck-previous-error))
 
 ;; TODO create function to connect to production server
 (defun connect-production ()

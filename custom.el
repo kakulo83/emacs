@@ -6,27 +6,34 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-bullets-bullet-list '("◉" "○" "✸" "◉"))
- '(package-selected-packages nil)
+ '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
+ '(package-selected-packages
+    '(ace-window all-the-icons-dired all-the-icons-ibuffer
+       balanced-windows bug-hunter cape copilot copilot-chat corfu
+       dape dired-sidebar diredfl disaster doom-modeline doom-themes
+       ef-themes eglot-booster embark-consult envrc eshell-toggle
+       evil-collection flycheck-eglot format-all frame-local gcmh
+       git-timemachine helpful hide-mode-line highlight-symbol
+       hydra-posframe inf-elixir inf-ruby kind-icon load-env-vars
+       magit marginalia minimap modus-themes multi-vterm nano-theme
+       nodejs-repl nvm nyan-mode olivetti orderless org-bullets
+       org-download org-drill org-roam-ui package-lint pythonic pyvenv
+       quelpa-use-package restclient tabspaces undo-tree
+       use-package-ensure-system-package vertico-posframe vterm-toggle
+       wgrep yasnippet-snippets))
  '(package-vc-selected-packages
     '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
 	"master")
        (copilot :url "https://github.com/copilot-emacs/copilot.el"
 	 :branch "main"))))
-;(set-face-attribute 'dired-perm-write nil :foreground "dark red")
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (custom-set-faces
-	      '(dired-perm-write ((t (:foreground "dark red" :underline t))))
-	      )))
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(dired-perm-write ((t (:foreground "dark red" :underline t))))
+ '(dired-perm-write ((t (:foreground "dark red" :underline t :family "JetBrains Mono"))))
  '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
+ '(fringe ((t (:background "FF" :foreground "#ffffff"))))
  '(line-number ((t (:inherit default :background "#ffffff00" :foreground "#989898"))))
  '(org-document-info ((t (:foreground "dark orange"))))
  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
