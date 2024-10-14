@@ -8,6 +8,12 @@
 (use-package bug-hunter)
 
 
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH")))
+
+
 (use-package evil
   :init
   :config
@@ -131,15 +137,15 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron
+(use-package doom-themes
+  :config
+  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
-(use-package modus-themes
-  :config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+;(use-package modus-themes
+;  :config
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
@@ -279,6 +285,13 @@
   (marginalia-mode))
 
 
+(use-package symbols-outline
+  :config
+  (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  (setq symbols-outline-window-position 'right)
+  :init
+  (symbols-outline-follow-mode))
+
 (use-package all-the-icons)
 
 
@@ -326,10 +339,6 @@
 
 ;; ignore jsonrpc events to speed up eglot
 (fset #'jsonrpc--log-event #'ignore)
-
-(use-package eglot-booster
-	:after eglot
-	:config	(eglot-booster-mode))
 
 
 (with-eval-after-load 'eglot
@@ -703,24 +712,17 @@
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
 (use-package elixir-ts-mode
   :hook (elixir-ts-mode . eglot-ensure)
-  (elixir-ts-mode
-    .
-    (lambda ()
-      (push '(">=" . ?\u2265) prettify-symbols-alist)
-      (push '("<=" . ?\u2264) prettify-symbols-alist)
-      (push '("!=" . ?\u2260) prettify-symbols-alist)
-      (push '("==" . ?\u2A75) prettify-symbols-alist)
-      (push '("=~" . ?\u2245) prettify-symbols-alist)
-      (push '("<-" . ?\u2190) prettify-symbols-alist)
-      (push '("->" . ?\u2192) prettify-symbols-alist)
-      (push '("<-" . ?\u2190) prettify-symbols-alist)
-      (push '("|>" . ?\u25B7) prettify-symbols-alist)))
   (before-save . eglot-format)
   :config
   (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
 
 
 (use-package heex-ts-mode)
+
+
+(use-package exunit
+  :config
+  (add-hook 'elixir-mode-hook 'exunit-mode))
 
 
 (use-package highlight-symbol)

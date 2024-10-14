@@ -294,6 +294,7 @@ FEATURE may be any one of:
 
 ;; Hide frame border (called the fringe)
 (set-fringe-mode '(8 . 0))
+;(set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; Stop eldoc from echoing in minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -342,6 +343,7 @@ FEATURE may be any one of:
 (setq manual-program "gman")
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
+;(add-to-list 'exec-path "/opt/homebrew/bin")
 
 ;; Set the modeline to show only the buffer name
 ;(setq-default mode-line-format

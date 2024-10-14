@@ -11,16 +11,16 @@
     '(ace-window all-the-icons-dired all-the-icons-ibuffer
        balanced-windows bug-hunter cape copilot copilot-chat corfu
        dape dired-sidebar diredfl disaster doom-modeline doom-themes
-       ef-themes eglot-booster embark-consult envrc eshell-toggle
-       evil-collection flycheck-eglot format-all frame-local gcmh
-       git-timemachine helpful hide-mode-line highlight-symbol
-       hydra-posframe inf-elixir inf-ruby kind-icon load-env-vars
-       magit marginalia minimap modus-themes multi-vterm nano-theme
-       nodejs-repl nvm nyan-mode olivetti orderless org-bullets
-       org-download org-drill org-roam-ui package-lint pythonic pyvenv
-       quelpa-use-package restclient tabspaces undo-tree
-       use-package-ensure-system-package vertico-posframe vterm-toggle
-       wgrep yasnippet-snippets))
+       ef-themes embark-consult envrc eshell-toggle evil-collection
+       exec-path-from-shell exunit flycheck-eglot format-all
+       frame-local gcmh git-timemachine helpful hide-mode-line
+       highlight-symbol hydra-posframe inf-elixir inf-ruby kind-icon
+       load-env-vars magit marginalia minimap modus-themes multi-vterm
+       nano-theme nodejs-repl nvm nyan-mode olivetti orderless
+       org-bullets org-download org-drill org-roam-ui package-lint
+       pythonic pyvenv quelpa-use-package restclient symbols-outline
+       tabspaces undo-tree use-package-ensure-system-package
+       vertico-posframe vterm-toggle wgrep yasnippet-snippets))
  '(package-vc-selected-packages
     '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
 	"master")
@@ -31,10 +31,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(dired-perm-write ((t (:foreground "dark red" :underline t :family "JetBrains Mono"))))
  '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
- '(fringe ((t (:background "FF" :foreground "#ffffff"))))
- '(line-number ((t (:inherit default :background "#ffffff00" :foreground "#989898"))))
  '(org-document-info ((t (:foreground "dark orange"))))
  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "Black" :font "ETBembo" :height 4.0 :underline nil))))

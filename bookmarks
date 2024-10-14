@@ -11,10 +11,9 @@
   (rear-context-string . "de))\n\n\n;(use-pac") (position . 3287)
   (last-modified 26368 26259 462260 0))
 ("org-capture-last-stored"
-  (filename . "~/Notes/org-roam-notes/20240922132952-liveview.org")
-  (front-context-string . "\n#+BEGIN_SRC eli")
-  (rear-context-string . "---------------\n") (position . 443)
-  (last-modified 26352 32340 791451 0))
+  (filename . "~/Notes/org-roam-notes/20241007053809-edingen.org")
+  (front-context-string) (rear-context-string . "---------------\n")
+  (position . 432) (last-modified 26371 54854 605489 0))
 ("Developer directory" (filename . "~/Developer/")
   (front-context-string . ".DS_Store\n  -rw-")
   (rear-context-string . "96 Sep  3 18:06 ") (position . 201)

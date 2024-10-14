@@ -159,17 +159,31 @@
     (vterm-send-string str nil)))
   ;(vterm-send-string (concat "echo " (yas-choose-value (yas--all-templates)) " \n")))
 
-(defhydra hydra-test-runner ()
-  "testing"
-  ("p" robert/run-test-under-cursor "pytest"))
+(defhydra hydra-test-runner (:color green :hint nil)
+  "
+Run Test
+--------------
+_p_: run pytest under cursor
+_e_: run elixir under cursor
+_E_: run all elixir test in buffer
+"
+  ("p" robert/run-test-under-cursor)
+  ("e" exunit-verify-single)
+  ("E" exunit-verify))
 
-(defhydra hydra-window-utils ()
-  "window utils"
-  ("n" global-display-line-numbers-mode "toggle line numbers")
-  ("s" shrink-window-horizontally "shrink buffer width")
-  ("S" enlarge-window-horizontally "increase buffer width")
-  ("g" text-scale-increase "increase font")
-  ("l" text-scale-decrease "decrease font"))
+
+(defhydra hydra-window-utils (:color green :hint nil)
+  "
+Window misc
+------------
+_n_: toggle line numbers   _s_: shrink buffer width       _+_: increase font
+                         _w_: increase buffer width     _-_: decrease font
+"
+  ("n" global-display-line-numbers-mode)
+  ("s" shrink-window-horizontally)
+  ("w" enlarge-window-horizontally)
+  ("+" text-scale-increase)
+  ("-" text-scale-decrease))
 
 (defhydra hydra-eglot ()
   "eglot"
@@ -198,6 +212,11 @@ _n_: node
   ("p" run-python)
   ("r" inf-ruby)
   ("n" nodejs-repl))
+
+;(defun robert/embark-clear-register ()
+;  "This function is meant to be invoked from embark. It clears a register."
+;  (interactive)
+;  (message "clearing register "))
 
 (defhydra hydra-register ()
   "register"

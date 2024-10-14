@@ -51,7 +51,7 @@
 (define-key evil-normal-state-map (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 (define-key evil-normal-state-map (kbd "C-p") 'project-find-file)
 (define-key evil-normal-state-map (kbd "/") 'consult-line)
-(define-key evil-normal-state-map (kbd "C-'") 'consult-imenu)
+(define-key evil-normal-state-map (kbd "C-'") 'symbols-outline-show);; 'consult-imenu)
 (define-key evil-normal-state-map (kbd "s-}") 'tab-bar-switch-to-next-tab)
 (define-key evil-normal-state-map (kbd "s-{") 'tab-bar-switch-to-prev-tab)
 (define-key evil-normal-state-map (kbd "C-b") 'consult-buffer);; 'tabspaces-switch-to-buffer)
@@ -79,6 +79,7 @@
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
 
 (after 'embark
+  ;(define-key embark-general-map (kbd "d") #'robert/embark-clear-register)
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-file-map     (kbd "z") #'dired-do-compress)
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
@@ -103,6 +104,7 @@
 (evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
 (evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'previous-buffer)
+(evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
 
 (provide 'bindings)
 ;;; bindings.el ends here

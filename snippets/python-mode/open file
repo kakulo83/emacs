@@ -5,4 +5,8 @@
 # --
 file = open("${1:path}", "r")
 for line in file:
-		print(line)
+    print(line)
+
+
+with open(filename) as f:
+    file_contents = f.read()
