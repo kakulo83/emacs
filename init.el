@@ -357,7 +357,10 @@ FEATURE may be any one of:
 (set-face-attribute 'default nil :height 120)
 ;; font family
 (set-frame-font "JetBrains Mono")
+;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 ;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
 (setq world-clock-list

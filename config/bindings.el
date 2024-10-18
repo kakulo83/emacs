@@ -89,6 +89,7 @@
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
   (define-key embark-identifier-map "n" #'eglot-rename)
   (define-key embark-identifier-map "t" #'hydra-test-runner/body)
+  (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
   (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
 )
 
@@ -105,6 +106,7 @@
 (evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'previous-buffer)
 (evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
+(evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
 
 (provide 'bindings)
 ;;; bindings.el ends here

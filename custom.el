@@ -11,16 +11,17 @@
     '(ace-window all-the-icons-dired all-the-icons-ibuffer
        balanced-windows bug-hunter cape copilot copilot-chat corfu
        dape dired-sidebar diredfl disaster doom-modeline doom-themes
-       ef-themes embark-consult envrc eshell-toggle evil-collection
-       exec-path-from-shell exunit flycheck-eglot format-all
-       frame-local gcmh git-timemachine helpful hide-mode-line
-       highlight-symbol hydra-posframe inf-elixir inf-ruby kind-icon
-       load-env-vars magit marginalia minimap modus-themes multi-vterm
-       nano-theme nodejs-repl nvm nyan-mode olivetti orderless
-       org-bullets org-download org-drill org-roam-ui package-lint
-       pythonic pyvenv quelpa-use-package restclient symbols-outline
-       tabspaces undo-tree use-package-ensure-system-package
-       vertico-posframe vterm-toggle wgrep yasnippet-snippets))
+       ef-themes eglot-booster embark-consult envrc eshell-toggle
+       evil-collection exec-path-from-shell exunit flycheck-eglot
+       format-all frame-local gcmh git-timemachine helpful
+       hide-mode-line highlight-symbol hydra-posframe inf-elixir
+       inf-ruby kind-icon load-env-vars magit marginalia minimap
+       modus-themes multi-vterm nano-theme nodejs-repl nvm nyan-mode
+       olivetti orderless org-bullets org-download org-drill
+       org-roam-ui package-lint pythonic pyvenv quelpa-use-package
+       restclient symbols-outline tabspaces undo-tree
+       use-package-ensure-system-package vertico-posframe vterm-toggle
+       wgrep yasnippet-snippets))
  '(package-vc-selected-packages
     '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
 	"master")

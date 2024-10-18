@@ -176,21 +176,32 @@ _E_: run all elixir test in buffer
   "
 Window misc
 ------------
-_n_: toggle line numbers   _s_: shrink buffer width       _+_: increase font
-                         _w_: increase buffer width     _-_: decrease font
+_n_: toggle line numbers   _l_: shrink buffer width    _k_: increase height       _+_: increase font
+                         _h_: increase buffer width    _j_: reduce height       _-_: decrease font
 "
   ("n" global-display-line-numbers-mode)
-  ("s" shrink-window-horizontally)
-  ("w" enlarge-window-horizontally)
+  ("h" shrink-window-horizontally)
+  ("l" enlarge-window-horizontally)
+  ("k" enlarge-window)
+  ("j" shrink-window)
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
 (defhydra hydra-eglot ()
-  "eglot"
-  ("d" xref-find-definitions "xref definitions")
-  ("r" xref-find-references "xref references")
-  ("=" eglot-format-buffer "format")
-  ("a" eglot-code-actions "apply code action"))
+  "
+Eglot Actions
+--------------
+_s_: start
+_d_: go definition     _=_: format buffer
+_r_: find references   _a_: apply code action
+_R_: rename
+"
+  ("s" eglot)
+  ("d" xref-find-definitions)
+  ("r" xref-find-references)
+  ("R" eglot-rename)
+  ("=" eglot-format-buffer)
+  ("a" eglot-code-actions))
 
 (defhydra hydra-snippets ()
   "snippets"

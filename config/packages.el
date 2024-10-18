@@ -139,10 +139,10 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron
+  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
+;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
 ;(use-package modus-themes
 ;  :config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
@@ -218,6 +218,8 @@
   (corfu-popupinfo-delay '(0.25 . 0.1))
   (corfu-popupinfo-hide nil)
   :config
+  (setq corfu-popupinfo-min-height 50)
+  (setq corfu-popupinfo-max-height 50)
   (corfu-popupinfo-mode))
 
 
@@ -289,6 +291,7 @@
   :config
   (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
   (setq symbols-outline-window-position 'right)
+  ;(setq symbols-outline-use-nerd-icon-in-gui t)
   :init
   (symbols-outline-follow-mode))
 
@@ -339,7 +342,6 @@
 
 ;; ignore jsonrpc events to speed up eglot
 (fset #'jsonrpc--log-event #'ignore)
-
 
 (with-eval-after-load 'eglot
   (setq completion-category-defaults nil))
