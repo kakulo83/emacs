@@ -33,46 +33,46 @@
 ;;; interesting package:      https://github.com/emarsden/pgmacs
 ;;; interesting package:      https://github.com/jxq0/org-tidy
 ;;;
-;;; Goal:
-;;;        Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
-;;;        Find out if I should use cape or company
+;;; Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
+;;; Find out if I should use cape or company
 ;;;
-;;; Goal:
-;;;        find a way to have a history of commands in pipenv shell
-;;;        https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
+;;; 
+;;; find a way to have a history of commands in pipenv shell
+;;; https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
 ;;;
-;;; Goal:
-;;;        create a synchronous function that conects to a breezeway production instance
-;;;        it should wait for commands to finish and parse the buffer for container ids
+;;; 
+;;; create a synchronous function that conects to a breezeway production instance
+;;; it should wait for commands to finish and parse the buffer for container ids
 ;;;
-;;; Goal:
-;;;        grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
-;;;        Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
+;;; 
+;;; grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
+;;; Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
 ;;;
-;;; Goal:
-;;;        look into dape debugger: https://www.youtube.com/watch?v=YKkyfz4cU8g
-;;;        https://github.com/svaante/dape?tab=readme-ov-file#configuration
-;;;        https://github.com/svaante/dape
-;;;        https://github.com/microsoft/debugpy
-;;;  Goal:
-;;;        investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
-;;;  Goal:
-;;;        look into cleaning up buffer lists at midnight:  https://www.emacswiki.org/emacs/KillingBuffers#h5o-12
-;;;  Goal:
-;;;        look into this https://github.com/ayrat555/company-elixir
-;;;        It would be cool to have Eglot available in the inferior-elixir-shell
-;;;  Goal:
-;;;        Investigate this: https://github.com/rksm/org-ai
+;;; 
+;;; look into dape debugger: https://www.youtube.com/watch?v=YKkyfz4cU8g
+;;; https://github.com/svaante/dape?tab=readme-ov-file#configuration
+;;; https://github.com/svaante/dape
+;;; https://github.com/microsoft/debugpy
+;;; 
+;;; investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
+;;; 
+;;; look into cleaning up buffer lists at midnight:  https://www.emacswiki.org/emacs/KillingBuffers#h5o-12
+;;; 
+;;; look into this https://github.com/ayrat555/company-elixir
+;;; It would be cool to have Eglot available in the inferior-elixir-shell
+;;; 
+;;; Investigate this: https://github.com/rksm/org-ai
+;;;   
 ;;;
-;;;  Investigate:  https://github.com/emacsmirror/undo-fu?tab=readme-ov-file
+;;; Investigate:  https://github.com/emacsmirror/undo-fu?tab=readme-ov-file
 ;;;                https://codeberg.org/ideasman42/emacs-undo-fu-session
 ;;;
-;;;  Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
-;;;  Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
+;;; Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
+;;; Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
 ;;;
-;;;  copilot toggling is messing up performance
+;;; Consider alternative elixir language server:   https://www.elixir-tools.dev/docs/next-ls/editors/#emacs-with-lsp-mode
 ;;;
-;;;  Look into elixir tooling here:  https://github.com/Sasanidas/Apprentice?tab=readme-ov-file
+;;; Look into elixir tooling here:  https://github.com/Sasanidas/Apprentice?tab=readme-ov-file
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
