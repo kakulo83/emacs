@@ -95,6 +95,9 @@
 
 (setq inhibit-startup-echo-area-message t)
 
+;; treat all themes as safe, stop prompting their potential risk
+(setq custom-safe-themes t)
+
 ;; UTF-8 everywhere
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)

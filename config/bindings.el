@@ -107,6 +107,7 @@
 (evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'previous-buffer)
 (evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
 (evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
+(evil-define-key 'normal dired-sidebar-mode-map (kbd "-") 'dired-sidebar-up-directory)
 
 (provide 'bindings)
 ;;; bindings.el ends here

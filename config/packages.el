@@ -137,18 +137,29 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night
-;(use-package modus-themes
-;  :config
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+(use-package modus-themes
+  :config
+  (defun customize-modus ()
+    (if (member 'modus-vivendi custom-enabled-themes)
+      (custom-theme-set-faces
+	'modus-vivendi
+        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
+  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package catppuccin-theme
+;  :config
+;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
+;  (load-theme 'catppuccin t))
+
 
 (use-package tabspaces
   :hook
@@ -324,6 +335,7 @@
   :config
   ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
   ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
+  ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
 
   ;; setting language specific lsp configs

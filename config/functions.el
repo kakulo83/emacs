@@ -271,6 +271,12 @@ _n_: node
       (next-line))
     (copilot-complete)))
 
+(defun open-copilot-in-split ()
+  "split current buffer and run copilot-chat."
+  (interactive)
+  (split-window-right) 
+  (copilot-chat-display))
+
 (defhydra hydra-copilot (:color green :hint nil)
   "
 Copilot
@@ -280,10 +286,10 @@ _c_: chat
 _e_: explain region
 _d_: document region
 "
-  ("t" #'robert/copilot-change-activation)
-  ("c" copilot-chat-display)
-  ("e" copilot-chat-explain)
-  ("d" copilot-chat-doc))
+  ("t" #'robert/copilot-change-activation :exit t)
+  ("c" #'open-copilot-in-split :exit t)
+  ("e" copilot-chat-explain :exit t)
+  ("d" copilot-chat-doc :exit t))
 
 (defhydra hydra-vc (:color green :hint nil)
   "vc"
