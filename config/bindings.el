@@ -12,6 +12,7 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
+  "c"  'open-copilot-in-split
   "C"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body

@@ -312,7 +312,7 @@ _l_: list
 _n_: next error
 _p_: prev error
 "
-  ("l" flycheck-list-errors)
+  ("l" flycheck-list-errors :exit t)
   ("n" flycheck-next-error)
   ("p" flycheck-previous-error))
 
