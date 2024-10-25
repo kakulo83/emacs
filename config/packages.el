@@ -157,7 +157,7 @@
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
-;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
+;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
 
 
