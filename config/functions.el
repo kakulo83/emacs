@@ -219,10 +219,10 @@ _p_: python
 _r_: ruby
 _n_: node
 "
-  ("e" inf-elixir)
-  ("p" run-python)
-  ("r" inf-ruby)
-  ("n" nodejs-repl))
+  ("e" inf-elixir :exit t)
+  ("p" run-python :exit t)
+  ("r" inf-ruby :exit t)
+  ("n" nodejs-repl :exit t))
 
 ;(defun robert/embark-clear-register ()
 ;  "This function is meant to be invoked from embark. It clears a register."

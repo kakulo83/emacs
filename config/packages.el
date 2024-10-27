@@ -337,6 +337,7 @@
   ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
 
   ;; setting language specific lsp configs
   (setq-default eglot-workspace-configuration
@@ -345,7 +346,7 @@
   (setq eglot-events-buffer-size 0)
   :defer t
   :hook (
-	  (ruby-mode . eglot-ensure)
+	  (ruby-ts-mode . eglot-ensure)
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
 	  (js-mode . eglot-ensure)
