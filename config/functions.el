@@ -177,8 +177,9 @@ _E_: run all elixir test in buffer
 Window misc
 ------------
 _n_: toggle line numbers   _l_: shrink buffer width    _k_: increase height       _+_: increase font
-                         _h_: increase buffer width    _j_: reduce height       _-_: decrease font
+_c_: copy buffer path      _h_: increase buffer width    _j_: reduce height       _-_: decrease font
 "
+  ("c" copy-filepath-to-clipboard :exit t)
   ("n" global-display-line-numbers-mode)
   ("h" shrink-window-horizontally)
   ("l" enlarge-window-horizontally)

@@ -30,7 +30,6 @@
   "s"  'hydra-snippets/body
   "y"  'consult-yank-from-kill-ring
   "w"  'hydra-window-utils/body
-  "cp" 'copy-filepath-to-clipboard
   "hv" 'helpful-variable
   "hf" 'helpful-function
   "hk" 'helpful-key

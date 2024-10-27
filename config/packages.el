@@ -750,6 +750,7 @@
   (setq flycheck-display-errors-delay 0.2)
   (setq flycheck-highlighting-mode 'symbol)
   (setq flycheck-indication-mode 'left-fringe)
+  (setq flycheck-ruby-executable "/Users/robertcarter/.rbenv/shims/rubocop")
   (add-to-list 'display-buffer-alist
     `(,(rx bos "*Flycheck errors*" eos)
        (display-buffer-in-side-window)
@@ -762,10 +763,10 @@
 (use-package flycheck-eglot
   :ensure t
   :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive nil)
   :config
   (global-flycheck-eglot-mode 1))
 
 
-(provide 'packages)
 
 ;;; packages.el ends here
