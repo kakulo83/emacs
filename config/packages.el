@@ -137,12 +137,12 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-one t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;  :config
 ;  (defun customize-modus ()
@@ -151,14 +151,26 @@
 ;	'modus-vivendi
 ;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
 ;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-;(use-package nano-theme
-;  :config
-;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;  (load-theme 'modus-vivendi-tinted t)) ; modus-operandi  modus-vivendi
+(use-package nano-theme
+  :config
+  (load-theme 'nano-light t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
-;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
+;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
+;(use-package tron-legacy-theme
+;  :config
+;  (load-theme 'tron-legacy t))
+;(use-package afternoon-theme
+;  :config
+;  (load-theme 'afternoon t))
+;(use-package jbeans-theme
+;  :config
+;  (load-theme 'jbeans t))
+;(use-package gotham-theme
+;  :config
+;  (load-theme 'gotham t))
 
 
 (use-package tabspaces
@@ -445,6 +457,8 @@
   (setq vterm-toggle-fullscreen-p nil
         vterm-toggle-project-root t
         vterm-toggle-scope 'project))
+
+
 
 
 (use-package copilot

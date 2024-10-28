@@ -297,7 +297,7 @@ FEATURE may be any one of:
 
 ;; Hide frame border (called the fringe)
 (set-fringe-mode '(8 . 0))
-;(set-face-attribute 'fringe nil :background 'unspecified)
+(set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; Stop eldoc from echoing in minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
