@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: source location
+# key: where
+# --
+method(${1}).source_location
