@@ -28,3 +28,6 @@ straight
 async-bytecomp.log
 tabsession.el
 sessions
+node_modules
+package-lock.json
+package.json

@@ -221,6 +221,8 @@
   (corfu-auto t)
   (corfu-auto-prefix 1)
   (corfu-auto-delay 0)
+  (corfu-min-width 30)
+  (corfu-popupinfo-min-width 60)
   (corfu-quit-no-match 'separator)
   :bind
   (:map corfu-map
@@ -350,6 +352,7 @@
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
+  (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
 
   ;; setting language specific lsp configs
   (setq-default eglot-workspace-configuration
@@ -711,7 +714,10 @@
   :config
   (yas-reload-all)
   (setq yas-snippet-dirs
-    '("~/.emacs.d/snippets")
+    '("~/.emacs.d/snippets" ;; personal snippets
+       "~/.emacs.d/elpa/yasnippet-snippets-20241014.949/snippets"
+       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets"
+       )
     yas-indent-line 'auto)
   (yas-global-mode +1))
 
@@ -720,6 +726,12 @@
   :after yasnippet)
 
 (use-package inf-ruby)
+
+
+(use-package rspec-mode
+  :config
+  (eval-after-load 'rpsec-mode
+    '(rspec-install-snippets)))
 
 
 (use-package nodejs-repl)
@@ -737,6 +749,7 @@
   (lambda ()
     (setq-local corfu-auto nil)
     (corfu-mode)))
+
 
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
 (use-package elixir-ts-mode
