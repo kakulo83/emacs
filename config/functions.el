@@ -178,8 +178,10 @@ Window misc
 ------------
 _n_: toggle line numbers   _l_: shrink buffer width    _k_: increase height       _+_: increase font
 _c_: copy buffer path      _h_: increase buffer width    _j_: reduce height       _-_: decrease font
+_f_: full-screen
 "
   ("c" copy-filepath-to-clipboard :exit t)
+  ("f" toggle-frame-maximized :exit t)
   ("n" global-display-line-numbers-mode)
   ("h" shrink-window-horizontally)
   ("l" enlarge-window-horizontally)

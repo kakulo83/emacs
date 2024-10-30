@@ -327,6 +327,7 @@ FEATURE may be any one of:
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
 (push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
+(push '(ruby-mode . ruby-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
 (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)

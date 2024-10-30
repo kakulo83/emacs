@@ -103,8 +103,8 @@
   ;  (lambda ()
   ;    (unless (file-remote-p default-directory)
   ;	(auto-revert-mode))))
-  :custom
-  (dired-subtree-line-prefix "  ")
+  ;:custom
+  ;(dired-subtree-line-prefix "  ")
   :bind
   (:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
@@ -139,7 +139,7 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-one t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;  (load-theme 'doom-material t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -151,17 +151,17 @@
 ;	'modus-vivendi
 ;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
 ;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-;  (load-theme 'modus-vivendi-tinted t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme
-  :config
-  (load-theme 'nano-light t)) ; nano-light  nano-dark
+;  (load-theme 'modus-operandi t)) ; modus-operandi  modus-vivendi
+;(use-package nano-theme
+;  :config
+;  (load-theme 'nano-light t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-;(use-package tron-legacy-theme
-;  :config
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
