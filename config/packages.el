@@ -137,9 +137,9 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-material t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+(use-package doom-themes
+  :config
+  (load-theme 'doom-acario-light t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -151,7 +151,7 @@
 ;	'modus-vivendi
 ;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
 ;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-;  (load-theme 'modus-operandi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'modus-vivendi-deuteranopia t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
@@ -159,9 +159,9 @@
 ;  :config
 ;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-(use-package tron-legacy-theme
-  :config
-  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -212,47 +212,6 @@
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
-
-
-(use-package corfu
-  ;; corfu provides in-buffer completion with a small completion popup
-  :ensure t
-  :custom
-  (corfu-auto t)
-  (corfu-auto-prefix 1)
-  (corfu-auto-delay 0)
-  (corfu-min-width 30)
-  (corfu-popupinfo-min-width 60)
-  (corfu-quit-no-match 'separator)
-  :bind
-  (:map corfu-map
-    ("M-n" . corfu-next)
-    ("M-p" . corfu-previous))
-  :config
-  (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete)
-  (global-corfu-mode)
-  (corfu-popupinfo-mode))
-
-
-(use-package corfu-popupinfo
-  :ensure nil
-  :after corfu
-  :hook (corfu-mode . corfu-popupinfo-mode)
-  :custom
-  (corfu-popupinfo-delay '(0.25 . 0.1))
-  (corfu-popupinfo-hide nil)
-  :config
-  (setq corfu-popupinfo-min-height 50)
-  (setq corfu-popupinfo-max-height 50)
-  (corfu-popupinfo-mode))
-
-
-(use-package kind-icon
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 
 (use-package vertico
@@ -359,6 +318,7 @@
     '((elixir-ls
 	(elixirLS.autoInsertRequiredAlias . nil))))
   (setq eglot-events-buffer-size 0)
+  (setq eglot-autoshutdown t)
   :defer t
   :hook (
 	  (ruby-ts-mode . eglot-ensure)
@@ -709,21 +669,88 @@
   (setq disaster-assembly-mode 'asm-mode))
 
 
+(use-package corfu
+  ;; corfu provides in-buffer completion with a small completion popup
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0.1)
+  (corfu-min-width 30)
+  (corfu-popupinfo-min-width 60)
+  (corfu-quit-no-match 'separator)
+  (setopt corfu-on-exact-match 'show)
+  :bind
+  (:map corfu-map
+    ("M-n" . corfu-next)
+    ("M-p" . corfu-previous))
+  :config
+  (setq completion-cycle-threshold 3)
+  (setq tab-always-indent 'complete)
+  (global-corfu-mode)
+  (corfu-popupinfo-mode))
+
+
+(use-package corfu-popupinfo
+  :ensure nil
+  :after corfu
+  :hook (corfu-mode . corfu-popupinfo-mode)
+  :custom
+  (corfu-popupinfo-delay '(0.25 . 0.1))
+  (corfu-popupinfo-hide nil)
+  :config
+  (setq corfu-popupinfo-min-height 50)
+  (setq corfu-popupinfo-max-height 50)
+  (corfu-popupinfo-mode))
+
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
+(use-package cape
+  :after corfu
+  :config
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  :init
+  (add-hook 'completion-at-point-functions #'cape-file))
+  ;(add-hook 'completion-at-point-functions #'eglot-completion-at-point)
+  ;(add-hook 'completion-at-point-functions #'cape-file)
+
+
 (use-package yasnippet
   :ensure t
   :config
   (yas-reload-all)
   (setq yas-snippet-dirs
-    '("~/.emacs.d/snippets" ;; personal snippets
+    '( "~/.emacs.d/snippets"
        "~/.emacs.d/elpa/yasnippet-snippets-20241014.949/snippets"
-       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets"
-       )
-    yas-indent-line 'auto)
-  (yas-global-mode +1))
+       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets/rspec-mode"
+       ))
+  (setq yas-indent-line 'auto)
+  :init
+  (yas-global-mode 1))
 
 
 (use-package yasnippet-snippets
   :after yasnippet)
+
+
+(use-package yasnippet-capf)
+(use-package yasnippet-capf
+  :after cape
+  :config
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+;(defalias 'cape-eglot-yas
+;    (cape-capf-super #'eglot-completion-at-point
+;                     #'yasnippet-capf))
+;(add-to-list 'completion-at-point-functions #'cape-eglot-yas)
+
+
 
 (use-package inf-ruby)
 
