@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: function
-# key: fun
-# --
-(defun ${1:name} ()
-  "${2:comment}"
-  {3:body}
-  )

@@ -28,7 +28,7 @@
        pythonic pyvenv quelpa-use-package restclient robe rspec-mode
        smart-jump symbols-outline tabspaces tron-legacy-theme
        undo-tree use-package-ensure-system-package vertico-posframe
-       vterm-toggle wgrep yasnippet-snippets))
+       vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
     '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
 	"master")

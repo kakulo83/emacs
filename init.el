@@ -73,6 +73,7 @@
 ;;; Consider alternative elixir language server:   https://www.elixir-tools.dev/docs/next-ls/editors/#emacs-with-lsp-mode
 ;;;
 ;;; Look into elixir tooling here:  https://github.com/Sasanidas/Apprentice?tab=readme-ov-file
+;;; https://www.reddit.com/r/emacs/comments/wwr6h2/setting_up_snippets_and_auto_completion_with/
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))

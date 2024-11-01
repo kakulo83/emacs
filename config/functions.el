@@ -208,7 +208,7 @@ _R_: rename
 
 (defhydra hydra-snippets ()
   "snippets"
-  ("i" robert/yasnippet-insert "insert")
+  ("i" robert/yasnippet-insert "insert" :exit t)
   ("n" yas-new-snippet "new")
   ("e" yas-visit-snippet-file "edit")
   ("l" yas-describe-tables "list"))
