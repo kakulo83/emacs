@@ -139,7 +139,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-acario-light t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -728,7 +728,7 @@
   (setq yas-snippet-dirs
     '( "~/.emacs.d/snippets"
        "~/.emacs.d/elpa/yasnippet-snippets-20241014.949/snippets"
-       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets/rspec-mode"
+       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets"
        ))
   (setq yas-indent-line 'auto)
   :init
