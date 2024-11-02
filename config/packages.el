@@ -137,21 +137,21 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-;(use-package modus-themes
-;  :config
-;  (defun customize-modus ()
-;    (if (member 'modus-vivendi custom-enabled-themes)
-;      (custom-theme-set-faces
-;	'modus-vivendi
-;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
-;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-;  (load-theme 'modus-vivendi-deuteranopia t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+  :config
+  ;(defun customize-modus ()
+  ;  (if (member 'modus-vivendi custom-enabled-themes)
+  ;    (custom-theme-set-faces
+  ;	'modus-vivendi
+  ;      '(fringe ((t (:background "black" :foreground "#ffffff")))))))
+  ;(add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
@@ -716,30 +716,25 @@
   :config
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   :init
+  (add-hook 'completion-at-point-functions #'yasnippet-capf)
+  (add-hook 'completion-at-point-functions #'eglot-completion-at-point)
   (add-hook 'completion-at-point-functions #'cape-file))
-  ;(add-hook 'completion-at-point-functions #'eglot-completion-at-point)
-  ;(add-hook 'completion-at-point-functions #'cape-file)
 
 
 (use-package yasnippet
   :ensure t
-  :config
-  (yas-reload-all)
-  (setq yas-snippet-dirs
-    '( "~/.emacs.d/snippets"
-       "~/.emacs.d/elpa/yasnippet-snippets-20241014.949/snippets"
-       "~/.emacs.d/elpa/rspec-mode-20230819.154/snippets"
-       ))
-  (setq yas-indent-line 'auto)
   :init
+  (setq yas-snippet-dirs '( "~/.emacs.d/snippets"))
+  (setq yas-indent-line 'auto)
   (yas-global-mode 1))
 
 
 (use-package yasnippet-snippets
-  :after yasnippet)
+  :after yasnippet
+  :init
+  (add-to-list 'yas-snippet-dirs yasnippet-snippets-dir))
 
 
-(use-package yasnippet-capf)
 (use-package yasnippet-capf
   :after cape
   :config
@@ -755,11 +750,9 @@
 (use-package inf-ruby)
 
 
-(use-package rspec-mode
-  :config
-  (eval-after-load 'rpsec-mode
-    '(rspec-install-snippets)))
-
+(use-package rspec-mode)
+(eval-after-load 'rspec-mode
+ '(rspec-install-snippets))
 
 (use-package nodejs-repl)
 

@@ -206,12 +206,18 @@ _R_: rename
   ("=" eglot-format-buffer)
   ("a" eglot-code-actions))
 
-(defhydra hydra-snippets ()
-  "snippets"
-  ("i" robert/yasnippet-insert "insert" :exit t)
-  ("n" yas-new-snippet "new")
-  ("e" yas-visit-snippet-file "edit")
-  ("l" yas-describe-tables "list"))
+(defhydra hydra-snippets (:hint nil)
+  "
+Snippet Actions
+-----------------
+_i_: insert   _n_: new    _l_: list all snippets
+_r_: reload   _e_: edit
+"
+  ("i" robert/yasnippet-insert :exit t)
+  ("n" yas-new-snippet :exit t)
+  ("e" yas-visit-snippet-file :exit t)
+  ("r" yas-reload-all)
+  ("l" yas-describe-tables))
 
 (defhydra hydra-repl (:color green :hint nil)
   "
