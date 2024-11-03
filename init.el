@@ -76,6 +76,8 @@
 ;;; https://www.reddit.com/r/emacs/comments/wwr6h2/setting_up_snippets_and_auto_completion_with/
 ;;;
 ;;; Check out the prodigy package for managing external services:  https://github.com/rejeep/prodigy.el
+;;; - Clean up Hydra Menus
+;;; - find way to only show my snippets
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))

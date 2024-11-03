@@ -190,30 +190,36 @@ _f_: full-screen
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
-(defhydra hydra-eglot ()
+(defhydra hydra-eglot (:hint nil)
   "
 Eglot Actions
 --------------
 _s_: start
-_d_: go definition     _=_: format buffer
+_d_: go definition     _=_: format buffer      _X_: shutdown all
 _r_: find references   _a_: apply code action
 _R_: rename
 "
-  ("s" eglot)
+  ("s" eglot :exit t)
   ("d" xref-find-definitions)
   ("r" xref-find-references)
   ("R" eglot-rename)
   ("=" eglot-format-buffer)
-  ("a" eglot-code-actions))
+  ("a" eglot-code-actions)
+  ("X" eglot-shutdown-all :exit t))
+
+(defun robert/find-snippet-by-name ()
+  (interactive)
+  (yas-expand-snippet (yas-lookup-snippet "name-of-your-snippet")))
 
 (defhydra hydra-snippets (:hint nil)
   "
 Snippet Actions
 -----------------
 _i_: insert   _n_: new    _l_: list all snippets
-_r_: reload   _e_: edit
+_r_: reload   _e_: edit   _f_: find by name
 "
   ("i" robert/yasnippet-insert :exit t)
+  ("f" robert/find-snippet-by-name :exit t)
   ("n" yas-new-snippet :exit t)
   ("e" yas-visit-snippet-file :exit t)
   ("r" yas-reload-all)

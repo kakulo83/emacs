@@ -322,6 +322,7 @@
   :defer t
   :hook (
 	  (ruby-ts-mode . eglot-ensure)
+	  (python-ts-mode . eglot-ensure)
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
 	  (js-mode . eglot-ensure)
@@ -715,10 +716,6 @@
   :after corfu
   :config
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
-  ;:init
-  ;(add-hook 'completion-at-point-functions #'yasnippet-capf)
-  ;(add-hook 'completion-at-point-functions #'eglot-completion-at-point)
-  ;(add-hook 'completion-at-point-functions #'cape-file))
 
 
 (use-package yasnippet
@@ -738,11 +735,13 @@
 (use-package yasnippet-capf)
 
 
+; https://stackoverflow.com/questions/72601990/how-to-show-suggestions-for-yasnippets-when-using-eglot?rq=3
 (defun my/eglot-capf ()
   (setq-local completion-at-point-functions
     (list (cape-capf-super
 	    #'eglot-completion-at-point
 	    #'yasnippet-capf
+	    #'cape-history
 	    #'cape-file))))
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
