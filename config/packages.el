@@ -736,18 +736,15 @@
 
 
 (use-package yasnippet-capf)
-  ;:after cape
-  ;:config
-  ;(add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
-(setq-local completion-at-point-functions
-            (list (cape-capf-super #'yasnippet-capf #'cape-ifile  #'eglot-completion-at-point)))
 
-;(defalias 'cape-eglot-yas
-;    (cape-capf-super #'eglot-completion-at-point
-;                     #'yasnippet-capf))
-;(add-to-list 'completion-at-point-functions #'cape-eglot-yas)
-
+(defun my/eglot-capf ()
+  (setq-local completion-at-point-functions
+    (list (cape-capf-super
+	    #'eglot-completion-at-point
+	    #'yasnippet-capf
+	    #'cape-file))))
+(add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
 
 (use-package inf-ruby)
