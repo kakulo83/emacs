@@ -62,6 +62,8 @@
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+ '(tab-bar-tab ((t (:inherit tab-bar :foreground "orange"))))
+ '(tab-bar-tab-inactive ((t (:box nil))))
  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin)))))
 
 (provide 'custom)

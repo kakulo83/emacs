@@ -142,15 +142,15 @@
 ;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-elea-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 (use-package modus-themes
   :config
-  ;(defun customize-modus ()
-  ;  (if (member 'modus-vivendi custom-enabled-themes)
-  ;    (custom-theme-set-faces
-  ;	'modus-vivendi
-  ;      '(fringe ((t (:background "black" :foreground "#ffffff")))))))
-  ;(add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
+  (defun customize-modus ()
+    (if (member 'modus-vivendi custom-enabled-themes)
+      (custom-theme-set-faces
+  	'modus-vivendi
+        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
+  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
   (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
@@ -208,7 +208,7 @@
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
   (setq tab-bar-new-button-show nil)
   (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-  (set-face-attribute 'tab-bar-tab nil :foreground "orange")
+  (set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
@@ -714,11 +714,11 @@
 (use-package cape
   :after corfu
   :config
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
-  :init
-  (add-hook 'completion-at-point-functions #'yasnippet-capf)
-  (add-hook 'completion-at-point-functions #'eglot-completion-at-point)
-  (add-hook 'completion-at-point-functions #'cape-file))
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  ;:init
+  ;(add-hook 'completion-at-point-functions #'yasnippet-capf)
+  ;(add-hook 'completion-at-point-functions #'eglot-completion-at-point)
+  ;(add-hook 'completion-at-point-functions #'cape-file))
 
 
 (use-package yasnippet
@@ -735,10 +735,13 @@
   (add-to-list 'yas-snippet-dirs yasnippet-snippets-dir))
 
 
-(use-package yasnippet-capf
-  :after cape
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+(use-package yasnippet-capf)
+  ;:after cape
+  ;:config
+  ;(add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+(setq-local completion-at-point-functions
+            (list (cape-capf-super #'yasnippet-capf #'cape-ifile  #'eglot-completion-at-point)))
 
 ;(defalias 'cape-eglot-yas
 ;    (cape-capf-super #'eglot-completion-at-point
@@ -753,6 +756,7 @@
 (use-package rspec-mode)
 (eval-after-load 'rspec-mode
  '(rspec-install-snippets))
+
 
 (use-package nodejs-repl)
 
