@@ -78,6 +78,7 @@
 ;;; Check out the prodigy package for managing external services:  https://github.com/rejeep/prodigy.el
 ;;; - Clean up Hydra Menus
 ;;; - find way to only show my snippets
+;;; - find a way to get autocomplete options for shell commands... maybe copilot ?
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -302,7 +303,7 @@ FEATURE may be any one of:
 
 ;; Hide frame border (called the fringe)
 (set-fringe-mode '(8 . 0))
-;(set-face-attribute 'fringe nil :background 'unspecified)
+(set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; Stop eldoc from echoing in minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -335,7 +336,7 @@ FEATURE may be any one of:
 (push '(ruby-mode . ruby-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-(push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+(push '(js-mode. js-ts-mode) major-mode-remap-alist)
 (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
 

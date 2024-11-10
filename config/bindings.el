@@ -24,6 +24,7 @@
   "n"  'robert/open-notes-dired-in-tab
   "N"  'robert/open-notes-in-split-with-embark
   "p"  'tabspaces-project-switch-project-open-file
+  "P"  'prodigy
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
   "x"  'eval-region
@@ -108,6 +109,13 @@
 (evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
 (evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
 (evil-define-key 'normal dired-sidebar-mode-map (kbd "-") 'dired-sidebar-up-directory)
+
+(evil-define-key 'normal prodigy-mode-map (kbd "s") 'prodigy-start)
+(evil-define-key 'normal prodigy-mode-map (kbd "S") 'prodigy-stop)
+(evil-define-key 'normal prodigy-mode-map (kbd "/") 'prodigy-add-name-filter)
+(evil-define-key 'normal prodigy-mode-map (kbd "F") 'prodigy-clear-filters)
+(evil-define-key 'normal prodigy-mode-map (kbd "q") 'quit-window)
+(evil-define-key 'normal prodigy-mode-map (kbd "$") 'prodigy-display-process)
 
 (provide 'bindings)
 ;;; bindings.el ends here

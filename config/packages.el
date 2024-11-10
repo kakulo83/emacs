@@ -139,29 +139,29 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-maris-light t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-(use-package modus-themes
-  :config
-  (defun customize-modus ()
-    (if (member 'modus-vivendi custom-enabled-themes)
-      (custom-theme-set-faces
-  	'modus-vivendi
-        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
-  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;(use-package modus-themes
+;  :config
+;  (defun customize-modus ()
+;    (if (member 'modus-vivendi custom-enabled-themes)
+;      (custom-theme-set-faces
+;  	'modus-vivendi
+;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
+;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
-;  (setq catppuccin-flavor 'latte)  ; latte mocha macchiato frappe
+;  (setq catppuccin-flavor 'macchiato)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-;(use-package tron-legacy-theme
-;  :config
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -311,6 +311,7 @@
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
+  (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
   (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
 
   ;; setting language specific lsp configs
@@ -325,7 +326,7 @@
 	  (python-ts-mode . eglot-ensure)
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
-	  (js-mode . eglot-ensure)
+	  (js-ts-mode . eglot-ensure)
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
 
@@ -596,7 +597,8 @@
   (org-image-actual-width 300)
   (org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
   :config
-  (require 'org-download))
+  (require 'org-download)
+  (add-hook 'org-mode-hook 'org-download-enable))
 
 
 (use-package simple-httpd)
@@ -815,5 +817,23 @@
   (global-flycheck-eglot-mode 1))
 
 
+(use-package prodigy
+  :config
+  (prodigy-define-service
+    :name "Elixir Server"
+    :command "mix"
+    :args '("phx.server")
+    :cwd "/Users/robertcarter/Developer/elixir/elixir-phoenix"
+    :tags '(elixir)
+    :stop-signal 'kill
+    :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+    :name "Rails Server"
+    :command "bundle"
+    :args '("exec" "rails" "server")
+    :cwd "/Users/robertcarter/Developer/rails/testapp"
+    :tags '(rails)
+    :stop-signal 'kill
+    :kill-process-buffer-on-stop t))
 
 ;;; packages.el ends here

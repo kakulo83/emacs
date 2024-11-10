@@ -25,10 +25,11 @@
        lsp-ui magit marginalia minimap modus-themes multi-vterm
        nano-theme nodejs-repl nvm nyan-mode olivetti orderless
        org-bullets org-download org-drill org-roam-ui package-lint
-       pythonic pyvenv quelpa-use-package restclient robe rspec-mode
-       smart-jump symbols-outline tabspaces tron-legacy-theme
-       undo-tree use-package-ensure-system-package vertico-posframe
-       vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
+       prodigy pythonic pyvenv quelpa-use-package restclient robe
+       rspec-mode smart-jump symbols-outline tabspaces
+       tron-legacy-theme undo-tree use-package-ensure-system-package
+       vertico-posframe vterm-toggle wgrep yasnippet-capf
+       yasnippet-snippets))
  '(package-vc-selected-packages
     '((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
 	"master")

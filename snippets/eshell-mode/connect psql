@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: connect psql
+# key: psql
+# --
+psql -U robertcarter -d postgres
