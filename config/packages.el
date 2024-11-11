@@ -312,6 +312,9 @@
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
+	(add-to-list 'eglot-server-programs '(html-ts-mode "vscode-html-language-server" "--stdio"))
+	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
+	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
   (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
 
   ;; setting language specific lsp configs
@@ -322,11 +325,12 @@
   (setq eglot-autoshutdown t)
   :defer t
   :hook (
+		(html-ts-mode . eglot-ensure)
 	  (ruby-ts-mode . eglot-ensure)
 	  (python-ts-mode . eglot-ensure)
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
-	  (js-ts-mode . eglot-ensure)
+	  (js-mode . eglot-ensure)
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
 
