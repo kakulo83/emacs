@@ -137,12 +137,12 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+(use-package doom-themes
+  :config
+  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-night t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;  :config
 ;  (defun customize-modus ()
@@ -159,9 +159,9 @@
 ;  :config
 ;  (setq catppuccin-flavor 'macchiato)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-(use-package tron-legacy-theme
-  :config
-  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -171,7 +171,6 @@
 ;(use-package gotham-theme
 ;  :config
 ;  (load-theme 'gotham t))
-
 
 (use-package tabspaces
   :hook
@@ -315,6 +314,7 @@
 	(add-to-list 'eglot-server-programs '(html-ts-mode "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
+	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
   (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
 
   ;; setting language specific lsp configs
