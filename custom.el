@@ -19,7 +19,7 @@
 			 copilot-chat corfu dape dired-sidebar diredfl disaster
 			 doom-modeline doom-themes dumb-jump ef-themes embark-consult
 			 envrc eshell-toggle evil-collection exec-path-from-shell exunit
-			 flycheck-eglot format-all frame-local gcmh git-timemachine
+			 format-all frame-local gcmh git-timemachine
 			 gotham-theme helpful hide-mode-line highlight-symbol
 			 hydra-posframe inf-elixir jbeans-theme kind-icon load-env-vars
 			 lsp-ui magit marginalia minimap modus-themes multi-vterm

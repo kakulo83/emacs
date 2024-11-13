@@ -190,22 +190,6 @@ _f_: full-screen
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
-(defhydra hydra-eglot (:hint nil)
-  "
-Eglot Actions
---------------
-_s_: start
-_d_: go definition     _=_: format buffer      _X_: shutdown all
-_r_: find references   _a_: apply code action
-_R_: rename
-"
-  ("s" eglot :exit t)
-  ("d" xref-find-definitions)
-  ("r" xref-find-references)
-  ("R" eglot-rename)
-  ("=" eglot-format-buffer)
-  ("a" eglot-code-actions)
-  ("X" eglot-shutdown-all :exit t))
 
 (defun robert/find-snippet-by-name ()
   (interactive)

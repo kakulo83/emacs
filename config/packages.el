@@ -299,48 +299,6 @@
                                (gcmh-mode))))
 
 
-(use-package eglot
-  ; Documentation:
-  ; configuring eglot: https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#Project_002dspecific-configuration
-  ; 
-  ; M-x eglot-workspace-configuration
-  :config
-  ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-  ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
-  ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
-  (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
-  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
-  (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
-	(add-to-list 'eglot-server-programs '(html-ts-mode "vscode-html-language-server" "--stdio"))
-	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
-	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
-	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
-  (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
-
-  ;; setting language specific lsp configs
-  (setq-default eglot-workspace-configuration
-    '((elixir-ls
-	(elixirLS.autoInsertRequiredAlias . nil))))
-  (setq eglot-events-buffer-size 0)
-  (setq eglot-autoshutdown t)
-  :defer t
-  :hook (
-		(html-ts-mode . eglot-ensure)
-	  (ruby-ts-mode . eglot-ensure)
-	  (python-ts-mode . eglot-ensure)
-	  (elixir-ts-mode . eglot-ensure)
-	  (go-mode . eglot-ensure)
-	  (js-mode . eglot-ensure)
-	  (typescript-ts-mode . eglot-ensure)
-	  (sql-mode . eglot-ensure)))
-
-;; ignore jsonrpc events to speed up eglot
-(fset #'jsonrpc--log-event #'ignore)
-
-(with-eval-after-load 'eglot
-  (setq completion-category-defaults nil))
-
-
 (use-package dape
   ;;https://github.com/svaante/dape?tab=readme-ov-file#configuration
   )
@@ -719,9 +677,7 @@
 
 
 (use-package cape
-  :after corfu
-  :config
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  :after corfu)
 
 
 (use-package yasnippet
@@ -739,17 +695,6 @@
 
 
 (use-package yasnippet-capf)
-
-
-; https://stackoverflow.com/questions/72601990/how-to-show-suggestions-for-yasnippets-when-using-eglot?rq=3
-(defun my/eglot-capf ()
-  (setq-local completion-at-point-functions
-    (list (cape-capf-super
-	    #'eglot-completion-at-point
-	    #'yasnippet-capf
-	    #'cape-history
-	    #'cape-file))))
-(add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
 
 (use-package inf-ruby)
@@ -779,8 +724,6 @@
 
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
 (use-package elixir-ts-mode
-  :hook (elixir-ts-mode . eglot-ensure)
-  (before-save . eglot-format)
   :config
   (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
 
@@ -811,14 +754,6 @@
        (reusable-frames . visible)
        (window-height . 0.33)))
   :init (global-flycheck-mode))
-
-
-(use-package flycheck-eglot
-  :ensure t
-  :after (flycheck eglot)
-  :custom (flycheck-eglot-exclusive nil)
-  :config
-  (global-flycheck-eglot-mode 1))
 
 
 (use-package prodigy

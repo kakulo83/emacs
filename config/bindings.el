@@ -16,7 +16,6 @@
   "C"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
-  "E"  'hydra-eglot/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
   "i"  'hydra-repl/body
@@ -88,7 +87,6 @@
   (define-key embark-region-map "f" #'fill-region)
   (define-key embark-region-map "b" #'vc-region-history)
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
-  (define-key embark-identifier-map "n" #'eglot-rename)
   (define-key embark-identifier-map "t" #'hydra-test-runner/body)
   (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
   (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
