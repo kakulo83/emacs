@@ -79,6 +79,10 @@
 ;;; - Clean up Hydra Menus
 ;;; - find way to only show my snippets
 ;;; - find a way to get autocomplete options for shell commands... maybe copilot ?
+;;;
+;;; Check out https://github.com/radian-software/apheleia
+;;;
+;;; Emacs Config for web development:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config
 
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -113,6 +117,9 @@
 (setq locale-coding-system 'utf-8)
 (setq default-file-name-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
+
+;; enable delimeter pairing
+(electric-pair-mode t)
 
 ;; Session management
 (require 'desktop)
@@ -339,13 +346,14 @@ FEATURE may be any one of:
 
 (push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
 (push '(json-mode . json-ts-mode) major-mode-remap-alist)
+(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(html-mode . html-ts-mode) major-mode-remap-alist)
 (push '(ruby-mode . ruby-ts-mode) major-mode-remap-alist)
 (push '(css-mode . css-ts-mode) major-mode-remap-alist)
 (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-(push '(js-mode. js-ts-mode) major-mode-remap-alist)
-(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+(push '(js-mode. typescript-ts-mode) major-mode-remap-alist)
+(push '(js2-mode . typescript-ts-mode) major-mode-remap-alist)
 (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
 
 ;; Do not clone current buffer into new tab
