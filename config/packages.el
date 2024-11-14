@@ -843,13 +843,14 @@
       :config
       (os/setup-install-grammars))
 
-
+; lsp-mode, treesitter, and lsp-ui config taken from:
+; https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config#org2b45109
 (use-package lsp-mode
 	:diminish "LSP"
 	:ensure t
 	:hook ((lsp-mode . lsp-diagnostics-mode)
 					(lsp-mode . lsp-enable-which-key-integration)
-					((tsx-ts-mode typescript-ts-mode js-ts-mode) . lsp-deferred))
+					((tsx-ts-mode typescript-ts-mode js-ts-mode elixir-ts-mode) . lsp-deferred))
 	:custom
 	(lsp-keymap-prefix "C-c l")           ; Prefix for LSP actions
 	(lsp-completion-provider :none)       ; Using Corfu as the provider
@@ -897,9 +898,8 @@
   ;; semantic
   (lsp-semantic-tokens-enable nil)      ; Related to highlighting, and we defer to treesitter
 
-  :init
-  (setq lsp-use-plists t)
 	:preface
+
 	(defun lsp-booster--advice-json-parse (old-fn &rest args)
         "Try to parse bytecode instead of json."
         (or
@@ -921,16 +921,19 @@
                 (message "Using emacs-lsp-booster for %s!" orig-result)
                 (cons "emacs-lsp-booster" orig-result))
             orig-result)))
-      :init
-      (setq lsp-use-plists t)
-      ;; Initiate https://github.com/blahgeek/emacs-lsp-booster for performance
-      (advice-add (if (progn (require 'json)
-                             (fboundp 'json-parse-buffer))
-                      'json-parse-buffer
-                    'json-read)
-                  :around
-                  #'lsp-booster--advice-json-parse)
-      (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+
+	:init
+
+	(setq lsp-use-plists t)
+	;; Initiate https://github.com/blahgeek/emacs-lsp-booster for performance
+	(advice-add (if (progn (require 'json)
+										(fboundp 'json-parse-buffer))
+								'json-parse-buffer
+								'json-read)
+		:around
+		#'lsp-booster--advice-json-parse)
+	(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+
 
 
 
