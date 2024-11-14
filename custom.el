@@ -15,11 +15,14 @@
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages nil)
  '(package-vc-selected-packages
-		'((miasma-theme :url "https://github.com/daut/miasma-theme.el")
+		'((lsp-tailwindcss :url
+				"https://github.com/merrickluo/lsp-tailwindcss" :branch
+				"master")
 			 (copilot-chat :url "https://github.com/chep/copilot-chat.el"
 				 :branch "master")
 			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
-				 :branch "main"))))
+				 :branch "main")
+			 (miasma-theme :url "https://github.com/daut/miasma-theme.el"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

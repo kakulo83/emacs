@@ -953,6 +953,7 @@
 
 
 (use-package lsp-tailwindcss
+	:after lsp-mode
 	:vc (:url "https://github.com/merrickluo/lsp-tailwindcss"
 				:rev :newest
 				:branch "master")
@@ -965,8 +966,7 @@
 							 typescript-ts-mode
 							 tsx-ts-mode
 							 js2-mode
-							 js-ts-mode
-							 clojure-mode))
+							 js-ts-mode))
 		(add-to-list 'lsp-tailwindcss-major-modes tw-major-mode)))
 
 ;;; packages.el ends here
