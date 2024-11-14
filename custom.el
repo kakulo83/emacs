@@ -13,23 +13,7 @@
 			 "98b4ef49c451350c28a8c20c35c4d2def5d0b8e5abbc962da498c423598a1cdd"
 			 default))
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
- '(package-selected-packages
-		'(ace-window afternoon-theme all-the-icons-dired all-the-icons-ibuffer
-			 balanced-windows bug-hunter cape catppuccin-theme copilot
-			 copilot-chat corfu dape dired-sidebar diredfl disaster
-			 doom-modeline doom-themes dumb-jump ef-themes embark-consult
-			 envrc eshell-toggle evil-collection exec-path-from-shell exunit
-			 format-all frame-local gcmh git-timemachine
-			 gotham-theme helpful hide-mode-line highlight-symbol
-			 hydra-posframe inf-elixir jbeans-theme kind-icon load-env-vars
-			 lsp-ui magit marginalia minimap modus-themes multi-vterm
-			 nano-theme nodejs-repl nvm nyan-mode olivetti orderless
-			 org-bullets org-download org-drill org-roam-ui package-lint
-			 prodigy pythonic pyvenv quelpa-use-package restclient robe
-			 rspec-mode smart-jump symbols-outline tabspaces
-			 tron-legacy-theme undo-tree use-package-ensure-system-package
-			 vertico-posframe vterm-toggle wgrep yasnippet-capf
-			 yasnippet-snippets))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
 		'((miasma-theme :url "https://github.com/daut/miasma-theme.el")
 			 (copilot-chat :url "https://github.com/chep/copilot-chat.el"

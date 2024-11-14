@@ -31,3 +31,4 @@ sessions
 node_modules
 package-lock.json
 package.json
+.lsp-session

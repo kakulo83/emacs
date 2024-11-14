@@ -118,6 +118,9 @@
 (setq default-file-name-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+;; needed for lsp config
+(setenv "LSP_USE_PLISTS" "true")
+
 ;; enable delimeter pairing
 (electric-pair-mode t)
 
@@ -168,6 +171,7 @@ FEATURE may be any one of:
 (setq lisp-indent-offset 2)
 (setq js-indent-level 2)
 (setq js-jsx-indent-level 2)
+(setq-default css-indent-offset 2)
 
 ;; tab-width is what eglot-format uses to indent the current mode
 (setq-default tab-width 2)
@@ -321,41 +325,6 @@ FEATURE may be any one of:
 (setq eldoc-echo-area-use-multiline-p nil)
 (setq eldoc-echo-area-prefer-doc-buffer t)
 
-; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
-; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
-(setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-				 (c "https://github.com/tree-sitter/tree-sitter-c")
-				 (css "https://github.com/tree-sitter/tree-sitter-css")
-				 (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-				 (heex "https://github.com/phoenixframework/tree-sitter-heex")
-				 (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-         (go "https://github.com/tree-sitter/tree-sitter-go")
-         (html "https://github.com/tree-sitter/tree-sitter-html")
-         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-         (json "https://github.com/tree-sitter/tree-sitter-json")
-         (make "https://github.com/alemuller/tree-sitter-make")
-         (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-         (python "https://github.com/tree-sitter/tree-sitter-python")
-				 (ruby  "https://github.com/tree-sitter/tree-sitter-ruby")
-				 (sql "https://github.com/m-novikov/tree-sitter-sql")
-         (toml "https://github.com/tree-sitter/tree-sitter-toml")
-         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-
-(push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
-(push '(json-mode . json-ts-mode) major-mode-remap-alist)
-(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
-(push '(css-mode . css-ts-mode) major-mode-remap-alist)
-(push '(html-mode . html-ts-mode) major-mode-remap-alist)
-(push '(ruby-mode . ruby-ts-mode) major-mode-remap-alist)
-(push '(css-mode . css-ts-mode) major-mode-remap-alist)
-(push '(python-mode . python-ts-mode) major-mode-remap-alist)
-(push '(js-mode. typescript-ts-mode) major-mode-remap-alist)
-(push '(js2-mode . typescript-ts-mode) major-mode-remap-alist)
-(push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
 
@@ -369,6 +338,7 @@ FEATURE may be any one of:
 (setq manual-program "gman")
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
+
 ;(add-to-list 'exec-path "/opt/homebrew/bin")
 
 ;; Set the modeline to show only the buffer name
