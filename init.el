@@ -83,7 +83,9 @@
 ;;; Check out https://github.com/radian-software/apheleia
 ;;;
 ;;; Emacs Config for web development:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config
-
+;;;
+;;; Consider using treesit-auto: https://github.com/renzmann/treesit-auto
+;;;
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
