@@ -13,7 +13,19 @@
 			 "98b4ef49c451350c28a8c20c35c4d2def5d0b8e5abbc962da498c423598a1cdd"
 			 default))
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
- '(package-selected-packages nil)
+ '(package-selected-packages
+		'(ace-window all-the-icons-dired all-the-icons-ibuffer
+			 balanced-windows bug-hunter cape copilot copilot-chat corfu
+			 dape dired-sidebar diredfl disaster doom-modeline doom-themes
+			 embark-consult eshell-toggle evil-collection
+			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
+			 git-timemachine helpful hide-mode-line highlight-symbol hydra
+			 inf-elixir inf-ruby kind-icon lsp-tailwindcss lsp-ui marginalia
+			 modus-themes multi-vterm nodejs-repl nvm nyan-mode olivetti
+			 orderless org-bullets org-download org-drill org-roam-ui
+			 prodigy pyvenv restclient rspec-mode symbols-outline tabspaces
+			 undo-tree vertico vterm-toggle wgrep yasnippet-capf
+			 yasnippet-snippets))
  '(package-vc-selected-packages
 		'((lsp-tailwindcss :url
 				"https://github.com/merrickluo/lsp-tailwindcss" :branch
