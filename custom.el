@@ -16,9 +16,9 @@
  '(package-selected-packages
 		'(ace-window all-the-icons-dired all-the-icons-ibuffer
 			 balanced-windows bug-hunter cape copilot copilot-chat corfu
-			 dape dired-sidebar diredfl disaster doom-modeline doom-themes
+			 dape dired-sidebar diredfl disaster doom-modeline
 			 embark-consult eshell-toggle evil-collection
-			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
+			 exec-path-from-shell exunit flycheck format-all gcmh
 			 git-timemachine helpful hide-mode-line highlight-symbol hydra
 			 inf-elixir inf-ruby kind-icon lsp-tailwindcss lsp-ui marginalia
 			 modus-themes multi-vterm nodejs-repl nvm nyan-mode olivetti

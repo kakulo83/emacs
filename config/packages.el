@@ -687,6 +687,8 @@
   :init
   (setq yas-snippet-dirs '( "~/.emacs.d/snippets"))
   (setq yas-indent-line 'auto)
+	(setq yas-prompt-functions '(yas-dropdown-prompt
+																 yas-completing-prompt))
   (yas-global-mode 1))
 
 
@@ -900,6 +902,9 @@
   ;; semantic
   (lsp-semantic-tokens-enable nil)      ; Related to highlighting, and we defer to treesitter
 
+	;:config
+	;((typescript-mode . ((lsp-enabled-clients . (ts-ls tailwindcss vscode-html-language-server)))))
+
 	:preface
 
 	(defun lsp-booster--advice-json-parse (old-fn &rest args)
@@ -938,7 +943,6 @@
 
 
 
-
 (use-package lsp-ui
 		:ensure t
 		:commands
@@ -953,11 +957,12 @@
 								lsp-ui-doc-include-signature t       ; Show signature
 								lsp-ui-doc-position 'at-point))
 
+
 (use-package lsp-tailwindcss
-	:after lsp-mode
-	:vc (:url "https://github.com/merrickluo/lsp-tailwindcss"
-				:branch "master")
-	:init (setq lsp-tailwindcss-add-on-mode t)
+	:ensure t
+	:init
+	(setq lsp-tailwindcss-server-path "/opt/homebrew/bin/tailwindcss-language-server")
+	(setq lsp-tailwindcss-add-on-mode t)
 	:config
 	(dolist (tw-major-mode
 						'(css-mode
@@ -968,5 +973,22 @@
 							 js2-mode
 							 js-ts-mode))
 		(add-to-list 'lsp-tailwindcss-major-modes tw-major-mode)))
+
+
+;(use-package lsp-tailwindcss
+;	:after lsp-mode
+;	:vc (:url "https://github.com/merrickluo/lsp-tailwindcss"
+;				:branch "master")
+;	:init (setq lsp-tailwindcss-add-on-mode t)
+;	:config
+;	(dolist (tw-major-mode
+;						'(css-mode
+;							 css-ts-mode
+;							 typescript-mode
+;							 typescript-ts-mode
+;							 tsx-ts-mode
+;							 js2-mode
+;							 js-ts-mode))
+;		(add-to-list 'lsp-tailwindcss-major-modes tw-major-mode)))
 
 ;;; packages.el ends here
