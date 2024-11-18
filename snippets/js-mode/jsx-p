@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jsx-p
+# key: p
+# --
+<p className='${0}'>
+  ${1}
+</p>

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jsx-h1
+# key: h1 
+# --
+<h1 className='${0}'>
+  ${1}
+</h1>

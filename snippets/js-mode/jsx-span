@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: jsx-span
+# key: span
+# --
+<span className='${0}'>${1}</span>

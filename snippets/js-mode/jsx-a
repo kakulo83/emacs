@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: jsx-anchor
+# key: a
+# --
+<a src='${0}'>${1}</a>

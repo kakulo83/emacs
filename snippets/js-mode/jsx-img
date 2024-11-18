@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: jsx-img
+# key: img
+# --
+<img src='${1}' className='${2}'/>

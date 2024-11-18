@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jsx-div
+# key: div
+# --
+<div className='${0}'>
+  ${1}
+</div>
