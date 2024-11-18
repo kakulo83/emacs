@@ -137,21 +137,22 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-;(use-package modus-themes
-;  :config
-;  (defun customize-modus ()
-;    (if (member 'modus-vivendi custom-enabled-themes)
-;      (custom-theme-set-faces
-;  	'modus-vivendi
-;        '(fringe ((t (:background "black" :foreground "#ffffff")))))))
-;  (add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+  ;:config
+  ;(defun customize-modus ()
+  ;  (if (member 'modus-vivendi custom-enabled-themes)
+  ;    (custom-theme-set-faces
+  ;	'modus-vivendi
+  ;      '(fringe ((t (:background "black" :foreground "#ffffff")))))))
+  ;(add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
+	:config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
@@ -311,7 +312,7 @@
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
-	(add-to-list 'eglot-server-programs '(html-ts-mode "vscode-html-language-server" "--stdio"))
+	(add-to-list 'eglot-server-programs '((html-ts-mode js-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
@@ -681,8 +682,8 @@
   :ensure t
   :custom
   (corfu-auto t)
-  (corfu-auto-prefix 1)
-  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.3)
   (corfu-min-width 30)
   (corfu-popupinfo-min-width 60)
   (corfu-quit-no-match 'separator)

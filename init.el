@@ -86,6 +86,8 @@
 ;;;
 ;;; Consider using treesit-auto: https://github.com/renzmann/treesit-auto
 ;;;
+;;; lsp-mode with multi server for major-mode:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config#orgc542f94
+;;;
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
