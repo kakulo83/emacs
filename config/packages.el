@@ -139,18 +139,11 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 (use-package modus-themes
-  ;:config
-  ;(defun customize-modus ()
-  ;  (if (member 'modus-vivendi custom-enabled-themes)
-  ;    (custom-theme-set-faces
-  ;	'modus-vivendi
-  ;      '(fringe ((t (:background "black" :foreground "#ffffff")))))))
-  ;(add-hook 'modus-themes-after-load-theme-hook 'customize-modus)
 	:config
   (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
@@ -158,7 +151,7 @@
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
-;  (setq catppuccin-flavor 'macchiato)  ; latte mocha macchiato frappe
+;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
 ;(use-package tron-legacy-theme
 ;  :config
@@ -312,11 +305,11 @@
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
-	(add-to-list 'eglot-server-programs '((html-ts-mode js-mode) "vscode-html-language-server" "--stdio"))
+	(add-to-list 'eglot-server-programs '((html-ts-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
-  (add-to-list 'eglot-server-programs '(typescript-mode "typescript-language-server" "--stdio"))
+  (add-to-list 'eglot-server-programs '((typescript-mode js-mode) "typescript-language-server" "--stdio"))
 
   ;; setting language specific lsp configs
   (setq-default eglot-workspace-configuration
