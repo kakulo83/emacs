@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: jsx-input
+# key: inp
+# --
+<input
+	type='${1}'
+	value={${2}}
+	className='${3}'
+	placeholder='${4}'
+/>

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: jsx-label
+# key: lbl
+# --
+<label htmlFor="${1}">${2}</label>

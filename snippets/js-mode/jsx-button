@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: jsx-button
+# key: btn
+# --
+<button className='${1}'>${2}</button>
