@@ -300,10 +300,12 @@ _t_: toggle on/off
 _c_: chat
 _e_: explain region
 _d_: document region
+_l_: lama menus
 "
   ("t" #'robert/copilot-change-activation :exit t)
   ("c" #'open-copilot-in-split :exit t)
   ("e" copilot-chat-explain :exit t)
+	("l" ellama-transient-main-menu)
   ("d" copilot-chat-doc :exit t))
 
 (defhydra hydra-vc (:color green :hint nil)

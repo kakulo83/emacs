@@ -142,7 +142,7 @@
 ;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-deuteranopia-dark t)) ; ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 (use-package modus-themes
 	:config
   (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
@@ -165,6 +165,12 @@
 ;(use-package gotham-theme
 ;  :config
 ;  (load-theme 'gotham t))
+;(use-package reykjavik-theme
+;	:config
+;	(load-theme 'reykjavik t))
+;(use-package color-theme-sanityinc-tomorrow
+;	:config
+;	(load-theme 'sanityinc-tomorrow-blue t))
 
 (use-package tabspaces
   :hook
@@ -213,7 +219,18 @@
   (setq vertico-count 20)
   (setq vertico-resize nil)
   :init
-  (vertico-mode))
+  (vertico-mode)
+	(vertico-multiform-mode))
+
+
+(use-package vertico-posframe
+	:config
+	(setq vertico-posframe-parameters '((alpha . 85)))
+  :init
+  (vertico-posframe-mode 1))
+(setq vertico-multiform-commands
+		'((consult-line (:not posframe))
+		(t posframe)))
 
 
 (use-package orderless
@@ -259,6 +276,11 @@
   (setq consult-project-root-function (lambda () (project-root (project-current)))))
 
 
+(use-package consult-xref-stack
+  :vc
+  (:url "https://github.com/brett-lempereur/consult-xref-stack" :branch "main"))
+
+
 (use-package marginalia
   :init
   (marginalia-mode))
@@ -271,6 +293,7 @@
   ;(setq symbols-outline-use-nerd-icon-in-gui t)
   :init
   (symbols-outline-follow-mode))
+
 
 (use-package all-the-icons)
 
@@ -335,9 +358,12 @@
   (setq completion-category-defaults nil))
 
 
-(use-package dape
+;(use-package dape
   ;;https://github.com/svaante/dape?tab=readme-ov-file#configuration
-  )
+	;(add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
+  ;; To not display info and/or buffers on startup
+  ;; (remove-hook 'dape-start-hook 'dape-info)
+  ;(remove-hook 'dape-start-hook 'dape-repl))
 
 
 (use-package eshell
@@ -440,6 +466,9 @@
 	:branch "master")
   :custom
   (copilot-chat-frontend 'org))
+
+
+(use-package ellama)
 
 
 (use-package undo-tree

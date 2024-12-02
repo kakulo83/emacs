@@ -41,10 +41,6 @@
 ;;; https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
 ;;;
 ;;; 
-;;; create a synchronous function that conects to a breezeway production instance
-;;; it should wait for commands to finish and parse the buffer for container ids
-;;;
-;;; 
 ;;; grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
 ;;; Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
 ;;;
@@ -87,6 +83,10 @@
 ;;; Consider using treesit-auto: https://github.com/renzmann/treesit-auto
 ;;;
 ;;; lsp-mode with multi server for major-mode:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config#orgc542f94
+;;;
+;;; worth reading through:  python setup:   https://blog.serghei.pl/posts/emacs-python-ide/
+;;;
+;;; another gpt package:  https://github.com/AnselmC/le-gpt.el
 ;;;
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -172,6 +172,8 @@ FEATURE may be any one of:
 (setq lisp-indent-offset 2)
 (setq js-indent-level 2)
 (setq js-jsx-indent-level 2)
+
+(add-hook 'python-ts-mode-hook '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
 
 ;; tab-width is what eglot-format uses to indent the current mode
 (setq-default tab-width 2)
@@ -319,7 +321,6 @@ FEATURE may be any one of:
 
 ;; Hide frame border (called the fringe)
 (set-fringe-mode '(8 . 0))
-(set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; Stop eldoc from echoing in minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -386,10 +387,10 @@ FEATURE may be any one of:
 ;; font size
 (set-face-attribute 'default nil :height 120)
 ;; font family
-(set-frame-font "JetBrains Mono")
+;(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
@@ -488,4 +489,5 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 ;; maximize emacs frame
 (toggle-frame-maximized)
 
+(set-face-attribute 'fringe nil :background 'unspecified)
 ;;; init.el ends here

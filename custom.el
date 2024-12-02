@@ -15,21 +15,26 @@
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages
 		'(ace-window all-the-icons-dired all-the-icons-ibuffer
-			 balanced-windows bug-hunter cape catppuccin-theme copilot
+			 balanced-windows bug-hunter cape catppuccin-theme
+			 color-theme-sanityinc-tomorrow consult-xref-stack copilot
 			 copilot-chat corfu dape dired-sidebar diredfl disaster
-			 doom-modeline doom-themes ef-themes embark-consult
+			 doom-modeline doom-themes ef-themes ellama embark-consult
 			 eshell-toggle evil-collection exec-path-from-shell exunit
 			 flycheck-eglot format-all gcmh git-timemachine gotham-theme
 			 helpful hide-mode-line highlight-symbol ht hydra inf-elixir
-			 inf-ruby jbeans-theme kind-icon lsp-tailwindcss marginalia
+			 inf-ruby jbeans-theme kind-icon llm lsp-tailwindcss marginalia
 			 material-theme modus-themes multi-vterm nodejs-repl nvm
 			 nyan-mode olivetti orderless org-bullets org-download org-drill
-			 org-roam-ui prodigy pyvenv restclient rspec-mode spinner
-			 symbols-outline tabspaces tron-legacy-theme undo-tree vertico
-			 vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
+			 org-roam-ui prodigy pyvenv restclient reykjavik-theme
+			 rspec-mode spinner symbols-outline tabspaces tron-legacy-theme
+			 undo-tree vertico vertico-posframe vterm-toggle wgrep
+			 yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
-		'((copilot-chat :url "https://github.com/chep/copilot-chat.el" :branch
-				"master")
+		'((consult-xref-stack :url
+				"https://github.com/brett-lempereur/consult-xref-stack"
+				:branch "main")
+			 (copilot-chat :url "https://github.com/chep/copilot-chat.el"
+				 :branch "master")
 			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
 				 :branch "main"))))
 (custom-set-faces

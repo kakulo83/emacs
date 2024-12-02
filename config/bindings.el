@@ -94,6 +94,15 @@
   (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
 )
 
+(define-key grep-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
+(define-key grep-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
+(define-key grep-mode-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))
+(define-key grep-mode-map (kbd "s-4") #'(lambda ()(interactive) (tab-bar-select-tab 4)))
+(define-key grep-mode-map (kbd "s-5") #'(lambda ()(interactive) (tab-bar-select-tab 5)))
+(define-key grep-mode-map (kbd "s-6") #'(lambda ()(interactive) (tab-bar-select-tab 6)))
+(define-key grep-mode-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
+(define-key grep-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
+(define-key grep-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 (define-key evil-motion-state-map (kbd "RET") nil) ; allows other mode maps to override RET
 
 (define-key vertico-map (kbd "TAB") 'vertico-insert)
@@ -109,6 +118,9 @@
 (evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
 (evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
 (evil-define-key 'normal dired-sidebar-mode-map (kbd "-") 'dired-sidebar-up-directory)
+
+;(evil-define-key 'normal ibuffer-mode-map (kbd (my-leader-map . "a")) 'ace-window)
+
 
 (evil-define-key 'normal prodigy-mode-map (kbd "s") 'prodigy-start)
 (evil-define-key 'normal prodigy-mode-map (kbd "S") 'prodigy-stop)
