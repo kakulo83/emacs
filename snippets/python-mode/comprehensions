@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# name: comprehension
+# key: comprehensions
+# --
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+fruits = [x for x in fruits if "a" in x]
+
+# tuple
+list_of_tuples = [(1, "lumberjack"), (2, "inquisition"), (4, "spam")]
+comprehension = [skit * number for number, skit in list_of_tuples]
+
+# double comprehension
+list_of_eggs = ["poached egg", "fried egg"]
+list_of_meats = ["lite spam", "ham spam", "fried spam"]
+
+comprehension = [
+		"{0} and {1}".format(egg, meat)
+		for egg in list_of_eggs
+		for meat in list_of_meats
+]
+
+
+# dictionary
+dict_of_weapons = {
+		"first": "fear",
+		"second": "surprise",
+		"third": "ruthless efficiency",
+		"fourth": "fanatical devotion",
+		"fifth": None,
+}
+
+dict_comprehension = {
+		k.upper(): weapon for k, weapon in dict_of_weapons.items() if weapon
+}

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: context
+# key: context
+# --
+# context manager
+class FileContextManager:
+		def __init__(self, file_name):
+				self._file_name = file_name
+				self._file = None
+
+		def __enter__(self):
+				self._file = open(self._file_name)
+				return self._file
+
+		def __exit__(self, cls, value, tb):
+				self._file.close()
