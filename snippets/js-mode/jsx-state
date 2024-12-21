@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: state
+# key: state
+# --
+const [${1:data}, set${2:Data}] = useState('${3:default}')

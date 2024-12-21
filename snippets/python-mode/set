@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: set
+# key: set
+# --
+set = {"apple", "banana", "cherry"}
+other_set = set()
+
+# operations
+# add()	 	Adds an element to the set
+# clear()	 	Removes all the elements from the set
+# difference()	-	Returns a set containing the difference between two or more sets
+# discard()	 	Remove the specified item
+# intersection()	&	Returns a set, that is the intersection of two other sets
+# pop()	 	Removes an element from the set
+# remove()	 	Removes the specified element

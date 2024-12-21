@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# name: breadth first levels
+# key: bfl
+# --
+
+# class Node:
+#     def __init__(self, value, neighbors=None):
+#         self.value = value
+#         self.neighbors = neighbors
+#
+#     def __repr__(self):
+#         cls = self.__class__.__name__
+#         children_values = [child.value for child in self.children]
+#         return f'{cls}(value={self.value}, children=[])
+
+from collections import deque
+
+def breadth_first_levels(root):
+    if not root:
+        return []
+    
+    levels = []
+    queue = deque([root])
+    
+    while queue:
+        level_size = len(queue)
+        current_level = []
+
+        # process a whole level by popleft() all items in the queue
+				# we append to the queue ALL children for the nodes on the current level
+        for _ in range(level_size):
+            node = queue.popleft()
+            current_level.append(node.value)
+            
+            if node.children:
+               for child in node.children:
+                   queue.append(child)
+        
+        levels.append(current_level)
+    
+    return levels 

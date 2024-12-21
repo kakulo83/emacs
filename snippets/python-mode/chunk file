@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: file chunking
+# key: chunk
+# --
+test_file = 'random_test.txt'
+
+# this method works with character number instead of lines
+def chunks(file_name, size=10000):
+    with open(file_name) as f:
+        while content := f.read(size):
+            yield content
+
+if __name__ == '__main__':
+    split_files = chunks(test_file)
+    for chunk in split_files:
+        print(len(chunk))
+
+# chunk by lines
+def chunks(file_name, size=10000):
+    with open(file_name) as f:
+        while content := f.readline():
+            for _ in range(size - 1):
+                content += f.readline()
+
+                yield content.splitlines()
+
+if __name__ == '__main__':
+    split_files = chunks(test_file)
+
+    for chunk in split_files:
+        print(len(chunk))

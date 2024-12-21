@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: depth first traversal
+# key: dft
+# --
+
+# class Node:
+#     def __init__(self, value, children=[]):
+#         self.value = value
+#         self.children = children
+from typing import Callable
+
+def depth_first_traversal(root, func: Callable):
+    if not root:
+        return
+
+    func(root)
+
+    for child in root.children:
+        depth_first_traversal(child, func)
