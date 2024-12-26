@@ -14,7 +14,7 @@
 			 default))
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages
-		'(ace-window all-the-icons-dired all-the-icons-ibuffer
+		'(ace-window afternoon-theme all-the-icons-dired all-the-icons-ibuffer
 			 balanced-windows bug-hunter cape catppuccin-theme
 			 color-theme-sanityinc-tomorrow consult-xref-stack copilot
 			 copilot-chat corfu dape dired-sidebar diredfl disaster
@@ -23,9 +23,9 @@
 			 flycheck-eglot format-all gcmh git-timemachine gotham-theme
 			 helpful hide-mode-line highlight-symbol ht hydra inf-elixir
 			 inf-ruby jbeans-theme kind-icon llm lsp-tailwindcss marginalia
-			 material-theme modus-themes multi-vterm nodejs-repl nvm
-			 nyan-mode olivetti orderless org-bullets org-download org-drill
-			 org-roam-ui prodigy pyvenv restclient reykjavik-theme
+			 material-theme modus-themes multi-vterm nano-theme nodejs-repl
+			 nvm nyan-mode olivetti orderless org-bullets org-download
+			 org-drill org-roam-ui prodigy pyvenv restclient reykjavik-theme
 			 rspec-mode spinner symbols-outline tabspaces tron-legacy-theme
 			 undo-tree vertico vertico-posframe vterm-toggle wgrep
 			 yasnippet-capf yasnippet-snippets))

@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: debouncer
+# key: debounce
+# --
+import time
+from functools import wraps
+
+def debounce(wait):
+    """Decorator that debounces a function."""
+
+    def decorator(func):
+        last_called = [0]		 
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            now = time.time()							
+            if now - last_called[0] >= wait:
+                last_called[0] = now						
+                return func(*args, **kwargs)
+
+        return wrapper							
+    return decorator
+
+#@debounce(0.5)
+#def print_something(text):
+#    print(text)

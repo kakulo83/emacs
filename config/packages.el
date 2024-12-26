@@ -137,15 +137,15 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+(use-package doom-themes
+  :config
+  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-(use-package modus-themes
-	:config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;(use-package modus-themes
+;	:config
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
@@ -333,6 +333,19 @@
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
   (add-to-list 'eglot-server-programs '((typescript-mode js-mode) "typescript-language-server" "--stdio"))
+
+	;; taken from https://www.reddit.com/r/emacs/comments/11faie2/how_can_i_make_eglot_shut_up_in_the_minibuffer/
+	;; add the following to fix eldoc overriding the mini-buffer with function signature docs instead of
+	;; showing the current flycheck error information.
+	(defun /eglot-managed-mode-initialize ()
+		(setq-local
+				eldoc-documentation-functions
+				(list
+					#'eglot-signature-eldoc-function
+					;; #'eglot-hover-eldoc-function
+					;; #'flymake-eldoc-function
+				)))
+	(add-hook 'eglot-managed-mode-hook #'/eglot-managed-mode-initialize)
 
   ;; setting language specific lsp configs
   (setq-default eglot-workspace-configuration

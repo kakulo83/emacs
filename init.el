@@ -88,6 +88,10 @@
 ;;;
 ;;; another gpt package:  https://github.com/AnselmC/le-gpt.el
 ;;;
+;;; desktop session alternatives:  https://www.reddit.com/r/emacs/comments/1hd5vco/sessions_in_emacs/
+;;;
+;;; Consider showing stuff on side:  https://github.com/emacs-sideline/sideline?tab=readme-ov-file
+;;;
 ;;; Code:
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -173,6 +177,7 @@ FEATURE may be any one of:
 (setq js-indent-level 2)
 (setq js-jsx-indent-level 2)
 
+; fix indent when inserting python snippets
 (add-hook 'python-ts-mode-hook '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
 
 ;; tab-width is what eglot-format uses to indent the current mode
@@ -387,10 +392,10 @@ FEATURE may be any one of:
 ;; font size
 (set-face-attribute 'default nil :height 120)
 ;; font family
-;(set-frame-font "JetBrains Mono")
+(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
@@ -402,11 +407,6 @@ FEATURE may be any one of:
         ("Europe/Frankfurt" "Frankfurt")
         ("Asia/Calcutta" "Bangalore")
         ("Asia/Tokyo" "Tokyo")))
-
-; configure ipython as the python shell
-(when (executable-find "ipython")
-  (setq python-shell-interpreter "ipython")
-	(setq python-shell-interpreter-args "-i --simple-prompt"))
 
 ;; config use-package
 (eval-when-compile
@@ -437,7 +437,7 @@ FEATURE may be any one of:
 You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 
 ;; run clean-buffer-list every 30mins 
-(setq clean-buffer-list-timer (run-at-time t 1800 'clean-buffer-list))
+(setq clean-buffer-list-timer (run-at-time t 3600 'clean-buffer-list))
 
 ;; kill everything, clean-buffer-list is very intelligent at not killing
 ;; unsaved buffer.
@@ -452,7 +452,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
   "Init value for clean-buffer-list-kill-never-buffer-names.")
 (setq clean-buffer-list-kill-never-buffer-names
       (append
-       '("*vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
+       '("*Copilot-chat* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
        clean-buffer-list-kill-never-buffer-names-init))
 
 ;; prevent append multiple times
@@ -487,7 +487,31 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 			  )))))
 
 ;; maximize emacs frame
-(toggle-frame-maximized)
+;(toggle-frame-maximized)
 
 (set-face-attribute 'fringe nil :background 'unspecified)
+
+;; configure emacs for transparent background
+;;(set-frame-parameter (selected-frame) 'alpha '(95 95))
+;;(add-to-list 'default-frame-alist '(alpha 95 95))
+
+; python shell autocompletes a bunch of crap that is annoying, this might be related
+; https://emacs.stackexchange.com/questions/77297/python-shell-completion-complete-or-indent-tab-in-an-inferior-python-mode-shel
+
+; configure ipython as the python shell
+;(when (executable-find "ipython")
+;  (setq python-shell-interpreter "ipython")
+;	(setq python-shell-interpreter-args "-i --simple-prompt"))
+
+; configure comint mode to load/save python history to ~/.python_history
+;(defun my/comint-set-history-file (file)
+;  "Load the given history FILE into Comint and write on process exit."
+;  (setq comint-input-ring-file-name file)
+;  (comint-read-input-ring t)
+;  (set-process-sentinel (get-buffer-process (current-buffer))
+;                        #'shell-write-history-on-exit))
+;
+;(defun my/set-python-repl-history-file ()
+;  (my/comint-set-history-file (expand-file-name ".python_history" "~")))
+;(add-hook 'inferior-python-mode-hook #'my/set-python-repl-history-file)
 ;;; init.el ends here

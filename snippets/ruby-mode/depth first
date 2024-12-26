@@ -3,12 +3,12 @@
 # key: dfs
 # --
 
-def depth_first_search(root)
+def depth_first_search(root):
   stack = []
 	output = []
 	current = root
 
-  while stack.any? || current
+  while (stack.any? || current):
     if current
 		  stack.push(current)
 			current = current.left

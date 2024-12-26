@@ -41,6 +41,7 @@
 (define-key package-menu-mode-map (kbd "C-k") 'evil-window-up)
 (define-key package-menu-mode-map (kbd "C-l") 'evil-window-right)
 
+(define-key evil-normal-state-map (kbd "f") 'avy-goto-char-2)
 (define-key evil-normal-state-map (kbd "M-s-<left>") 'tab-bar-move-tab-backward)
 (define-key evil-normal-state-map (kbd "M-s-<right>") 'tab-bar-move-tab)
 (define-key evil-normal-state-map (kbd "C-f") 'consult-ripgrep)
@@ -66,6 +67,7 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
+(define-key evil-normal-state-map (kbd "C-o") 'pop-global-mark)
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -78,6 +80,7 @@
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 ;(define-key evil-insert-state-map (kbd "C-n") 'cape-prefix-map)
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
+(define-key evil-insert-state-map (kbd "C-h") 'cape-history)
 
 (after 'embark
   ;(define-key embark-general-map (kbd "d") #'robert/embark-clear-register)
