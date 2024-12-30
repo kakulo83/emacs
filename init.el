@@ -492,8 +492,8 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 (set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; configure emacs for transparent background
-;;(set-frame-parameter (selected-frame) 'alpha '(95 95))
-;;(add-to-list 'default-frame-alist '(alpha 95 95))
+;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
+;; (add-to-list 'default-frame-alist '(alpha 100 100))
 
 ; python shell autocompletes a bunch of crap that is annoying, this might be related
 ; https://emacs.stackexchange.com/questions/77297/python-shell-completion-complete-or-indent-tab-in-an-inferior-python-mode-shel

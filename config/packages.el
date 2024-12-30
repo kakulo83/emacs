@@ -137,15 +137,15 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-tron t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-one t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-;(use-package modus-themes
-;	:config
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+	:config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-light t)) ; nano-light  nano-dark
@@ -168,6 +168,9 @@
 ;(use-package reykjavik-theme
 ;	:config
 ;	(load-theme 'reykjavik t))
+;(use-package dracula-theme
+;	:config
+;	(load-theme 'dracula))
 ;(use-package color-theme-sanityinc-tomorrow
 ;	:config
 ;	(load-theme 'sanityinc-tomorrow-blue t))
@@ -298,9 +301,14 @@
 (use-package all-the-icons)
 
 
-(use-package all-the-icons-dired
+;(use-package all-the-icons-dired
+;  :hook
+;  (dired-mode . all-the-icons-dired-mode))
+
+
+(use-package nerd-icons-dired
   :hook
-  (dired-mode . all-the-icons-dired-mode))
+  (dired-mode . nerd-icons-dired-mode))
 
 
 (use-package all-the-icons-ibuffer
