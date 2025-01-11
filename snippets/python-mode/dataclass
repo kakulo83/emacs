@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: dataclass
+# key: dataclass
+# --
+from dataclasses import dataclass
+
+@dataclass
+class Position:
+    row: int
+    col: int
+
+p = Position(1,2)
+p.row => 1
+p.col => 2

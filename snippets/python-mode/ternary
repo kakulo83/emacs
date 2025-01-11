@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ternary
+# key: ternary
+# --
+value_if_true if condition else value_if_false # example:  z = x if x > y else y

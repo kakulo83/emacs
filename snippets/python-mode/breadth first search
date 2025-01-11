@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: breadth first search
+# key: bfs
+# --
+
+# class Node:
+#     def __init__(self, value, children=[]):
+#         self.value = value
+#         self.children = children 
+from typing import Callable
+from collections import deque
+
+def bfs(root: Node, func: Callable=None):
+		visited = set()
+    queue = deque([root])
+
+    visited.add(root)
+
+    while queue:
+        vertex = queue.popleft()
+
+        # do something with vertex node
+        # func(vertex)  
+
+        for child in vertex.children:
+            if child not in visited:
+               	visited.add(child)					
+                queue.append(child)

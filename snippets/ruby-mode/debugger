@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: debugger
+# key: deubgger
+# --
+# gem 'pry', require: false
+# gem 'pry-rails', require: 'pry-rails/console
+binding.pry

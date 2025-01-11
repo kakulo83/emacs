@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: itertools
+# key: itertools 
+# --
+import itertools
+
+# count(10) -> 10 11 12 13 14
+
+# cycle('ABCD') → A B C D A B C D A B C D ...
+
+# repeat(object, times=None)
+
+# accumulate(iterable, function, initial) -> list(accumulate([1,2,3...]))
+
+# returns iterator that returns elements from data where corresponding selector is true
+# compress(data, selector) -> compress('ABCDE', [1,0,1,0,1]) -> A C E
+
+# dropwhile(predicate, iterable) -> dropwhile(lambda x: x<5, [1,4,6,3,8]) -> 6 3 8
+
+# filterfalse(predicate, iterable) -> filterfalse(lambda x: x<5, [1,4,6,3,8]) -> 6 8
+
+
