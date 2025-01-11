@@ -2,21 +2,29 @@
 # name: depth first search
 # key: dfs
 # --
-def depth_first_search(root)
-  stack = []
-	output = []
-	current = root
 
-  while any(stack) or current
-    if current:
-		  stack.append(current)
-			current = current.left
-		else:
-      current = stack.pop()
+# class Node:
+#     def __init__(self, value, children=[]):
+#         self.value = value
+#         self.children = children 
+def dfs_recursive(node, visited):
+    visited.add(node)
 
-      # process current node
-		  output.append(current)	
+    for child in node:
+        if child not in visited:		
+            dfs_recursive(child, visited)
 
-      current = current.right
+# iterative
+def dfs(node):
+    visited = set()
+    stack = [node]		
 
-	output
+    while stack:
+        vertex = stack.pop()		
+        if vertex not in visited:
+            visited.add(vertex)			
+
+            for child in vertex:
+                if child not in visited:
+                    stack.append(child)							
+        
