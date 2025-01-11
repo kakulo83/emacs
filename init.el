@@ -390,6 +390,7 @@ FEATURE may be any one of:
 ;	 ))
 
 ;; font size
+;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
 (set-frame-font "JetBrains Mono")
