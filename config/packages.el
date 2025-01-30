@@ -45,6 +45,12 @@
   (evil-collection-init))
 
 
+;(use-package nano-modeline
+;  :config
+;	(setq nano-modeline-position 'nano-modeline-footer)
+;  (nano-modeline-text-mode t))
+
+
 (use-package doom-modeline
   :defines doom-modeline-mode-alist doom-modeline-support-imenu
   :functions doom-modeline-def-modeline
@@ -60,7 +66,7 @@
     doom-modeline-major-mode-icon nil
     doom-modeline-minor-modes nil
     doom-modeline-buffer-file-name-style 'relative-to-project
-    doom-modeline-vcs-max-length 40
+    doom-modeline-vcs-max-length 60
     doom-modeline-mode-alist nil
     doom-modeline-height 16
     doom-modeline-buffer-encoding nil
@@ -139,16 +145,16 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-one t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf  doom-tron   doom-material    doom-manegarm
+;  (load-theme 'doom-wilmersdorf t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-duo-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 (use-package modus-themes
 	:config
   (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
-;  (load-theme 'nano-light t)) ; nano-light  nano-dark
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
@@ -174,6 +180,8 @@
 ;(use-package color-theme-sanityinc-tomorrow
 ;	:config
 ;	(load-theme 'sanityinc-tomorrow-blue t))
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/")
+;(load-theme `tron t)
 
 (use-package tabspaces
   :hook
@@ -488,8 +496,11 @@
   :custom
   (copilot-chat-frontend 'org))
 
+; this client works with almost all of the llms
+; https://github.com/karthink/gptel?tab=readme-ov-file
 
-(use-package ellama)
+; https://github.com/s-kostyaev/ellama
+; (use-package ellama)
 
 
 (use-package undo-tree
@@ -883,5 +894,23 @@
     :tags '(rails)
     :stop-signal 'kill
     :kill-process-buffer-on-stop t))
+
+
+(use-package outline-indent
+  :ensure t
+  :custom
+  (outline-indent-ellipsis " ▼ "))
+(add-hook 'prog-mode-hook #'outline-indent-minor-mode)
+
+
+;(package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
+
+;(use-package ultra-scroll
+;  ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
+;  :init
+;  (setq scroll-conservatively 101 ; important!
+;        scroll-margin 0) 
+;  :config
+;  (ultra-scroll-mode 1))
 
 ;;; packages.el ends here

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: sort
+# key: sort
+# --
+# return new list
+my_list = [[1,2], [5,7], [0,1]]
+sorted_list = sorted(my_list, key=lambda elm: elm[0])

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: node
+# key: node
+# --
+class Node(object):
+    def __init__(self, val=None, children=None):
+        self.val = val
+        if children:
+            self.children = children
+        else:
+            self.children = []

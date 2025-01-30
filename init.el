@@ -378,7 +378,7 @@ FEATURE may be any one of:
 
 (setq manual-program "gman")
 
-(add-to-list 'exec-path "~/.emacs.d/bin")
+;(add-to-list 'exec-path "~/.emacs.d/bin")
 ;(add-to-list 'exec-path "/opt/homebrew/bin")
 
 ;; Set the modeline to show only the buffer name
@@ -503,6 +503,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 ;(when (executable-find "ipython")
 ;  (setq python-shell-interpreter "ipython")
 ;	(setq python-shell-interpreter-args "-i --simple-prompt"))
+
 
 ; configure comint mode to load/save python history to ~/.python_history
 ;(defun my/comint-set-history-file (file)

@@ -7,19 +7,19 @@
 # Pipfile
 """
 [[source]]
-url = "https://pypi.org/simple"
+url = 'https://pypi.org/simple'
 verify_ssl = true
-name = "pypi"
+name = 'pypi'
 
 [packages]
-flask = "*"
-ipython = "*"
+flask = '*'
+ipython = '*'
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
-python_full_version = "3.12.2"
+python_version = '3.12'
+python_full_version = '3.12.2'
 """
 
 from flask import Flask, request
