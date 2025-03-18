@@ -8,8 +8,8 @@
  ;; If there is more than one, they won't work right.
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages
-		'(ace-window all-the-icons-ibuffer balanced-windows bug-hunter cape
-			 catppuccin-theme color-theme-sanityinc-tomorrow
+		'(ace-window all-the-icons-ibuffer balanced-windows bind-chord
+			 bug-hunter cape catppuccin-theme color-theme-sanityinc-tomorrow
 			 consult-xref-stack copilot copilot-chat corfu dired-sidebar
 			 diredfl disaster doom-modeline doom-themes dracula-theme
 			 ef-themes embark-consult eshell-toggle evil-collection
@@ -20,9 +20,9 @@
 			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
 			 org-download org-drill org-roam-ui outline-indent prodigy
 			 pyvenv restclient reykjavik-theme rspec-mode symbols-outline
-			 tabspaces tron tron-legacy-theme tron-theme tsx-mode undo-tree
-			 vertico-posframe vterm-toggle wgrep yasnippet-capf
-			 yasnippet-snippets))
+			 system-packages tabspaces treesit-auto tron-legacy-theme
+			 tsx-mode tsx-ts-mode undo-tree vertico-posframe vterm-toggle
+			 wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
 		'((tsx-mode :url "https://github.com/orzechowskid/tsx-mode.el.git"
 				:branch "emacs30")

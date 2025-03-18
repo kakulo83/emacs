@@ -3,18 +3,19 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("emacs font config" (filename . "~/.emacs.d/init.el")
-	(front-context-string . "set-frame-font \"")
-	(rear-context-string . "pixelsize=12\")\n(") (position . 12215)
-	(last-modified 26368 26287 842919 0))
+	 (front-context-string . "set-frame-font \"")
+	 (rear-context-string . "pixelsize=12\")\n(") (position . 12215)
+	 (last-modified 26368 26287 842919 0))
 ("emacs theme config" (filename . "~/.emacs.d/config/packages.el")
 	(front-context-string . "kage doom-themes")
 	(rear-context-string . "de))\n\n\n;(use-pac") (position . 3287)
 	(last-modified 26368 26259 462260 0))
 ("org-capture-last-stored"
-	(filename . "~/Notes/org-roam-notes/20250111045244-sqlite.org")
-	(front-context-string . "https://www.yout")
-	(rear-context-string . "---------------\n") (position . 439)
-	(last-modified 26498 27046 727930 0))
+	(filename
+		. "~/Notes/org-roam-notes/20250223212132-aircraft_technician.org")
+	(front-context-string . "\nhttps://www.red")
+	(rear-context-string . "---------------\n") (position . 470)
+	(last-modified 26556 531 651072 0))
 ("Developer directory" (filename . "~/Developer/")
 	(front-context-string . ".DS_Store\n  -rw-")
 	(rear-context-string . "96 Sep  3 18:06 ") (position . 201)

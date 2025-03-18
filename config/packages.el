@@ -14,6 +14,20 @@
   (exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH")))
 
 
+(use-package treesit-auto
+	  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+
+;(use-package treesit-fold
+;  :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold"))
+
+;(use-package css-in-js-mode :straight '(css-in-js-mode :type git :host github :repo "orzechowskid/tree-sitter-css-in-js"))
+
+
 (use-package evil
   :init
   :config
@@ -145,7 +159,7 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-wilmersdorf t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-manegarm t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-duo-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -348,7 +362,7 @@
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
-  (add-to-list 'eglot-server-programs '((typescript-mode js-mode) "typescript-language-server" "--stdio"))
+  (add-to-list 'eglot-server-programs '((typescript-mode tsx-ts-mode -js-mode) "typescript-language-server" "--stdio"))
 
 	;; taken from https://www.reddit.com/r/emacs/comments/11faie2/how_can_i_make_eglot_shut_up_in_the_minibuffer/
 	;; add the following to fix eldoc overriding the mini-buffer with function signature docs instead of
@@ -377,6 +391,7 @@
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
 	  (js-mode . eglot-ensure)
+		(tsx-ts-mode . eglot-ensure)
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
 
@@ -702,7 +717,8 @@
        ("YAML"  (prettier))
        ("XML"   (prettier))
        ("SQL"   (sqlformat)))))
-                  
+
+
 (use-package hide-mode-line
 	:hook
 	((completion-list-mode . hide-mode-line-mode)
@@ -714,10 +730,18 @@
 	 (term-mode . hide-mode-line-mode)
 	 (dired-sidebar)))
 
-(use-package typescript-ts-mode
-  :config
-  ;(setq-default typescript-indent-level 4)
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
+
+(use-package jtsx
+  :ensure t
+  :mode (("\\.jsx?\\'" . jtsx-tsx-mode)
+         ("\\.tsx\\'" . jtsx-tsx-mode)
+         ("\\.ts\\'" . jtsx-typescript-mode)))
+
+
+;(use-package typescript-ts-mode
+;  :config
+;  ;(setq-default typescript-indent-level 4)
+;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
 
 (use-package pyvenv

@@ -80,8 +80,6 @@
 ;;;
 ;;; Emacs Config for web development:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config
 ;;;
-;;; Consider using treesit-auto: https://github.com/renzmann/treesit-auto
-;;;
 ;;; lsp-mode with multi server for major-mode:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config#orgc542f94
 ;;;
 ;;; worth reading through:  python setup:   https://blog.serghei.pl/posts/emacs-python-ide/
@@ -331,41 +329,6 @@ FEATURE may be any one of:
 (setq eldoc-echo-area-use-multiline-p nil)
 (setq eldoc-echo-area-prefer-doc-buffer t)
 
-; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
-; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
-(setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-				 (c "https://github.com/tree-sitter/tree-sitter-c")
-				 (css "https://github.com/tree-sitter/tree-sitter-css")
-				 (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-				 (heex "https://github.com/phoenixframework/tree-sitter-heex")
-				 (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-         (go "https://github.com/tree-sitter/tree-sitter-go")
-         (html "https://github.com/tree-sitter/tree-sitter-html")
-         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-         (json "https://github.com/tree-sitter/tree-sitter-json")
-         (make "https://github.com/alemuller/tree-sitter-make")
-         (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-         (python "https://github.com/tree-sitter/tree-sitter-python")
-				 (ruby  "https://github.com/tree-sitter/tree-sitter-ruby")
-				 (sql "https://github.com/m-novikov/tree-sitter-sql")
-         (toml "https://github.com/tree-sitter/tree-sitter-toml")
-         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-
-(push '(elixir-mode . elixir-ts-mode) major-mode-remap-alist)
-(push '(json-mode . json-ts-mode) major-mode-remap-alist)
-(push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
-(push '(css-mode . css-ts-mode) major-mode-remap-alist)
-(push '(html-mode . html-ts-mode) major-mode-remap-alist)
-(push '(ruby-mode . ruby-ts-mode) major-mode-remap-alist)
-(push '(css-mode . css-ts-mode) major-mode-remap-alist)
-(push '(python-mode . python-ts-mode) major-mode-remap-alist)
-(push '(js-mode. typescript-ts-mode) major-mode-remap-alist)
-(push '(js2-mode . typescript-ts-mode) major-mode-remap-alist)
-(push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
 
@@ -464,8 +427,6 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 (setq clean-buffer-list-kill-never-regexps
       (append '("^\\*EMMS Playlist\\*.*$")
 	      clean-buffer-list-kill-never-regexps-init))
-
-
 
 
 (let ((gc-cons-threshold most-positive-fixnum) ;(* 256 1024 1024))
