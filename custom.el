@@ -6,39 +6,43 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(gptel-api-key "")
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages
-		'(ace-window all-the-icons-ibuffer balanced-windows bind-chord
-			 bug-hunter cape catppuccin-theme color-theme-sanityinc-tomorrow
-			 consult-xref-stack copilot copilot-chat corfu dired-sidebar
-			 diredfl disaster doom-modeline doom-themes dracula-theme
-			 ef-themes embark-consult eshell-toggle evil-collection
-			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
-			 git-timemachine gotham-theme helpful hide-mode-line
-			 highlight-symbol hydra inf-elixir inf-ruby kind-icon marginalia
-			 modus-themes multi-vterm nano-theme nerd-icons-dired
+		'(ace-window all-the-icons-ibuffer balanced-windows bug-hunter cape
+			 consult-xref-stack copilot corfu dired-sidebar diredfl disaster
+			 doom-modeline doom-themes dracula-theme ef-themes
+			 embark-consult eshell-toggle evil-collection
+			 exec-path-from-shell exunit fleury-theme flycheck-eglot
+			 format-all gcmh git-timemachine gptel helpful hide-mode-line
+			 highlight-symbol hydra inf-elixir inf-ruby jtsx kind-icon magit
+			 marginalia modus-themes multi-vterm nano-theme nerd-icons-dired
 			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
 			 org-download org-drill org-roam-ui outline-indent prodigy
 			 pyvenv restclient reykjavik-theme rspec-mode symbols-outline
-			 system-packages tabspaces treesit-auto tron-legacy-theme
-			 tsx-mode tsx-ts-mode undo-tree vertico-posframe vterm-toggle
-			 wgrep yasnippet-capf yasnippet-snippets))
+			 tabspaces treesit-auto tron-legacy-theme undo-tree
+			 vertico-posframe vterm-toggle wgrep yasnippet-capf
+			 yasnippet-snippets))
  '(package-vc-selected-packages
-		'((tsx-mode :url "https://github.com/orzechowskid/tsx-mode.el.git"
-				:branch "emacs30")
+		'((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+				"main")
+			 (fleury-theme :url
+				 "https://github.com/ShamsParvezArka/fleury-theme.el" :branch
+				 "main")
+			 (copilot-chat :url "https://github.com/chep/copilot-chat.el"
+				 :branch "master")
+			 (consult-xref-stack :url
+				 "https://github.com/brett-lempereur/consult-xref-stack"
+				 :branch "main")
+			 (tsx-mode :url
+				 "https://github.com/orzechowskid/tsx-mode.el.git" :branch
+				 "emacs30")
 			 (tron-theme :url
 				 "https://github.com/paul-jewell/Emacs-Tron-Legacy-Theme"
 				 :branch "master")
 			 (tron :url
 				 "https://github.com/paul-jewell/Emacs-Tron-Legacy-Theme"
 				 :branch "master")
-			 (copilot-chat :url "https://github.com/chep/copilot-chat.el"
-				 :branch "master")
-			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
-				 :branch "main")
-			 (consult-xref-stack :url
-				 "https://github.com/brett-lempereur/consult-xref-stack"
-				 :branch "main")
 			 (ts-fold :url "https://github.com/emacs-tree-sitter/ts-fold"
 				 :branch "master")
 			 (ultra-scroll :vc-backend Git :url

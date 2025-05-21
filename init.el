@@ -7,6 +7,7 @@
 ;;;             |,4-  ) )_   .;.(  `'___'
 ;;;            '---''(_/._)-'(_\_)
 ;;;
+;;; ᓚᘏᗢ
 ;;; DEPENDENCIES
 ;;; MacTex
 ;;; nerd-fonts
@@ -91,6 +92,13 @@
 ;;; Consider showing stuff on side:  https://github.com/emacs-sideline/sideline?tab=readme-ov-file
 ;;;
 ;;; Code:
+
+; needed due to failure in native-compilation
+; https://github.com/d12frosted/homebrew-emacs-plus/issues/733
+;(setenv "PATH" "/Users/robertcarter/.rbenv/shims:/Users/robertcarter/.rbenv/bin:/Users/robertcarter/.emacs.d/bin:/opt/homebrew/opt/postgresql@15/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/mysql-client/bin:/Users/robertcarter/.nvm/versions/node/v20.11.1/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/robertcarter/.local/bin:/bin")
+;(setq exec-path (split-string (getenv "PATH") path-separator))
+
+
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -356,10 +364,10 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
-(set-frame-font "JetBrains Mono")
+;(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
@@ -401,7 +409,7 @@ FEATURE may be any one of:
 You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 
 ;; run clean-buffer-list every 30mins 
-(setq clean-buffer-list-timer (run-at-time t 3600 'clean-buffer-list))
+(setq clean-buffer-list-timer (run-at-time t 10800 'clean-buffer-list))
 
 ;; kill everything, clean-buffer-list is very intelligent at not killing
 ;; unsaved buffer.

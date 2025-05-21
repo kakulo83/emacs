@@ -159,13 +159,13 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-manegarm t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-duo-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-(use-package modus-themes
-	:config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;(use-package modus-themes
+;	:config
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
@@ -173,9 +173,9 @@
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-;(use-package tron-legacy-theme
-;  :config
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -196,6 +196,11 @@
 ;	(load-theme 'sanityinc-tomorrow-blue t))
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/")
 ;(load-theme `tron t)
+;(use-package fleury-theme
+;  :vc
+;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
+;	(load-theme 'fleury-theme))
+
 
 (use-package tabspaces
   :hook
@@ -250,7 +255,7 @@
 
 (use-package vertico-posframe
 	:config
-	(setq vertico-posframe-parameters '((alpha . 85)))
+	;(setq vertico-posframe-parameters '((alpha . 85)))
   :init
   (vertico-posframe-mode 1))
 (setq vertico-multiform-commands
@@ -372,7 +377,7 @@
 				eldoc-documentation-functions
 				(list
 					#'eglot-signature-eldoc-function
-					;; #'eglot-hover-eldoc-function
+					#'eglot-hover-eldoc-function
 					;; #'flymake-eldoc-function
 				)))
 	(add-hook 'eglot-managed-mode-hook #'/eglot-managed-mode-initialize)
@@ -492,7 +497,11 @@
         vterm-toggle-scope 'project))
 
 
-
+;; https://www.reddit.com/r/vscode/comments/1danet1/good_alternative_for_github_copilot/
+;; try out continue.dev + ollama + deepseek-coder 6.7b
+;;
+;; https://github.com/tninja/aider.el?tab=readme-ov-file
+;; https://github.com/Aider-AI/aider
 
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
@@ -503,13 +512,20 @@
   (define-key copilot-mode-map (kbd "M-C-p") #'copilot-previous-completion)
   (define-key copilot-mode-map (kbd "M-C-l") #'copilot-accept-completion-by-word))
 
+(use-package gptel
+  :ensure t
+  :config
+	(setq gptel-backend (gptel-make-gh-copilot "Copilot Chat"))
+	:custom
+	(gptel-default-mode 'org-mode))
 
-(use-package copilot-chat
-  :vc (:url "https://github.com/chep/copilot-chat.el"
-	:rev :newest
-	:branch "master")
-  :custom
-  (copilot-chat-frontend 'org))
+
+;(use-package copilot-chat
+;  :vc (:url "https://github.com/chep/copilot-chat.el"
+;	:rev :newest
+;	:branch "master")
+;  :custom
+;  (copilot-chat-frontend 'org))
 
 ; this client works with almost all of the llms
 ; https://github.com/karthink/gptel?tab=readme-ov-file

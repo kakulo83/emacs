@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -80,6 +81,8 @@
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 ;(define-key evil-insert-state-map (kbd "C-n") 'cape-prefix-map)
 (define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
+																				; copilot-accept-completion-by-line
+																				; copilot-accept-completion-by-word
 (define-key evil-insert-state-map (kbd "C-h") 'cape-history)
 
 (after 'embark

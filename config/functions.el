@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -251,7 +252,9 @@ _n_: node
   ;	 (interactive)
   ;	 ((let ((register (string-to-char (read-string "select register: "))))
   ;	    (set-register ?register nil)))) "delete")
-  ("l" consult-register "list"))
+  ("l" (lambda ()
+				 (interactive)
+				 (consult-load-register))))
 
 
 ;; following from https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
@@ -290,7 +293,7 @@ _n_: node
   "split current buffer and run copilot-chat."
   (interactive)
   (split-window-right) 
-  (copilot-chat-display))
+  (call-interactively 'gptel))
 
 (defhydra hydra-copilot (:color green :hint nil)
   "
