@@ -68,7 +68,8 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
-(define-key evil-normal-state-map (kbd "C-o") 'pop-global-mark)
+(define-key evil-normal-state-map (kbd "C-o") 'better-jumper-jump-backward)
+(define-key evil-normal-state-map (kbd "C-i") 'better-jumper-jump-forward)
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -120,8 +121,8 @@
 (evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
 (evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
-(evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'previous-buffer)
-(evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'previous-buffer)
+(evil-define-key 'normal flycheck-mode-map (kbd "C-o") 'better-jumper-jump-backward); 'previous-buffer)
+(evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'better-jumper-jump-backward);'previous-buffer)
 (evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
 (evil-define-key 'normal dired-sidebar-mode-map (kbd "-") 'dired-sidebar-up-directory)
 
@@ -135,6 +136,13 @@
 (evil-define-key 'normal prodigy-mode-map (kbd "q") 'quit-window)
 (evil-define-key 'normal prodigy-mode-map (kbd "$") 'prodigy-display-process)
 
+(global-set-key (kbd "C-c RET") 'gptel-send)
+
+(global-set-key (kbd "s-l") 'comint-clear-buffer) ; added to clear python-shell buffer
+
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
 (provide 'bindings)
 ;;; bindings.el ends here
 

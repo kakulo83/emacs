@@ -186,6 +186,9 @@ FEATURE may be any one of:
 ; fix indent when inserting python snippets
 (add-hook 'python-ts-mode-hook '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
 
+(setq python-indent-guess-indent-offset t)
+(setq python-indent-guess-indent-offset-verbose nil)
+
 ;; tab-width is what eglot-format uses to indent the current mode
 (setq-default tab-width 2)
 
@@ -364,10 +367,10 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
-;(set-frame-font "JetBrains Mono")
+(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
@@ -424,7 +427,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
   "Init value for clean-buffer-list-kill-never-buffer-names.")
 (setq clean-buffer-list-kill-never-buffer-names
       (append
-       '("*Copilot-chat* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*")
+       '("*Copilot-chat* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*" "*chat*")
        clean-buffer-list-kill-never-buffer-names-init))
 
 ;; prevent append multiple times

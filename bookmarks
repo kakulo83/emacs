@@ -15,11 +15,11 @@
 	(position . 12215)
 	(last-modified 26368 26287 842919 0))
 ("org-capture-last-stored"
-	(filename . "~/Notes/org-roam-notes/20250517184144-snakes.org")
-	(front-context-string . "\nCarmen's tiny l")
+	(filename . "~/Notes/org-roam-notes/20250525051605-artificial_intelligence.org")
+	(front-context-string . "\nhttps://s10251.")
 	(rear-context-string . "---------------\n")
-	(position . 446)
-	(last-modified 26665 15117 358663 0))
+	(position . 466)
+	(last-modified 26675 3635 47667 0))
 ("Developer directory"
 	(filename . "~/Developer/")
 	(front-context-string . ".DS_Store\n  -rw-")

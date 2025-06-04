@@ -173,13 +173,29 @@ _E_: run all elixir test in buffer
   ("E" exunit-verify))
 
 
+(defun delete-visible-buffers ()
+  "Delete all visible buffers showing in windows."
+	(interactive)
+  (let ((visible-buffers (delete-dups (mapcar #'window-buffer (window-list)))))
+    (dolist (buffer visible-buffers)
+      (kill-buffer buffer))))
+
+
+(defun save-buffers-to-register-and-close ()
+	"Save all buffers to a register, close, and create an empty one."
+	(interactive)
+	(window-configuration-to-register ?w)
+	(delete-other-windows)
+	(switch-to-buffer (generate-new-buffer "Scratch Pad")))
+
+
 (defhydra hydra-window-utils (:color green :hint nil)
   "
 Window misc
 ------------
 _n_: toggle line numbers   _l_: shrink buffer width    _k_: increase height       _+_: increase font
 _c_: copy buffer path      _h_: increase buffer width    _j_: reduce height       _-_: decrease font
-_f_: full-screen
+_f_: full-screen           _x_: save buffers to register and swtich
 "
   ("c" copy-filepath-to-clipboard :exit t)
   ("f" toggle-frame-maximized :exit t)
@@ -188,6 +204,7 @@ _f_: full-screen
   ("l" enlarge-window-horizontally)
   ("k" enlarge-window)
   ("j" shrink-window)
+	("x" save-buffers-to-register-and-close)
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
@@ -252,9 +269,7 @@ _n_: node
   ;	 (interactive)
   ;	 ((let ((register (string-to-char (read-string "select register: "))))
   ;	    (set-register ?register nil)))) "delete")
-  ("l" (lambda ()
-				 (interactive)
-				 (consult-load-register))))
+  ("l" consult-register-load "load"))
 
 
 ;; following from https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
