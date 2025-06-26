@@ -9,23 +9,28 @@
  '(gptel-api-key "")
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
  '(package-selected-packages
-		'(ace-window all-the-icons-ibuffer balanced-windows better-jumper
-			 bug-hunter cape catppuccin-theme consult-xref-stack copilot
-			 corfu dired-sidebar diredfl disaster doom-modeline doom-themes
-			 dracula-theme ef-themes embark-consult eshell-toggle
-			 evil-collection exec-path-from-shell exunit fleury-theme
-			 flycheck-eglot format-all gcmh git-timemachine gotham-theme
-			 gptel helpful hide-mode-line highlight-symbol hydra inf-elixir
-			 inf-ruby jtsx kind-icon magit marginalia modus-themes
-			 multi-vterm nano-theme nerd-icons-dired nodejs-repl nvm
-			 nyan-mode olivetti orderless org-bullets org-download org-drill
-			 org-roam-ui outline-indent prodigy pyvenv restclient
-			 reykjavik-theme rspec-mode symbols-outline tabspaces
-			 treesit-auto tron-legacy-theme undo-tree vertico-posframe
-			 vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
+		'(ace-window aio all-the-icons-ibuffer balanced-windows better-jumper
+			 bug-hunter cape catppuccin-theme color-theme-sanityinc-tomorrow
+			 consult-xref-stack copilot corfu dired-sidebar diredfl disaster
+			 doom-modeline doom-two-tone-themes dracula-theme ef-themes
+			 embark-consult eshell-toggle evil-collection
+			 exec-path-from-shell exunit fleury-theme flycheck-eglot
+			 format-all gcmh git-timemachine gotham-theme gptel helpful
+			 hide-mode-line highlight-symbol hydra inf-elixir inf-ruby
+			 jbeans-theme jtsx kind-icon magit marginalia markdown-mode
+			 modus-themes multi-vterm nano-theme nerd-icons-dired
+			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
+			 org-download org-drill org-roam-ui outline-indent polymode
+			 prodigy pyvenv request restclient restclient-jq reykjavik-theme
+			 rspec-mode shell-maker symbols-outline tabspaces treesit-auto
+			 tron-legacy-theme undo-tree verb vertico-posframe vterm-toggle
+			 wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
-		'((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
-				"main")
+		'((doom-two-tone-themes :url
+				"https://github.com/eliraz-refael/doom-two-tone-themes"
+				:branch "master")
+			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
+				 :branch "main")
 			 (fleury-theme :url
 				 "https://github.com/ShamsParvezArka/fleury-theme.el" :branch
 				 "main")
@@ -46,7 +51,9 @@
 			 (ts-fold :url "https://github.com/emacs-tree-sitter/ts-fold"
 				 :branch "master")
 			 (ultra-scroll :vc-backend Git :url
-				 "https://github.com/jdtsmith/ultra-scroll"))))
+				 "https://github.com/jdtsmith/ultra-scroll")))
+ '(window-divider-default-bottom-width 1)
+ '(window-divider-default-right-width 1))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -72,6 +79,7 @@
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+ '(tab-bar-tab ((t (:inherit tab-bar))))
  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin)))))
 
 (provide 'custom)

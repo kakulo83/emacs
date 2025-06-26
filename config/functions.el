@@ -184,7 +184,7 @@ _E_: run all elixir test in buffer
 (defun save-buffers-to-register-and-close ()
 	"Save all buffers to a register, close, and create an empty one."
 	(interactive)
-	(window-configuration-to-register ?w)
+	(window-configuration-to-register ?x) ; NOTE the question mark symbol is for referencing registers
 	(delete-other-windows)
 	(switch-to-buffer (generate-new-buffer "Scratch Pad")))
 
@@ -193,9 +193,9 @@ _E_: run all elixir test in buffer
   "
 Window misc
 ------------
-_n_: toggle line numbers   _l_: shrink buffer width    _k_: increase height       _+_: increase font
-_c_: copy buffer path      _h_: increase buffer width    _j_: reduce height       _-_: decrease font
-_f_: full-screen           _x_: save buffers to register and swtich
+_n_: toggle line numbers   _l_: shrink buffer width      _b_: balance windows     _k_: increase height     _+_: increase font
+_c_: copy buffer path      _h_: increase buffer width                             _j_: reduce height       _-_: decrease font
+_f_: full-screen           _x_: temp workspace
 "
   ("c" copy-filepath-to-clipboard :exit t)
   ("f" toggle-frame-maximized :exit t)
@@ -204,6 +204,7 @@ _f_: full-screen           _x_: save buffers to register and swtich
   ("l" enlarge-window-horizontally)
   ("k" enlarge-window)
   ("j" shrink-window)
+	("b" balance-windows-area)
 	("x" save-buffers-to-register-and-close)
   ("+" text-scale-increase)
   ("-" text-scale-decrease))

@@ -159,17 +159,17 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-material t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-night t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme
-  :config
-	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package nano-theme
+;  :config
+;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
@@ -195,12 +195,13 @@
 ;(use-package color-theme-sanityinc-tomorrow
 ;	:config
 ;	(load-theme 'sanityinc-tomorrow-blue t))
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/")
 ;(load-theme `tron t)
 ;(use-package fleury-theme
 ;  :vc
 ;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
 ;	(load-theme 'fleury-theme))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/private/")
+(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 
 
 (use-package tabspaces
@@ -326,17 +327,17 @@
   (symbols-outline-follow-mode))
 
 
-(use-package all-the-icons)
+;(use-package all-the-icons)
 
 
 ;(use-package all-the-icons-dired
 ;  :hook
 ;  (dired-mode . all-the-icons-dired-mode))
 
-
+(use-package nerd-icons :defer t)
 (use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
+	:commands (nerd-icons-dired-mode))
+(setq dired-sidebar-theme 'nerd-icons)
 
 
 (use-package all-the-icons-ibuffer
@@ -361,7 +362,6 @@
   ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
   ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
 	(message "warning: `jsonrpc--log-event' is ignored.")
-  (fset #'jsonrpc--log-event #'ignore)
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
@@ -379,16 +379,16 @@
 		(setq-local
 				eldoc-documentation-functions
 				(list
-					;;#'eglot-signature-eldoc-function
-					;;#'eglot-hover-eldoc-function
-					;;#'flymake-eldoc-function
+					#'eglot-signature-eldoc-function
+					; #'eglot-hover-eldoc-function
+					; #'flymake-eldoc-function
 				)))
 	(add-hook 'eglot-managed-mode-hook #'/eglot-managed-mode-initialize)
 
   ;; setting language specific lsp configs
-  (setq-default eglot-workspace-configuration
-    '((elixir-ls
-	(elixirLS.autoInsertRequiredAlias . nil))))
+  ;;(setq-default eglot-workspace-configuration
+  ;;  '((elixir-ls
+	;;(elixirLS.autoInsertRequiredAlias . nil))))
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
   :defer t
@@ -404,7 +404,7 @@
 	  (sql-mode . eglot-ensure)))
 
 ;; ignore jsonrpc events to speed up eglot
-;; (fset #'jsonrpc--log-event #'ignore)
+(fset #'jsonrpc--log-event #'ignore)
 
 (with-eval-after-load 'eglot
   (setq completion-category-defaults nil))
@@ -518,9 +518,9 @@
 (use-package gptel
   :ensure t
   :config
-	(setq gptel-backend (gptel-make-gh-copilot "Copilot"))
-	:custom
-	(gptel-default-mode 'org-mode))
+	(setq gptel-model 'gpt-4o
+		gptel-backend (gptel-make-gh-copilot "Copilot")
+		gptel-default-mode 'org-mode))
 
 
 ;(use-package copilot-chat
@@ -621,6 +621,18 @@
           ("C-c i" . org-roam-node-insert)))
 
 
+(use-package verb
+	:after org
+	:config
+	(setq verb-auto-kill-response-buffers t)
+	(push '("\\*HTTP Response.*\\*" . (
+																		(display-buffer-reuse-window)
+																		(side . right)
+																		(slot . 0)
+																		)) display-buffer-alist)
+	(define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+
+
 (use-package org-bullets
   :after org
   :init
@@ -710,9 +722,23 @@
   (setq-default olivetti-body-width 128))
 
 
+
 (use-package restclient
   :config
+	(push '("\\*HTTP Response\\*" . (
+																		(display-buffer-in-side-window)
+																		(side . right)
+																		(slot . 0)
+																		)) display-buffer-alist)
+	;(setq display-buffer-alist '(("\\*HTTP Response*"
+	;															 (display-buffer-in-side-window)
+	;															 (side . right)
+	;															 (slot . 0)
+	;															 (window-width . 80))))
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
+
+(use-package restclient-jq
+	:after restclient)
 
 
 (use-package nvm)
@@ -729,6 +755,7 @@
     '(("Python" (black))
        ("Go"    (gofmt) (goimports))
        ("JS"    (prettier))
+			 ("RUBY"  (rubyfmt "-i"))
        ("TS"    (prettier))
        ("HTML"  (prettier))
        ("CSS"   (prettier))

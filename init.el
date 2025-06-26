@@ -91,13 +91,18 @@
 ;;;
 ;;; Consider showing stuff on side:  https://github.com/emacs-sideline/sideline?tab=readme-ov-file
 ;;;
+;;; Consider using https://github.com/federicotdn/verb as a substitute for restclient
+;;;
+;;; Consider Claude Code:  https://github.com/manzaltu/claude-code-ide.el
+;;;
 ;;; Code:
 
 ; needed due to failure in native-compilation
 ; https://github.com/d12frosted/homebrew-emacs-plus/issues/733
 ;(setenv "PATH" "/Users/robertcarter/.rbenv/shims:/Users/robertcarter/.rbenv/bin:/Users/robertcarter/.emacs.d/bin:/opt/homebrew/opt/postgresql@15/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/mysql-client/bin:/Users/robertcarter/.nvm/versions/node/v20.11.1/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/robertcarter/.local/bin:/bin")
 ;(setq exec-path (split-string (getenv "PATH") path-separator))
-
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
 
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -134,6 +139,9 @@
 
 ;; enable delimeter pairing
 (electric-pair-mode t)
+
+;; enable window-divider mode so we can see the different splits
+(menu-bar-bottom-window-divider)
 
 ;; Session management
 (require 'desktop)
@@ -427,7 +435,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
   "Init value for clean-buffer-list-kill-never-buffer-names.")
 (setq clean-buffer-list-kill-never-buffer-names
       (append
-       '("*Copilot-chat* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*" "*chat*")
+       '("*Copilot* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*" "*chat*")
        clean-buffer-list-kill-never-buffer-names-init))
 
 ;; prevent append multiple times
