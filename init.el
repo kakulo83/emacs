@@ -337,12 +337,6 @@ FEATURE may be any one of:
     (setq-default evil-symbol-word-search t))
 
 
-;; Taken from perspective.el suggestions
-;; Reuse windows as much as possible to minimize changes to layout
-(customize-set-variable 'display-buffer-base-action
-  '((display-buffer-reuse-window display-buffer-same-window)
-    (reusable-frames . t)))
-
 (customize-set-variable 'even-window-sizes nil)
 
 ;; Set default ibuffer sorting
