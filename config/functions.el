@@ -293,56 +293,6 @@ _n_: node
     (copilot-complete)))
 
 
-(defun create-centered-frame ()
-  "Create a new frame and center it on the screen."
-  (interactive)
-  (let* ((frame (make-frame))
-         (frame-width (frame-pixel-width frame))
-         (frame-height (frame-pixel-height frame))
-         (display-width (display-pixel-width))
-         (display-height (display-pixel-height))
-         (x-pos (/ (- display-width frame-width) 2))
-         (y-pos (/ (- display-height frame-height) 2)))
-    (set-frame-position frame (max x-pos 0) (max y-pos 0))
-    frame))  ;; Return the new frame if needed
-
-
-(defun create-new-bottom-buffer ()
-  "Create a new full-width horizontal buffer at the bottom of the frame.
-BUFFER-NAME is the name of the new buffer."
-  (interactive)
-  (let ((new-window (split-window (frame-root-window) nil 'below))) ; Split below the root window
-    (select-window new-window) ; Select the new window
-    (switch-to-buffer (get-buffer-create "horizontal split")))) ; Switch to or create the buffer
-
-
-(defun open-copilot-in-split ()
-  "split current buffer and run copilot-chat."
-  (interactive)
-  (split-window-right) 
-  (call-interactively 'gptel))
-
-
-(defun open-copilot-in-new-frame ()
-	"create a new emacs frame and run copilot-chat."
-	(interactive)
-	(create-centered-frame)
-	(call-interactively 'gptel))
-
-
-(defun open-copilot-in-horizontal-split ()
-	"split below all buffers."
-	(interactive)
-	(create-new-bottom-buffer)
-	(call-interactively 'gptel))
-
-(defun toggle-eshell-in-horizontal-buffer ()
-	"Create a horizontal split for eshell."
-	(interactive)
-	(create-new-bottom-buffer)
-	(eshell))
-
-
 (defhydra hydra-copilot (:color green :hint nil)
   "
 Copilot
