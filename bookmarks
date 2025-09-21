@@ -21,11 +21,11 @@
 	(position . 12215)
 	(last-modified 26368 26287 842919 0))
 ("org-capture-last-stored"
-	(filename . "~/Notes/org-roam-notes/20250612232156-bittorrent.org")
-	(front-context-string . "\nhttps://github.")
-	(rear-context-string . "---------------\n")
-	(position . 450)
-	(last-modified 26699 50077 505177 0))
+	(filename . "~/Notes/org-roam-notes/20250905043909-math_misc.org")
+	(front-context-string . "https://www.quan")
+	(rear-context-string . "r transformers\n\n")
+	(position . 472)
+	(last-modified 26810 52220 833912 0))
 ("Developer directory"
 	(filename . "~/Developer/")
 	(front-context-string . ".DS_Store\n  -rw-")
