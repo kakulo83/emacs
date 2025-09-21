@@ -177,9 +177,9 @@
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-(use-package tron-legacy-theme
-  :config
-  (load-theme 'tron-legacy t))
+;(use-package tron-legacy-theme
+;  :config
+;  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -198,7 +198,6 @@
 ;(use-package color-theme-sanityinc-tomorrow
 ;	:config
 ;	(load-theme 'sanityinc-tomorrow-blue t))
-;(load-theme `tron t)
 ;(use-package fleury-theme
 ;  :vc
 ;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
@@ -207,8 +206,9 @@
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
 ;       :branch "main"))
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+;(load-theme `tron t)
 
 
 (use-package tabspaces
