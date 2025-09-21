@@ -293,20 +293,6 @@ _n_: node
     (copilot-complete)))
 
 
-(defhydra hydra-copilot (:color green :hint nil)
-  "
-Copilot
-----------
-_t_: toggle on/off
-_c_: chat
-_e_: explain region
-_d_: document region
-"
-  ("t" #'robert/copilot-change-activation :exit t)
-  ("c" #'open-copilot-in-split :exit t)
-  ("e" copilot-chat-explain :exit t)
-  ("d" copilot-chat-doc :exit t))
-
 (defhydra hydra-vc (:color green :hint nil)
   "vc"
   ("a" vc-annotate "Annotate" :exit t)
