@@ -13,8 +13,7 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
-  "c"  'open-copilot-in-horizontal-split
-  ;"C"  'hydra-copilot/body
+  "c"  'gptel
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
   "E"  'hydra-eglot/body
@@ -69,7 +68,7 @@
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
 (define-key evil-normal-state-map (kbd "C-o") 'better-jumper-jump-backward)
 (define-key evil-normal-state-map (kbd "C-i") 'better-jumper-jump-forward)
-(define-key evil-normal-state-map (kbd "s-`") 'toggle-eshell-in-horizontal-buffer)
+(define-key evil-normal-state-map (kbd "s-`") 'eshell)
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -90,15 +89,21 @@
   ;(define-key embark-general-map (kbd "d") #'robert/embark-clear-register)
   (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-file-map     (kbd "z") #'dired-do-compress)
+
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
   (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
+
+	(keymap-set embark-general-map "?" #'gptel-quick)
+
   (define-key embark-region-map "f" #'fill-region)
+  (define-key embark-region-map "r" #'gptel-rewrite)
   (define-key embark-region-map "b" #'vc-region-history)
+  (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
+
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
   (define-key embark-identifier-map "r" #'eglot-rename)
 	(define-key embark-identifier-map "f" #'consult-ripgrep)
   (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
-  (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
 )
 
 (define-key grep-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
