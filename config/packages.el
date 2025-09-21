@@ -5,13 +5,14 @@
 ;; :init executes code BEFORE a package is loaded
 ;; :config executes code AFTER a package is loaded
 
-(use-package bug-hunter)
+(use-package bug-hunter
+	:defer t)
 
 
-(use-package exec-path-from-shell
-  :init
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH")))
+;(use-package exec-path-from-shell
+;  :init
+;  (exec-path-from-shell-initialize)
+;  (exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH")))
 
 
 (use-package treesit-auto
@@ -159,10 +160,10 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-deuteranopia-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-elea-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
@@ -174,9 +175,9 @@
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
 ;  (load-theme 'catppuccin t))
-;(use-package tron-legacy-theme
-;  :config
-;  (load-theme 'tron-legacy t))
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
 ;(use-package afternoon-theme
 ;  :config
 ;  (load-theme 'afternoon t))
@@ -200,8 +201,12 @@
 ;  :vc
 ;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
 ;	(load-theme 'fleury-theme))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/private/")
-(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+;(use-package south-theme
+;  :vc (:url "https://github.com/SophieBosio/south"
+;       :rev :newest
+;       :branch "main"))
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 
 
 (use-package tabspaces
@@ -243,6 +248,30 @@
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
+
+
+(use-package popper
+  :ensure t ; or :straight t
+  :bind (("C-`"   . popper-toggle)
+         ("M-`"   . popper-cycle)
+         ("C-M-`" . popper-toggle-type))
+  :init
+	(setq popper-reference-buffers
+      (append popper-reference-buffers
+              '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
+                "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+                "^\\*term.*\\*$"   term-mode   ;term as a popup
+                "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
+								"\\*Messages\\*"
+								"\\*Copilot\\*"
+								"Output\\*$"
+								"\\*Async Shell Command\\*"
+								 help-mode
+								 compilation-mode
+                )))
+	(setq popper-window-height 30)
+  (popper-mode +1)
+  (popper-echo-mode +1))
 
 
 (use-package vertico
@@ -289,6 +318,13 @@
   (setq embark-verbose-indicator-display-action
         '(display-buffer-at-bottom
   	  (window-height . fit-window-to-buffer)))
+	:config
+	;; The issue of eglot-rename not working seamlessly with embark-identifier often stems from how eglot-rename expects its input and how Embark delivers it.
+  ;; Specifically, eglot-rename is designed to be called with a specific input, typically a symbol at point, and it then prompts for the new name. When called via embark-identifier,
+	;; Embark might try to "insert" the identified target directly into the command, which is not the expected behavior for eglot-rename's interactive prompt.
+  ;; To address this, a common solution involves configuring Embark to allow eglot-rename to prompt for input instead of trying to pre-fill it. This is achieved by adding eglot-rename
+	;; to embark-target-injection-hooks, ensuring that Embark does not attempt to "inject" the identifier directly into the command.
+	(push 'embark--allow-edit (alist-get 'eglot-rename embark-target-injection-hooks))
   :bind
   (("M-o" . embark-act)))
 
@@ -366,9 +402,11 @@
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
-	(add-to-list 'eglot-server-programs '((html-ts-mode) "vscode-html-language-server" "--stdio"))
+	(add-to-list 'eglot-server-programs '((html-mode html-ts-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
+	; For python ?
+	; https://www.reddit.com/r/emacs/comments/1mddqpx/eglot_pyright_made_simple_thanks_to_uvx/
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
   (add-to-list 'eglot-server-programs '((typescript-mode tsx-ts-mode -js-mode) "typescript-language-server" "--stdio"))
 
@@ -435,22 +473,54 @@
         (propertize "└─>" 'face `(:foreground "royal blue"))
         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "DeepSkyBlue1"))  ;; prompt color
         )))
+
+	;; https://tony-zorman.com/posts/eshell-zsh-history.html
+	(defun slot/unmetafy ()
+  (cl-flet ((unmetafy (input)
+              (let ((i 0) output)
+                (while-let ((char (nth i input))
+                            (inc-and-char
+                             (if (= char #x83)
+                                 ;; Skip meta character and unmetafy.
+                                 `(2 . ,(logxor (nth (1+ i) input) 32))
+                               ;; Advance as usual.
+                               `(1 . ,char))))
+                  (cl-incf i (car inc-and-char))
+                  (setq output (cons (cdr inc-and-char) output)))
+                (decode-coding-string
+                 (apply #'unibyte-string (nreverse output))
+                 'utf-8-unix
+                 t))))
+    (let ((hist-file "~/.zsh_history"))
+      (with-temp-buffer
+        (insert (mapconcat (-compose #'unmetafy #'string-to-list)
+                           (s-lines (f-read-bytes hist-file))
+                           "\n"))
+        (write-file hist-file)))))
+
+	(defun slot/eshell-exit (&optional arg)
+		"Exit eshell and kill the current frame."
+		(interactive "P")
+		(slot/unmetafy)
+		(eshell-write-history)
+		(save-buffers-kill-terminal))
+
+	(setq eshell-history-file-name "~/.zsh_history")
+	;(setq eshell-history-file-name (expand-file-name "eshell/history" user-emacs-directory))
   (setq eshell-banner-message ""
     eshell-smart-space-goes-to-end t
+		eshell-save-history-on-exit t
     eshell-history-size 1000
     eshell-highlight-prompt t
     eshell-scroll-to-bottom-on-input t
-    eshell-hist-ignoredups t))
+    eshell-hist-ignoredups t)
+	:hook (
+					(eshell-hist-load . slot/unmetafy)
+					(eshell-exit-hook . slot/eshell-exit)))
 
 
-(use-package eshell-toggle
-  :custom
-  (eshell-toggle-size-fraction 3)
-  (eshell-toggle-use-git-root t)
-  (eshell-toggle-run-command nil)
-  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
-  :bind
-  ("s-`" . eshell-toggle))
+;; https://github.com/xuchunyang/eshell-git-prompt
+
 
 
 (use-package vterm
@@ -506,35 +576,53 @@
 ;; https://github.com/tninja/aider.el?tab=readme-ov-file
 ;; https://github.com/Aider-AI/aider
 
-(use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-	:rev :newest
-	:branch "main")
-  :config
-  (define-key copilot-mode-map (kbd "M-C-n") #'copilot-next-completion)
-  (define-key copilot-mode-map (kbd "M-C-p") #'copilot-previous-completion)
-  (define-key copilot-mode-map (kbd "M-C-l") #'copilot-accept-completion-by-word))
+;(use-package copilot
+;  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+;	:rev :newest
+;	:branch "main")
+;  :config
+;  (define-key copilot-mode-map (kbd "M-C-n") #'copilot-next-completion)
+;  (define-key copilot-mode-map (kbd "M-C-p") #'copilot-previous-completion)
+;  (define-key copilot-mode-map (kbd "M-C-l") #'copilot-accept-completion-by-word))
 
+
+; https://console.anthropic.com/settings/billing
 (use-package gptel
   :ensure t
   :config
 	(setq gptel-model 'gpt-4o
-		gptel-backend (gptel-make-gh-copilot "Copilot")
-		gptel-default-mode 'org-mode))
+		gptel-default-mode 'org-mode
+		gptel-backend (gptel-make-gh-copilot "Copilot")))
 
 
-;(use-package copilot-chat
-;  :vc (:url "https://github.com/chep/copilot-chat.el"
-;	:rev :newest
-;	:branch "master")
-;  :custom
-;  (copilot-chat-frontend 'org))
+;(use-package claude-code-ide
+;  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+;  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+;  :config
+;  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
 
-; this client works with almost all of the llms
-; https://github.com/karthink/gptel?tab=readme-ov-file
 
-; https://github.com/s-kostyaev/ellama
-; (use-package ellama)
+; TRY THIS
+; https://www.reddit.com/r/emacs/comments/1n123gy/eca_best_ai_tools_for_emacs/
+; https://github.com/editor-code-assistant/eca-emacs?tab=readme-ov-file
+; TODO
+; 1. bind <,-c> to hydra for AI functions, c for chat, e for explain
+; 2. add embark visual-region bind for explaining
+; 3. find package that does autocomplete on a per-line basis
+; NOTE:  API key and models saved to /Users/robertcarter/.config/eca/config.json
+; BILLING:  https://console.anthropic.com/settings/billing
+(use-package eca
+  :bind (("C-c a" . eca-run)
+         ("C-c C-a" . eca-run)
+         ("C-c e" . eca-explain)
+         ("C-c r" . eca-refactor)
+         ("C-c f" . eca-fix)
+         ("C-c d" . eca-document)
+         ("C-c t" . eca-test))
+  :config
+  ;; Optional: Set ECA preferences
+  (setq eca-auto-save-before-run t)
+  (setq eca-show-output-buffer t))
 
 
 (use-package undo-tree
@@ -643,6 +731,7 @@
 
 
 (use-package org-roam
+	:defer t
   :defines org-roam-v2-act org-roam-db-update-method org-roam-dailies-directory
   :custom
   (org-roam-directory "~/Notes/org-roam-notes/")
@@ -677,11 +766,13 @@
 
 
 (use-package org-roam-ui
+	:defer t
   :config
   (setq org-roam-ui-follow t))
 
 
 (use-package org-drill
+	:defer t
   :defines org-drill-hint-separator org-drill-left-close-delimiter org-drill-right-close-delimiter
   :init
   (setq org-drill-scope 'file)
@@ -693,6 +784,7 @@
 
 
 (use-package org-download
+	:defer t
   :after org
   :custom
   (org-download-method 'directory)
@@ -752,17 +844,17 @@
   :hook (prog-mode . format-all-mode)
   :config
   (setq-default format-all-formatters
-    '(("Python" (black))
-       ("Go"    (gofmt) (goimports))
-       ("JS"    (prettier))
-			 ("RUBY"  (rubyfmt "-i"))
-       ("TS"    (prettier))
-       ("HTML"  (prettier))
-       ("CSS"   (prettier))
-       ("JSON"  (prettier))
-       ("YAML"  (prettier))
-       ("XML"   (prettier))
-       ("SQL"   (sqlformat)))))
+    '(("python" (black))
+       ("gO"    (GOFMT) (GOIMPORTS))
+       ("js"    (PRETTIER))
+			 ("ruby"  (rubocop "--auto-correct"))
+       ("ts"    (PRETTIER))
+       ("html"  (PRETTIER))
+       ("css"   (PRETTIER))
+       ("json"  (PRETTIER))
+       ("yaml"  (PRETTIER))
+       ("xml"   (PRETTIER))
+       ("sql"   (SQLFORMAT)))))
 
 
 (use-package hide-mode-line
@@ -790,9 +882,9 @@
 ;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
 
 
-(use-package pyvenv
-	:config
-	(pyvenv-mode 1))
+;(use-package pyvenv
+;	:config
+;	(pyvenv-mode 1))
 
 
 (use-package disaster
@@ -889,6 +981,7 @@
 
 
 (use-package inf-elixir
+	:defer t
   :after consult
   :bind (("C-c i i" . 'inf-elixir)
 	  ("C-c i p" . 'inf-elixir-project)
@@ -928,6 +1021,7 @@
   (setq flycheck-display-errors-delay 0.2)
   (setq flycheck-highlighting-mode 'symbol)
   (setq flycheck-indication-mode 'left-fringe)
+	(setq flycheck-python-pyright-executable "/opt/homebrew/bin/ruff")
   (setq flycheck-ruby-executable "/Users/robertcarter/.rbenv/shims/rubocop")
   (add-to-list 'display-buffer-alist
     `(,(rx bos "*Flycheck errors*" eos)
@@ -946,7 +1040,17 @@
   (global-flycheck-eglot-mode 1))
 
 
+(use-package flyover
+	:load-path "~/.emacs.d/private/flyover/"
+	:init
+	(setq flyover-levels '(error))
+	(setq flyover-error-icon "😾")
+	:config
+	(flyover-mode))
+
+
 (use-package prodigy
+	:defer t
   :config
   (prodigy-define-service
     :name "Elixir Server"

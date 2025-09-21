@@ -13,8 +13,8 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
-  "c"  'open-copilot-in-split
-  "C"  'hydra-copilot/body
+  "c"  'open-copilot-in-horizontal-split
+  ;"C"  'hydra-copilot/body
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
   "E"  'hydra-eglot/body
@@ -23,7 +23,6 @@
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
   "n"  'robert/open-notes-dired-in-tab
-  "N"  'robert/open-notes-in-split-with-embark
   "p"  'tabspaces-project-switch-project-open-file
   "P"  'prodigy
   "q"  'my/delete-buffer-or-workspace
@@ -70,6 +69,7 @@
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
 (define-key evil-normal-state-map (kbd "C-o") 'better-jumper-jump-backward)
 (define-key evil-normal-state-map (kbd "C-i") 'better-jumper-jump-forward)
+(define-key evil-normal-state-map (kbd "s-`") 'toggle-eshell-in-horizontal-buffer)
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -95,8 +95,8 @@
   (define-key embark-region-map "f" #'fill-region)
   (define-key embark-region-map "b" #'vc-region-history)
   (define-key embark-identifier-map (kbd "o") (my/embark-ace-action xref-find-definitions))
-  (define-key embark-identifier-map "n" #'eglot-rename)
-  (define-key embark-identifier-map "t" #'hydra-test-runner/body)
+  (define-key embark-identifier-map "r" #'eglot-rename)
+	(define-key embark-identifier-map "f" #'consult-ripgrep)
   (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
   (define-key embark-region-map "c" #'robert/embark-org-roam-cut-to-new-note)
 )
@@ -128,6 +128,8 @@
 
 ;(evil-define-key 'normal ibuffer-mode-map (kbd (my-leader-map . "a")) 'ace-window)
 
+(with-eval-after-load 'html-mode
+	(define-key html-mode-map (kbd "M-o M-o") nil))
 
 (evil-define-key 'normal prodigy-mode-map (kbd "s") 'prodigy-start)
 (evil-define-key 'normal prodigy-mode-map (kbd "S") 'prodigy-stop)

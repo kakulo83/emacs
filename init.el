@@ -95,7 +95,23 @@
 ;;;
 ;;; Consider Claude Code:  https://github.com/manzaltu/claude-code-ide.el
 ;;;
+;;; Consider Macher:  https://github.com/kmontag/macher
+;;;
+;;; Try to speed up load:  https://github.com/jamescherti/minimal-emacs.d
+;;;
+;;; https://github.com/manzaltu/claude-code-ide.el?tab=readme-ov-file
+;;; https://github.com/editor-code-assistant/eca-emacs?tab=readme-ov-file
+;;; https://github.com/editor-code-assistant/eca
+;;; https://www.reddit.com/r/emacs/comments/18rkds0/ai_coding_autocomplete_assistants/
+;;;
+;;; Create an Emacs function for formatting a region depending on the buffer type (json, html, etc)
+;;; https://stackoverflow.com/questions/137043/can-emacs-re-indent-a-big-blob-of-html-for-me
+;;; For html use the functions `sgml-pretty-print` and then `indent-for-tab` on the same region/buffer
+;;;
 ;;; Code:
+
+; enable package statistics
+(setq use-package-compute-statistics t)
 
 ; needed due to failure in native-compilation
 ; https://github.com/d12frosted/homebrew-emacs-plus/issues/733
@@ -141,7 +157,7 @@
 (electric-pair-mode t)
 
 ;; enable window-divider mode so we can see the different splits
-(menu-bar-bottom-window-divider)
+;(menu-bar-bottom-window-divider)
 
 ;; Session management
 (require 'desktop)
@@ -375,10 +391,10 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
-(set-frame-font "JetBrains Mono")
+;(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 
 ; set clock for different timezones
@@ -413,7 +429,7 @@ FEATURE may be any one of:
 (require 'midnight)
 
 ;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-special 1800)
+(setq clean-buffer-list-delay-special 7200)
 
 (defvar clean-buffer-list-timer nil
   "Stores `clean-buffer-list` timer if there is one.
@@ -457,6 +473,16 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
                            ("gnu" . "https://elpa.gnu.org/packages/")))
   (setq package-enable-at-startup nil)
   (package-initialize)
+
+
+; Configuration of exec-path-from-shell package	
+; This sets $MANPATH, $PATH and exec-path from your shell, but only when executed
+; in a GUI frame on OS X and Linux.
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize)
+	(exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH"))
+	)
+
 
   (cl-loop for file in (append (reverse (directory-files-recursively config-directory "\\.el$")))
            do (condition-case ex

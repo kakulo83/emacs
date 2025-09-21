@@ -5,9 +5,12 @@
 (defun my/delete-buffer-or-workspace ()
 "Delete the current buffer or workspace/tab."
   (interactive)
-  (if (= (length (window-list)) 1)
-      (call-interactively (tabspaces-close-workspace))
-    (delete-window)))
+  ;(if (> (length (frame-list)) 2)
+  ;    (delete-frame)
+	(if (= (length (window-list)) 1)
+		(call-interactively (tabspaces-close-workspace))
+		(delete-window)))
+
 
 (eval-when-compile
   (defmacro my/embark-ace-action (fn)
@@ -18,6 +21,7 @@
        (let ((aw-dispatch-always t))
         (aw-switch-to-window (aw-select nil))
         (call-interactively (symbol-function ',fn)))))))
+
 
 (defun my/cpm-open-notes-in-workspace ()
   "Open Notes in its own workspace."
@@ -49,6 +53,7 @@
   "Remove empty string values from LIST."
   (--filter (not (string= "" it)) list))
 
+
 (defvar notes-dir-path "/Users/robertcarter/Notes/org-roam-notes/")
 (defvar rg-drill-cmd "rg -l '.*drill.*' ")
 
@@ -57,6 +62,7 @@
   (cd notes-dir-path)
   (let ((rg-tag-command (concat "rg -l 'tags:.*'" tag)))
     (string-join (split-string (shell-command-to-string rg-tag-command) "\n") " ")))
+
 
 (defun robert/get-org-files-for-topic (tag)
   "Function to generate list of files from TAG."
@@ -67,6 +73,7 @@
   (let ((files-by-tag (robert/org-files-by-tag tag)))
                                         ; filter list further with onlly files that have drill items
     (split-string (shell-command-to-string (concat rg-drill-cmd files-by-tag)) "\n")))
+
 
 (defun robert/drill-by-topic ()
   "Wrapper function on org-drill to invoke against a list of files from TOPIC."
@@ -133,16 +140,7 @@
           (message "killed: %s" prompt-title)
         (message "error: could not kill %s" prompt-title)))))
 
-(defun robert/run-test-under-cursor (&optional full-file)
-  "Run the nearest pytest using toffee.  Pass `FULL-FILE' to run all test in file."
-  (interactive "P")
-  (let ((test-file-name (buffer-file-name))
-	 (line-number (line-number-at-pos)))
-    (eshell-toggle)
-    (eshell-return-to-prompt)
-    (insert (shell-command-to-string
-	      (format "toffee '%s' '%s'" test-file-name line-number)))
-    (eshell-send-input)))
+
 
 ; https://www.reddit.com/r/emacs/comments/ynbbu7/store_autoyasnippets_in_registers_and_expand_on/
 (defun robert/yasnippet-insert ()
@@ -153,24 +151,13 @@
     (yas-insert-snippet)))
     ;(robert/vterm-insert-snip (yas-choose-value (yas--all-templates)))
 
+
 (defun robert/vterm-insert-snip (str)
   "Insert a snippet into the vterm buffer."
   (interactive)
   (let* ((inhibit-read-only t))
     (vterm-send-string str nil)))
   ;(vterm-send-string (concat "echo " (yas-choose-value (yas--all-templates)) " \n")))
-
-(defhydra hydra-test-runner (:color green :hint nil)
-  "
-Run Test
---------------
-_p_: run pytest under cursor
-_e_: run elixir under cursor
-_E_: run all elixir test in buffer
-"
-  ("p" robert/run-test-under-cursor)
-  ("e" exunit-verify-single)
-  ("E" exunit-verify))
 
 
 (defun delete-visible-buffers ()
@@ -193,17 +180,15 @@ _E_: run all elixir test in buffer
   "
 Window misc
 ------------
-_n_: toggle line numbers   _l_: shrink buffer width      _b_: balance windows     _k_: increase height     _+_: increase font
-_c_: copy buffer path      _h_: increase buffer width                             _j_: reduce height       _-_: decrease font
+_n_: toggle line numbers   _b_: balance windows     _k_: kill frame          _+_: increase font
+_c_: copy buffer path                             _p_: new frame           _-_: decrease font
 _f_: full-screen           _x_: temp workspace
 "
   ("c" copy-filepath-to-clipboard :exit t)
   ("f" toggle-frame-maximized :exit t)
   ("n" global-display-line-numbers-mode)
-  ("h" shrink-window-horizontally)
-  ("l" enlarge-window-horizontally)
-  ("k" enlarge-window)
-  ("j" shrink-window)
+  ("k" delete-frame)
+	("p" make-frame)
 	("b" balance-windows-area)
 	("x" save-buffers-to-register-and-close)
   ("+" text-scale-increase)
@@ -277,6 +262,7 @@ _n_: node
 (defvar robert/copilot-manual-mode nil
   "When `t' will only show completions when manually triggered, e.g. via M-C-<return>.")
 
+
 (defun robert/copilot-change-activation ()
   "Switch between three activation modes:
     - automatic: copilot will automatically overlay completions
@@ -295,6 +281,7 @@ _n_: node
       (message "activating copilot mode")
       (copilot-mode))))
 
+
 (defun robert/copilot-complete-or-accept ()
   "Command that either triggers a completion or accepts one if one is available. Useful if you tend to hammer your keys like I do."
   (interactive)
@@ -305,11 +292,56 @@ _n_: node
       (next-line))
     (copilot-complete)))
 
+
+(defun create-centered-frame ()
+  "Create a new frame and center it on the screen."
+  (interactive)
+  (let* ((frame (make-frame))
+         (frame-width (frame-pixel-width frame))
+         (frame-height (frame-pixel-height frame))
+         (display-width (display-pixel-width))
+         (display-height (display-pixel-height))
+         (x-pos (/ (- display-width frame-width) 2))
+         (y-pos (/ (- display-height frame-height) 2)))
+    (set-frame-position frame (max x-pos 0) (max y-pos 0))
+    frame))  ;; Return the new frame if needed
+
+
+(defun create-new-bottom-buffer ()
+  "Create a new full-width horizontal buffer at the bottom of the frame.
+BUFFER-NAME is the name of the new buffer."
+  (interactive)
+  (let ((new-window (split-window (frame-root-window) nil 'below))) ; Split below the root window
+    (select-window new-window) ; Select the new window
+    (switch-to-buffer (get-buffer-create "horizontal split")))) ; Switch to or create the buffer
+
+
 (defun open-copilot-in-split ()
   "split current buffer and run copilot-chat."
   (interactive)
   (split-window-right) 
   (call-interactively 'gptel))
+
+
+(defun open-copilot-in-new-frame ()
+	"create a new emacs frame and run copilot-chat."
+	(interactive)
+	(create-centered-frame)
+	(call-interactively 'gptel))
+
+
+(defun open-copilot-in-horizontal-split ()
+	"split below all buffers."
+	(interactive)
+	(create-new-bottom-buffer)
+	(call-interactively 'gptel))
+
+(defun toggle-eshell-in-horizontal-buffer ()
+	"Create a horizontal split for eshell."
+	(interactive)
+	(create-new-bottom-buffer)
+	(eshell))
+
 
 (defhydra hydra-copilot (:color green :hint nil)
   "
@@ -342,10 +374,12 @@ _d_: document region
   "
 Actions
 ----------
+_f_: activate flyover
 _l_: list
 _n_: next error
 _p_: prev error
 "
+	("f" flyover-mode :exit t)
   ("l" flycheck-list-errors :exit t)
   ("n" flycheck-next-error)
   ("p" flycheck-previous-error))
@@ -373,13 +407,6 @@ _p_: prev error
   (tab-bar-new-tab)
   (tab-bar-rename-tab "Notes")
   (find-file "~/Notes/org-roam-notes/")
-  (call-interactively 'project-find-file))
-
-(defun robert/open-notes-in-split-with-embark()
-  "This is meant to be invoked with embark.  Once <leader-N> is pressed, you must also press
-M-o and o."
-  (interactive)
-  (cd "~/Notes/org-roam-notes/")
   (call-interactively 'project-find-file))
 
 (defun org-hide-properties ()
