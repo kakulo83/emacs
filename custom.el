@@ -8,27 +8,15 @@
  ;; If there is more than one, they won't work right.
  '(gptel-api-key "")
  '(org-bullets-bullet-list '("◉" "○" "✸" "◉🌿"))
- '(package-selected-packages
-		'(ace-window aio all-the-icons-ibuffer balanced-windows better-jumper
-			 bug-hunter cape catppuccin-theme color-theme-sanityinc-tomorrow
-			 consult-xref-stack copilot corfu dired-sidebar diredfl disaster
-			 doom-modeline doom-two-tone-themes dracula-theme ef-themes
-			 embark-consult eshell-toggle evil-collection
-			 exec-path-from-shell exunit fleury-theme flycheck-eglot
-			 format-all gcmh git-timemachine gotham-theme gptel helpful
-			 hide-mode-line highlight-symbol hydra inf-elixir inf-ruby
-			 jbeans-theme jtsx kind-icon magit marginalia markdown-mode
-			 modus-themes multi-vterm nano-theme nerd-icons-dired
-			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
-			 org-download org-drill org-roam-ui outline-indent polymode
-			 prodigy pyvenv request restclient restclient-jq reykjavik-theme
-			 rspec-mode shell-maker symbols-outline tabspaces treesit-auto
-			 tron-legacy-theme undo-tree verb vertico-posframe vterm-toggle
-			 wgrep yasnippet-capf yasnippet-snippets))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
-		'((doom-two-tone-themes :url
-				"https://github.com/eliraz-refael/doom-two-tone-themes"
-				:branch "master")
+		'((south-theme :url "https://github.com/SophieBosio/south" :branch
+				"main")
+			 (claude-code-ide :url
+				 "https://github.com/manzaltu/claude-code-ide.el")
+			 (doom-two-tone-themes :url
+				 "https://github.com/eliraz-refael/doom-two-tone-themes"
+				 :branch "master")
 			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
 				 :branch "main")
 			 (fleury-theme :url
