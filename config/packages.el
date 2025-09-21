@@ -253,7 +253,6 @@
 
 
 (use-package popper
-  :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
@@ -265,6 +264,10 @@
                 "^\\*term.*\\*$"   term-mode   ;term as a popup
                 "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
 								"\\*Messages\\*"
+								"\\*Python\\*"     inferior-python-mode
+								"\\*nodejs\\*"     nodejs-repl-mode
+								"\\*ruby\\*"       inf-ruby-mode
+								"\\*Help\\*"
 								"\\*Copilot\\*"
 								"Output\\*$"
 								"\\*Async Shell Command\\*"
@@ -589,12 +592,21 @@
 
 
 ; https://console.anthropic.com/settings/billing
+; TODO configure to use Anthropic instead, reference API key via environment variable stored in zshrc
+; NOTE: you can invoke gptel's transient menu with either \ + C-u + gptel-send   or with gptel-menu
 (use-package gptel
   :ensure t
-  :config
+	:config
 	(setq gptel-model 'gpt-4o
 		gptel-default-mode 'org-mode
 		gptel-backend (gptel-make-gh-copilot "Copilot")))
+
+
+(use-package gptel-quick
+	; NOTE: Press '+' for an expanded summary
+  :vc (:url "https://github.com/karthink/gptel-quick" :rev :newest)
+	:init
+	(setq gptel-quick-timeout 1000))
 
 
 ;(use-package claude-code-ide
