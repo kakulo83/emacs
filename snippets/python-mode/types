@@ -3,9 +3,8 @@
 # key: types
 # --
 # useful types
-from collections.abc import Sequence
-
 type Interval = Sequence[int]
-
 type Elevations = list[list[int]]
 type Position = tuple[int, int]
+type Resource = Literal["board", "list", "card"]
+type ResourcePermissions = defaultdict[Resource, list[Permission]]
