@@ -935,6 +935,9 @@
   :config
   (setq completion-cycle-threshold 3)
   (setq tab-always-indent 'complete)
+	(add-hook 'eshell-mode-hook (lambda ()
+                              (setq-local corfu-auto nil)
+                              (corfu-mode)))
   (global-corfu-mode)
   (corfu-popupinfo-mode))
 
