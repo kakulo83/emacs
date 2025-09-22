@@ -14,12 +14,12 @@
 			 claude-code-ide color-theme-sanityinc-tomorrow
 			 consult-xref-stack corfu dired-sidebar diredfl disaster
 			 doom-modeline doom-two-tone-themes dracula-theme eca ef-themes
-			 embark-consult eshell-git-prompt evil-collection
-			 exec-path-from-shell exunit fleury-theme flycheck-eglot
-			 format-all gcmh git-timemachine gotham-theme gptel gptel-quick
-			 helpful hide-mode-line highlight-symbol hydra inf-elixir
-			 inf-ruby jbeans-theme jtsx kind-icon magit marginalia
-			 modus-themes multi-vterm nano-theme nerd-icons-dired
+			 emacs-fish-completion embark-consult eshell-git-prompt
+			 evil-collection exec-path-from-shell exunit fleury-theme
+			 flycheck-eglot format-all gcmh git-timemachine gotham-theme
+			 gptel gptel-quick helpful hide-mode-line highlight-symbol hydra
+			 inf-elixir inf-ruby jbeans-theme jtsx kind-icon magit
+			 marginalia modus-themes multi-vterm nano-theme nerd-icons-dired
 			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
 			 org-download org-drill org-roam-ui outline-indent polymode
 			 popper prodigy pyvenv request restclient-jq reykjavik-theme

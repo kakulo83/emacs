@@ -105,8 +105,8 @@
 
 
 (use-package git-timemachine
-  :config
-  (add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
+  :init
+	(add-to-list 'evil-emacs-state-modes 'git-timemachine-mode))
 
 
 (use-package dired-sidebar
@@ -965,7 +965,11 @@
 (use-package cape
   :after corfu
   :config
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+	:init
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-history)
+	)
 
 
 (use-package yasnippet

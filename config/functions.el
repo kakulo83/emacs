@@ -297,7 +297,7 @@ _n_: node
   ("b" magit-blame "Blame" :exit t)
   ("d" vc-diff "Diff" :exit t)
   ("f" magit-find-file "Find file" :exit t)
-  ("H" git-timemachine "Time-machine" :exit t)
+  ("h" git-timemachine "Time-machine" :exit t)
   ("l" magit-log-buffer-file "File log" :exit t)
   ("L" magit-log-all "Global log" :exit t)
   ("s" magit-status "Status" :exit t)
