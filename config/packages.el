@@ -160,19 +160,19 @@
   (balanced-windows-mode))
 
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-wilmersdorf t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;(use-package doom-themes
+;  :config
+;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-;(use-package nano-theme
-;  :config
-;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+(use-package nano-theme
+  :config
+	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
@@ -464,20 +464,20 @@
 (use-package eshell
   :config
   (require 'em-smart)
-  (setq eshell-prompt-function
-     (lambda ()
-       (concat
-        (propertize "\n┌─ " 'face `(:foreground "royal blue"))
-        (propertize (concat (eshell/pwd)) 'face `(:foreground "SteelBlue1"))
-        (propertize " (" 'face `(:foreground "green"))
-        (if (magit-get-current-branch)
-            (propertize (magit-get-current-branch) 'face `(:foreground "green"))
-            (propertize "z" 'face `(:foreground "yellow")))
-        (propertize ")" 'face `(:foreground "green"))
-        (propertize "\n" 'face `(:foreground "green"))
-        (propertize "└─>" 'face `(:foreground "royal blue"))
-        (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "DeepSkyBlue1"))  ;; prompt color
-        )))
+  ;(setq eshell-prompt-function
+  ;   (lambda ()
+  ;     (concat
+  ;      (propertize "\n┌─ " 'face `(:foreground "royal blue"))
+  ;      (propertize (concat (eshell/pwd)) 'face `(:foreground "SteelBlue1"))
+  ;      (propertize " (" 'face `(:foreground "green"))
+  ;      (if (magit-get-current-branch)
+  ;          (propertize (magit-get-current-branch) 'face `(:foreground "green"))
+  ;          (propertize "z" 'face `(:foreground "yellow")))
+  ;      (propertize ")" 'face `(:foreground "green"))
+  ;      (propertize "\n" 'face `(:foreground "green"))
+  ;      (propertize "└─>" 'face `(:foreground "royal blue"))
+  ;      (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "DeepSkyBlue1"))  ;; prompt color
+  ;      )))
 
 	;; https://tony-zorman.com/posts/eshell-zsh-history.html
 	(defun slot/unmetafy ()
@@ -524,8 +524,9 @@
 					(eshell-exit-hook . slot/eshell-exit)))
 
 
-;; https://github.com/xuchunyang/eshell-git-prompt
-
+(use-package eshell-git-prompt
+	:init
+	(eshell-git-prompt-use-theme 'powerline))
 
 
 (use-package vterm

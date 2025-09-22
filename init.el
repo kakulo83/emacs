@@ -53,8 +53,6 @@
 ;;; 
 ;;; investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
 ;;; 
-;;; look into cleaning up buffer lists at midnight:  https://www.emacswiki.org/emacs/KillingBuffers#h5o-12
-;;; 
 ;;; look into this https://github.com/ayrat555/company-elixir
 ;;; It would be cool to have Eglot available in the inferior-elixir-shell
 ;;; 
