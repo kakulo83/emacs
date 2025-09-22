@@ -1,12 +1,10 @@
-;;; -*- lexical-binding: t -*-
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
 (defun my/delete-buffer-or-workspace ()
 "Delete the current buffer or workspace/tab."
   (interactive)
-  ;(if (> (length (frame-list)) 2)
-  ;    (delete-frame)
 	(if (= (length (window-list)) 1)
 		(call-interactively (tabspaces-close-workspace))
 		(delete-window)))
@@ -186,7 +184,7 @@ _f_: full-screen           _x_: temp workspace
 "
   ("c" copy-filepath-to-clipboard :exit t)
   ("f" toggle-frame-maximized :exit t)
-  ("n" global-display-line-numbers-mode)
+  ("n" global-display-line-numbers-mode :exit t)
   ("k" delete-frame)
 	("p" make-frame)
 	("b" balance-windows-area)

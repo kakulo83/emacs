@@ -160,9 +160,9 @@
   (balanced-windows-mode))
 
 
-;(use-package doom-themes
-;  :config
-;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+(use-package doom-themes
+  :config
+  (load-theme 'doom-wilmersdorf t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -176,7 +176,7 @@
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
-;  (load-theme 'catppuccin t))
+;  (load-theme 'latte t))
 ;(use-package tron-legacy-theme
 ;  :config
 ;  (load-theme 'tron-legacy t))
@@ -206,8 +206,8 @@
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
 ;       :branch "main"))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(load-theme 'doom-purple-gold t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
 
 
@@ -256,7 +256,9 @@
   :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
-  :init
+	:init
+  (popper-mode +1)
+  (popper-echo-mode +1)
 	(setq popper-reference-buffers
       (append popper-reference-buffers
               '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
@@ -274,9 +276,7 @@
 								 help-mode
 								 compilation-mode
                 )))
-	(setq popper-window-height 30)
-  (popper-mode +1)
-  (popper-echo-mode +1))
+	(setq popper-window-height 30))
 
 
 (use-package vertico
@@ -625,6 +625,15 @@
 ; 3. find package that does autocomplete on a per-line basis
 ; NOTE:  API key and models saved to /Users/robertcarter/.config/eca/config.json
 ; BILLING:  https://console.anthropic.com/settings/billing
+;
+;  Marek's process
+;
+;  I want to follow the process Marek found useful:
+;- ME describe the project file structure
+;- ME describe the signature of the each class
+;- AI write some tests and generate some code in manageable checkins
+;- ME modify code while AI monitors the file I'm working on and surfaces warnings and/or
+;  things I might consider
 (use-package eca
   :bind (("C-c a" . eca-run)
          ("C-c C-a" . eca-run)
