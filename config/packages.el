@@ -777,14 +777,14 @@
 	;; M-x describe-variable on:  org-roam-capture-templates
 	'(
 	  ("d" "default" plain "%?"
-	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-		     "#+title: ${title}
-# ------------------------------------------------------------------------------------------------------------------------------
+	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
+							 "# -*- mode:org; epa-file-encrypt-to: (\"robertcliffordcarter@gmail.com\") -*- 
+#+title: ${title}
 #+startup: showall inlineimages
 #+tags: %^{org-roam-tags}
 #+created: %u
 #+options: ^:{}
-# ------------------------------------------------------------------------------------------------------------------------------
+
 ")
 	    :unnarrowed t))))
 

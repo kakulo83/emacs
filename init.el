@@ -157,6 +157,12 @@
 ;; enable window-divider mode so we can see the different splits
 ;(menu-bar-bottom-window-divider)
 
+;; Enable encryption for Org Notes
+;; https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial/68304#68304
+(require 'epa-file)
+(epa-file-enable)
+(setq epg-pinentry-mode 'loopback)
+
 ;; Session management
 (require 'desktop)
 (setq desktop-path (list "~/.emacs.d/sessions/"))
