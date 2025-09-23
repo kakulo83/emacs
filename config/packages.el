@@ -162,17 +162,17 @@
 
 ;(use-package doom-themes
 ;  :config
-;  (load-theme 'doom-city-lights t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-elea-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme
-  :config
-	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package nano-theme
+;  :config
+;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
@@ -206,8 +206,8 @@
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
 ;       :branch "main"))
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-;(load-theme 'doom-purple-gold t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
 
 
@@ -257,26 +257,30 @@
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
 	:init
-  (popper-mode +1)
-  (popper-echo-mode +1)
+	(setq popper-reference-buffers
+		'("\\*Messages\\*"
+			 "\\*Help\\*"
+			 "\\*Copilot\\*"
+			 "Output\\*$"
+			 "\\*Async Shell Command\\*"
+			 ))
 	(setq popper-reference-buffers
       (append popper-reference-buffers
               '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
                 "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
                 "^\\*term.*\\*$"   term-mode   ;term as a popup
                 "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-								"\\*Messages\\*"
 								"\\*Python\\*"     inferior-python-mode
 								"\\*nodejs\\*"     nodejs-repl-mode
 								"\\*ruby\\*"       inf-ruby-mode
-								"\\*Help\\*"
-								"\\*Copilot\\*"
-								"Output\\*$"
-								"\\*Async Shell Command\\*"
 								 help-mode
 								 compilation-mode
                 )))
-	(setq popper-window-height 30))
+	(setq popper-group-function #'popper-group-by-project)
+	(setq popper-group-function #'popper-group-by-directory)
+	(setq popper-window-height 30)
+  (popper-mode +1)
+  (popper-echo-mode +1))
 
 
 (use-package vertico
@@ -716,8 +720,6 @@
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
    '(org-link ((t (:foreground "deep sky blue" :underline t))))
    '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
-   '(org-property-value ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))

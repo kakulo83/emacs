@@ -1,4 +1,4 @@
-;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: no-conversion; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
@@ -21,11 +21,11 @@
 	(position . 12215)
 	(last-modified 26368 26287 842919 0))
 ("org-capture-last-stored"
-	(filename . "~/Notes/org-roam-notes/20250905043909-math_misc.org")
-	(front-context-string . "https://www.quan")
-	(rear-context-string . "r transformers\n\n")
-	(position . 472)
-	(last-modified 26810 52220 833912 0))
+	(filename . "~/Notes/org-roam-notes/20250923145508-test_file.org.gpg")
+	(front-context-string . #1="")
+	(rear-context-string . #1#)
+	(position . 249)
+	(last-modified 26835 5955 933158 0))
 ("Developer directory"
 	(filename . "~/Developer/")
 	(front-context-string . ".DS_Store\n  -rw-")

@@ -389,8 +389,8 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
-;(set-frame-font "JetBrains Mono")
-(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "JetBrains Mono")
+;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 ;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
