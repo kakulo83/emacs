@@ -478,7 +478,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 ; in a GUI frame on OS X and Linux.
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize)
-	(exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH"))
+	(exec-path-from-shell-copy-envs '("LIBRARY_PATH" "INFOPATH" "CPATH" "MANPATH" "ANTHROPIC_API_KEY"))
 	)
 
 

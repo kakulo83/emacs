@@ -192,26 +192,11 @@ _f_: full-screen           _x_: temp workspace
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
-(defhydra hydra-eglot (:hint nil)
-  "
-Eglot Actions
---------------
-_s_: start
-_d_: go definition     _=_: format buffer      _X_: shutdown all
-_r_: find references   _a_: apply code action
-_R_: rename
-"
-  ("s" eglot :exit t)
-  ("d" xref-find-definitions)
-  ("r" xref-find-references)
-  ("R" eglot-rename)
-  ("=" eglot-format-buffer)
-  ("a" eglot-code-actions)
-  ("X" eglot-shutdown-all :exit t))
 
 (defun robert/find-snippet-by-name ()
   (interactive)
   (yas-expand-snippet (yas-lookup-snippet "name-of-your-snippet")))
+
 
 (defhydra hydra-snippets (:hint nil)
   "
@@ -226,6 +211,7 @@ _r_: reload   _e_: edit   _f_: find by name
   ("e" yas-visit-snippet-file :exit t)
   ("r" yas-reload-all)
   ("l" yas-describe-tables))
+
 
 (defhydra hydra-repl (:color green :hint nil)
   "
@@ -289,6 +275,16 @@ _n_: node
       (open-line 1)
       (next-line))
     (copilot-complete)))
+
+
+(defhydra hydra-ai (:color green :hint nil)
+	"ai shit"
+	("b" eca-chat-select-behavior "select behavior" :exit t)
+	("c" gptel "chat" :exit t)
+	("m" eca-chat-select-model "select model" :exit t)
+	("p" eca   "pair" :exit t)
+	("$" (browse-url "https://console.anthropic.com/settings/billing") "billing" :exit t)
+	)
 
 
 (defhydra hydra-vc (:color green :hint nil)

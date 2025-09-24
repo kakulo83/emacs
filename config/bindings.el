@@ -13,23 +13,21 @@
   "`"  'vterm-toggle
   "a"  'ace-window
   "b"  'consult-bookmark
-  "c"  'gptel
+  "c"  'hydra-ai/body ;'gptel
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
-  "E"  'hydra-eglot/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
   "n"  'robert/open-notes-dired-in-tab
   "p"  'tabspaces-project-switch-project-open-file
-  "P"  'prodigy
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
-  "x"  'eval-region
   "s"  'hydra-snippets/body
-  "y"  'consult-yank-from-kill-ring
   "w"  'hydra-window-utils/body
+  "x"  'eval-region
+  "y"  'consult-yank-from-kill-ring
   "hv" 'helpful-variable
   "hf" 'helpful-function
   "hk" 'helpful-key
