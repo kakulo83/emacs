@@ -1115,15 +1115,7 @@
 	:init
 	(better-jumper-mode +1))
 
-;(package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
 
-;(use-package ultra-scroll
-;  ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
-;  :init
-;  (setq scroll-conservatively 101 ; important!
-;        scroll-margin 0) 
-;  :config
-;  (ultra-scroll-mode 1))
 (use-package go-mode)
 
 
