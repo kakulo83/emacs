@@ -16,8 +16,9 @@
 			 doom-modeline doom-two-tone-themes dracula-theme eca ef-themes
 			 emacs-fish-completion embark-consult eshell-git-prompt
 			 evil-collection exec-path-from-shell exunit fleury-theme
-			 flycheck-eglot format-all gcmh git-timemachine gotham-theme
-			 gptel gptel-quick helpful hide-mode-line highlight-symbol hydra
+			 flycheck-eglot format-all gcmh git-timemachine go-mode
+			 go-playground go-playground-cli gotham-theme gptel gptel-quick
+			 helpful hide-mode-line highlight-symbol hydra iceberg-theme
 			 inf-elixir inf-ruby jbeans-theme jtsx kind-icon magit
 			 marginalia modus-themes multi-vterm nano-theme nerd-icons-dired
 			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
@@ -27,7 +28,10 @@
 			 treesit-auto tron-legacy-theme undo-tree verb vertico-posframe
 			 vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
-		'((gptel-quick :url "https://github.com/karthink/gptel-quick")
+		'((go-playground-cli :url
+				"https://github.com/emacsmirror/go-playground-cli" :branch
+				"master")
+			 (gptel-quick :url "https://github.com/karthink/gptel-quick")
 			 (south-theme :url "https://github.com/SophieBosio/south"
 				 :branch "main")
 			 (claude-code-ide :url
@@ -80,8 +84,6 @@
  '(org-level-8 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo"))))
  '(org-link ((t (:foreground "deep sky blue" :underline t))))
  '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
- ;'(org-property-value ((t (:foreground "#84909d"))))
- ;'(org-special-keyword ((t (:foreground "#84909d"))))
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
