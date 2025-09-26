@@ -409,6 +409,7 @@
 	(message "warning: `jsonrpc--log-event' is ignored.")
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
+	(add-to-list 'eglot-server-programs '(go-mode "gopls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
 	(add-to-list 'eglot-server-programs '((html-mode html-ts-mode) "vscode-html-language-server" "--stdio"))
@@ -1123,5 +1124,10 @@
 ;        scroll-margin 0) 
 ;  :config
 ;  (ultra-scroll-mode 1))
+(use-package go-mode)
+
+
+(use-package go-playground)
+
 
 ;;; packages.el ends here

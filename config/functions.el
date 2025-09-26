@@ -220,12 +220,15 @@ Inferior REPL
 _e_: elixir
 _p_: python
 _r_: ruby
+_g_: golang
 _n_: node
 "
   ("e" inf-elixir :exit t)
   ("p" run-python :exit t)
   ("r" inf-ruby :exit t)
+	("g" go-playground :exit t)
   ("n" nodejs-repl :exit t))
+
 
 ;(defun robert/embark-clear-register ()
 ;  "This function is meant to be invoked from embark. It clears a register."
