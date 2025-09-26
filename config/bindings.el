@@ -64,9 +64,11 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
-(define-key evil-normal-state-map (kbd "C-o") 'better-jumper-jump-backward)
-(define-key evil-normal-state-map (kbd "C-i") 'better-jumper-jump-forward)
 (define-key evil-normal-state-map (kbd "s-`") 'eshell)
+
+(with-eval-after-load 'evil-maps
+		(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+		(define-key evil-motion-state-map(kbd "C-i") 'better-jumper-jump-forward))
 
 (define-key evil-normal-state-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key evil-normal-state-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -116,6 +118,21 @@
 (define-key evil-motion-state-map (kbd "RET") nil) ; allows other mode maps to override RET
 
 (define-key vertico-map (kbd "TAB") 'vertico-insert)
+
+(define-key compilation-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
+(define-key compilation-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
+(define-key compilation-mode-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))
+(define-key compilation-mode-map (kbd "s-4") #'(lambda ()(interactive) (tab-bar-select-tab 4)))
+(define-key compilation-mode-map (kbd "s-5") #'(lambda ()(interactive) (tab-bar-select-tab 5)))
+(define-key compilation-mode-map (kbd "s-6") #'(lambda ()(interactive) (tab-bar-select-tab 6)))
+(define-key compilation-mode-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
+(define-key compilation-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
+(define-key compilation-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
+
+(define-key compilation-mode-map (kbd "C-h") 'evil-window-left)
+(define-key compilation-mode-map (kbd "C-j") 'evil-window-down)
+(define-key compilation-mode-map (kbd "C-k") 'evil-window-up)
+(define-key compilation-mode-map (kbd "C-l") 'evil-window-right)
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 (evil-define-key 'normal dired-mode-map (kbd "L") 'evil-window-bottom)
