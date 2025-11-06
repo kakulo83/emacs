@@ -120,7 +120,6 @@
 
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -151,8 +150,17 @@
 (setq default-file-name-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+;; try to use the same windows as much as possible
+;;(customize-set-variable 'display-buffer-base-action
+;;  '((display-buffer-reuse-window display-buffer-same-window)
+;;    (reusable-frames . t)))
+;(setq display-buffer-base-action
+;      '((display-buffer-reuse-window
+;				 display-buffer-same-window
+;         display-buffer-reuse-mode-window)))
+
 ;; enable delimeter pairing
-(electric-pair-mode t)
+;(electric-pair-mode t)
 
 ;; enable window-divider mode so we can see the different splits
 ;(menu-bar-bottom-window-divider)
@@ -216,6 +224,9 @@ FEATURE may be any one of:
 
 (setq python-indent-guess-indent-offset t)
 (setq python-indent-guess-indent-offset-verbose nil)
+
+;; fix mode line rendering artifacts.
+(setq ns-use-srgb-colorspace nil)
 
 ;; tab-width is what eglot-format uses to indent the current mode
 (setq-default tab-width 2)
@@ -359,8 +370,9 @@ FEATURE may be any one of:
 (set-fringe-mode '(8 . 0))
 
 ;; Stop eldoc from echoing in minibuffer
-(setq eldoc-echo-area-use-multiline-p nil)
-(setq eldoc-echo-area-prefer-doc-buffer t)
+;;(setq eldoc-echo-area-use-multiline-p nil)
+;;(setq eldoc-echo-area-prefer-doc-buffer t)
+;;(global-eldoc-mode -1)
 
 ;; Do not clone current buffer into new tab
 (setq tab-bar-new-tab-choice "*scratch*")
@@ -389,8 +401,8 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 (set-face-attribute 'default nil :height 120)
 ;; font family
-(set-frame-font "JetBrains Mono")
-;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-frame-font "JetBrains Mono")
+(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 ;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
@@ -449,7 +461,7 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
   "Init value for clean-buffer-list-kill-never-buffer-names.")
 (setq clean-buffer-list-kill-never-buffer-names
       (append
-       '("*Copilot* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*shell*" "*Server*" "*chat*")
+       '("*Copilot* *vterm* *et~* *Messages*" "*EGLOT*" "*Inf*" "*eshell*" "*Server*" "*chat*")
        clean-buffer-list-kill-never-buffer-names-init))
 
 ;; prevent append multiple times
