@@ -217,8 +217,8 @@ _r_: reload   _e_: edit   _f_: find by name
   "
 Inferior REPL
 ---------------
-_e_: elixir
-_p_: python
+_e_: elixir   _s_: sqlite3
+_p_: python   _ms_: mit scheme
 _r_: ruby
 _g_: golang
 _n_: node
@@ -227,7 +227,10 @@ _n_: node
   ("p" run-python :exit t)
   ("r" inf-ruby :exit t)
 	("g" go-playground :exit t)
-  ("n" nodejs-repl :exit t))
+  ("n" nodejs-repl :exit t)
+	("s" sql-sqlite :exit t)
+	("ms" run-scheme :exit t)
+	)
 
 
 ;(defun robert/embark-clear-register ()
@@ -435,6 +438,14 @@ _p_: prev error
       (format "[[id:%s][%s]]" id title))
       ; insert link in place of moved text
     (insert (concat "[[id:" id "][" title "]]"))))
+
+(setq trash-directory "~/.Trash")
+;; See `trash-directory' as it requires defining `system-move-file-to-trash'.
+(defun system-move-file-to-trash (file)
+  "Use \"trash\" to move FILE to the system trash."
+  (cl-assert (executable-find "trash") nil "'trash' must be installed. Needs \"brew install trash\"")
+  (call-process "trash" nil 0 nil "-F"  file))
+
 
 (defalias 'dired-refresh 'revert-buffer)
 
