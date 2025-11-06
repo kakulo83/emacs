@@ -7,7 +7,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(gptel-api-key "")
- '(org-bullets-bullet-list '("🌺" "🌸" "🌼" "🌿" "🍀"))
  '(package-selected-packages
 		'(ace-window afternoon-theme aio all-the-icons-ibuffer
 			 balanced-windows better-jumper bug-hunter cape catppuccin-theme
