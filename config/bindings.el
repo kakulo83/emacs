@@ -91,7 +91,6 @@
   (define-key embark-file-map     (kbd "z") #'dired-do-compress)
 
   (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
-  (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
 
 	(keymap-set embark-general-map "?" #'gptel-quick)
 
@@ -134,7 +133,11 @@
 (define-key compilation-mode-map (kbd "C-k") 'evil-window-up)
 (define-key compilation-mode-map (kbd "C-l") 'evil-window-right)
 
+(define-key vterm-mode-map (kbd "M-`") nil)
+
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
+(evil-define-key 'normal eshell-mode-map (kbd "[[") 'eshell-previous-prompt)
+(evil-define-key 'normal eshell-mode-map (kbd "]]") 'eshell-next-prompt)
 (evil-define-key 'normal dired-mode-map (kbd "L") 'evil-window-bottom)
 (evil-define-key 'normal dired-mode-map (kbd "H") 'evil-window-top)
 (evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
