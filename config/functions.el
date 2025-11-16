@@ -187,7 +187,7 @@ _f_: full-screen           _x_: temp workspace
   ("n" global-display-line-numbers-mode :exit t)
   ("k" delete-frame)
 	("p" make-frame)
-	("b" balance-windows-area)
+	("b" balance-windows-area :exit t)
 	("x" save-buffers-to-register-and-close)
   ("+" text-scale-increase)
   ("-" text-scale-decrease))

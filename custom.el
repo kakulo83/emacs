@@ -10,23 +10,23 @@
  '(package-selected-packages
 		'(ace-window afternoon-theme aio all-the-icons-ibuffer
 			 balanced-windows better-jumper bug-hunter cape catppuccin-theme
-			 claude-code-ide color-theme-sanityinc-tomorrow
-			 consult-xref-stack corfu dired-sidebar disaster doom-modeline
-			 doom-two-tone-themes dracula-theme eca ef-themes eldoc-box
-			 emacs-fish-completion embark-consult eshell-git-prompt
-			 evil-collection exec-path-from-shell exunit fleury-theme
-			 flycheck flycheck-eglot format-all gcmh git-timemachine go-mode
-			 go-playground go-playground-cli gotham-theme gptel gptel-quick
-			 helpful hide-mode-line highlight-symbol hydra iceberg-theme
-			 inf-elixir inf-ruby jbeans-theme jtsx kind-icon magit
-			 marginalia modus-themes multi-vterm nano-theme nerd-icons-dired
+			 claude-code-ide color-theme-sanityinc-tomorrow consult
+			 consult-xref-stack corfu deferred dired-sidebar disaster
+			 doom-modeline doom-two-tone-themes dracula-theme eca ef-themes
+			 eldoc-box embark-consult eshell-git-prompt evil-collection
+			 evil-surround exec-path-from-shell exunit fleury-theme
+			 flycheck-eglot format-all gcmh git-timemachine go-playground
+			 gotham-theme gptel-quick helpful hide-mode-line
+			 highlight-symbol hydra iceberg-theme inf-elixir inf-ruby
+			 jbeans-theme jtsx kind-icon magit marginalia modus-themes
+			 multi-vterm names nano-modeline nano-theme nerd-icons-dired
 			 nodejs-repl nvm nyan-mode olivetti orderless org-bullets
 			 org-download org-drill org-roam-ui outline-indent polymode
-			 popper prodigy pyvenv queue request restclient-jq
-			 reykjavik-theme rspec-mode shell-maker south-theme
-			 sql-interactive-mode symbols-outline tabspaces treesit-auto
-			 tron-legacy-theme undo-tree verb vertico-posframe vterm-toggle
-			 wgrep yasnippet-capf yasnippet-snippets))
+			 popper prodigy pyvenv request restclient-jq reykjavik-theme
+			 rspec-mode shell-maker smartparens south-theme symbols-outline
+			 tabspaces treesit-auto tron-legacy-theme undo-tree verb vertico
+			 vertico-posframe vterm-toggle wgrep yasnippet-capf
+			 yasnippet-snippets))
  '(package-vc-selected-packages
 		'((go-playground-cli :url
 				"https://github.com/emacsmirror/go-playground-cli" :branch
@@ -70,6 +70,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
+ '(olivetti-fringe ((t (:background "\"unspecified\""))))
  '(org-document-info ((t (:foreground "dark orange"))))
  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 4.0 :underline nil))))

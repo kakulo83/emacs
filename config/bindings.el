@@ -66,6 +66,8 @@
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
 (define-key evil-normal-state-map (kbd "s-`") 'eshell)
 
+
+
 (with-eval-after-load 'evil-maps
 		(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
 		(define-key evil-motion-state-map(kbd "C-i") 'better-jumper-jump-forward))
@@ -104,6 +106,9 @@
 	(define-key embark-identifier-map "f" #'consult-ripgrep)
   (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
 )
+
+(define-key magit-status-mode-map (kbd "]]") 'magit-section-forward)
+(define-key magit-status-mode-map (kbd "[[") 'magit-section-backward)
 
 (define-key grep-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key grep-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))

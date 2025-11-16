@@ -41,23 +41,41 @@
   :defines evil-collection-company-use-tng
   :after evil
   :config
+	(evil-set-initial-state 'archive-mode 'normal)
+	(evil-set-initial-state 'occur-mode 'normal)
   (setq evil-collection-mode-list
 	'(vterm
-	  occur
-	  ; https://github.com/emacs-evil/evil-collection/issues/100
-	  ;(occur ,(if (<= emacs-major-version 25) "replace" 'replace))
-	  ibuffer
-	  dired
-	  dashboard
-	  magit
-	  proced
-	  help
-	  man
-	  woman
-	  completion
-	  helpful))
+		 occur
+	   ; https://github.com/emacs-evil/evil-collection/issues/100
+	   ;(occur ,(if (<= emacs-major-version 25) "replace" 'replace))
+		 ibuffer
+ 	   dired
+ 	   dashboard
+ 	   magit
+ 	   proced
+ 	   help
+ 		 debugger
+ 	   man
+ 	   woman
+ 	   completion
+ 	   helpful))
   (setq evil-collection-company-use-tng nil)
   (evil-collection-init))
+
+
+;; In visual-state with S<textobject> or gS<textobject
+;; In normal-state with ys<textobject> or yS<textobject>
+(use-package evil-surround
+	:config
+	(global-evil-surround-mode 1))
+
+
+;(use-package smartparens
+;  :ensure smartparens  ;; install the package
+;  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+;  :config
+;  ;; load default config
+;  (require 'smartparens-config))
 
 
 ;(use-package nano-modeline
@@ -155,28 +173,29 @@
   	  )))
 
 
-(use-package balanced-windows
-  :config
-  (balanced-windows-mode))
+;(use-package balanced-windows
+;  :config
+;  (balanced-windows-mode))
 
 
 ;(use-package doom-themes
 ;  :config
+;  ;(set-background-color "black")
 ;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-elea-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-duo-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+;	(set-background-color "black")
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
-;  (setq catppuccin-flavor 'frappe)  ; latte mocha macchiato frappe
-;  (load-theme 'latte t))
+;  (catppuccin-load-flavor 'macchiato))  ; latte mocha macchiato frappe
 ;(use-package tron-legacy-theme
 ;  :config
 ;  (load-theme 'tron-legacy t))
@@ -197,11 +216,15 @@
 ;	(load-theme 'dracula))
 ;(use-package color-theme-sanityinc-tomorrow
 ;	:config
-;	(load-theme 'sanityinc-tomorrow-blue t))
+;	(load-theme 'sanityinc-tomorrow-eighties t))
 ;(use-package fleury-theme
 ;  :vc
 ;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
 ;	(load-theme 'fleury-theme))
+;(use-package iceberg-theme
+;	:config
+;  (iceberg-theme-create-theme-file)
+;  (load-theme 'solarized-iceberg-dark t))
 ;(use-package south-theme
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
@@ -252,35 +275,33 @@
   )
 
 
+
+;; https://github.com/gilbertw1/better-jumper/issues/21
 (use-package popper
+	:ensure t
   :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
 	:init
 	(setq popper-reference-buffers
-		'("\\*Messages\\*"
+		'("^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
+       "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+       "^\\*term.*\\*$"   term-mode   ;term as a popup
+       "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
+			 "\\*Python\\*"     inferior-python-mode
+			 "\\*nodejs\\*"     nodejs-repl-mode
+			 "\\*ruby\\*"       inf-ruby-mode
+			 "\\*SQL: SQLite\\*"
+			 "\\*Messages\\*"
 			 "\\*Help\\*"
 			 "\\*Copilot\\*"
 			 "Output\\*$"
 			 "\\*Async Shell Command\\*"
+			 help-mode
+			 compilation-mode
 			 ))
-	(setq popper-reference-buffers
-      (append popper-reference-buffers
-              '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-                "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-                "^\\*term.*\\*$"   term-mode   ;term as a popup
-                "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-								"\\*Python\\*"     inferior-python-mode
-								"\\*nodejs\\*"     nodejs-repl-mode
-								"\\*ruby\\*"       inf-ruby-mode
-								 help-mode
-								 compilation-mode
-                )))
-	(setq popper-group-function #'popper-group-by-project)
-	(setq popper-group-function #'popper-group-by-directory)
-	(setq popper-window-height 30)
-  (popper-mode +1)
-  (popper-echo-mode +1))
+	(setq popper-window-height 0.50)
+  (popper-mode +1))
 
 
 (use-package vertico
@@ -381,7 +402,8 @@
 
 (use-package nerd-icons :defer t)
 (use-package nerd-icons-dired
-	:commands (nerd-icons-dired-mode))
+	:config
+	(nerd-icons-dired-mode))
 (setq dired-sidebar-theme 'nerd-icons)
 
 
@@ -401,6 +423,7 @@
 (use-package eglot
   ; Documentation:
   ; configuring eglot: https://www.gnu.org/software/emacs/manual/html_mono/eglot.html#Project_002dspecific-configuration
+	;                    https://elpa.gnu.org/devel/doc/eglot.html#index-eglot_002dcode_002daction_002dindications
   ; 
   ; M-x eglot-workspace-configuration
   :config
@@ -409,9 +432,10 @@
 	(message "warning: `jsonrpc--log-event' is ignored.")
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
+	(add-to-list 'eglot-server-programs '((python-mode python-ts-mode) "basedpyright-langserver" "--stdio"))
 	(add-to-list 'eglot-server-programs '(go-mode "gopls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
-  (add-to-list 'eglot-server-programs '((sql-mode) "sqls"))
+  (add-to-list 'eglot-server-programs '((sql-mode) "sql-language-server" "up --method stdio"))
 	(add-to-list 'eglot-server-programs '((html-mode html-ts-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
@@ -427,16 +451,21 @@
 		(setq-local
 				eldoc-documentation-functions
 				(list
-					#'eglot-signature-eldoc-function
-					; #'eglot-hover-eldoc-function
-					; #'flymake-eldoc-function
+					;; #'eglot-signature-eldoc-function
+					;; #'eglot-hover-eldoc-function
+					;; #'flymake-eldoc-function
 				)))
-	(add-hook 'eglot-managed-mode-hook #'/eglot-managed-mode-initialize)
+	;; (add-hook 'eglot-managed-mode-hook #'/eglot-managed-mode-initialize)
 
   ;; setting language specific lsp configs
   ;;(setq-default eglot-workspace-configuration
   ;;  '((elixir-ls
 	;;(elixirLS.autoInsertRequiredAlias . nil))))
+	;(setq eglot-quickfix-function #'ignore)
+
+
+	;; stops eglot from showing available code actions in the echo area
+  (setq eglot-code-action-indications nil)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
   :defer t
@@ -447,6 +476,7 @@
 	  (elixir-ts-mode . eglot-ensure)
 	  (go-mode . eglot-ensure)
 	  (js-mode . eglot-ensure)
+		(js-ts-mode . eglot-ensure)
 		(tsx-ts-mode . eglot-ensure)
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
@@ -456,6 +486,13 @@
 
 (with-eval-after-load 'eglot
   (setq completion-category-defaults nil))
+
+;; activate documentation popup on hover
+;(with-eval-after-load 'eglot
+	;(eldoc-box-hover-at-point-mode))
+(add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode)
+;; popup ui for eldoc documentation
+;(use-package eldoc-box)
 
 
 ;(use-package dape
@@ -522,7 +559,8 @@
 		eshell-save-history-on-exit t
     eshell-history-size 1000
     eshell-highlight-prompt t
-    eshell-scroll-to-bottom-on-input t
+		eshell-scroll-show-maximum-output nil
+    ;eshell-scroll-to-bottom-on-input t
     eshell-hist-ignoredups t)
 	:hook (
 					(eshell-hist-load . slot/unmetafy)
@@ -751,8 +789,8 @@
 (use-package org-bullets
   :after org
   :init
-  (custom-set-variables '(org-bullets-bullet-list (quote ("◉" "○" "✸" "◉🌿"))))
-  ;(custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
+  ; (custom-set-variables '(org-bullets-bullet-list (quote ("◉" "○" "✸" "◉🌿"))))
+  ; (custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
   ;(setq org-bullets-bullet-list '("\u200b")) ; for a blank bullet (hiding them)
   :hook (org-mode . org-bullets-mode))
 
@@ -839,22 +877,6 @@
 	 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
   :config
   (setq-default olivetti-body-width 128))
-
-
-
-(use-package restclient
-  :config
-	(push '("\\*HTTP Response\\*" . (
-																		(display-buffer-in-side-window)
-																		(side . right)
-																		(slot . 0)
-																		)) display-buffer-alist)
-	;(setq display-buffer-alist '(("\\*HTTP Response*"
-	;															 (display-buffer-in-side-window)
-	;															 (side . right)
-	;															 (slot . 0)
-	;															 (window-width . 80))))
-  (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
 (use-package restclient-jq
 	:after restclient)
@@ -1055,7 +1077,7 @@
   (setq flycheck-display-errors-delay 0.2)
   (setq flycheck-highlighting-mode 'symbol)
   (setq flycheck-indication-mode 'left-fringe)
-	(setq flycheck-python-pyright-executable "/opt/homebrew/bin/ruff")
+	 (setq flycheck-python-pyright-executable "/opt/homebrew/bin/ruff")
   (setq flycheck-ruby-executable "/Users/robertcarter/.rbenv/shims/rubocop")
   (add-to-list 'display-buffer-alist
     `(,(rx bos "*Flycheck errors*" eos)
@@ -1074,13 +1096,13 @@
   (global-flycheck-eglot-mode 1))
 
 
-(use-package flyover
-	:load-path "~/.emacs.d/private/flyover/"
-	:init
-	(setq flyover-levels '(error))
-	(setq flyover-error-icon "😾")
-	:config
-	(flyover-mode))
+;(use-package flyover
+;	:load-path "~/.emacs.d/private/flyover/"
+;	:init
+;	(setq flyover-levels '(error))
+;	(setq flyover-error-icon "😾")
+;	:config
+;	(flyover-mode))
 
 
 (use-package prodigy
