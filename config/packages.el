@@ -1143,5 +1143,7 @@
 
 (use-package go-playground)
 
+(use-package bookmark+
+	:load-path "~/.emacs.d/private/bookmark-plus")
 
 ;;; packages.el ends here

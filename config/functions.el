@@ -233,6 +233,18 @@ _n_: node
 	)
 
 
+(defhydra hydra-bookmark (:color green :hint nil)
+	"
+Bookmarks
+----------
+_s_: bookmark file
+_u_: bookmark url
+_l_: list bookmarks
+"
+	("s" bookmark-set :exit t)
+	("u" bmkp-url-target-set :exit t)
+	("l" consult-bookmark :exit t)
+	)
 ;(defun robert/embark-clear-register ()
 ;  "This function is meant to be invoked from embark. It clears a register."
 ;  (interactive)

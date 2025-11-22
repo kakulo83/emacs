@@ -12,7 +12,7 @@
   ;; add your bindings here:
   "`"  'vterm-toggle
   "a"  'ace-window
-  "b"  'consult-bookmark
+  "b"  'hydra-bookmark/body ; 'consult-bookmark
   "c"  'hydra-ai/body ;'gptel
   "d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
