@@ -193,20 +193,14 @@ _f_: full-screen           _x_: temp workspace
   ("-" text-scale-decrease))
 
 
-(defun robert/find-snippet-by-name ()
-  (interactive)
-  (yas-expand-snippet (yas-lookup-snippet "name-of-your-snippet")))
-
-
 (defhydra hydra-snippets (:hint nil)
   "
 Snippet Actions
 -----------------
 _i_: insert   _n_: new    _l_: list all snippets
-_r_: reload   _e_: edit   _f_: find by name
+_r_: reload   _e_: edit
 "
   ("i" robert/yasnippet-insert :exit t)
-  ("f" robert/find-snippet-by-name :exit t)
   ("n" yas-new-snippet :exit t)
   ("e" yas-visit-snippet-file :exit t)
   ("r" yas-reload-all)
@@ -231,6 +225,30 @@ _n_: node
 	("s" sql-sqlite :exit t)
 	("ms" run-scheme :exit t)
 	)
+
+
+(defun create-requests-http-buffer-below ()
+  "Create a new buffer named 'requests.http' in a window below the current one."
+  (interactive)
+  (let ((buffer (get-buffer-create "requests.http")))
+    (split-window-below)
+    (other-window 1)
+    (switch-to-buffer buffer)
+		(insert "# Examples: https://github.com/emacsorphanage/restclient/blob/master/examples/httpbin\n\n")
+		(insert "# POST http://localhost:3000/foobar\n")
+		(insert "# Content-Type: application/json\n")
+		(insert "# {\n")
+    (insert "#    'jql': 'project = HCPUB',\n")
+    (insert "#    'startAt': 0\n")
+		(insert "# }")
+		(restclient-mode)))
+
+(defhydra hydra-utilities (:color green :hint nil)
+	"
+Utilities
+_h_: http
+"
+	("h" create-requests-http-buffer-below :exit t)) 
 
 
 (defhydra hydra-bookmark (:color green :hint nil)

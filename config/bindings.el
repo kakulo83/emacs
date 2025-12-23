@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -25,6 +25,7 @@
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
   "s"  'hydra-snippets/body
+	"u"  'hydra-utilities/body
   "w"  'hydra-window-utils/body
   "x"  'eval-region
   "y"  'consult-yank-from-kill-ring
@@ -64,8 +65,8 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
-(define-key evil-normal-state-map (kbd "s-`") 'eshell)
-
+;(define-key evil-normal-state-map (kbd "s-`") 'eshell)
+(define-key evil-normal-state-map (kbd "s-p") 'prodigy)
 
 
 (with-eval-after-load 'evil-maps

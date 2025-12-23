@@ -284,8 +284,9 @@
          ("C-M-`" . popper-toggle-type))
 	:init
 	(setq popper-reference-buffers
-		'("^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
+		'(
        "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+			 ;"^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
        "^\\*term.*\\*$"   term-mode   ;term as a popup
        "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
 			 "\\*Python\\*"     inferior-python-mode
@@ -565,6 +566,15 @@
 	:hook (
 					(eshell-hist-load . slot/unmetafy)
 					(eshell-exit-hook . slot/eshell-exit)))
+
+(use-package eshell-toggle
+  :custom
+  (eshell-toggle-size-fraction 3)
+  (eshell-toggle-use-git-root t)
+  (eshell-toggle-run-command nil)
+  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
+  :bind
+  ("s-`" . eshell-toggle))
 
 
 (use-package eshell-git-prompt
@@ -869,14 +879,16 @@
 (use-package websocket)
 
 
-(use-package olivetti
-  :defines olivetti-set-width
-  :functions olivetti-set-width
-  :hook (
-	 (org-mode . olivetti-mode)
-	 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
-  :config
-  (setq-default olivetti-body-width 128))
+;(use-package olivetti
+;  :defines olivetti-set-width
+;  :functions olivetti-set-width
+;  :hook (
+;	 (org-mode . olivetti-mode)
+;	 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
+;  :config
+;  (setq-default olivetti-body-width 128))
+
+(use-package restclient)
 
 (use-package restclient-jq
 	:after restclient)
@@ -1019,7 +1031,7 @@
   (setq-local completion-at-point-functions
     (list (cape-capf-super
 	    #'eglot-completion-at-point
-	    #'yasnippet-capf
+	    ;#'yasnippet-capf
 	    #'cape-history
 	    #'cape-file))))
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
@@ -1108,19 +1120,27 @@
 (use-package prodigy
 	:defer t
   :config
+  ;(prodigy-define-service
+  ;  :name "Elixir Server"
+  ;  :command "mix"
+  ;  :args '("phx.server")
+  ;  :cwd "/Users/robertcarter/Developer/elixir/elixir-phoenix"
+  ;  :tags '(elixir)
+  ;  :stop-signal 'kill
+  ;  :kill-process-buffer-on-stop t)
+	(prodigy-define-service
+		:name "React Portfolio Client"
+		:command "nvm"
+		:args '("run" "dev")
+		:cwd "/Users/robertcarter/Developer/typescript/portfolio"
+		:tags '(react)
+		:stop-signal 'kill
+		:kill-process-buffer-on-stop t)
   (prodigy-define-service
-    :name "Elixir Server"
-    :command "mix"
-    :args '("phx.server")
-    :cwd "/Users/robertcarter/Developer/elixir/elixir-phoenix"
-    :tags '(elixir)
-    :stop-signal 'kill
-    :kill-process-buffer-on-stop t)
-  (prodigy-define-service
-    :name "Rails Server"
+    :name "Rails Portfolio Server"
     :command "bundle"
     :args '("exec" "rails" "server")
-    :cwd "/Users/robertcarter/Developer/rails/testapp"
+    :cwd "/Users/robertcarter/Developer/rails/portfolio_api"
     :tags '(rails)
     :stop-signal 'kill
     :kill-process-buffer-on-stop t))

@@ -406,8 +406,8 @@ FEATURE may be any one of:
 (set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-
 ; set clock for different timezones
+
 (setq world-clock-list
       '(("America/Los_Angeles" "San Francisco")
         ("America/New_York" "New York")
