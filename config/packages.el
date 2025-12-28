@@ -859,7 +859,20 @@
 ;  :config
 ;  (setq-default olivetti-body-width 128))
 
-(use-package restclient)
+(use-package restclient
+	:init
+	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
+	:config
+	(defun restclient-replace-request-with-response (&rest _args)
+  "Replace the current buffer (request) content with the HTTP response."
+  (let ((response-buffer "*HTTP Response*"))
+    (when (get-buffer response-buffer)
+      (let ((response (with-current-buffer response-buffer (buffer-string))))
+        (erase-buffer)
+        (insert response)
+        (kill-buffer response-buffer)))))
+	(advice-add 'restclient-http-handle-response :after #'restclient-replace-request-with-response))
+
 
 (use-package restclient-jq
 	:after restclient)
