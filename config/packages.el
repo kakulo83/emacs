@@ -276,35 +276,6 @@
 
 
 
-;; https://github.com/gilbertw1/better-jumper/issues/21
-(use-package popper
-	:ensure t
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-	:init
-	(setq popper-reference-buffers
-		'(
-       "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-			 ;"^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
-       "^\\*term.*\\*$"   term-mode   ;term as a popup
-       "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-			 "\\*Python\\*"     inferior-python-mode
-			 "\\*nodejs\\*"     nodejs-repl-mode
-			 "\\*ruby\\*"       inf-ruby-mode
-			 "\\*SQL: SQLite\\*"
-			 "\\*Messages\\*"
-			 "\\*Help\\*"
-			 "\\*Copilot\\*"
-			 "Output\\*$"
-			 "\\*Async Shell Command\\*"
-			 help-mode
-			 compilation-mode
-			 ))
-	(setq popper-window-height 0.50)
-  (popper-mode +1))
-
-
 (use-package vertico
   ;; vertico provides mini-buffer completion
   :config
@@ -1165,5 +1136,35 @@
 
 (use-package bookmark+
 	:load-path "~/.emacs.d/private/bookmark-plus")
+
+
+;; NOTE: popper is loaded last because otherwise it does not
+;; seem to be initialized correctly and i have to manually stop/start
+;; it again when emacs starts up. which is annoying
+;; https://github.com/gilbertw1/better-jumper/issues/21
+(use-package popper
+	:ensure t
+  :bind (("C-`"   . popper-toggle)
+         ("M-`"   . popper-cycle)
+         ("C-M-`" . popper-toggle-type))
+	:init
+	(setq popper-reference-buffers
+		'("\\*prodigy\\*"    prodigy-mode
+			 "\\*Python\\*"     inferior-python-mode
+			 "\\*nodejs\\*"     nodejs-repl-mode
+			 "\\*ruby\\*"       inf-ruby-mode
+			 "\\*SQL: SQLite\\*"
+			 "\\*Messages\\*"
+			 "\\*Warnings\\*"
+			 "\\*Help\\*"
+			 "\\*Copilot\\*"
+			 "Output\\*$"
+			 "\\*Async Shell Command\\*"
+			 "\\*HTTP Response\\*"
+			 help-mode
+			 compilation-mode
+			 ))
+	(setq popper-window-height 0.50)
+  (popper-mode +1))
 
 ;;; packages.el ends here
