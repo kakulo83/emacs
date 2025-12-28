@@ -651,14 +651,6 @@
 ; NOTE:  API key and models saved to /Users/robertcarter/.config/eca/config.json
 ; BILLING:  https://console.anthropic.com/settings/billing
 ;
-;  Marek's process
-;
-;  I want to follow the process Marek found useful:
-;- ME describe the project file structure
-;- ME describe the signature of the each class
-;- AI write some tests and generate some code in manageable checkins
-;- ME modify code while AI monitors the file I'm working on and surfaces warnings and/or
-;  things I might consider
 (use-package eca
   :bind (("C-c a" . eca-run)
          ("C-c C-a" . eca-run)
@@ -1114,7 +1106,7 @@
   ;  :kill-process-buffer-on-stop t)
 	(prodigy-define-service
 		:name "React Portfolio Client"
-		:command "nvm"
+		:command "npm"
 		:args '("run" "dev")
 		:cwd "/Users/robertcarter/Developer/typescript/portfolio"
 		:tags '(react)
