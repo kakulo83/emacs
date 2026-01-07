@@ -89,11 +89,9 @@
 ;;;
 ;;; Consider showing stuff on side:  https://github.com/emacs-sideline/sideline?tab=readme-ov-file
 ;;;
-;;; Consider using https://github.com/federicotdn/verb as a substitute for restclient
-;;;
-;;; Consider Claude Code:  https://github.com/manzaltu/claude-code-ide.el
-;;;
 ;;; Consider Macher:  https://github.com/kmontag/macher
+;;;
+;;; Consider improved eldoc UI:   https://codeberg.org/mekeor/eglot-signature-eldoc-talkative
 ;;;
 ;;; Try to speed up load:  https://github.com/jamescherti/minimal-emacs.d
 ;;;
@@ -382,7 +380,6 @@ FEATURE may be any one of:
 
 (setenv "PYTEST_ADDOPTS" "--color=yes")
 
-(setq flymake-start-on-flymake-mode nil)
 
 (setq manual-program "gman")
 

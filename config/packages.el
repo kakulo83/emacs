@@ -32,6 +32,7 @@
 (use-package evil
   :init
   :config
+	(setq evil-want-minibuffer nil)
   (evil-set-undo-system 'undo-redo)
   (evil-set-initial-state 'package-menu-mode 'motion)
   (evil-mode 1))
@@ -181,17 +182,17 @@
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-acario-light t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-duo-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;	(set-background-color "black")
+;	;(set-background-color "black")
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
@@ -229,6 +230,9 @@
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
 ;       :branch "main"))
+;(use-package nordic-night-theme
+;	:config
+;	(load-theme 'nordic-night t))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
 (load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
@@ -266,8 +270,10 @@
 
     "Set workspace buffer list for consult-buffer.")
     (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
   (setq tab-bar-new-button-show nil)
+
   (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
   (set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
   (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
@@ -411,11 +417,12 @@
 	(add-to-list 'eglot-server-programs '((html-mode html-ts-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
+
+	(add-to-list 'project-vc-extra-root-markers "tsconfig.json")
 	; For python ?
 	; https://www.reddit.com/r/emacs/comments/1mddqpx/eglot_pyright_made_simple_thanks_to_uvx/
 	; (add-to-list 'eglot-server-programs '((html-ts-mode :language-id "html") . ("tailwindcss-language-server")))
   (add-to-list 'eglot-server-programs '((typescript-mode tsx-ts-mode -js-mode) "typescript-language-server" "--stdio"))
-
 	;; taken from https://www.reddit.com/r/emacs/comments/11faie2/how_can_i_make_eglot_shut_up_in_the_minibuffer/
 	;; add the following to fix eldoc overriding the mini-buffer with function signature docs instead of
 	;; showing the current flycheck error information.
@@ -434,7 +441,6 @@
   ;;  '((elixir-ls
 	;;(elixirLS.autoInsertRequiredAlias . nil))))
 	;(setq eglot-quickfix-function #'ignore)
-
 
 	;; stops eglot from showing available code actions in the echo area
   (setq eglot-code-action-indications nil)
@@ -462,10 +468,14 @@
 ;; activate documentation popup on hover
 ;(with-eval-after-load 'eglot
 	;(eldoc-box-hover-at-point-mode))
-(add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode)
+
+;(add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode)
+
 ;; popup ui for eldoc documentation
 ;(use-package eldoc-box)
 
+
+(use-package eglot-signature-eldoc-talkative)
 
 ;(use-package dape
   ;;https://github.com/svaante/dape?tab=readme-ov-file#configuration
@@ -677,6 +687,8 @@
 
 
 (use-package org
+	:init
+	(add-hook 'org-mode-hook #'visual-line-mode)
   :config
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
@@ -1057,15 +1069,14 @@
 
 (use-package highlight-symbol)
 
-
 (use-package flycheck
   :ensure t
   :config
   (setq flycheck-check-syntax-automatically '(save new-line))
   (setq flycheck-display-errors-delay 0.2)
-  (setq flycheck-highlighting-mode 'symbol)
+  (setq flycheck-highlighting-mode 'lines)
   (setq flycheck-indication-mode 'left-fringe)
-	 (setq flycheck-python-pyright-executable "/opt/homebrew/bin/ruff")
+	(setq flycheck-python-pyright-executable "/opt/homebrew/bin/ruff")
   (setq flycheck-ruby-executable "/Users/robertcarter/.rbenv/shims/rubocop")
   (add-to-list 'display-buffer-alist
     `(,(rx bos "*Flycheck errors*" eos)
@@ -1105,7 +1116,7 @@
   ;  :stop-signal 'kill
   ;  :kill-process-buffer-on-stop t)
 	(prodigy-define-service
-		:name "React Portfolio Client"
+		:name "Client"
 		:command "npm"
 		:args '("run" "dev")
 		:cwd "/Users/robertcarter/Developer/typescript/portfolio"
@@ -1113,7 +1124,7 @@
 		:stop-signal 'kill
 		:kill-process-buffer-on-stop t)
   (prodigy-define-service
-    :name "Rails Portfolio Server"
+    :name "Server"
     :command "bundle"
     :args '("exec" "rails" "server")
     :cwd "/Users/robertcarter/Developer/rails/portfolio_api"

@@ -18,3 +18,5 @@ alias pip pip3 $*
 alias pshell pipenv shell
 alias pytest pytest -svv
 alias cb { magit-get-current-branch }
+
+alias drop ssh -i ~/.ssh/id_ed_ed25519 root@144.126.214.107
