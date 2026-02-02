@@ -182,7 +182,7 @@
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-acario-light t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-manegarm t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -234,7 +234,8 @@
 ;	:config
 ;	(load-theme 'nordic-night t))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+(load-theme 'naga-blue t)
+;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
 
 
@@ -272,12 +273,12 @@
     (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
-  (setq tab-bar-new-button-show nil)
+  ;(setq tab-bar-new-button-show nil)
 
-  (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-  (set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
-  (set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
-  (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+  ;(set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
+  ;(set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
+  ;(set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+  ;(set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
 
 
@@ -1125,9 +1126,14 @@
 		:kill-process-buffer-on-stop t)
   (prodigy-define-service
     :name "Server"
-    :command "bundle"
-    :args '("exec" "rails" "server")
+    ;:command "bundle"
+    ;:args '("exec" "rails" "server")
+		:command "rails"
+		:args '("s")
     :cwd "/Users/robertcarter/Developer/rails/portfolio_api"
+		;:command "unicorn"
+		;:args '("-c" "config/unicorn.rb")
+    ;:cwd "/Users/robertcarter/Developer/rails/portfolio_api"
     :tags '(rails)
     :stop-signal 'kill
     :kill-process-buffer-on-stop t))
@@ -1152,6 +1158,11 @@
 
 (use-package bookmark+
 	:load-path "~/.emacs.d/private/bookmark-plus")
+
+
+; /rpc:user@host:/path/to/file
+;(use-package tramp-rpc
+;  :ensure t)
 
 
 ;; NOTE: popper is loaded last because otherwise it does not

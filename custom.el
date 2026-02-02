@@ -8,28 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(gptel-api-key "")
- '(package-selected-packages
-		'(ace-window afternoon-theme aio all-the-icons-ibuffer
-			 balanced-windows better-jumper bug-hunter cape catppuccin-theme
-			 cherry-blossom-theme claude-code-ide
-			 color-theme-sanityinc-tomorrow consult-xref-stack corfu
-			 deferred dired-sidebar disaster doom-modeline
-			 doom-two-tone-themes dracula-theme eca ef-themes
-			 eglot-signature-eldoc-talkative eldoc-box embark-consult
-			 eshell-git-prompt eshell-toggle evil-collection evil-surround
-			 exec-path-from-shell exunit fleury-theme flycheck-eglot
-			 format-all gcmh git-timemachine go-playground gotham-theme
-			 gptel-quick gruvbox-theme helpful hide-mode-line
-			 highlight-symbol ht hydra iceberg-theme inf-elixir inf-ruby
-			 jbeans-theme jtsx kind-icon magit marginalia modus-themes
-			 multi-vterm names nano-modeline nano-theme nerd-icons-dired
-			 nodejs-repl nordic-night-theme nvm nyan-mode olivetti orderless
-			 org-bullets org-download org-drill org-roam-ui outline-indent
-			 polymode popper prodigy pyvenv request restclient-jq
-			 reykjavik-theme rspec-mode shell-maker smartparens south-theme
-			 spinner symbols-outline tabspaces treesit-auto
-			 tron-legacy-theme undo-tree verb vertico-posframe vterm-toggle
-			 wgrep yasnippet-capf yasnippet-snippets))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
 		'((go-playground-cli :url
 				"https://github.com/emacsmirror/go-playground-cli" :branch
