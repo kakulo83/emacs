@@ -233,8 +233,17 @@
 ;(use-package nordic-night-theme
 ;	:config
 ;	(load-theme 'nordic-night t))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-(load-theme 'naga-blue t)
+;(use-package monokai-pro-theme
+;	:ensure t
+;  :config
+;  (load-theme 'monokai-pro t))
+(use-package nord-theme
+	:config
+	(load-theme 'nord t)
+	(set-background-color "black"))
+	
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(load-theme 'naga-blue t)
 ;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
 
@@ -273,12 +282,11 @@
     (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
   ; faces are customized here to allow tabspaces to setup its state before we apply our customizations
-  ;(setq tab-bar-new-button-show nil)
-
-  ;(set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
-  ;(set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
-  ;(set-face-attribute 'tab-bar-tab-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
-  ;(set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
+  (setq tab-bar-new-button-show nil)
+  (set-face-attribute 'tab-bar nil :foreground "grey" :background 'unspecified)
+  (set-face-attribute 'tab-bar-tab nil :foreground "orange" :background 'unspecified)
+  (set-face-attribute 'tab-bar-tab-inactive nil :foreground (face-foreground 'default) :background 'unspecified :box nil)
+  (set-face-attribute 'tab-bar-tab-group-inactive nil :foreground 'unspecified :background 'unspecified :box nil)
   )
 
 

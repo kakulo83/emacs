@@ -378,6 +378,8 @@ FEATURE may be any one of:
 ;; Hide tab-bar close button
 (setq tab-bar-close-button-show nil) 
 
+
+
 (setenv "PYTEST_ADDOPTS" "--color=yes")
 
 
