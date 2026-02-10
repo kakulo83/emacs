@@ -28,7 +28,7 @@
 			 org-roam-ui outline-indent polymode popper prodigy pyvenv
 			 request restclient-jq reykjavik-theme rspec-mode shell-maker
 			 smartparens south-theme spinner symbols-outline tabspaces
-			 treesit-auto tron-legacy-theme undo-tree verb vertico-posframe
+			 treesit-auto tron-legacy-theme undo-tree vertico-posframe
 			 vterm-toggle wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
 		'((go-playground-cli :url

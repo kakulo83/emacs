@@ -163,10 +163,13 @@
 ;; enable window-divider mode so we can see the different splits
 ;(menu-bar-bottom-window-divider)
 
+
+
 ;; Enable encryption for Org Notes
 ;; https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial/68304#68304
 (require 'epa-file)
 (epa-file-enable)
+(setq epa-file-encrypt-to '("your-key-id"))
 (setq epg-pinentry-mode 'loopback)
 
 ;; Session management
@@ -355,9 +358,6 @@ FEATURE may be any one of:
 ;; Set default ibuffer sorting
 (setq ibuffer-default-sorting-mode 'filename/process)
 
-;; Always reuse existing compilation window.
-(push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
-
 ;; Avoid prompt, just follow symbolic-links.
 (setq vc-follow-symlinks t)
 
@@ -508,7 +508,8 @@ You can disable `clean-buffer-list` by (cancel-timer clean-buffer-list-timer).")
 (set-face-attribute 'fringe nil :background 'unspecified)
 
 ;; configure emacs for transparent background
-;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
+;;(set-frame-parameter (selected-frame) 'alpha '(80 80))
+;;(set-frame-parameter (selected-frame) 'alpha '(100 100))
 ;; (add-to-list 'default-frame-alist '(alpha 100 100))
 
 ; python shell autocompletes a bunch of crap that is annoying, this might be related

@@ -179,6 +179,7 @@
 ;  (balanced-windows-mode))
 
 
+;; https://doc.emacsen.de/gallery.html
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
@@ -192,7 +193,7 @@
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;	;(set-background-color "black")
+;	(set-background-color "black")
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
@@ -237,11 +238,15 @@
 ;	:ensure t
 ;  :config
 ;  (load-theme 'monokai-pro t))
-(use-package nord-theme
-	:config
-	(load-theme 'nord t)
-	(set-background-color "black"))
-	
+;(use-package nord-theme
+;	:config
+;	(load-theme 'nord t)
+;	(set-background-color "black"))
+(use-package doric-themes
+	:ensure t
+  :demand t
+  :config
+	(doric-themes-select 'doric-water))
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
 ;(load-theme 'naga-blue t)
 ;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
@@ -768,16 +773,19 @@
           ("C-c i" . org-roam-node-insert)))
 
 
-(use-package verb
-	:after org
-	:config
-	(setq verb-auto-kill-response-buffers t)
-	(push '("\\*HTTP Response.*\\*" . (
-																		(display-buffer-reuse-window)
-																		(side . right)
-																		(slot . 0)
-																		)) display-buffer-alist)
-	(define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+;; https://github.com/mrcnski/org-recur
+
+
+;(use-package verb
+;	:after org
+;	:config
+;	(setq verb-auto-kill-response-buffers t)
+;	(push '("\\*HTTP Response.*\\*" . (
+;																		(display-buffer-reuse-window)
+;																		(side . right)
+;																		(slot . 0)
+;																		)) display-buffer-alist)
+;	(define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
 
 (use-package org-bullets
@@ -852,6 +860,8 @@
   (org-download-timestamp "%Y%m%d-%H%M%S_")
   (org-image-actual-width 300)
   (org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
+	:hook
+	(org-mode . org-download-enable)
   :config
   (require 'org-download)
   (add-hook 'org-mode-hook 'org-download-enable))
@@ -1202,4 +1212,11 @@
 	(setq popper-window-height 0.50)
   (popper-mode +1))
 
+;; Always reuse existing compilation window.
+(push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
+
+;; configure xref to reuse current buffer instead of hijacking another
+(add-to-list 'display-buffer-alist
+             '("\\*xref\\*"
+               (display-buffer-same-window)))
 ;;; packages.el ends here
