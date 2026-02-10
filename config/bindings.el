@@ -65,7 +65,7 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
-;(define-key evil-normal-state-map (kbd "s-`") 'eshell)
+(define-key evil-normal-state-map (kbd "s-`") 'eshell)
 (define-key evil-normal-state-map (kbd "s-p") 'prodigy)
 
 
@@ -172,6 +172,7 @@
 (global-set-key (kbd "s-l") 'comint-clear-buffer) ; added to clear python-shell buffer
 
 (with-eval-after-load 'evil-maps
+	(define-key evil-motion-state-map (kbd "TAB") nil) ; remove mapping to allow org-cycle to work in org-mode
   (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
   (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
 (provide 'bindings)

@@ -190,11 +190,11 @@
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-;(use-package nano-theme
-;  :config
-;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;	(set-background-color "black")
-;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+(use-package nano-theme
+  :config
+	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+	(set-background-color "black")
+  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (catppuccin-load-flavor 'macchiato))  ; latte mocha macchiato frappe
@@ -242,11 +242,11 @@
 ;	:config
 ;	(load-theme 'nord t)
 ;	(set-background-color "black"))
-(use-package doric-themes
-	:ensure t
-  :demand t
-  :config
-	(doric-themes-select 'doric-water))
+;(use-package doric-themes
+;	:ensure t
+;  :demand t
+;  :config
+;	(doric-themes-select 'doric-obsidian))
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
 ;(load-theme 'naga-blue t)
 ;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
@@ -764,7 +764,8 @@
 
   :bind (
 	  :map org-mode-map
-	  ("C-j" . windmove-down)
+					("TAB" . org-cycle)
+					("C-j" . windmove-down)
           ("C-k" . windmove-up)
           ("C-p" . org-roam-node-find)
           ("C-f" . consult-ripgrep)
@@ -773,6 +774,7 @@
           ("C-c i" . org-roam-node-insert)))
 
 
+;; recurring org-agenda tasks
 ;; https://github.com/mrcnski/org-recur
 
 

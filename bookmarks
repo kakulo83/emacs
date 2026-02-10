@@ -65,13 +65,13 @@
 		 (last-modified 26688 4346 974241 0))
 #1=(#("emacs themes" 0 12
 			 (bmkp-full-record #1#))
-		 (end-position . 4885)
-		 (last-visited 26981 20457 706473 0)
-		 (visits . 1)
+		 (end-position . 4924)
+		 (last-visited 27018 49033 992554 0)
+		 (visits . 2)
 		 (filename . "~/.emacs.d/config/packages.el")
 		 (front-context-string . "use-package doom")
 		 (rear-context-string . "ndows-mode))\n\n\n(")
-		 (position . 4885)
+		 (position . 4924)
 		 (last-modified 26602 55060 995547 0))
 #1=(#("emacs font config" 0 17
 			 (bmkp-full-record #1#))
