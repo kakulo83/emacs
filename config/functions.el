@@ -360,6 +360,12 @@ _p_: prev error
     (insert "ls")
     (eshell-send-input))
   )
+
+(defhydra hydra-agenda (:color red :hint nil)
+	"
+	_a_: agenda-view
+"
+	("a" org-agenda :exit t))
   
 (defun robert/tab ()
   "Command to complete a copilot suggestion if available otherwise insert a tab."

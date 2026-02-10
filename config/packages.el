@@ -49,6 +49,7 @@
 		 occur
 	   ; https://github.com/emacs-evil/evil-collection/issues/100
 	   ;(occur ,(if (<= emacs-major-version 25) "replace" 'replace))
+		 agenda
 		 ibuffer
  	   dired
  	   dashboard
@@ -704,6 +705,8 @@
 	:init
 	(add-hook 'org-mode-hook #'visual-line-mode)
   :config
+	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg"))
+	(setq org-agenda-window-setup 'current-window)
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
        ("/" (italic :foreground "Orange"))
@@ -777,6 +780,8 @@
 ;; recurring org-agenda tasks
 ;; https://github.com/mrcnski/org-recur
 
+;; org agenda notifications
+;; https://github.com/spegoraro/org-alert
 
 ;(use-package verb
 ;	:after org
