@@ -49,7 +49,6 @@
 		 occur
 	   ; https://github.com/emacs-evil/evil-collection/issues/100
 	   ;(occur ,(if (<= emacs-major-version 25) "replace" 'replace))
-		 agenda
 		 ibuffer
  	   dired
  	   dashboard
@@ -80,36 +79,36 @@
 ;  (require 'smartparens-config))
 
 
-;(use-package nano-modeline
-;  :config
-;	(setq nano-modeline-position 'nano-modeline-footer)
-;  (nano-modeline-text-mode t))
-
-
-(use-package doom-modeline
-  :defines doom-modeline-mode-alist doom-modeline-support-imenu
-  :functions doom-modeline-def-modeline
+(use-package nano-modeline
   :config
-  (setq doom-modeline-hud t
-    doom-modeline-modal nil
-    doom-modeline-persp-name nil
-    doom-modeline-persp-icon nil
-    doom-modeline-time-icon t
-    doom-modeline-env-version nil
-    doom-modeline-workspace-name nil
-    doom-modeline-lsp nil
-    doom-modeline-major-mode-icon nil
-    doom-modeline-minor-modes nil
-    doom-modeline-buffer-file-name-style 'relative-to-project
-    doom-modeline-vcs-max-length 60
-    doom-modeline-mode-alist nil
-    doom-modeline-height 16
-    doom-modeline-buffer-encoding nil
-    doom-modeline-display-misc-in-all-mode-lines nil
-    doom-modeline-percent-position nil
-    doom-modeline-env-enable-ruby nil
-    doom-modeline-env-version nil)
-  :hook (after-init . doom-modeline-mode))
+	(setq nano-modeline-position 'nano-modeline-footer)
+  (nano-modeline-text-mode t))
+
+
+;(use-package doom-modeline
+;  :defines doom-modeline-mode-alist doom-modeline-support-imenu
+;  :functions doom-modeline-def-modeline
+;  :config
+;  (setq doom-modeline-hud t
+;    doom-modeline-modal nil
+;    doom-modeline-persp-name nil
+;    doom-modeline-persp-icon nil
+;    doom-modeline-time-icon t
+;    doom-modeline-env-version nil
+;    doom-modeline-workspace-name nil
+;    doom-modeline-lsp nil
+;    doom-modeline-major-mode-icon nil
+;    doom-modeline-minor-modes nil
+;    doom-modeline-buffer-file-name-style 'relative-to-project
+;    doom-modeline-vcs-max-length 60
+;    doom-modeline-mode-alist nil
+;    doom-modeline-height 16
+;    doom-modeline-buffer-encoding nil
+;    doom-modeline-display-misc-in-all-mode-lines nil
+;    doom-modeline-percent-position nil
+;    doom-modeline-env-enable-ruby nil
+;    doom-modeline-env-version nil)
+;  :hook (after-init . doom-modeline-mode))
 
 
 (use-package nyan-mode
@@ -191,11 +190,11 @@
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme
-  :config
-	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-	(set-background-color "black")
-  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package nano-theme
+;  :config
+;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+;	(set-background-color "black")
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package catppuccin-theme
 ;  :config
 ;  (catppuccin-load-flavor 'macchiato))  ; latte mocha macchiato frappe
@@ -243,11 +242,11 @@
 ;	:config
 ;	(load-theme 'nord t)
 ;	(set-background-color "black"))
-;(use-package doric-themes
-;	:ensure t
-;  :demand t
-;  :config
-;	(doric-themes-select 'doric-obsidian))
+(use-package doric-themes
+	:ensure t
+  :demand t
+  :config
+	(doric-themes-select 'doric-obsidian))
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
 ;(load-theme 'naga-blue t)
 ;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
@@ -707,6 +706,7 @@
   :config
 	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg"))
 	(setq org-agenda-window-setup 'current-window)
+	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
        ("/" (italic :foreground "Orange"))
@@ -727,6 +727,7 @@
   (setq org-src-preserve-indentation t)
   (setq org-src-tab-acts-natively t)
   (setq org-adapt-indentation t)
+	;(setq org-clock-sound "~/.emacs.d/private/nyan.wav")
   (let* ((variable-tuple
           (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
                 ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
@@ -780,19 +781,14 @@
 ;; recurring org-agenda tasks
 ;; https://github.com/mrcnski/org-recur
 
-;; org agenda notifications
-;; https://github.com/spegoraro/org-alert
-
-;(use-package verb
-;	:after org
-;	:config
-;	(setq verb-auto-kill-response-buffers t)
-;	(push '("\\*HTTP Response.*\\*" . (
-;																		(display-buffer-reuse-window)
-;																		(side . right)
-;																		(slot . 0)
-;																		)) display-buffer-alist)
-;	(define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+(use-package org-alert
+  :ensure t
+	:config
+	(setq org-alert-interval 300
+		org-alert-notify-cutoff 10
+    org-alert-notify-after-event-cutoff 10
+		alert-default-style 'osx-notifier)
+	(org-alert-enable))
 
 
 (use-package org-bullets

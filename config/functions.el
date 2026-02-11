@@ -364,8 +364,11 @@ _p_: prev error
 (defhydra hydra-agenda (:color red :hint nil)
 	"
 	_a_: agenda-view
+  _x_: archive finished items
 "
-	("a" org-agenda :exit t))
+	("a" org-agenda :exit t)
+	("x" org-archive-subtree-default :exit t)
+	)
   
 (defun robert/tab ()
   "Command to complete a copilot suggestion if available otherwise insert a tab."
