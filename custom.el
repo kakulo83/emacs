@@ -24,9 +24,9 @@
 			 jbeans-theme jtsx kind-icon magit marginalia modus-themes
 			 monokai-pro-theme multi-vterm names nano-modeline nano-theme
 			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
-			 nyan-mode olivetti orderless org-alert org-bullets org-download
-			 org-drill org-roam-ui outline-indent polymode popper prodigy
-			 pyvenv request restclient-jq reykjavik-theme rspec-mode
+			 nyan-mode orderless org-alert org-bullets org-download
+			 org-drill org-recur org-roam-ui outline-indent polymode popper
+			 prodigy request restclient-jq reykjavik-theme rspec-mode
 			 shell-maker smartparens south-theme spinner symbols-outline
 			 tabspaces treesit-auto tron-legacy-theme undo-tree
 			 vertico-posframe vterm-toggle wgrep yasnippet-capf

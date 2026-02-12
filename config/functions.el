@@ -364,9 +364,11 @@ _p_: prev error
 (defhydra hydra-agenda (:color red :hint nil)
 	"
 	_a_: agenda-view
+  _t_: todos list
   _x_: archive finished items
 "
 	("a" org-agenda :exit t)
+	("t" org-agenda-list :exit t)
 	("x" org-archive-subtree-default :exit t)
 	)
   
@@ -375,6 +377,11 @@ _p_: prev error
   (interactive)
   (or (copilot-accept-completion-by-word)
     (indent-for-tab-command)))
+
+(defun robert/open-dashboard-agenda()
+	"Open agenda dashboard in new tab."
+	(tab-bar-new-tab)
+	(tab-bar-rename-tab "Agenda"))
 
 (defun robert/open-notes-dired-in-tab()
   "Open a new tab with notes."
@@ -487,6 +494,21 @@ _p_: prev error
 
 
 (defalias 'dired-refresh 'revert-buffer)
+
+;; Refresh org-agenda after rescheduling a task.
+(defun org-agenda-refresh ()
+  "Refresh all `org-agenda' buffers."
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when (derived-mode-p 'org-agenda-mode)
+        (org-agenda-maybe-redo)))))
+
+(defadvice org-schedule (after refresh-agenda activate)
+  "Refresh org-agenda."
+  (org-agenda-refresh))
+
+
+
 
 ;; todo add tooling for sql
 ;; https://arjanvandergaag.nl/blog/using-emacs-as-a-database-client.html

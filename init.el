@@ -168,8 +168,8 @@
 ;; Enable encryption for Org Notes
 ;; https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial/68304#68304
 (require 'epa-file)
+(setq epa-file-encrypt-to '("3E869B53D207006C"))
 (epa-file-enable)
-(setq epa-file-encrypt-to '("your-key-id"))
 (setq epg-pinentry-mode 'loopback)
 
 ;; Session management

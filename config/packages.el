@@ -79,36 +79,36 @@
 ;  (require 'smartparens-config))
 
 
-(use-package nano-modeline
-  :config
-	(setq nano-modeline-position 'nano-modeline-footer)
-  (nano-modeline-text-mode t))
-
-
-;(use-package doom-modeline
-;  :defines doom-modeline-mode-alist doom-modeline-support-imenu
-;  :functions doom-modeline-def-modeline
+;(use-package nano-modeline
 ;  :config
-;  (setq doom-modeline-hud t
-;    doom-modeline-modal nil
-;    doom-modeline-persp-name nil
-;    doom-modeline-persp-icon nil
-;    doom-modeline-time-icon t
-;    doom-modeline-env-version nil
-;    doom-modeline-workspace-name nil
-;    doom-modeline-lsp nil
-;    doom-modeline-major-mode-icon nil
-;    doom-modeline-minor-modes nil
-;    doom-modeline-buffer-file-name-style 'relative-to-project
-;    doom-modeline-vcs-max-length 60
-;    doom-modeline-mode-alist nil
-;    doom-modeline-height 16
-;    doom-modeline-buffer-encoding nil
-;    doom-modeline-display-misc-in-all-mode-lines nil
-;    doom-modeline-percent-position nil
-;    doom-modeline-env-enable-ruby nil
-;    doom-modeline-env-version nil)
-;  :hook (after-init . doom-modeline-mode))
+;	(setq nano-modeline-position 'nano-modeline-footer)
+;  (nano-modeline-text-mode t))
+
+
+(use-package doom-modeline
+  :defines doom-modeline-mode-alist doom-modeline-support-imenu
+  :functions doom-modeline-def-modeline
+  :config
+  (setq doom-modeline-hud t
+    doom-modeline-modal nil
+    doom-modeline-persp-name nil
+    doom-modeline-persp-icon nil
+    doom-modeline-time-icon t
+    doom-modeline-env-version nil
+    doom-modeline-workspace-name nil
+    doom-modeline-lsp nil
+    doom-modeline-major-mode-icon nil
+    doom-modeline-minor-modes nil
+    doom-modeline-buffer-file-name-style 'relative-to-project
+    doom-modeline-vcs-max-length 60
+    doom-modeline-mode-alist nil
+    doom-modeline-height 16
+    doom-modeline-buffer-encoding nil
+    doom-modeline-display-misc-in-all-mode-lines nil
+    doom-modeline-percent-position nil
+    doom-modeline-env-enable-ruby nil
+    doom-modeline-env-version nil)
+  :hook (after-init . doom-modeline-mode))
 
 
 (use-package nyan-mode
@@ -242,14 +242,14 @@
 ;	:config
 ;	(load-theme 'nord t)
 ;	(set-background-color "black"))
-(use-package doric-themes
-	:ensure t
-  :demand t
-  :config
-	(doric-themes-select 'doric-obsidian))
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(use-package doric-themes
+;	:ensure t
+;  :demand t
+;  :config
+;	(doric-themes-select 'doric-light))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme 'naga-blue t)
-;(load-theme 'doom-silver-slate t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme `tron t)
 
 
@@ -385,13 +385,6 @@
   (symbols-outline-follow-mode))
 
 
-;(use-package all-the-icons)
-
-
-;(use-package all-the-icons-dired
-;  :hook
-;  (dired-mode . all-the-icons-dired-mode))
-
 (use-package nerd-icons :defer t)
 (use-package nerd-icons-dired
 	:config
@@ -460,6 +453,7 @@
   (setq eglot-code-action-indications nil)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
+
   :defer t
   :hook (
 		(html-ts-mode . eglot-ensure)
@@ -704,7 +698,17 @@
 	:init
 	(add-hook 'org-mode-hook #'visual-line-mode)
   :config
-	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg"))
+	(setq org-todo-keywords
+		'((sequence "TODO" "DOING" "|" "DONE" "CANCELLED")))
+	;; Log time a task was set to DONE.
+	(setq org-log-done (quote time))
+
+	;; Don't log the time a task was rescheduled or redeadlined.
+	(setq org-log-redeadline nil)
+	(setq org-log-reschedule nil)
+	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg" "~/Notes/org-roam-daily"))
+
+	;; use the same window instead of hijacking another
 	(setq org-agenda-window-setup 'current-window)
 	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
   (setq org-emphasis-alist
@@ -778,8 +782,20 @@
           ("C-c i" . org-roam-node-insert)))
 
 
-;; recurring org-agenda tasks
-;; https://github.com/mrcnski/org-recur
+(use-package org-recur
+  :hook ((org-mode . org-recur-mode)
+         (org-agenda-mode . org-recur-agenda-mode))
+  :demand t
+  :config
+  (define-key org-recur-mode-map (kbd "C-c d") 'org-recur-finish)
+
+  ;; Rebind the 'd' key in org-agenda (default: `org-agenda-day-view').
+  (define-key org-recur-agenda-mode-map (kbd "d") 'org-recur-finish)
+  (define-key org-recur-agenda-mode-map (kbd "C-c d") 'org-recur-finish)
+
+  (setq org-recur-finish-done t
+        org-recur-finish-archive t))
+
 
 (use-package org-alert
   :ensure t
@@ -787,9 +803,12 @@
 	(setq org-alert-interval 300
 		org-alert-notify-cutoff 10
     org-alert-notify-after-event-cutoff 10
+		org-alert-notification-title "Task Due"
 		alert-default-style 'osx-notifier)
 	(org-alert-enable))
 
+;; consider ?
+;; https://github.com/TatriX/pomidor
 
 (use-package org-bullets
   :after org
@@ -876,15 +895,6 @@
 (use-package websocket)
 
 
-;(use-package olivetti
-;  :defines olivetti-set-width
-;  :functions olivetti-set-width
-;  :hook (
-;	 (org-mode . olivetti-mode)
-;	 (olivetti-mode-on-hook . (lambda () (olivetti-set-width 128))))
-;  :config
-;  (setq-default olivetti-body-width 128))
-
 (use-package restclient
 	:init
 	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
@@ -945,17 +955,6 @@
   :mode (("\\.jsx?\\'" . jtsx-tsx-mode)
          ("\\.tsx\\'" . jtsx-tsx-mode)
          ("\\.ts\\'" . jtsx-typescript-mode)))
-
-
-;(use-package typescript-ts-mode
-;  :config
-;  ;(setq-default typescript-indent-level 4)
-;  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-ts-mode)))
-
-
-;(use-package pyvenv
-;	:config
-;	(pyvenv-mode 1))
 
 
 (use-package disaster
@@ -1115,15 +1114,6 @@
   :custom (flycheck-eglot-exclusive nil)
   :config
   (global-flycheck-eglot-mode 1))
-
-
-;(use-package flyover
-;	:load-path "~/.emacs.d/private/flyover/"
-;	:init
-;	(setq flyover-levels '(error))
-;	(setq flyover-error-icon "😾")
-;	:config
-;	(flyover-mode))
 
 
 (use-package prodigy

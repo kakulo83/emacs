@@ -2,11 +2,25 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(#1=(#("Cloudflare Dashboard" 0 20
+(#1=(#("org-capture-last-stored" 0 23
 				(bmkp-full-record #1#))
-			(filename . "   - no file -")
-			(location . "https://dash.cloudflare.com/7b678ec40bb4006aca9b44d1cb69fdf6/home/overview")
-			(handler . bmkp-jump-url-browse))
+			(annotation)
+			(tags)
+			(filename . "~/Notes/org-roam-daily/2026-02-13.org")
+			(buffer-name . "2026-02-13.org")
+			(front-context-string . "* TODO cleanup p")
+			(rear-context-string . "tle: 2026-02-13\n")
+			(front-context-region-string)
+			(rear-context-region-string)
+			(visits . 0)
+			(created . #2=(27020 47993 310010 0))
+			(last-modified . #2#)
+			(position . 88))
+#1=(#("Cloudflare Dashboard" 0 20
+			 (bmkp-full-record #1#))
+		 (filename . "   - no file -")
+		 (location . "https://dash.cloudflare.com/7b678ec40bb4006aca9b44d1cb69fdf6/home/overview")
+		 (handler . bmkp-jump-url-browse))
 #1=(#("puma systemd config (DigitalOcean)" 0 34
 			 (bmkp-full-record #1#))
 		 (filename . "/ssh:root@144.126.214.107:/etc/systemd/system/puma.service")
@@ -65,13 +79,13 @@
 		 (last-modified 26688 4346 974241 0))
 #1=(#("emacs themes" 0 12
 			 (bmkp-full-record #1#))
-		 (end-position . 4924)
-		 (last-visited 27018 49033 992554 0)
-		 (visits . 2)
+		 (end-position . 4949)
+		 (last-visited 27020 10076 743410 0)
+		 (visits . 3)
 		 (filename . "~/.emacs.d/config/packages.el")
 		 (front-context-string . "use-package doom")
 		 (rear-context-string . "ndows-mode))\n\n\n(")
-		 (position . 4924)
+		 (position . 4949)
 		 (last-modified 26602 55060 995547 0))
 #1=(#("emacs font config" 0 17
 			 (bmkp-full-record #1#))

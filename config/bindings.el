@@ -14,18 +14,18 @@
   "a"  'ace-window
   "b"  'hydra-bookmark/body ; 'consult-bookmark
   "c"  'hydra-ai/body ;'gptel
-  "d"  'robert/drill-by-topic
+  ;"d"  'robert/drill-by-topic
   "e"  'hydra-flycheck/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body
   "i"  'hydra-repl/body
   "k"  'robert/quick-kill-process
   "n"  'robert/open-notes-dired-in-tab
-	"o"  'hydra-agenda/body
   "p"  'tabspaces-project-switch-project-open-file
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
   "s"  'hydra-snippets/body
+	"t"  'hydra-agenda/body
 	"u"  'hydra-utilities/body
   "w"  'hydra-window-utils/body
   "x"  'eval-region
@@ -135,24 +135,28 @@
 (define-key compilation-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key compilation-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 
-(with-eval-after-load 'org-agenda-mode
-		(define-key org-agenda-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
-		(define-key org-agenda-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
-		(define-key org-agenda-mode-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))
-		(define-key org-agenda-mode-map (kbd "s-4") #'(lambda ()(interactive) (tab-bar-select-tab 4)))
-		(define-key org-agenda-mode-map (kbd "s-5") #'(lambda ()(interactive) (tab-bar-select-tab 5)))
-		(define-key org-agenda-mode-map (kbd "s-6") #'(lambda ()(interactive) (tab-bar-select-tab 6)))
-		(define-key org-agenda-mode-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
-		(define-key org-agenda-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
-		(define-key org-agenda-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
+(with-eval-after-load 'org-agenda
+	(define-key org-agenda-mode-map (kbd ",") 'my-leader-map)
 
-		(define-key org-agenda-mode-map (kbd "k") 'org-agenda-previous-line)
-		(define-key org-agenda-mode-map (kbd "j") 'org-agenda-next-line)
+	(define-key org-agenda-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
+	(define-key org-agenda-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
+	(define-key org-agenda-mode-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))
+	(define-key org-agenda-mode-map (kbd "s-4") #'(lambda ()(interactive) (tab-bar-select-tab 4)))
+	(define-key org-agenda-mode-map (kbd "s-5") #'(lambda ()(interactive) (tab-bar-select-tab 5)))
+	(define-key org-agenda-mode-map (kbd "s-6") #'(lambda ()(interactive) (tab-bar-select-tab 6)))
+	(define-key org-agenda-mode-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
+	(define-key org-agenda-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
+	(define-key org-agenda-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 
-		(define-key org-agenda-mode-map (kbd "C-h") 'evil-window-left)
-		(define-key org-agenda-mode-map (kbd "C-j") 'evil-window-down)
-		(define-key org-agenda-mode-map (kbd "C-k") 'evil-window-up)
-		(define-key org-agenda-mode-map (kbd "C-l") 'evil-window-right))
+	(define-key org-agenda-mode-map (kbd "m") 'org-agenda-month-view)
+	
+	(define-key org-agenda-mode-map (kbd "k") 'org-agenda-previous-line)
+	(define-key org-agenda-mode-map (kbd "j") 'org-agenda-next-line)
+
+	(define-key org-agenda-mode-map (kbd "C-h") 'evil-window-left)
+	(define-key org-agenda-mode-map (kbd "C-j") 'evil-window-down)
+	(define-key org-agenda-mode-map (kbd "C-k") 'evil-window-up)
+	(define-key org-agenda-mode-map (kbd "C-l") 'evil-window-right))
 
 
 (define-key compilation-mode-map (kbd "C-h") 'evil-window-left)
