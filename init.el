@@ -31,26 +31,11 @@
 ;;; find anything useful in:  https://gitlab.com/ideasman42/dotfiles/-/blob/main/.config/emacs/init.el?ref_type=heads
 ;;; find anything useful in:  https://github.com/bling/dotemacs/tree/master
 ;;; find anything useful in:  https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el#L1591-L1614
-;;; interesting package:      https://github.com/emarsden/pgmacs
 ;;; interesting package:      https://github.com/jxq0/org-tidy
 ;;;
-;;; Investigate thread:  https://www.reddit.com/r/emacs/comments/td0nth/sample_usage_of_cape_completion_at_point/
-;;; Find out if I should use cape or company
-;;;
-;;; 
-;;; find a way to have a history of commands in pipenv shell
-;;; https://stackoverflow.com/questions/6558765/how-do-you-see-the-entire-command-history-in-interactive-python
-;;;
-;;; 
 ;;; grab snippets from here:  https://gist.github.com/Ladicle/119c57fc97439c1b103f7847aa03be52?permalink_comment_id=4312513
 ;;; Make hydra menu pretty:  https://github.com/jerrypnz/major-mode-hydra.el?tab=readme-ov-file#pretty-hydra
 ;;;
-;;; 
-;;; look into dape debugger: https://www.youtube.com/watch?v=YKkyfz4cU8g
-;;; https://github.com/svaante/dape?tab=readme-ov-file#configuration
-;;; https://github.com/svaante/dape
-;;; https://github.com/microsoft/debugpy
-;;; 
 ;;; investigate this for performance tuning: https://www.leemeichin.com/posts/my-emacs-config.html
 ;;; 
 ;;; look into this https://github.com/ayrat555/company-elixir
@@ -396,17 +381,26 @@ FEATURE may be any one of:
 ;	 ;(:eval (list (nyan-create)))
 ;	 ))
 
-;; font size
+;; font related
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
-(set-face-attribute 'default nil :height 120)
+;(set-face-attribute 'default nil :height 120)
 ;; font family
+(when (member "Roboto Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "Roboto Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :family "Roboto Mono"))
+
+(when (member "Source Sans Pro" (font-family-list))
+  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
+
 ;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-(set-frame-font "JetBrains Mono")
+;(set-frame-font "JetBrains Mono")
 ;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
 ;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-; set clock for different timezones
 
+
+
+; set clock for different timezones
 (setq world-clock-list
       '(("America/Los_Angeles" "San Francisco")
         ("America/New_York" "New York")

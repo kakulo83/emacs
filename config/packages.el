@@ -71,20 +71,6 @@
 	(global-evil-surround-mode 1))
 
 
-;(use-package smartparens
-;  :ensure smartparens  ;; install the package
-;  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
-;  :config
-;  ;; load default config
-;  (require 'smartparens-config))
-
-
-;(use-package nano-modeline
-;  :config
-;	(setq nano-modeline-position 'nano-modeline-footer)
-;  (nano-modeline-text-mode t))
-
-
 (use-package doom-modeline
   :defines doom-modeline-mode-alist doom-modeline-support-imenu
   :functions doom-modeline-def-modeline
@@ -151,11 +137,6 @@
   (:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
 
-;(use-package diredfl
-;  :hook
-;  (dired-mode . diredfl-global-mode))
-
-
 (use-package ace-window
   :init
   (setq aw-dispatch-always t)
@@ -174,16 +155,11 @@
   	  )))
 
 
-;(use-package balanced-windows
-;  :config
-;  (balanced-windows-mode))
-
-
 ;; https://doc.emacsen.de/gallery.html
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-manegarm t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
@@ -195,38 +171,20 @@
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
 ;	(set-background-color "black")
 ;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
-;(use-package catppuccin-theme
-;  :config
-;  (catppuccin-load-flavor 'macchiato))  ; latte mocha macchiato frappe
-;(use-package tron-legacy-theme
-;  :config
-;  (load-theme 'tron-legacy t))
-;(use-package afternoon-theme
-;  :config
-;  (load-theme 'afternoon t))
-;(use-package jbeans-theme
-;  :config
-;  (load-theme 'jbeans t))
-;(use-package gotham-theme
-;  :config
-;  (load-theme 'gotham t))
-;(use-package reykjavik-theme
-;	:config
-;	(load-theme 'reykjavik t))
-;(use-package dracula-theme
-;	:config
-;	(load-theme 'dracula))
-;(use-package color-theme-sanityinc-tomorrow
-;	:config
-;	(load-theme 'sanityinc-tomorrow-eighties t))
-;(use-package fleury-theme
-;  :vc
-;  (:url "https://github.com/ShamsParvezArka/fleury-theme.el" :branch "main")
-;	(load-theme 'fleury-theme))
 ;(use-package iceberg-theme
 ;	:config
 ;  (iceberg-theme-create-theme-file)
 ;  (load-theme 'solarized-iceberg-dark t))
+;(use-package nord-theme
+;	:config
+;	(load-theme 'nord t)
+;	(set-background-color "black"))
+;(use-package catppuccin-theme
+;  :config
+;  (catppuccin-load-flavor 'macchiato))  ; latte mocha macchiato frappe
+;(use-package color-theme-sanityinc-tomorrow
+;	:config
+;	(load-theme 'sanityinc-tomorrow-eighties t))
 ;(use-package south-theme
 ;  :vc (:url "https://github.com/SophieBosio/south"
 ;       :rev :newest
@@ -238,10 +196,6 @@
 ;	:ensure t
 ;  :config
 ;  (load-theme 'monokai-pro t))
-;(use-package nord-theme
-;	:config
-;	(load-theme 'nord t)
-;	(set-background-color "black"))
 ;(use-package doric-themes
 ;	:ensure t
 ;  :demand t
@@ -485,13 +439,6 @@
 
 (use-package eglot-signature-eldoc-talkative)
 
-;(use-package dape
-  ;;https://github.com/svaante/dape?tab=readme-ov-file#configuration
-	;(add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
-  ;; To not display info and/or buffers on startup
-  ;; (remove-hook 'dape-start-hook 'dape-info)
-  ;(remove-hook 'dape-start-hook 'dape-repl))
-
 
 (use-package eshell
   :config
@@ -618,22 +565,6 @@
         vterm-toggle-scope 'project))
 
 
-;; https://www.reddit.com/r/vscode/comments/1danet1/good_alternative_for_github_copilot/
-;; try out continue.dev + ollama + deepseek-coder 6.7b
-;;
-;; https://github.com/tninja/aider.el?tab=readme-ov-file
-;; https://github.com/Aider-AI/aider
-
-;(use-package copilot
-;  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-;	:rev :newest
-;	:branch "main")
-;  :config
-;  (define-key copilot-mode-map (kbd "M-C-n") #'copilot-next-completion)
-;  (define-key copilot-mode-map (kbd "M-C-p") #'copilot-previous-completion)
-;  (define-key copilot-mode-map (kbd "M-C-l") #'copilot-accept-completion-by-word))
-
-
 ; https://console.anthropic.com/settings/billing
 ; TODO configure to use Anthropic instead, reference API key via environment variable stored in zshrc
 ; NOTE: you can invoke gptel's transient menu with either \ + C-u + gptel-send   or with gptel-menu
@@ -652,23 +583,8 @@
 	(setq gptel-quick-timeout 1000))
 
 
-;(use-package claude-code-ide
-;  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
-;  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-;  :config
-;  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
-
-
-; TRY THIS
-; https://www.reddit.com/r/emacs/comments/1n123gy/eca_best_ai_tools_for_emacs/
-; https://github.com/editor-code-assistant/eca-emacs?tab=readme-ov-file
-; TODO
-; 1. bind <,-c> to hydra for AI functions, c for chat, e for explain
-; 2. add embark visual-region bind for explaining
-; 3. find package that does autocomplete on a per-line basis
 ; NOTE:  API key and models saved to /Users/robertcarter/.config/eca/config.json
 ; BILLING:  https://console.anthropic.com/settings/billing
-;
 (use-package eca
   :bind (("C-c a" . eca-run)
          ("C-c C-a" . eca-run)
@@ -707,10 +623,13 @@
 	(setq org-log-redeadline nil)
 	(setq org-log-reschedule nil)
 	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg" "~/Notes/org-roam-daily"))
-
-	;; use the same window instead of hijacking another
+	(set-face-attribute 'org-agenda-date-today nil
+		:foreground "orange"
+		:background 'unspecified
+	)
 	(setq org-agenda-window-setup 'current-window)
 	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
+
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
        ("/" (italic :foreground "Orange"))
@@ -718,41 +637,50 @@
        ("=" (:background "maroon" :foreground "white"))
        ("~" (:background "deep sky blue" :foreground "MidnightBlue"))
        ("+" (:strike-through t))))
+
   (setq org-link-frame-setup '((file . find-file))) ; find-file-other-window
   (setq org-return-follows-link t)
   (setq org-pretty-entities t)
   (setq org-hide-emphasis-markers t)
   (setq org-hidden-keywords '(title))
   (setq org-startup-with-inline-images t)
-  ;(setq org-startup-with-latex-preview t)
-  ;(setq org-preview-latex-default-process 'dvisvgm)
-  ;(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
   (setq org-startup-indented t)
   (setq org-src-preserve-indentation t)
-  (setq org-src-tab-acts-natively t)
+	;(setq org-src-fontify-natively t
+	;  org-src-tab-acts-natively t
+  ;    org-edit-src-content-indentation 0) 
   (setq org-adapt-indentation t)
 	;(setq org-clock-sound "~/.emacs.d/private/nyan.wav")
-  (let* ((variable-tuple
-          (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
-                ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-                ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-                ((x-list-fonts "Verdana")         '(:font "Verdana"))
-                ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
 
-     (custom-theme-set-faces
-     'user
-     `(org-level-8 ((t (,@headline ,@variable-tuple))))
-     `(org-level-7 ((t (,@headline ,@variable-tuple))))
-     `(org-level-6 ((t (,@headline ,@variable-tuple))))
-     `(org-level-5 ((t (,@headline ,@variable-tuple))))
-     `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-     `(org-level-1 ((t (,@headline ,@variable-tuple :height 2.75 ))))
-     `(org-document-title ((t (,@headline ,@variable-tuple :height 4.0 :underline nil))))))
+	;; Resize Org headings
+	(dolist (face '((org-document-title . 4.0)
+									 (org-level-1 . 1.35)
+									 (org-level-2 . 1.3)
+									 (org-level-3 . 1.2)
+									 (org-level-4 . 1.1)
+									 (org-level-5 . 1.1)
+									 (org-level-6 . 1.1)
+									 (org-level-7 . 1.1)
+									 (org-level-8 . 1.1)))
+		(set-face-attribute (car face) nil :font "Source Sans Pro" :weight 'bold :height (cdr face)))
+
+	;; Make the document title a bit bigger
+	(set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight
+		'bold :height 1.8)
+
+	(require 'org-indent)
+	(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+	(add-hook 'org-mode-hook 'variable-pitch-mode)
+
+	(set-face-attribute 'org-block nil            :foreground nil :inherit
+		'fixed-pitch :height 0.85)
+	(set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
+	(set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
+	(set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
+	(set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+	fixed-pitch))
+	(set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+	(set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
   (custom-theme-set-faces
    'user
@@ -779,7 +707,8 @@
           ("C-f" . consult-ripgrep)
           ("C-c n" . org-roam-capture)
           ("C-'" . org-roam-buffer-toggle)
-          ("C-c i" . org-roam-node-insert)))
+          ("C-c i" . org-roam-node-insert))
+	)
 
 
 (use-package org-recur
@@ -787,11 +716,11 @@
          (org-agenda-mode . org-recur-agenda-mode))
   :demand t
   :config
-  (define-key org-recur-mode-map (kbd "C-c d") 'org-recur-finish)
+  (define-key org-recur-mode-map (kbd "C-c x") 'org-recur-finish)
 
-  ;; Rebind the 'd' key in org-agenda (default: `org-agenda-day-view').
-  (define-key org-recur-agenda-mode-map (kbd "d") 'org-recur-finish)
-  (define-key org-recur-agenda-mode-map (kbd "C-c d") 'org-recur-finish)
+  ;; Rebind the 'x' key in org-agenda (default: `org-agenda-day-view').
+  (define-key org-recur-agenda-mode-map (kbd "x") 'org-recur-finish)
+  (define-key org-recur-agenda-mode-map (kbd "C-c x") 'org-recur-finish)
 
   (setq org-recur-finish-done t
         org-recur-finish-archive t))
@@ -807,16 +736,20 @@
 		alert-default-style 'osx-notifier)
 	(org-alert-enable))
 
-;; consider ?
-;; https://github.com/TatriX/pomidor
 
-(use-package org-bullets
-  :after org
-  :init
-  ; (custom-set-variables '(org-bullets-bullet-list (quote ("◉" "○" "✸" "◉🌿"))))
-  ; (custom-set-variables '(org-bullets-bullet-list (quote ("🌺" "🌸" "🌼" "🌿" "🍀" ))))
-  ;(setq org-bullets-bullet-list '("\u200b")) ; for a blank bullet (hiding them)
-  :hook (org-mode . org-bullets-mode))
+(use-package org-superstar
+  :config
+  (setq org-superstar-leading-bullet " ")
+  (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
+  (setq org-superstar-todo-bullet-alist '(("TODO" . 9744)
+																					 ("DONE" . 9744)
+																					 ("READ" . 9744)
+																					 ("IDEA" . 9744)
+                                           ("WAITING" . 9744)
+                                           ("CANCELLED" . 9744)
+                                           ("PROJECT" . 9744)
+                                           ("POSTPONED" . 9744)))
+	)
 
 
 (use-package org-roam
@@ -1175,6 +1108,10 @@
 ;(use-package tramp-rpc
 ;  :ensure t)
 
+(use-package which-key
+	:config
+	(setq which-key-popup-type 'frame)
+	(which-key-mode))
 
 ;; NOTE: popper is loaded last because otherwise it does not
 ;; seem to be initialized correctly and i have to manually stop/start

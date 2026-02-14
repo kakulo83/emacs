@@ -9,27 +9,24 @@
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(gptel-api-key "")
  '(package-selected-packages
-		'(ace-window afternoon-theme aio all-the-icons-ibuffer
-			 balanced-windows better-jumper bug-hunter cape catppuccin-theme
-			 cherry-blossom-theme claude-code-ide
+		'(ace-window aio all-the-icons-ibuffer better-jumper bug-hunter cape
+			 catppuccin-theme cherry-blossom-theme
 			 color-theme-sanityinc-tomorrow consult-xref-stack corfu
-			 deferred dired-sidebar diredfl disaster doom-modeline
-			 doom-two-tone-themes dracula-theme eca ef-themes
+			 deferred dired-sidebar disaster doom-modeline
+			 doom-two-tone-themes eca ef-themes
 			 eglot-signature-eldoc-talkative eldoc-box embark-consult
 			 eshell-git-prompt eshell-toggle evil-collection evil-surround
-			 exec-path-from-shell exunit fleury-theme flycheck-eglot
-			 format-all gcmh git-timemachine go-playground gotham-theme
-			 gptel-quick gruvbox-theme helpful hide-mode-line
-			 highlight-symbol ht hydra iceberg-theme inf-elixir inf-ruby
-			 jbeans-theme jtsx kind-icon magit marginalia modus-themes
-			 monokai-pro-theme multi-vterm names nano-modeline nano-theme
+			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
+			 git-timemachine go-playground gptel-quick gruvbox-theme helpful
+			 hide-mode-line highlight-symbol ht hydra iceberg-theme
+			 inf-elixir inf-ruby jtsx kind-icon magit marginalia
+			 modus-themes monokai-pro-theme multi-vterm names nano-theme
 			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
-			 nyan-mode orderless org-alert org-bullets org-download
-			 org-drill org-recur org-roam-ui outline-indent polymode popper
-			 prodigy request restclient-jq reykjavik-theme rspec-mode
-			 shell-maker smartparens south-theme spinner symbols-outline
-			 tabspaces treesit-auto tron-legacy-theme undo-tree
-			 vertico-posframe vterm-toggle wgrep yasnippet-capf
+			 nyan-mode orderless org-alert org-download org-drill org-recur
+			 org-roam-ui org-superstar outline-indent polymode popper
+			 prodigy request restclient-jq rspec-mode shell-maker
+			 south-theme spinner symbols-outline tabspaces treesit-auto
+			 undo-tree vertico-posframe vterm-toggle wgrep yasnippet-capf
 			 yasnippet-snippets))
  '(package-vc-selected-packages
 		'((go-playground-cli :url
@@ -63,9 +60,7 @@
 				 "https://github.com/paul-jewell/Emacs-Tron-Legacy-Theme"
 				 :branch "master")
 			 (ts-fold :url "https://github.com/emacs-tree-sitter/ts-fold"
-				 :branch "master")
-			 (ultra-scroll :vc-backend Git :url
-				 "https://github.com/jdtsmith/ultra-scroll")))
+				 :branch "master")))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-right-width 1))
 (custom-set-faces
@@ -74,19 +69,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
- '(olivetti-fringe ((t (:background "\"unspecified\""))))
  '(org-document-info ((t (:foreground "dark orange"))))
  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 4.0 :underline nil))))
  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 2.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#ECEFF4" :font "ETBembo"))))
  '(org-link ((t (:foreground "deep sky blue" :underline t))))
  '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))

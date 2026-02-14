@@ -66,7 +66,6 @@
 (define-key evil-normal-state-map "n" 'highlight-symbol-next)
 (define-key evil-normal-state-map "N" 'highlight-symbol-prev)
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
-(define-key evil-normal-state-map (kbd "s-`") 'eshell)
 (define-key evil-normal-state-map (kbd "s-p") 'prodigy)
 
 
@@ -150,14 +149,11 @@
 
 	(define-key org-agenda-mode-map (kbd "m") 'org-agenda-month-view)
 	
-	(define-key org-agenda-mode-map (kbd "k") 'org-agenda-previous-line)
-	(define-key org-agenda-mode-map (kbd "j") 'org-agenda-next-line)
-
 	(define-key org-agenda-mode-map (kbd "C-h") 'evil-window-left)
 	(define-key org-agenda-mode-map (kbd "C-j") 'evil-window-down)
 	(define-key org-agenda-mode-map (kbd "C-k") 'evil-window-up)
-	(define-key org-agenda-mode-map (kbd "C-l") 'evil-window-right))
-
+	(define-key org-agenda-mode-map (kbd "C-l") 'evil-window-right)
+	)
 
 (define-key compilation-mode-map (kbd "C-h") 'evil-window-left)
 (define-key compilation-mode-map (kbd "C-j") 'evil-window-down)
