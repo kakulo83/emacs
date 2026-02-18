@@ -361,14 +361,18 @@ _p_: prev error
     (eshell-send-input))
   )
 
+
 (defhydra hydra-agenda (:color red :hint nil)
 	"
-	_a_: agenda-view
-  _t_: todos list
+  _m_: menu
+	_a_: todo (all)              _c_: create task
+  _t_: todo (calendar)
   _x_: archive finished items
 "
-	("a" org-agenda :exit t)
+	("a" org-todo-list :exit t)
+	("c" org-capture :exit t)
 	("t" org-agenda-list :exit t)
+	("m" org-agenda :exit t)
 	("x" org-archive-subtree-default :exit t)
 	)
   
@@ -506,8 +510,6 @@ _p_: prev error
 (defadvice org-schedule (after refresh-agenda activate)
   "Refresh org-agenda."
   (org-agenda-refresh))
-
-
 
 
 ;; todo add tooling for sql

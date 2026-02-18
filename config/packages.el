@@ -159,13 +159,13 @@
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-nord t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-winter-is-coming-dark-blue t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-;(use-package modus-themes
-;	:config
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+(use-package modus-themes
+	:config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
@@ -200,9 +200,9 @@
 ;	:ensure t
 ;  :demand t
 ;  :config
-;	(doric-themes-select 'doric-light))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+;	(doric-themes-select 'doric-dark))
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme 'naga-blue t)
 ;(load-theme `tron t)
 
@@ -366,9 +366,6 @@
   ; 
   ; M-x eglot-workspace-configuration
   :config
-  ; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-  ; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
-	(message "warning: `jsonrpc--log-event' is ignored.")
   ;(add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/robertcarter/Developer/elixir/elixir-ls-v0.24.1/language_server.sh"))
   (add-to-list 'eglot-server-programs '(elixir-ts-mode "/opt/homebrew/bin/elixir-ls"))
 	(add-to-list 'eglot-server-programs '((python-mode python-ts-mode) "basedpyright-langserver" "--stdio"))
@@ -378,6 +375,8 @@
 	(add-to-list 'eglot-server-programs '((html-mode html-ts-mode) "vscode-html-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(json-ts-mode "vscode-json-language-server" "--stdio"))
 	(add-to-list 'eglot-server-programs '(css-ts-mode "vscode-css-language-server"  "--stdio"))
+	(add-to-list 'eglot-server-programs '(org-mode . nil))
+	(add-to-list 'eglot-server-programs '(emacs-lisp-mode . nil))
 
 	(add-to-list 'project-vc-extra-root-markers "tsconfig.json")
 	; For python ?
@@ -421,6 +420,8 @@
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
 
+;; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+;; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
 ;; ignore jsonrpc events to speed up eglot
 (fset #'jsonrpc--log-event #'ignore)
 
@@ -615,20 +616,13 @@
 	(add-hook 'org-mode-hook #'visual-line-mode)
   :config
 	(setq org-todo-keywords
-		'((sequence "TODO" "DOING" "|" "DONE" "CANCELLED")))
+		'((sequence "TODO" "DOING" "WAITING" "|" "DONE" "CANCELLED")))
 	;; Log time a task was set to DONE.
 	(setq org-log-done (quote time))
 
 	;; Don't log the time a task was rescheduled or redeadlined.
 	(setq org-log-redeadline nil)
 	(setq org-log-reschedule nil)
-	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg" "~/Notes/org-roam-daily"))
-	(set-face-attribute 'org-agenda-date-today nil
-		:foreground "orange"
-		:background 'unspecified
-	)
-	(setq org-agenda-window-setup 'current-window)
-	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
 
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
@@ -646,34 +640,36 @@
   (setq org-startup-with-inline-images t)
   (setq org-startup-indented t)
   (setq org-src-preserve-indentation t)
-	;(setq org-src-fontify-natively t
-	;  org-src-tab-acts-natively t
-  ;    org-edit-src-content-indentation 0) 
+	(setq org-src-fontify-natively t
+	  org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0) 
   (setq org-adapt-indentation t)
 	;(setq org-clock-sound "~/.emacs.d/private/nyan.wav")
 
 	;; Resize Org headings
-	(dolist (face '((org-document-title . 4.0)
-									 (org-level-1 . 1.35)
-									 (org-level-2 . 1.3)
-									 (org-level-3 . 1.2)
-									 (org-level-4 . 1.1)
-									 (org-level-5 . 1.1)
-									 (org-level-6 . 1.1)
-									 (org-level-7 . 1.1)
-									 (org-level-8 . 1.1)))
-		(set-face-attribute (car face) nil :font "Source Sans Pro" :weight 'bold :height (cdr face)))
+	;; https://sophiebos.io/posts/beautifying-emacs-org-mode/#fonts
+	(custom-set-faces
+		'(outline-2          ((t (:height 1.2))))
+		'(outline-3          ((t (:height 1.2))))
+		'(outline-4          ((t (:height 1.2))))
+		'(outline-5          ((t (:height 1.2))))
+		'(outline-6          ((t (:height 1.2))))
+		'(outline-7          ((t (:height 1.2))))
+		'(outline-8          ((t (:height 1.2))))
+		'(outline-9          ((t (:height 1.2))))
+		)
 
 	;; Make the document title a bit bigger
 	(set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight
-		'bold :height 1.8)
+		'bold :height 4.6)
+
+	(set-face-attribute 'org-default nil :font "Iosevka Slab" :height 120)
 
 	(require 'org-indent)
 	(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 	(add-hook 'org-mode-hook 'variable-pitch-mode)
 
-	(set-face-attribute 'org-block nil            :foreground nil :inherit
-		'fixed-pitch :height 0.85)
+	(set-face-attribute 'org-block nil 		        :inherit 'fixed-pitch :height 1.0)
 	(set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
 	(set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
 	(set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
@@ -682,22 +678,26 @@
 	(set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
 	(set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
-   '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
+	(setq org-default-notes-file "~/Notes/org")
 
-  (custom-theme-set-faces
-   'user
-   '(org-document-info ((t (:foreground "dark orange"))))
-   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-link ((t (:foreground "deep sky blue" :underline t))))
-   '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
-   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+	(setq org-catch-invisible-edits 'error) ; prevent editing text inside folds
 
+	(setq org-capture-templates
+    '(("p" "Personal Todo" entry
+				(file+headline "~/Notes/org/tasks.org" "Personal TODO")
+         "* TODO %?\n ")
+			 ("w" "Wishful Todo" entry
+				 (file+headline "~/Notes/org/tasks.org" "Wishful TODO")
+					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+			 ("r" "Recurring Todo" entry
+				 (file+headline "~/Notes/org/tasks.org" "Recurring TODO")
+					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>")
+			    ; <%%(memq (calendar-day-of-week date) '(2 3 4 5 6))>   just the day
+					;"* TODO %?\n %(concat \"<%%\" \"(when\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \"12:00\" \")\" )>")  day with time (not working, need to figure out how to add quotes around "12:00")
+       ("W" "Work Todo" entry
+				 (file+headline "~/Notes/org/tasks.org" "Work TODO")
+         "* %?\n KEYWORD: %^{Keyword|work}\n %U\n  %i\n  %a")))
+	
   :bind (
 	  :map org-mode-map
 					("TAB" . org-cycle)
@@ -709,6 +709,135 @@
           ("C-'" . org-roam-buffer-toggle)
           ("C-c i" . org-roam-node-insert))
 	)
+
+
+(use-package org-agenda
+	:ensure nil
+	:commands org-agenda
+	:custom
+	(org-agenda-current-time-string
+		"← now ─────────────────")
+	(org-agenda-time-grid
+		'((daily today require-timed remove-match)
+			 (700 800 830 1000 1030 1200 1230 1400 1430 1600 1630 1700 1730 1800 1830 2000 )
+			 "......" "────────────────"))
+	:config
+	(add-to-list 'display-buffer-alist
+             '("\\*Org Agenda\\*"
+               (display-buffer-in-tab display-buffer-reuse-mode-window)
+               (ignore-current-tab . t)
+               (tab-name . "Org Agenda")
+               (dedicated . t)
+               (inhibit-same-window . nil)))
+
+	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg" "~/Notes/org/tasks.org"))
+	(set-face-attribute 'org-agenda-date-today nil
+		:foreground "orange"
+		:background 'unspecified
+	)
+	(setq org-agenda-window-setup 'current-window)
+	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
+
+	
+	;; Hide duplicates of the same todo item
+	;; If it has more than one of timestamp, scheduled,
+	;; or deadline information
+	(setq org-agenda-skip-timestamp-if-done t
+		org-agenda-skip-deadline-if-done t
+    org-agenda-skip-scheduled-if-done t
+    org-agenda-skip-scheduled-if-deadline-is-shown t
+    org-agenda-skip-timestamp-if-deadline-is-shown t)
+
+	(setq org-agenda-prefix-format
+      '(
+        ;; Remove "%-12:c" from the agenda format to hide the file name/category
+        (agenda . " % i %?-12t% s")
+        (timeline . " % s")
+        (todo . " % i ")
+        (tags . " % i ")
+        (search . " % i ")
+        ))
+
+	(setq org-agenda-time-grid
+      '((daily today require-timed)
+        (800 1000 1200 1400 1600 1800 2000)
+        "......"
+        "----------------")
+      org-agenda-use-time-grid t)
+
+	(setq org-agenda-timegrid-use-ampm t) ; Set this to t to force 12-hour format (am/pm).
+
+
+	; https://orgmode.org/manual/Storing-searches.html
+	(setq org-agenda-custom-commands
+      '(("x" agenda)
+        ("y" agenda*)
+        ("w" todo "WAITING")
+        ("W" todo-tree "WAITING")
+        ("u" tags "+boss-urgent")
+        ("v" tags-todo "+boss-urgent")
+        ("U" tags-tree "+boss-urgent")
+        ("f" occur-tree "\\<FIXME\\>")
+        ("h" . "HOME+Name tags searches") ;description for "h" prefix
+        ("hl" tags "+personal+leonie")
+        ("hp" tags "+personal+lucien")
+        ("hk" tags "+personal+carmen")))
+	)
+
+
+(use-package org-super-agenda
+	:config
+	(setq org-super-agenda-groups
+       '(;; Each group has an implicit boolean OR operator between its selectors.
+         (:name " Overdue "  ; Optionally specify section name
+                :scheduled past
+                :order 2
+                :face 'error)
+
+         (:name "Personal "
+                :and(:file-path "Personal.p" :not (:tag "event"))
+                :order 3)
+
+         (:name "Family "
+                :and(:file-path "Family.s" :not (:tag "event"))
+                :order 3)
+
+         (:name "Teaching "
+                :and(:file-path "Teaching.p" :not (:tag "event"))
+                :order 3)
+
+         (:name "Gamedev "
+                :and(:file-path "Gamedev.s" :not (:tag "event"))
+                :order 3)
+
+         (:name "Youtube "
+                :and(:file-path "Producer.p" :not (:tag "event"))
+                :order 3)
+
+         (:name "Music "
+                :and(:file-path "Bard.p" :not (:tag "event"))
+                :order 3)
+
+         (:name "Storywriting "
+                :and(:file-path "Stories.s" :not (:tag "event"))
+                :order 3)
+
+         (:name "Writing "
+                :and(:file-path "Author.p" :not (:tag "event"))
+                :order 3)
+
+         (:name "Learning "
+                :and(:file-path "Knowledge.p" :not (:tag "event"))
+                :order 3)
+
+          (:name " Today "  ; Optionally specify section name
+                :time-grid t
+                :date today
+                :scheduled today
+                :order 1
+                :face 'warning)
+	)))
+
 
 
 (use-package org-recur
@@ -738,18 +867,15 @@
 
 
 (use-package org-superstar
+	:after org
   :config
   (setq org-superstar-leading-bullet " ")
   (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
   (setq org-superstar-todo-bullet-alist '(("TODO" . 9744)
 																					 ("DONE" . 9744)
-																					 ("READ" . 9744)
-																					 ("IDEA" . 9744)
-                                           ("WAITING" . 9744)
-                                           ("CANCELLED" . 9744)
-                                           ("PROJECT" . 9744)
-                                           ("POSTPONED" . 9744)))
-	)
+                                           ("DOING" . 9744)
+                                           ("CANCELLED" . 9744)))
+	:hook (org-mode . org-superstar-mode))
 
 
 (use-package org-roam
@@ -1006,11 +1132,11 @@
 
 
 ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196/5
-(use-package elixir-ts-mode
-  :hook (elixir-ts-mode . eglot-ensure)
-  (before-save . eglot-format)
-  :config
-  (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
+;(use-package elixir-ts-mode
+;  :hook (elixir-ts-mode . eglot-ensure)
+;  (before-save . eglot-format)
+;  :config
+;  (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
 
 
 (use-package heex-ts-mode)
@@ -1113,6 +1239,12 @@
 	(setq which-key-popup-type 'frame)
 	(which-key-mode))
 
+(use-package show-font
+  :ensure t
+  :bind
+  (("C-c s f" . show-font-select-preview)
+   ("C-c s t" . show-font-tabulated)))
+
 ;; NOTE: popper is loaded last because otherwise it does not
 ;; seem to be initialized correctly and i have to manually stop/start
 ;; it again when emacs starts up. which is annoying
@@ -1133,6 +1265,9 @@
 			 "\\*Warnings\\*"
 			 "\\*Help\\*"
 			 "\\*Copilot\\*"
+			 "\\*Org Capture\\*"
+			 "\\*Org Select\\*"
+			 "\\*Agenda Commands\\*"
 			 "Output\\*$"
 			 "\\*Async Shell Command\\*"
 			 "\\*HTTP Response\\*"

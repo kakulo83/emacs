@@ -147,12 +147,15 @@
 	(define-key org-agenda-mode-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 	(define-key org-agenda-mode-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
 
-	(define-key org-agenda-mode-map (kbd "m") 'org-agenda-month-view)
+  (define-key org-agenda-mode-map (kbd "k") 'org-agenda-previous-line)
+  (define-key org-agenda-mode-map (kbd "j") 'org-agenda-next-line)
 	
 	(define-key org-agenda-mode-map (kbd "C-h") 'evil-window-left)
 	(define-key org-agenda-mode-map (kbd "C-j") 'evil-window-down)
 	(define-key org-agenda-mode-map (kbd "C-k") 'evil-window-up)
 	(define-key org-agenda-mode-map (kbd "C-l") 'evil-window-right)
+
+	(define-key org-agenda-mode-map (kbd "C-c n") 'org-agenda-capture)
 	)
 
 (define-key compilation-mode-map (kbd "C-h") 'evil-window-left)

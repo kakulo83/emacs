@@ -13,7 +13,7 @@
 			 catppuccin-theme cherry-blossom-theme
 			 color-theme-sanityinc-tomorrow consult-xref-stack corfu
 			 deferred dired-sidebar disaster doom-modeline
-			 doom-two-tone-themes eca ef-themes
+			 doom-two-tone-themes doric-themes eca ef-themes
 			 eglot-signature-eldoc-talkative eldoc-box embark-consult
 			 eshell-git-prompt eshell-toggle evil-collection evil-surround
 			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
@@ -23,10 +23,11 @@
 			 modus-themes monokai-pro-theme multi-vterm names nano-theme
 			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
 			 nyan-mode orderless org-alert org-download org-drill org-recur
-			 org-roam-ui org-superstar outline-indent polymode popper
-			 prodigy request restclient-jq rspec-mode shell-maker
-			 south-theme spinner symbols-outline tabspaces treesit-auto
-			 undo-tree vertico-posframe vterm-toggle wgrep yasnippet-capf
+			 org-roam-ui org-super-agenda org-superstar outline-indent
+			 polymode popper prodigy request restclient-jq rspec-mode
+			 shell-maker show-font south-theme spinner svg-tag-mode
+			 symbols-outline tabspaces treesit-auto undo-tree
+			 vertico-posframe vterm-toggle web-server wgrep yasnippet-capf
 			 yasnippet-snippets))
  '(package-vc-selected-packages
 		'((go-playground-cli :url
@@ -68,17 +69,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fixed-pitch ((t (:family "Fira Code Retina" :height 160))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-link ((t (:foreground "deep sky blue" :underline t))))
- '(org-meta-line ((t (:inherit fixed-pitch :height 0.8))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
- '(tab-bar-tab ((t (:inherit tab-bar))))
- '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin)))))
+ '(org-block ((t (:height 2.0))))
+ '(outline-1 ((t (:height 2.25))))
+ '(outline-2 ((t (:height 1.2))))
+ '(outline-3 ((t (:height 1.2))))
+ '(outline-4 ((t (:height 1.2))))
+ '(outline-5 ((t (:height 1.2))))
+ '(outline-6 ((t (:height 1.2))))
+ '(outline-7 ((t (:height 1.2))))
+ '(outline-8 ((t (:height 1.2))))
+ '(outline-9 ((t (:height 1.2))))
+ '(tab-bar-tab ((t (:inherit tab-bar)))))
 
 (provide 'custom)
 ;;; custom.el ends here

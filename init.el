@@ -363,10 +363,7 @@ FEATURE may be any one of:
 ;; Hide tab-bar close button
 (setq tab-bar-close-button-show nil) 
 
-
-
 (setenv "PYTEST_ADDOPTS" "--color=yes")
-
 
 (setq manual-program "gman")
 
@@ -383,22 +380,21 @@ FEATURE may be any one of:
 
 ;; font related
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
-;(set-face-attribute 'default nil :height 120)
+
 ;; font family
-(when (member "Roboto Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Roboto Mono" :height 120)
-  (set-face-attribute 'fixed-pitch nil :family "Roboto Mono"))
+;(when (member "Roboto Mono" (font-family-list))
+;  (set-face-attribute 'default nil :font "Roboto Mono" :height 128)
+;  (set-face-attribute 'fixed-pitch nil :family "Roboto Mono"))
+;
+;(when (member "Source Sans Pro" (font-family-list))
+;  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
 
-(when (member "Source Sans Pro" (font-family-list))
-  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
-
-;(set-frame-font "-*-JetBrains Mono-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-;(set-frame-font "-*-Roboto Mono-ultralight-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-;(set-frame-font "JetBrains Mono")
-;(set-frame-font "-*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-;(set-frame-font "-*-Inconsolata Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-
-
+;(set-face-attribute 'default nil :height 128)
+;(set-frame-font (font-spec :family "Iosevka Slab" :weight 'light :size 14))
+;(set-frame-font (font-spec :family "Roboto Mono" :weight 'ultralight :size 14))
+;(set-frame-font (font-spec :family "JetBrains Mono" :weight 'light :size 12))
+;(set-frame-font (font-spec :family "Hack Nerd Font" :weight 'light :size 12))     ; -*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
+(set-frame-font (font-spec :family "Inconsolata Nerd Font" :weight 'ultralight :size 14))
 
 ; set clock for different timezones
 (setq world-clock-list
