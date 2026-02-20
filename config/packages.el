@@ -792,16 +792,35 @@
 
 	(setq org-agenda-custom-commands nil)
 	; https://orgmode.org/manual/Storing-searches.html
+	; Can the other default commands be removed ?   SEEMS NO
+	; I don't want anything showing in the day calendar that hasn't been explicitly scheduled, so items that were merely created on that day shouldn't show unless they have SCHEDULED or DEADLINE
+	; I want to have 2 sections.  The top shows the time of day and time blocks with scheduled/deadline items.   The bottom sections shows BACKLOG stuff (maybe ordered by FIFO) and limited to 5
+	; 
 	(setq org-agenda-custom-commands
-      '(("c" "Custom Agenda View"
-         ((agenda "" ((org-agenda-span 'day)))   ; Day agenda
-          (alltodo "")))))                      ; TODO list
+		'(("d" "Custom Daily View"
+			 ((agenda ""                ;; Section 1: Standard daily agenda
+					((org-agenda-span 'day)
+					 (org-agenda-overriding-header "Deadlines & Scheduled Tasks")))
+				 (tags "ARCHIVE_TODO=\"DONE\""  ;; Section 2: Completed today (from archive)
+					 ((org-agenda-overriding-header "Completed Today")
+					  (org-agenda-files
+					   (list (expand-file-name
+					          (car (split-string org-archive-location "::"))
+					          (car org-agenda-files))))
+					  (org-agenda-skip-function
+					   `(org-agenda-skip-entry-if 'notregexp
+					      ,(format-time-string "ARCHIVE_TIME: %Y-%m-%d" (current-time))))))
+				 (tags-todo "+backlog"       ;; Section 3: Backlog tasks
+					 ((org-agenda-overriding-header "Backlog")))))
+			 ("c" org-capture)
+			 ))
 
-	(setq org-agenda-custom-commands
-      '(("t" org-agenda-list)
-        ("a" org-todo-list)
-				("c" org-capture)
-				 ))
+
+	;(setq org-agenda-custom-commands
+  ;    '(("t" org-agenda-list)
+  ;      ("a" org-todo-list)
+	;			("c" org-capture)
+	;			 ))
 
 	(add-hook 'org-capture-after-finalize-hook
           (lambda ()
