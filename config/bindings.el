@@ -25,7 +25,7 @@
   "q"  'my/delete-buffer-or-workspace
   "r"  'hydra-register/body
   "s"  'hydra-snippets/body
-	"t"  'hydra-agenda/body
+	"t"  'org-agenda ;'hydra-agenda/body
 	"u"  'hydra-utilities/body
   "w"  'hydra-window-utils/body
   "x"  'eval-region
@@ -136,6 +136,8 @@
 
 (with-eval-after-load 'org-agenda
 	(define-key org-agenda-mode-map (kbd ",") 'my-leader-map)
+
+	(define-key org-agenda-mode-map (kbd "b") 'my-capture-current-hour-interval)
 
 	(define-key org-agenda-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 	(define-key org-agenda-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))

@@ -682,29 +682,51 @@
 
 	(setq org-catch-invisible-edits 'error) ; prevent editing text inside folds
 
+	; https://orgmode.org/manual/Template-elements.html
+	; https://orgmode.org/manual/Template-expansion.html
 	(setq org-capture-templates
-    '(("p" "Personal Todo" entry
-				(file+headline "~/Notes/org/tasks.org" "Personal TODO")
-         "* TODO %?\n ")
-			 ("w" "Wishful Todo" entry
-				 (file+headline "~/Notes/org/tasks.org" "Wishful TODO")
+    `(
+			 ("p" "Personal" entry   ; this template is for creating personal items when i'm not looking at org-agenda
+				(file+headline "~/Notes/org/tasks.org" "Personal")
+         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
+
+			 ("W" "Work" entry       ; akin to personal, for creating work items when i'm not looking at org-agenda
+				 (file+headline "~/Notes/org/tasks.org" "Work")
+         "* %?\n KEYWORD: %^{Keyword|work}\n %U\n  %i\n  %a")
+
+			 ("B" "Block") ; This delineates a section of nested commands, Bw and Bp are under B
+			               ; these templates are for creating items when in an org-agenda view, they capture the current time and block off that hour
+			 ("Bw" "Work Block" entry
+				 (file+headline "~/Notes/org/tasks.org" "Work")
+				 "* TODO %?\n ")
+			 ("Bp" "Personal Block" entry
+				 (file+headline "~/Notes/org/tasks.org" "Personal")
+				 "* TODO %?\n ")
+
+			 ("b" "Backlog")
+			 ("bb" "Backlog" entry ; for creating a misc backlog item
+				 (file+headline"~/Notes/org/tasks.org" "Backlog")   
 					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+			 ("br" "Reading (Backlog)" entry ; reading
+				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Reading") ;file+olp is the mechanism to reference nested headers
+					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+			 ("by" "Youtube (Backlog)" entry  ; watching youtube
+				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Youtube")
+					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+
 			 ("r" "Recurring Todo" entry
-				 (file+headline "~/Notes/org/tasks.org" "Recurring TODO")
+				 (file+headline "~/Notes/org/tasks.org" "Recurring")
 					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>")
 			    ; <%%(memq (calendar-day-of-week date) '(2 3 4 5 6))>   just the day
 					;"* TODO %?\n %(concat \"<%%\" \"(when\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \"12:00\" \")\" )>")  day with time (not working, need to figure out how to add quotes around "12:00")
-       ("W" "Work Todo" entry
-				 (file+headline "~/Notes/org/tasks.org" "Work TODO")
-         "* %?\n KEYWORD: %^{Keyword|work}\n %U\n  %i\n  %a")))
+
+       ))
 	
   :bind (
 	  :map org-mode-map
 					("TAB" . org-cycle)
 					("C-j" . windmove-down)
           ("C-k" . windmove-up)
-          ("C-p" . org-roam-node-find)
-          ("C-f" . consult-ripgrep)
           ("C-c n" . org-roam-capture)
           ("C-'" . org-roam-buffer-toggle)
           ("C-c i" . org-roam-node-insert))
@@ -768,20 +790,25 @@
 	(setq org-agenda-timegrid-use-ampm t) ; Set this to t to force 12-hour format (am/pm).
 
 
+	(setq org-agenda-custom-commands nil)
 	; https://orgmode.org/manual/Storing-searches.html
 	(setq org-agenda-custom-commands
-      '(("x" agenda)
-        ("y" agenda*)
-        ("w" todo "WAITING")
-        ("W" todo-tree "WAITING")
-        ("u" tags "+boss-urgent")
-        ("v" tags-todo "+boss-urgent")
-        ("U" tags-tree "+boss-urgent")
-        ("f" occur-tree "\\<FIXME\\>")
-        ("h" . "HOME+Name tags searches") ;description for "h" prefix
-        ("hl" tags "+personal+leonie")
-        ("hp" tags "+personal+lucien")
-        ("hk" tags "+personal+carmen")))
+      '(("c" "Custom Agenda View"
+         ((agenda "" ((org-agenda-span 'day)))   ; Day agenda
+          (alltodo "")))))                      ; TODO list
+
+	(setq org-agenda-custom-commands
+      '(("t" org-agenda-list)
+        ("a" org-todo-list)
+				("c" org-capture)
+				 ))
+
+	(add-hook 'org-capture-after-finalize-hook
+          (lambda ()
+            (when (get-buffer "*Org Agenda*") ;; Check if the Org Agenda buffer exists
+              (with-current-buffer "*Org Agenda*"
+                (org-agenda-redo)))))
+
 	)
 
 
@@ -1266,6 +1293,7 @@
 			 "\\*Help\\*"
 			 "\\*Copilot\\*"
 			 "\\*Org Capture\\*"
+			 "Capture-tasks.org"
 			 "\\*Org Select\\*"
 			 "\\*Agenda Commands\\*"
 			 "Output\\*$"

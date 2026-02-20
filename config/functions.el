@@ -512,6 +512,41 @@ _p_: prev error
   (org-agenda-refresh))
 
 
+(defun my-capture-current-hour-interval ()
+  "Capture task with the current hour interval as SCHEDULED and DEADLINE in an agenda view.
+When invoked from org-agenda with the cursor on a time slot, uses that hour.
+Otherwise falls back to the current system hour."
+  (interactive)
+  (let* ((current-day (format-time-string "%Y-%m-%d"))
+         (hour
+          (or
+           ;; Bug 1 fix: read the hour from the org-agenda entry under point
+           ;; via the `time-of-day' text property (an integer like 1300 for 1pm).
+           (when (derived-mode-p 'org-agenda-mode)
+             (let ((time-of-day (get-text-property (point) 'time-of-day)))
+               (when (numberp time-of-day)
+                 (/ time-of-day 100))))
+           ;; Fallback: parse the time displayed on the current agenda grid line,
+           ;; which looks like "  1:00" or " 13:00" at the start of the line.
+           (when (derived-mode-p 'org-agenda-mode)
+             (save-excursion
+               (beginning-of-line)
+               (when (re-search-forward "\\b\\([0-9]\\{1,2\\}\\):[0-9]\\{2\\}\\b"
+                                        (line-end-position) t)
+                 (string-to-number (match-string 1)))))
+           ;; Final fallback: current system hour.
+           (nth 2 (decode-time))))
+         ;; Bug 2 fix: start-hour is simply the hour under the cursor —
+         ;; no conditional needed (the old (if (> minute 0) hour (+ hour 1))
+         ;; incorrectly advanced the hour when the cursor was on an exact :00 slot).
+         (schedule-time (format "%s %02d:00" current-day hour))
+         ;; Bug 3 fix: deadline is hour:59 (end of the same hour), not (hour+1):00.
+         (deadline-time  (format "%s %02d:59" current-day hour)))
+    (org-capture nil "Bw")
+    (insert (format "\nSCHEDULED: <%s>\nDEADLINE: <%s>\n" schedule-time deadline-time))))
+
+
+
 ;; todo add tooling for sql
 ;; https://arjanvandergaag.nl/blog/using-emacs-as-a-database-client.html
 
