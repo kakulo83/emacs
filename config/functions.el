@@ -540,11 +540,35 @@ Otherwise falls back to the current system hour."
          ;; no conditional needed (the old (if (> minute 0) hour (+ hour 1))
          ;; incorrectly advanced the hour when the cursor was on an exact :00 slot).
          (schedule-time (format "%s %02d:00" current-day hour))
-         ;; Bug 3 fix: deadline is hour:59 (end of the same hour), not (hour+1):00.
-         (deadline-time  (format "%s %02d:59" current-day hour)))
+         )
     (org-capture nil "Bw")
-    (insert (format "\nSCHEDULED: <%s>\nDEADLINE: <%s>\n" schedule-time deadline-time))))
+    (insert (format "\nSCHEDULED: <%s>\n" schedule-time))))
 
+(defun my-org-scheduled-today-no-time (date)
+  "Match tasks scheduled for DATE without a time."
+  (when-let ((scheduled-time (org-entry-get nil "SCHEDULED")))
+    (and (string-match-p (format-time-string "%Y-%m-%d" date) scheduled-time)
+         (not (string-match-p "T[0-9]" scheduled-time)))))
+
+
+(defun my-org-refill-and-reschedule ()
+  "Refill the current task's heading and reschedule it together.
+Works from both org-mode buffers and org-agenda views."
+  (interactive)
+  (let ((marker (or (org-get-at-bol 'org-hd-marker)   ; resolve the real org entry marker from agenda
+                    (point-marker))))                  ; fall back to current position if in an org buffer
+    (with-current-buffer (marker-buffer marker)
+      (goto-char (marker-position marker))
+      ;; Refill the current heading based on column width
+      (org-fold-show-entry)                            ; Ensure the entry is visible for refill
+      (org-edit-headline (org-trim (org-get-heading))) ; Refills the title heading
+      ;; Prompt for a new scheduled date
+      (org-schedule nil (org-read-date nil t))))
+  ;; Refresh the agenda view if invoked from there
+  (when (derived-mode-p 'org-agenda-mode)
+    (org-agenda-redo)))
+
+;; TODO modify refille to remove backlog tag
 
 
 ;; todo add tooling for sql

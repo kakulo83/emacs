@@ -139,6 +139,8 @@
 
 	(define-key org-agenda-mode-map (kbd "b") 'my-capture-current-hour-interval)
 
+	(define-key org-agenda-mode-map (kbd "M") 'my-org-refill-and-reschedule)
+
 	(define-key org-agenda-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 	(define-key org-agenda-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
 	(define-key org-agenda-mode-map (kbd "s-3") #'(lambda ()(interactive) (tab-bar-select-tab 3)))

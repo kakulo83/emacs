@@ -690,7 +690,7 @@
 				(file+headline "~/Notes/org/tasks.org" "Personal")
          "* TODO %?\nSCHEDULED: %^{Scheduled Time}T") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
 
-			 ("W" "Work" entry       ; akin to personal, for creating work items when i'm not looking at org-agenda
+			 ("w" "Work" entry       ; akin to personal, for creating work items when i'm not looking at org-agenda
 				 (file+headline "~/Notes/org/tasks.org" "Work")
          "* %?\n KEYWORD: %^{Keyword|work}\n %U\n  %i\n  %a")
 
@@ -739,10 +739,6 @@
 	:custom
 	(org-agenda-current-time-string
 		"← now ─────────────────")
-	(org-agenda-time-grid
-		'((daily today require-timed remove-match)
-			 (700 800 830 1000 1030 1200 1230 1400 1430 1600 1630 1700 1730 1800 1830 2000 )
-			 "......" "────────────────"))
 	:config
 	(add-to-list 'display-buffer-alist
              '("\\*Org Agenda\\*"
@@ -752,7 +748,7 @@
                (dedicated . t)
                (inhibit-same-window . nil)))
 
-	(setq org-agenda-files '("~/Notes/org-roam-notes/20210905175557-todo.org.gpg" "~/Notes/org/tasks.org"))
+	(setq org-agenda-files '("~/Notes/org/tasks.org"))
 	(set-face-attribute 'org-agenda-date-today nil
 		:foreground "orange"
 		:background 'unspecified
@@ -764,11 +760,11 @@
 	;; Hide duplicates of the same todo item
 	;; If it has more than one of timestamp, scheduled,
 	;; or deadline information
-	(setq org-agenda-skip-timestamp-if-done t
-		org-agenda-skip-deadline-if-done t
-    org-agenda-skip-scheduled-if-done t
-    org-agenda-skip-scheduled-if-deadline-is-shown t
-    org-agenda-skip-timestamp-if-deadline-is-shown t)
+	;(setq org-agenda-skip-timestamp-if-done t
+	;	org-agenda-skip-deadline-if-done t
+  ;  org-agenda-skip-scheduled-if-done t
+  ;  org-agenda-skip-scheduled-if-deadline-is-shown t
+  ;  org-agenda-skip-timestamp-if-deadline-is-shown t)
 
 	(setq org-agenda-prefix-format
       '(
@@ -781,8 +777,11 @@
         ))
 
 	(setq org-agenda-time-grid
-      '((daily today require-timed)
-        (800 1000 1200 1400 1600 1800 2000)
+      '((daily today require-timed remove-match)
+				 (0000 0100 0200 0300 0400 0500 0600 0700 
+                                   0800 0900 1000 1100 1200 1300 1400 1500 
+                                   1600 1700 1800 1900 2000 2100 2200 2300)
+;        (800 900 1000 1100 1200 1300 1400 1500 1600 1700)
         "......"
         "----------------")
       org-agenda-use-time-grid t)
@@ -795,11 +794,15 @@
 	; Can the other default commands be removed ?   SEEMS NO
 	; I don't want anything showing in the day calendar that hasn't been explicitly scheduled, so items that were merely created on that day shouldn't show unless they have SCHEDULED or DEADLINE
 	; I want to have 2 sections.  The top shows the time of day and time blocks with scheduled/deadline items.   The bottom sections shows BACKLOG stuff (maybe ordered by FIFO) and limited to 5
-	; 
+	;
+	; I want to quickly mark N backlog items and be able to schedule them for a day.   This should mutate them in the 
+	; following ways:   1. They should have SCHEDULE attributes added to them.  2.  Their :backlog: tags should be removed
+	; and they should be moved
 	(setq org-agenda-custom-commands
-		'(("d" "Custom Daily View"
+		'(("t" "Custom Daily View"
 			 ((agenda ""                ;; Section 1: Standard daily agenda
 					((org-agenda-span 'day)
+					 ;(org-agenda-entry-types '(:deadline :scheduled))
 					 (org-agenda-overriding-header "Deadlines & Scheduled Tasks")))
 				 (tags "ARCHIVE_TODO=\"DONE\""  ;; Section 2: Completed today (from archive)
 					 ((org-agenda-overriding-header "Completed Today")
@@ -814,13 +817,6 @@
 					 ((org-agenda-overriding-header "Backlog")))))
 			 ("c" org-capture)
 			 ))
-
-
-	;(setq org-agenda-custom-commands
-  ;    '(("t" org-agenda-list)
-  ;      ("a" org-todo-list)
-	;			("c" org-capture)
-	;			 ))
 
 	(add-hook 'org-capture-after-finalize-hook
           (lambda ()
