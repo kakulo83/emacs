@@ -20,9 +20,6 @@
 ;;; sqls
 ;;; exa
 ;;; man-db
-;;; pip3 install epc
-;;; pip3 install python-lsp-black
-;;; pip3 install pyenv
 ;;; mandb (for creating man page db/cache) see: https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
 ;;; graphviz (for google profiling tools)
 ;;; man-db see:  https://github.com/abo-abo/swiper/issues/2836#issuecomment-831292443
@@ -43,28 +40,16 @@
 ;;; 
 ;;; Investigate this: https://github.com/rksm/org-ai
 ;;;   
-;;;
 ;;; Investigate:  https://github.com/emacsmirror/undo-fu?tab=readme-ov-file
 ;;;                https://codeberg.org/ideasman42/emacs-undo-fu-session
 ;;;
 ;;; Look into eshell autocomplete https://elpa.gnu.org/packages/capf-autosuggest.html
 ;;; Disable ElixirLS elixirLS.autoInsertRequiredAlias don't want to auto add incorrect module aliases
 ;;;
-;;; Consider alternative elixir language server:   https://www.elixir-tools.dev/docs/next-ls/editors/#emacs-with-lsp-mode
-;;;
 ;;; Look into elixir tooling here:  https://github.com/Sasanidas/Apprentice?tab=readme-ov-file
 ;;; https://www.reddit.com/r/emacs/comments/wwr6h2/setting_up_snippets_and_auto_completion_with/
 ;;;
-;;; Check out the prodigy package for managing external services:  https://github.com/rejeep/prodigy.el
-;;; - Clean up Hydra Menus
-;;; - find way to only show my snippets
-;;; - find a way to get autocomplete options for shell commands... maybe copilot ?
-;;;
-;;; Check out https://github.com/radian-software/apheleia
-;;;
 ;;; Emacs Config for web development:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config
-;;;
-;;; lsp-mode with multi server for major-mode:  https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config#orgc542f94
 ;;;
 ;;; worth reading through:  python setup:   https://blog.serghei.pl/posts/emacs-python-ide/
 ;;;
