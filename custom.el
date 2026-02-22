@@ -23,12 +23,11 @@
 			 modus-themes monokai-pro-theme multi-vterm names nano-theme
 			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
 			 nyan-mode orderless org-alert org-download org-drill org-recur
-			 org-roam-ui org-super-agenda org-superstar outline-indent
-			 polymode popper prodigy request restclient-jq rspec-mode
-			 shell-maker show-font south-theme spinner svg-tag-mode
-			 symbols-outline tabspaces treesit-auto undo-tree
-			 vertico-posframe vterm-toggle web-server wgrep yasnippet-capf
-			 yasnippet-snippets))
+			 org-roam-ui org-superstar outline-indent polymode popper
+			 prodigy request restclient-jq rspec-mode shell-maker show-font
+			 south-theme spinner svg-tag-mode symbols-outline tabspaces
+			 treesit-auto undo-tree vertico-posframe vterm-toggle web-server
+			 wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
 		'((go-playground-cli :url
 				"https://github.com/emacsmirror/go-playground-cli" :branch

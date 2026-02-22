@@ -2,11 +2,25 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(#1=(#("PYTHON ITERATION MODULE" 0 23
+(#1=(#("org-refile-last-stored" 0 22
 				(bmkp-full-record #1#))
-			(filename . "   - no file -")
-			(location . "https://docs.python.org/3/library/itertools.html#module-itertools")
-			(handler . bmkp-jump-url-browse))
+			(annotation)
+			(tags)
+			(filename . "~/Notes/org/tasks.org")
+			(buffer-name . "tasks.org")
+			(front-context-string . "** TODO transfer")
+			(rear-context-string . "sk-within-emacs\n")
+			(front-context-region-string)
+			(rear-context-region-string)
+			(visits . 0)
+			(created . #2=(27033 15746 91200 0))
+			(last-modified . #2#)
+			(position . 3255))
+#1=(#("PYTHON ITERATION MODULE" 0 23
+			 (bmkp-full-record #1#))
+		 (filename . "   - no file -")
+		 (location . "https://docs.python.org/3/library/itertools.html#module-itertools")
+		 (handler . bmkp-jump-url-browse))
 #1=(#("PYTHON COLLECTIONS MODULE" 0 18
 			 (bmkp-full-record #1#)
 			 18 25
@@ -34,14 +48,14 @@
 		 (tags)
 		 (filename . "~/Notes/org/tasks.org")
 		 (buffer-name . "tasks.org")
-		 (front-context-string . "*** TODO Watch S")
-		 (rear-context-string . "END:\n** Youtube\n")
+		 (front-context-string . "** TODO Remind C")
+		 (rear-context-string . "Tarak Upadhyaya\n")
 		 (front-context-region-string)
 		 (rear-context-region-string)
 		 (visits . 0)
-		 (created . #2=(27031 43537 30801 0))
+		 (created . #2=(27034 3220 752352 0))
 		 (last-modified . #2#)
-		 (position . 1869))
+		 (position . 564))
 #1=(#("Cloudflare Dashboard" 0 20
 			 (bmkp-full-record #1#))
 		 (filename . "   - no file -")
