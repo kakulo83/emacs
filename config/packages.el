@@ -777,17 +777,15 @@
         ))
 
 	(setq org-agenda-time-grid
-      '((daily today require-timed remove-match)
-				 (0000 0100 0200 0300 0400 0500 0600 0700 
-                                   0800 0900 1000 1100 1200 1300 1400 1500 
+      '((daily today)
+				 (0000 0100 0200 0300 0400 0500 0600 0700
+                                   0800 0900 1000 1100 1200 1300 1400 1500
                                    1600 1700 1800 1900 2000 2100 2200 2300)
-;        (800 900 1000 1100 1200 1300 1400 1500 1600 1700)
         "......"
         "----------------")
       org-agenda-use-time-grid t)
 
 	(setq org-agenda-timegrid-use-ampm t) ; Set this to t to force 12-hour format (am/pm).
-
 
 	(setq org-agenda-custom-commands nil)
 	; https://orgmode.org/manual/Storing-searches.html
