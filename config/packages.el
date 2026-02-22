@@ -796,11 +796,21 @@
 	; I want to quickly mark N backlog items and be able to schedule them for a day.   This should mutate them in the 
 	; following ways:   1. They should have SCHEDULE attributes added to them.  2.  Their :backlog: tags should be removed
 	; and they should be moved
+	; https://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
+	(defun my/org-agenda-skip-without-deadline-scheduled-or-recurring ()
+		"Skip agenda entries that lack DEADLINE, SCHEDULED, or a :recurring: tag."
+		(let ((end (save-excursion (org-end-of-subtree t))))
+			(unless (or (org-get-scheduled-time (point))
+									(org-get-deadline-time (point))
+									(member "recurring" (org-get-tags)))
+				end)))
+
 	(setq org-agenda-custom-commands
 		'(("t" "Custom Daily View"
 			 ((agenda ""                ;; Section 1: Standard daily agenda
 					((org-agenda-span 'day)
-					 ;(org-agenda-entry-types '(:deadline :scheduled))
+					 (org-agenda-entry-types '(:deadline :scheduled))
+					 (org-agenda-skip-function #'my/org-agenda-skip-without-deadline-scheduled-or-recurring)
 					 (org-agenda-overriding-header "Deadlines & Scheduled Tasks")))
 				 (tags "ARCHIVE_TODO=\"DONE\""  ;; Section 2: Completed today (from archive)
 					 ((org-agenda-overriding-header "Completed Today")
@@ -821,7 +831,6 @@
             (when (get-buffer "*Org Agenda*") ;; Check if the Org Agenda buffer exists
               (with-current-buffer "*Org Agenda*"
                 (org-agenda-redo)))))
-
 	)
 
 
