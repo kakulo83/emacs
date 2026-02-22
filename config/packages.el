@@ -163,14 +163,14 @@
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-(use-package modus-themes
-	:config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-;(use-package nano-theme
-;  :config
-;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;	(set-background-color "black")
-;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package modus-themes
+;	:config
+;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+(use-package nano-theme
+  :config
+	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+	(set-background-color "black")
+  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package iceberg-theme
 ;	:config
 ;  (iceberg-theme-create-theme-file)
@@ -789,13 +789,6 @@
 
 	(setq org-agenda-custom-commands nil)
 	; https://orgmode.org/manual/Storing-searches.html
-	; Can the other default commands be removed ?   SEEMS NO
-	; I don't want anything showing in the day calendar that hasn't been explicitly scheduled, so items that were merely created on that day shouldn't show unless they have SCHEDULED or DEADLINE
-	; I want to have 2 sections.  The top shows the time of day and time blocks with scheduled/deadline items.   The bottom sections shows BACKLOG stuff (maybe ordered by FIFO) and limited to 5
-	;
-	; I want to quickly mark N backlog items and be able to schedule them for a day.   This should mutate them in the 
-	; following ways:   1. They should have SCHEDULE attributes added to them.  2.  Their :backlog: tags should be removed
-	; and they should be moved
 	; https://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
 	(defun my/org-agenda-skip-without-deadline-scheduled-or-recurring ()
 		"Skip agenda entries that lack DEADLINE, SCHEDULED, or a :recurring: tag."
@@ -809,9 +802,9 @@
 		'(("t" "Custom Daily View"
 			 ((agenda ""                ;; Section 1: Standard daily agenda
 					((org-agenda-span 'day)
-					 (org-agenda-entry-types '(:deadline :scheduled))
+					 ;(org-agenda-entry-types '(:deadline :scheduled))
 					 (org-agenda-skip-function #'my/org-agenda-skip-without-deadline-scheduled-or-recurring)
-					 (org-agenda-overriding-header "Deadlines & Scheduled Tasks")))
+					 (org-agenda-overriding-header "Scheduled & Deadlines Tasks\n")))
 				 (tags "ARCHIVE_TODO=\"DONE\""  ;; Section 2: Completed today (from archive)
 					 ((org-agenda-overriding-header "Completed Today")
 					  (org-agenda-files
