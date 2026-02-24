@@ -710,8 +710,8 @@
 			 ("br" "Reading (Backlog)" entry ; reading
 				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Reading") ;file+olp is the mechanism to reference nested headers
 					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
-			 ("by" "Youtube (Backlog)" entry  ; watching youtube
-				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Youtube")
+			 ("by" "Video (Backlog)" entry  ; watching youtube
+				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Video")
 					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
 
 			 ("r" "Recurring Todo" entry
