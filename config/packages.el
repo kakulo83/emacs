@@ -688,7 +688,7 @@
     `(
 			 ("p" "Personal" entry   ; this template is for creating personal items when i'm not looking at org-agenda
 				(file+headline "~/Notes/org/tasks.org" "Personal")
-         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
+         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T\n") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
 
 			 ("w" "Work" entry       ; akin to personal, for creating work items when i'm not looking at org-agenda
 				 (file+headline "~/Notes/org/tasks.org" "Work")
@@ -706,17 +706,18 @@
 			 ("b" "Backlog")
 			 ("bb" "Backlog" entry ; for creating a misc backlog item
 				 (file+headline"~/Notes/org/tasks.org" "Backlog")   
-					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+					"* TODO %?\n :PROPERTIES:\n:CATEGORY: general\n:CREATED: %t\n:END:\n")
 			 ("br" "Reading (Backlog)" entry ; reading
 				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Reading") ;file+olp is the mechanism to reference nested headers
-					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+					"* TODO %?\n :PROPERTIES:\n:CATEGORY: reading\n:CREATED: %t\n:END:\n")
 			 ("by" "Video (Backlog)" entry  ; watching youtube
 				 (file+olp "~/Notes/org/tasks.org" "Backlog" "Video")
-					"* TODO %?\n :PROPERTIES:\n:CREATED: %t\n:END:\n")
+					"* TODO %?\n :PROPERTIES:\n:CATEGORY: video\n:CREATED: %t\n:END:\n")
 
 			 ("r" "Recurring Todo" entry
 				 (file+headline "~/Notes/org/tasks.org" "Recurring")
-					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>")
+					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>\n :PROPERTIES:\n:CATEGORY: Repeat\n")
+					; THIS WORKS "* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>")
 			    ; <%%(memq (calendar-day-of-week date) '(2 3 4 5 6))>   just the day
 					;"* TODO %?\n %(concat \"<%%\" \"(when\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \"12:00\" \")\" )>")  day with time (not working, need to figure out how to add quotes around "12:00")
 
@@ -754,7 +755,7 @@
 		:background 'unspecified
 	)
 	(setq org-agenda-window-setup 'current-window)
-	(setq org-archive-location "~/Notes/org-roam-notes/archived.org::")
+	(setq org-archive-location "~/Notes/org/archived.org::")
 
 	
 	;; Hide duplicates of the same todo item
@@ -806,7 +807,7 @@
 					 (org-agenda-skip-function #'my/org-agenda-skip-without-deadline-scheduled-or-recurring)
 					 (org-agenda-overriding-header "Scheduled & Deadlines Tasks\n")))
 				 (tags "ARCHIVE_TODO=\"DONE\""  ;; Section 2: Completed today (from archive)
-					 ((org-agenda-overriding-header "Completed Today")
+					 ((org-agenda-overriding-header "\nCompleted Today\n")
 					  (org-agenda-files
 					   (list (expand-file-name
 					          (car (split-string org-archive-location "::"))
@@ -815,10 +816,25 @@
 					   `(org-agenda-skip-entry-if 'notregexp
 					      ,(format-time-string "ARCHIVE_TIME: %Y-%m-%d" (current-time))))))
 				 (tags-todo "+backlog"       ;; Section 3: Backlog tasks
-					 ((org-agenda-overriding-header "Backlog")))))
+					 ((org-agenda-overriding-header "Backlog\n")))))
 			 ("c" org-capture)
 			 ))
 
+	(customize-set-value
+		;; to resize an icon
+		;; rsvg-convert -w 32 -h 32 -f svg -o new-icon.svg original-icon.svg
+		;;
+		;; https://icons8.com/icons/set/svg-warning        (nice icons)
+		;; https://studio.creativefabrica.com/vectorizer   (convert png to svg)
+		'org-agenda-category-icon-alist
+		`(
+			 ("reading" "~/.emacs.d/private/icons/book.svg" nil nil :ascent center :mask heuristic)
+			 ("completed" "~/.emacs.d/private/icons/completed.svg" nil nil :ascent center :mask heuristic)
+			 ("general" "~/.emacs.d/private/icons/general.svg" nil nil :ascent center :mask heuristic)
+			 ("video" "~/.emacs.d/private/icons/video.svg" nil nil :ascent center :mask heuristic)
+			 ("repeat" "~/.emacs.d/private/icons/repeat.svg" nil nil :ascent center :mask heuristic)
+			 ))
+	
 	(add-hook 'org-capture-after-finalize-hook
           (lambda ()
             (when (get-buffer "*Org Agenda*") ;; Check if the Org Agenda buffer exists

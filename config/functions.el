@@ -551,6 +551,9 @@ Otherwise falls back to the current system hour."
          (not (string-match-p "T[0-9]" scheduled-time)))))
 
 
+;; when plucking a backlog item, they should be put into either the personal/work category
+;; because all items inherit their tags, there's no need to chnage tags directly, we need
+;; refile under the new header
 (defun my-org-refill-and-reschedule ()
   "Refill the current task's heading and reschedule it together.
 Works from both org-mode buffers and org-agenda views."

@@ -93,9 +93,10 @@
   (load custom-file))
 
 ;; Remove frame title and icon
+(set-frame-parameter nil 'undecorated t)
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq frame-title-format '("\n"))
+(setq frame-title-format nil)
 (setq ns-use-proxy-icon nil)
 
 ;; Disable frames resizing implicitly. Why?
@@ -117,6 +118,10 @@
 (setq locale-coding-system 'utf-8)
 (setq default-file-name-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
+
+;; automatically enable to prevent
+;; slow performance of very long lines
+(global-so-long-mode t)
 
 ;; try to use the same windows as much as possible
 ;;(customize-set-variable 'display-buffer-base-action
