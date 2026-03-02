@@ -770,15 +770,20 @@
 	(setq org-agenda-prefix-format
       '(
         ;; Remove "%-12:c" from the agenda format to hide the file name/category
-        (agenda . " % i %?-12t% s")
+        (agenda . " % i %?-12t")
         (timeline . " % s")
         (todo . " % i ")
         (tags . " % i ")
         (search . " % i ")
         ))
 
+	;; remove-match stops org agenda entries from having a duplicated time entry right after
+	;; when an agenda entry is schedule for 10am, for instance, the time grid still wants to
+	;; render 10:00am -------------
+	;; this is confusing and undesirable.  Adding remove-match removes the second time-gridline
+	;; since it's no longer needed
 	(setq org-agenda-time-grid
-      '((daily today)
+      '((daily today remove-match)
 				 (0000 0100 0200 0300 0400 0500 0600 0700
                                    0800 0900 1000 1100 1200 1300 1400 1500
                                    1600 1700 1800 1900 2000 2100 2200 2300)

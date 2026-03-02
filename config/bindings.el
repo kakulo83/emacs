@@ -139,7 +139,13 @@
 
 	(define-key org-agenda-mode-map (kbd "b") 'my-capture-current-hour-interval)
 
-	(define-key org-agenda-mode-map (kbd "M") 'my-org-refill-and-reschedule)
+	;(define-key org-agenda-mode-map (kbd "M") 'my-org-refill-and-reschedule)
+	(define-key org-agenda-mode-map (kbd "/") 'org-search-view)
+	(define-key org-agenda-mode-map (kbd "?") 'org-agenda-filter)
+
+	(define-key org-agenda-mode-map (kbd "H") 'evil-window-top)
+	(define-key org-agenda-mode-map (kbd "L") 'evil-window-bottom)
+	(define-key org-agenda-mode-map (kbd "M") 'evil-window-middle)
 
 	(define-key org-agenda-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 	(define-key org-agenda-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
