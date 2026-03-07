@@ -16,7 +16,7 @@
 
 
 (use-package treesit-auto
-	  :custom
+	:custom
   (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
@@ -137,6 +137,9 @@
   (:map dired-sidebar-mode-map ("<return>" . 'dired-sidebar-find-file-alt)))
 
 
+(use-package dirvish)
+
+
 (use-package ace-window
   :init
   (setq aw-dispatch-always t)
@@ -159,18 +162,18 @@
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-winter-is-coming-dark-blue t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm
+;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm  doom-winter-is-coming-dark-blue
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-winter t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+;  (load-theme 'ef-maris-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 ;(use-package modus-themes
 ;	:config
 ;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
-(use-package nano-theme
-  :config
-	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-	(set-background-color "black")
-  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package nano-theme
+;  :config
+;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+;	(set-background-color "black")
+;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package iceberg-theme
 ;	:config
 ;  (iceberg-theme-create-theme-file)
@@ -201,8 +204,8 @@
 ;  :demand t
 ;  :config
 ;	(doric-themes-select 'doric-dark))
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
 ;(load-theme 'naga-blue t)
 ;(load-theme `tron t)
 
@@ -614,7 +617,7 @@
 (use-package org
 	:init
 	(add-hook 'org-mode-hook #'visual-line-mode)
-  :config
+	:config
 	(setq org-todo-keywords
 		'((sequence "TODO" "DOING" "WAITING" "|" "DONE" "CANCELLED")))
 	;; Log time a task was set to DONE.

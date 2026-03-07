@@ -93,10 +93,11 @@
   (load custom-file))
 
 ;; Remove frame title and icon
-(set-frame-parameter nil 'undecorated t)
+;(set-frame-parameter nil 'undecorated t)
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq frame-title-format nil)
+(setq frame-title-format '("\n"))
+;(setq frame-title-format nil)
 (setq ns-use-proxy-icon nil)
 
 ;; Disable frames resizing implicitly. Why?
@@ -145,7 +146,7 @@
 (require 'epa-file)
 (setq epa-file-encrypt-to '("3E869B53D207006C"))
 (epa-file-enable)
-(setq epg-pinentry-mode 'loopback)
+(setq epg-pinentry-mode 'ask) ;'loopback)
 
 ;; Session management
 (require 'desktop)
@@ -372,7 +373,7 @@ FEATURE may be any one of:
 ;; https://www.reddit.com/r/emacs/comments/1ht83m1/choose_your_coding_font/
 
 ;; font family
-;(when (member "Roboto Mono" (font-family-list))
+;when (member "Roboto Mono" (font-family-list))
 ;  (set-face-attribute 'default nil :font "Roboto Mono" :height 128)
 ;  (set-face-attribute 'fixed-pitch nil :family "Roboto Mono"))
 ;
@@ -380,11 +381,12 @@ FEATURE may be any one of:
 ;  (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.18))
 
 ;(set-face-attribute 'default nil :height 128)
+(set-frame-font (font-spec :family "Inconsolata Nerd Font" :weight 'ultralight :size 14))
+;(set-frame-font (font-spec :family "Roboto Mono" :weight 'ultralight :size 12))
+;(set-frame-font (font-spec :family "Fira Code" :weight 'ultralight :size 12))
 ;(set-frame-font (font-spec :family "Iosevka Slab" :weight 'light :size 14))
-;(set-frame-font (font-spec :family "Roboto Mono" :weight 'ultralight :size 14))
 ;(set-frame-font (font-spec :family "JetBrains Mono" :weight 'light :size 12))
 ;(set-frame-font (font-spec :family "Hack Nerd Font" :weight 'light :size 12))     ; -*-Hack Nerd Font-regular-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-(set-frame-font (font-spec :family "Inconsolata Nerd Font" :weight 'ultralight :size 14))
 
 ; set clock for different timezones
 (setq world-clock-list

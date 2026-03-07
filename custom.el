@@ -12,7 +12,7 @@
 		'(ace-window aio all-the-icons-ibuffer better-jumper bug-hunter cape
 			 catppuccin-theme cherry-blossom-theme
 			 color-theme-sanityinc-tomorrow consult-xref-stack corfu
-			 deferred dired-sidebar disaster doom-modeline
+			 deferred dired-sidebar dirvish disaster doom-modeline
 			 doom-two-tone-themes doric-themes eca ef-themes
 			 eglot-signature-eldoc-talkative eldoc-box embark-consult
 			 eshell-git-prompt eshell-toggle evil-collection evil-surround

@@ -181,6 +181,7 @@
 (evil-define-key 'normal dired-mode-map (kbd "L") 'evil-window-bottom)
 (evil-define-key 'normal dired-mode-map (kbd "H") 'evil-window-top)
 (evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
+(evil-define-key 'normal dired-mode-map (kbd "TAB") 'dirvish-subtree-toggle)
 (evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
 (evil-define-key 'insert vterm-mode-map (kbd "C-h") 'vterm-completion)
 (evil-define-key 'insert inf-elixir-mode-map (kbd "C-h") 'consult-history)
