@@ -577,5 +577,12 @@ Works from both org-mode buffers and org-agenda views."
 ;; todo add tooling for sql
 ;; https://arjanvandergaag.nl/blog/using-emacs-as-a-database-client.html
 
+
+(defun my/save-org-buffer-after-todo (&rest _args)
+  "Save Org buffers after updating a TODO status in 'org-agenda'."
+	(org-save-all-org-buffers))
+
+(advice-add 'org-agenda-todo :after #'my/save-org-buffer-after-todo)
+
 (provide 'functions)
 ;;; functions.el ends here
