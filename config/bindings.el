@@ -68,6 +68,9 @@
 (define-key evil-normal-state-map (kbd "C-z") 'robert/unique-vterm-shell)
 (define-key evil-normal-state-map (kbd "s-p") 'prodigy)
 
+;; unset super-k so we can bind it in different modes to clear the input area
+(global-set-key (kbd "s-k") nil)
+
 
 (with-eval-after-load 'evil-maps
 		(define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
@@ -82,10 +85,6 @@
 (define-key evil-normal-state-map (kbd "s-7") #'(lambda ()(interactive) (tab-bar-select-tab 7)))
 (define-key evil-normal-state-map (kbd "s-8") #'(lambda ()(interactive) (tab-bar-select-tab 8)))
 (define-key evil-normal-state-map (kbd "s-9") #'(lambda ()(interactive) (tab-bar-select-tab 9)))
-;(define-key evil-insert-state-map (kbd "C-n") 'cape-prefix-map)
-(define-key evil-insert-state-map (kbd "S-<return>") #'copilot-accept-completion)
-																				; copilot-accept-completion-by-line
-																				; copilot-accept-completion-by-word
 (define-key evil-insert-state-map (kbd "C-h") 'cape-history)
 
 (after 'embark
@@ -138,6 +137,13 @@
 	(define-key org-agenda-mode-map (kbd ",") 'my-leader-map)
 
 	(define-key org-agenda-mode-map (kbd "b") 'my-capture-current-hour-interval)
+	(define-key org-agenda-mode-map (kbd "]") nil)
+	(define-key org-agenda-mode-map (kbd "[") nil)
+	(define-key org-agenda-mode-map (kbd "g") nil)
+	(define-key org-agenda-mode-map (kbd "]]") 'evil-forward-section-begin)
+	(define-key org-agenda-mode-map (kbd "[[") 'evil-backward-section-begin)
+	(define-key org-agenda-mode-map (kbd "gg") 'evil-goto-first-line)
+	(define-key org-agenda-mode-map (kbd "+") 'org-agenda-capture)
 
 	;(define-key org-agenda-mode-map (kbd "M") 'my-org-refill-and-reschedule)
 	(define-key org-agenda-mode-map (kbd "/") 'org-search-view)
@@ -173,11 +179,28 @@
 (define-key compilation-mode-map (kbd "C-k") 'evil-window-up)
 (define-key compilation-mode-map (kbd "C-l") 'evil-window-right)
 
+(with-eval-after-load 'eca-chat
+	(define-key eca-chat-mode-map (kbd "s-k") 'eca-chat-clear)
+	(define-key eca-chat-mode-map (kbd "<return>") 'newline)
+	(define-key eca-chat-mode-map (kbd "RET") 'newline)
+	(define-key eca-chat-mode-map (kbd "C-c RET") 'eca-chat-send-prompt-at-chat)
+	)
+
+
 (define-key vterm-mode-map (kbd "M-`") nil)
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 (evil-define-key 'normal eshell-mode-map (kbd "[[") 'eshell-previous-prompt)
 (evil-define-key 'normal eshell-mode-map (kbd "]]") 'eshell-next-prompt)
+
+(with-eval-after-load 'eshell
+	(define-key eshell-mode-map (kbd "s-k") 'eshell-clear)
+	(evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
+	(evil-define-key 'insert eshell-mode-map (kbd "C-h") 'consult-history)
+	(evil-define-key 'normal eshell-mode-map (kbd "[[") 'eshell-previous-prompt)
+	(evil-define-key 'normal eshell-mode-map (kbd "]]") 'eshell-next-prompt)
+	)
+
 (evil-define-key 'normal dired-mode-map (kbd "L") 'evil-window-bottom)
 (evil-define-key 'normal dired-mode-map (kbd "H") 'evil-window-top)
 (evil-define-key 'normal dired-mode-map (kbd "M") 'evil-window-middle)
@@ -189,8 +212,6 @@
 (evil-define-key 'normal messages-buffer-mode-map (kbd "C-o") 'better-jumper-jump-backward);'previous-buffer)
 (evil-define-key 'normal symbols-outline-mode-map (kbd "RET") 'symbols-outline-visit-and-quit)
 (evil-define-key 'normal dired-sidebar-mode-map (kbd "-") 'dired-sidebar-up-directory)
-
-;(evil-define-key 'normal ibuffer-mode-map (kbd (my-leader-map . "a")) 'ace-window)
 
 (with-eval-after-load 'html-mode
 	(define-key html-mode-map (kbd "M-o M-o") nil))
