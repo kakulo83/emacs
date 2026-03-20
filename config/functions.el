@@ -213,16 +213,19 @@ Inferior REPL
 ---------------
 _e_: elixir   _s_: sqlite3
 _p_: python   _ms_: mit scheme
-_r_: ruby
+_r_: ruby     _q_: postgres
+_R_: rails/c
 _g_: golang
 _n_: node
 "
   ("e" inf-elixir :exit t)
   ("p" run-python :exit t)
   ("r" inf-ruby :exit t)
+	("R" inf-ruby-console-rails :exit t)
 	("g" go-playground :exit t)
   ("n" nodejs-repl :exit t)
 	("s" sql-sqlite :exit t)
+	("q" sql-postgres :exit t)
 	("ms" run-scheme :exit t)
 	)
 
@@ -315,7 +318,7 @@ _l_: list bookmarks
 
 (defhydra hydra-ai (:color green :hint nil)
 	"ai shit"
-	("b" eca-chat-select-behavior "select behavior" :exit t)
+	("b" eca-chat-select-agent "select agent" :exit t)
 	("c" gptel "chat" :exit t)
 	("m" eca-chat-select-model "select model" :exit t)
 	("p" eca   "pair" :exit t)

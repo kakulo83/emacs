@@ -162,13 +162,13 @@
 ;(use-package doom-themes
 ;  :config
 ;  ;(set-background-color "black")
-;  (load-theme 'doom-outrun-electric t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm  doom-winter-is-coming-dark-blue
+;  (load-theme 'doom-earl-grey t))  ; doom-acario-light  doom-nord    doom-nord-light   doom-city-lights   doom-outrun-electric   doom-wilmersdorf   doom-material    doom-manegarm  doom-winter-is-coming-dark-blue
 ;(use-package ef-themes
 ;  :config
-;  (load-theme 'ef-maris-light t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-;(use-package modus-themes
-;	:config
-;  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+;  (load-theme 'ef-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
+(use-package modus-themes
+	:config
+  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
@@ -204,8 +204,8 @@
 ;  :demand t
 ;  :config
 ;	(doric-themes-select 'doric-dark))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
-(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate  winter-is-coming-dark-blue
 ;(load-theme 'naga-blue t)
 ;(load-theme `tron t)
 
@@ -336,8 +336,9 @@
 (use-package symbols-outline
   :config
   (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+	(setq symbols-outline-collapse-functions-on-startup nil)
   (setq symbols-outline-window-position 'right)
-  ;(setq symbols-outline-use-nerd-icon-in-gui t)
+  (setq symbols-outline-use-nerd-icon-in-gui t)
   :init
   (symbols-outline-follow-mode))
 
@@ -422,6 +423,7 @@
 		(tsx-ts-mode . eglot-ensure)
 	  (typescript-ts-mode . eglot-ensure)
 	  (sql-mode . eglot-ensure)))
+
 
 ;; https://www.reddit.com/r/emacs/comments/vau4x1/comment/ic6wd9i/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 ;; Eglot writes events to an events-buffer that can become very large thus slowing emacs down
@@ -587,6 +589,21 @@
 	(setq gptel-quick-timeout 1000))
 
 
+; https://github.com/copilot-emacs/copilot.el?tab=readme-ov-file
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+        :branch "main")
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . copilot-accept-completion)
+              ("TAB" . copilot-accept-completion)
+              ("C-<tab>" . copilot-accept-completion-by-word)
+              ("C-TAB" . copilot-accept-completion-by-word)
+              ("C-n" . copilot-next-completion)
+              ("C-p" . copilot-previous-completion)))
+
+
 ; NOTE:  API key and models saved to /Users/robertcarter/.config/eca/config.json
 ; BILLING:  https://console.anthropic.com/settings/billing
 (use-package eca
@@ -599,6 +616,7 @@
          ("C-c t" . eca-test))
   :config
   ;; Optional: Set ECA preferences
+	;(setq eca-buttons-allow-mouse t)
   (setq eca-auto-save-before-run t)
   (setq eca-show-output-buffer t))
 
@@ -621,12 +639,14 @@
 	(setq org-todo-keywords
 		'((sequence "TODO" "DOING" "WAITING" "|" "DONE" "CANCELLED")))
 	;; Log time a task was set to DONE.
-	(setq org-log-done (quote time))
+	(setq org-log-done nil) ;(quote time))
 
 	;; Don't log the time a task was rescheduled or redeadlined.
 	(setq org-log-redeadline nil)
 	(setq org-log-reschedule nil)
 
+	(setq org-log-into-drawer nil)
+	
   (setq org-emphasis-alist
     '(("*" (bold :foreground "Red" ))
        ("/" (italic :foreground "Orange"))
@@ -691,11 +711,11 @@
     `(
 			 ("p" "Personal" entry   ; this template is for creating personal items when i'm not looking at org-agenda
 				(file+headline "~/Notes/org/tasks.org" "Personal")
-         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T\n") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
+         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T\n :PROPERTIES:\n:CATEGORY: personal\n:END:\n") ; %^{MY_PROMPT}X, where X is one of g,G,t,T,u,U,C,L
 
 			 ("w" "Work" entry       ; akin to personal, for creating work items when i'm not looking at org-agenda
 				 (file+headline "~/Notes/org/tasks.org" "Work")
-         "* %?\n KEYWORD: %^{Keyword|work}\n %U\n  %i\n  %a")
+         "* TODO %?\nSCHEDULED: %^{Scheduled Time}T\n :PROPERTIES:\n:CATEGORY: work\n:END:\n")
 
 			 ("B" "Block") ; This delineates a section of nested commands, Bw and Bp are under B
 			               ; these templates are for creating items when in an org-agenda view, they capture the current time and block off that hour
@@ -719,7 +739,7 @@
 
 			 ("r" "Recurring Todo" entry
 				 (file+headline "~/Notes/org/tasks.org" "Recurring")
-					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>\n :PROPERTIES:\n:CATEGORY: Repeat\n")
+					"* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>\n :PROPERTIES:\n:CATEGORY: recurring\n")
 					; THIS WORKS "* TODO %?\n %(concat \"<%%\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \")\" )>")
 			    ; <%%(memq (calendar-day-of-week date) '(2 3 4 5 6))>   just the day
 					;"* TODO %?\n %(concat \"<%%\" \"(when\" \"(memq (calendar-day-of-week date) \" \"'(1 3 5)) \" \"12:00\" \")\" )>")  day with time (not working, need to figure out how to add quotes around "12:00")
@@ -838,9 +858,11 @@
 		`(
 			 ("reading" "~/.emacs.d/private/icons/book.svg" nil nil :ascent center :mask heuristic)
 			 ("completed" "~/.emacs.d/private/icons/completed.svg" nil nil :ascent center :mask heuristic)
+			 ("personal" "~/.emacs.d/private/icons/nyan.svg" nil nil :ascent center :mask heuristic)
+			 ("work" "~/.emacs.d/private/icons/nyan.svg" nil nil :ascent center :mask heuristic)
 			 ("general" "~/.emacs.d/private/icons/general.svg" nil nil :ascent center :mask heuristic)
 			 ("video" "~/.emacs.d/private/icons/video.svg" nil nil :ascent center :mask heuristic)
-			 ("repeat" "~/.emacs.d/private/icons/repeat.svg" nil nil :ascent center :mask heuristic)
+			 ("recurring" "~/.emacs.d/private/icons/repeat.svg" nil nil :ascent center :mask heuristic)
 			 ))
 	
 	(add-hook 'org-capture-after-finalize-hook
@@ -1039,8 +1061,8 @@
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 2)
-  (corfu-auto-delay 0.3)
-  (corfu-min-width 30)
+  (corfu-auto-delay 0.1)
+  (corfu-min-width 60)
   (corfu-popupinfo-min-width 60)
   (corfu-quit-no-match 'separator)
   (setopt corfu-on-exact-match 'show)
@@ -1054,13 +1076,12 @@
 	(add-hook 'eshell-mode-hook (lambda ()
                               (setq-local corfu-auto nil)
                               (corfu-mode)))
-  (global-corfu-mode)
-  (corfu-popupinfo-mode))
+  (global-corfu-mode))
 
 
 (use-package corfu-popupinfo
   :ensure nil
-  :after corfu
+	:after corfu
   :hook (corfu-mode . corfu-popupinfo-mode)
   :custom
   (corfu-popupinfo-delay '(0.25 . 0.1))
@@ -1085,7 +1106,9 @@
 	:init
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-history)
-	)
+	(add-hook 'completion-at-point-functions #'elisp-completion-at-point)
+	(add-hook 'completion-at-point-functions #'cape-elisp-symbol)
+  )
 
 
 (use-package yasnippet
@@ -1187,6 +1210,8 @@
 
 
 (use-package prodigy
+	; NOTE:  super-P opens prodigy menu
+	; Press `$` to see a process output 
 	:defer t
   :config
   ;(prodigy-define-service
@@ -1271,6 +1296,7 @@
 			 "\\*Python\\*"     inferior-python-mode
 			 "\\*nodejs\\*"     nodejs-repl-mode
 			 "\\*ruby\\*"       inf-ruby-mode
+			 "\\*et\\*"         eshell-mode
 			 "\\*SQL: SQLite\\*"
 			 "\\*Messages\\*"
 			 "\\*Warnings\\*"

@@ -146,7 +146,7 @@
 (require 'epa-file)
 (setq epa-file-encrypt-to '("3E869B53D207006C"))
 (epa-file-enable)
-(setq epg-pinentry-mode 'ask) ;'loopback)
+(setq epg-pinentry-mode 'loopback)
 
 ;; Session management
 (require 'desktop)

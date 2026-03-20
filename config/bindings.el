@@ -107,8 +107,9 @@
   (define-key embark-identifier-map (kbd "d") (my/embark-ace-action eldoc-print-current-symbol-info))
 )
 
-(define-key magit-status-mode-map (kbd "]]") 'magit-section-forward)
-(define-key magit-status-mode-map (kbd "[[") 'magit-section-backward)
+;(with-eval-after-load 'magit
+;		(define-key magit-status-mode-map (kbd "]]") 'magit-section-forward)
+;		(define-key magit-status-mode-map (kbd "[[") 'magit-section-backward))
 
 (define-key grep-mode-map (kbd "s-1") #'(lambda ()(interactive) (tab-bar-select-tab 1)))
 (define-key grep-mode-map (kbd "s-2") #'(lambda ()(interactive) (tab-bar-select-tab 2)))
@@ -186,12 +187,20 @@
 	(define-key eca-chat-mode-map (kbd "C-c RET") 'eca-chat-send-prompt-at-chat)
 	)
 
-
-(define-key vterm-mode-map (kbd "M-`") nil)
+(with-eval-after-load 'vterm 
+	(define-key vterm-mode-map (kbd "M-`") nil)
+	(define-key vterm-mode-map (kbd "s-k") 'vterm-clear))
 
 (evil-define-key 'motion eshell-mode-map (kbd "0") 'eshell-bol)
 (evil-define-key 'normal eshell-mode-map (kbd "[[") 'eshell-previous-prompt)
 (evil-define-key 'normal eshell-mode-map (kbd "]]") 'eshell-next-prompt)
+
+(with-eval-after-load 'inf-ruby
+	(define-key inf-ruby-mode-map (kbd "s-k") 'comint-clear-buffer))
+
+(with-eval-after-load 'sql
+	(define-key sql-interactive-mode-map (kbd "s-k") 'comint-clear-buffer))
+
 
 (with-eval-after-load 'eshell
 	(define-key eshell-mode-map (kbd "s-k") 'eshell-clear)

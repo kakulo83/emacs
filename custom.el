@@ -8,30 +8,13 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(gptel-api-key "")
- '(package-selected-packages
-		'(ace-window aio all-the-icons-ibuffer better-jumper bug-hunter cape
-			 catppuccin-theme cherry-blossom-theme
-			 color-theme-sanityinc-tomorrow consult-xref-stack corfu
-			 deferred dired-sidebar dirvish disaster doom-modeline
-			 doom-two-tone-themes doric-themes eca ef-themes
-			 eglot-signature-eldoc-talkative eldoc-box embark-consult
-			 eshell-git-prompt eshell-toggle evil-collection evil-surround
-			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
-			 git-timemachine go-playground gptel-quick gruvbox-theme helpful
-			 hide-mode-line highlight-symbol ht hydra iceberg-theme
-			 inf-elixir inf-ruby jtsx kind-icon magit marginalia
-			 modus-themes monokai-pro-theme multi-vterm names nano-theme
-			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
-			 nyan-mode orderless org-alert org-download org-drill org-recur
-			 org-roam-ui org-superstar outline-indent polymode popper
-			 prodigy request restclient-jq rspec-mode shell-maker show-font
-			 south-theme spinner svg-tag-mode symbols-outline tabspaces
-			 treesit-auto undo-tree vertico-posframe vterm-toggle web-server
-			 wgrep yasnippet-capf yasnippet-snippets))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
-		'((go-playground-cli :url
-				"https://github.com/emacsmirror/go-playground-cli" :branch
-				"master")
+		'((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+				"main")
+			 (go-playground-cli :url
+				 "https://github.com/emacsmirror/go-playground-cli" :branch
+				 "master")
 			 (gptel-quick :url "https://github.com/karthink/gptel-quick")
 			 (south-theme :url "https://github.com/SophieBosio/south"
 				 :branch "main")
@@ -40,8 +23,6 @@
 			 (doom-two-tone-themes :url
 				 "https://github.com/eliraz-refael/doom-two-tone-themes"
 				 :branch "master")
-			 (copilot :url "https://github.com/copilot-emacs/copilot.el"
-				 :branch "main")
 			 (fleury-theme :url
 				 "https://github.com/ShamsParvezArka/fleury-theme.el" :branch
 				 "main")
