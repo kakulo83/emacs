@@ -211,22 +211,23 @@ _r_: reload   _e_: edit
   "
 Inferior REPL
 ---------------
-_e_: elixir   _s_: sqlite3
-_p_: python   _ms_: mit scheme
-_r_: ruby     _q_: postgres
-_R_: rails/c
-_g_: golang
-_n_: node
+_e_: elixir    _q_: postgres
+_p_: python    _s_: sqlite3
+_n_: node      _R_: rails/c
+_g_: golang    _re_: redis 
+_E_: ielm
+_rb_: ruby 
 "
   ("e" inf-elixir :exit t)
+	("E" ielm :exit t)
   ("p" run-python :exit t)
-  ("r" inf-ruby :exit t)
+  ("rb" inf-ruby :exit t)
+	("re" redis-cli :exit t)
 	("R" inf-ruby-console-rails :exit t)
 	("g" go-playground :exit t)
   ("n" nodejs-repl :exit t)
 	("s" sql-sqlite :exit t)
 	("q" sql-postgres :exit t)
-	("ms" run-scheme :exit t)
 	)
 
 

@@ -157,7 +157,6 @@
   	  (?? aw-show-dispatch-help)
   	  )))
 
-
 ;; https://doc.emacsen.de/gallery.html
 ;(use-package doom-themes
 ;  :config
@@ -168,7 +167,7 @@
 ;  (load-theme 'ef-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
 (use-package modus-themes
 	:config
-  (load-theme 'modus-vivendi t)) ; modus-operandi  modus-vivendi
+  (load-theme 'modus-vivendi-deuteranopia t)) ; modus-operandi  modus-vivendi
 ;(use-package nano-theme
 ;  :config
 ;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
@@ -203,7 +202,7 @@
 ;	:ensure t
 ;  :demand t
 ;  :config
-;	(doric-themes-select 'doric-dark))
+;	(doric-themes-select 'doric-siren))
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
 ;(load-theme 'doom-navy-copper t) ;  doom-navy-copper  doom-orange-grey  doom-purple-gold   doom-cyan-charcoal   doom-silver-slate  winter-is-coming-dark-blue
 ;(load-theme 'naga-blue t)
@@ -1171,6 +1170,9 @@
 ;  (before-save . eglot-format)
 ;  :config
 ;  (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode)))
+
+
+(use-package redis)
 
 
 (use-package heex-ts-mode)

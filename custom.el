@@ -8,7 +8,26 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(gptel-api-key "")
- '(package-selected-packages nil)
+ '(package-selected-packages
+		'(ace-window aio all-the-icons-ibuffer better-jumper bug-hunter cape
+			 catppuccin-theme cherry-blossom-theme
+			 color-theme-sanityinc-tomorrow consult-xref-stack copilot corfu
+			 deferred dired-sidebar dirvish disaster doom-modeline
+			 doom-two-tone-themes doric-themes eca ef-themes
+			 eglot-signature-eldoc-talkative eldoc-box embark-consult
+			 eshell-git-prompt eshell-toggle evil-collection evil-surround
+			 exec-path-from-shell exunit flycheck-eglot format-all gcmh
+			 git-timemachine go-playground gptel-quick gruvbox-theme helpful
+			 hide-mode-line highlight-symbol ht hydra iceberg-theme
+			 inf-elixir inf-ruby jtsx kind-icon magit marginalia
+			 modus-themes monokai-pro-theme multi-vterm names nano-theme
+			 nerd-icons-dired nodejs-repl nord-theme nordic-night-theme nvm
+			 nyan-mode orderless org-alert org-download org-drill org-recur
+			 org-roam-ui org-superstar outline-indent polymode popper
+			 prodigy redis request restclient-jq rspec-mode shell-maker
+			 show-font south-theme spinner svg-tag-mode symbols-outline
+			 tabspaces treesit-auto ts undo-tree vertico-posframe
+			 vterm-toggle web-server wgrep yasnippet-capf yasnippet-snippets))
  '(package-vc-selected-packages
 		'((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
 				"main")
