@@ -96,6 +96,7 @@
 
 	(keymap-set embark-general-map "?" #'gptel-quick)
 
+	(define-key embark-region-map (kbd "o") (my/embark-ace-action find-file))
   (define-key embark-region-map "f" #'fill-region)
   (define-key embark-region-map "r" #'gptel-rewrite)
   (define-key embark-region-map "b" #'vc-region-history)
