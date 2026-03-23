@@ -165,14 +165,14 @@
 ;(use-package ef-themes
 ;  :config
 ;  (load-theme 'ef-dark t)) ; ef-dark  ef-duo-dark  ef-deuteranopia-light  ef-deuteranopia-dark  ef-maris-light   ef-elea-light  ef-winter   ef-night   ef-cherie
-(use-package modus-themes
-	:config
-  (load-theme 'modus-vivendi-deuteranopia t)) ; modus-operandi  modus-vivendi
-;(use-package nano-theme
-;  :config
-;	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
-;	(set-background-color "black")
-;  (load-theme 'nano-dark t)) ; nano-light  nano-dark
+;(use-package modus-themes
+;	:config
+;  (load-theme 'modus-vivendi-deuteranopia t)) ; modus-operandi  modus-vivendi
+(use-package nano-theme
+  :config
+	(set-face-attribute 'font-lock-string-face nil :foreground "Orange")
+	;(set-background-color "black")
+  (load-theme 'nano-dark t)) ; nano-light  nano-dark
 ;(use-package iceberg-theme
 ;	:config
 ;  (iceberg-theme-create-theme-file)
@@ -1283,6 +1283,14 @@
   (("C-c s f" . show-font-select-preview)
    ("C-c s t" . show-font-tabulated)))
 
+; https://github.com/Silex/docker.el
+(use-package docker
+	:ensure t
+	:config
+	(setq docker-show-messages nil))
+(evil-set-initial-state 'docker-container-mode 'emacs)
+(evil-set-initial-state 'docker-image-mode 'emacs)
+
 ;; NOTE: popper is loaded last because otherwise it does not
 ;; seem to be initialized correctly and i have to manually stop/start
 ;; it again when emacs starts up. which is annoying
@@ -1311,6 +1319,7 @@
 			 "Output\\*$"
 			 "\\*Async Shell Command\\*"
 			 "\\*HTTP Response\\*"
+			 "\\*docker-container\\*"
 			 help-mode
 			 compilation-mode
 			 ))

@@ -14,7 +14,7 @@
   "a"  'ace-window
   "b"  'hydra-bookmark/body ; 'consult-bookmark
   "c"  'hydra-ai/body ;'gptel
-  ;"d"  'robert/drill-by-topic
+  "d"  'docker
   "e"  'hydra-flycheck/body
   "f"  'avy-goto-char-2
   "g"  'hydra-vc/body

@@ -185,7 +185,7 @@ _f_: full-screen           _x_: temp workspace
   ("c" copy-filepath-to-clipboard :exit t)
   ("f" toggle-frame-maximized :exit t)
   ("n" global-display-line-numbers-mode :exit t)
-  ("k" delete-frame)
+  ("k" delete-frame :exit t)
 	("p" make-frame)
 	("b" balance-windows-area :exit t)
 	("x" save-buffers-to-register-and-close)
@@ -379,7 +379,7 @@ _p_: prev error
 	("m" org-agenda :exit t)
 	("x" org-archive-subtree-default :exit t)
 	)
-  
+
 (defun robert/tab ()
   "Command to complete a copilot suggestion if available otherwise insert a tab."
   (interactive)
